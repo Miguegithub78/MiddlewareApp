@@ -81,6 +81,7 @@ __Ruta principal__: La Home debe contener
 __Ruta de creación de Perfil Programador__: debe contener
 - [ ] Un formulario __controlado__ con los siguientes campos como lineamiento general pudiendo ser modificados
 - [ ] Botón/Opción para crear el perfil
+- [ ] Botón/Opción para modificar el perfil
 - [ ] Botón/Opción para eliminar el perfil
 - [ ] Botón/Opción para redirigir a la Ruta Home
 - [ ] Posibilidad de seleccionar/agregar varios campos en simultaneo
@@ -106,6 +107,7 @@ __Ruta de creación de Perfil Programador__: debe contener
 - [ ] Posibilidad de subir Fotografia desde su pc o celular
 - [ ] Posibilidad de compartir sus Proyectos
 - [ ] Posibilidad de grabar un Video de presentacion de 30 segundos
+- [ ] Posibilidad de descargar un archivo pdf con la hoja de vida
 
 __Ruta de creación de Perfil Empresa__: debe contener
 - Datos de la Companía

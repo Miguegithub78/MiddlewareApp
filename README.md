@@ -76,6 +76,7 @@ __Ruta principal__: La Home debe contener
         - guías
 - [ ] Publicaciones destacadas de los usuarios
 - [ ] Área donde se podra acceder a la Ruta de empresas y a la de programadores
+- [ ] Área donde se podrá acceder a la Ruta publica (Empleo, Ayudas, Proyectos)
 - [ ] Poder buscar por nombre de empresa o programador (reveer) 
 
 __Ruta de creación de Perfil Programador__: debe contener

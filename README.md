@@ -108,18 +108,7 @@ __Ruta de creación de Perfil Programador__: debe contener
 - [ ] Posibilidad de grabar un Video de presentacion de 30 segundos
 
 __Ruta de creación de Perfil Empresa__: debe contener
-- [ ] Un formulario __controlado__ de publicación de empleo con los siguientes campos como lineamiento general pudiendo ser modificados
-- [ ] Posibilidad de seleccionar/agregar varios campos en simultaneo 
-- [ ] Posibilidad de eliminar/editar varios campos en simultaneo 
-- [ ] Botón/Opción para crear el perfil
-- [ ] Botón/Opción para eliminar el perfil
-- [ ] Botón/Opción para redirigir a la Ruta Home
-- [ ] Botón/Opción para eliminar/ editar pubicaciones de empleos
-- [ ] Botón/Opción para acceder a los programadores postulados en su publicación
-- [ ] Botón/Opción para acceder a un programador postulado en su publicación
-- [ ] Botón/Opción para ver las publicaciones de empleo
-- [ ] Botón/Opción para marcar a un programador postulado como favorito en su publicación
-  - Datos de la Companía
+- Datos de la Companía
         - Nombre (pudiendo usar API de listado de companias)
         - Nombre de usuario 
   - Contacto
@@ -159,7 +148,22 @@ __Ruta de creación de Perfil Empresa__: debe contener
 - [ ] Posibilidad de grabar un Video de incentivo a candidatos de 30 segundos
 - [ ] Posibilidad de acceder a la Ruta de 'Busca tu Programador'
 
-__Ruta de Programadores Busca tu programador__: debe contener
+__Ruta de Publicaciones de Empresas__: debe contener
+- [ ] Un formulario __controlado__ de publicación de empleo con los siguientes campos como lineamiento general pudiendo ser modificados
+- [ ] Posibilidad de seleccionar/agregar varios campos en simultaneo 
+- [ ] Posibilidad de eliminar/editar varios campos en simultaneo 
+- [ ] Botón/Opción para ir al perfil
+- [ ] Botón/Opción para eliminar el perfil
+- [ ] Botón/Opción para redirigir a la Ruta Home
+- [ ] Botón/Opción para crear pubicaciones de empleos
+- [ ] Botón/Opción para eliminar/ editar pubicaciones de empleos
+- [ ] Botón/Opción para acceder a los programadores postulados en su publicación
+- [ ] Botón/Opción para acceder a un programador postulado en su publicación
+- [ ] Botón/Opción para ver las publicaciones de empleo
+- [ ] Botón/Opción para marcar a un programador postulado como favorito en su publicación
+  
+
+__Ruta Busca tu programador__: debe contener
 
 - [ ] Input de búsqueda de programadores por nombre
 - [ ] Área donde se verá el listado de programadores. Al iniciar deberá cargar los primeros resultados obtenidos desde la ruta `GET /developers` y deberá mostrar:

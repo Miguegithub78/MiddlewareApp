@@ -187,5 +187,3 @@ __Ruta de Detalle del Programador__: debe contener
 
 
 
-
-

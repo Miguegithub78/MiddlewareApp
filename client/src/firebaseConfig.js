@@ -9,19 +9,20 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: proces.env.EACT_APP_FIREBASE_APIKEY,
-  authDomain: proces.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId: proces.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket: proces.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: proces.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-  appId: proces.env.REACT_APP_FIREBASE_APPID,
-  measurementId: proces.env.REACT_APP_FIREBASE_MEASUREMENTID,
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-var ui = new firebaseui.auth.AuthUI(app.auth());
+const firebase = initializeApp(firebaseConfig);
+const auth = getAuth()
+// var ui = new firebaseui.auth.AuthUI(app.auth());
 
 
 // const analytics = getAnalytics(app);
-export { ui }
+export { firebase, auth }

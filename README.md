@@ -49,7 +49,10 @@ La idea general es crear una aplicación en la cual se pueda ver información de
 - [ ] React
 - [ ] Redux
 - [ ] Express
-- [ ] A definir por el equipo
+- [ ] Mongoose v6
+- [ ] Firebase
+- [ ] MongoDb
+
 
 #### Frontend
 
@@ -61,7 +64,7 @@ __Pagina inicial__: landing page con
 - [ ] Botón para ingresar como empresa al inicio de sesion
 - [ ] Video o texto representativo del proyecto
 
-__Pagina para acceder__: inicion de sesion y autenticacion
+__Pagina para acceder__: inicio de sesion y autenticacion
 - [ ] Posibilidad de crear una cuenta con mail o github si es la primera vez en la app
 - [ ] Posibilidad de loguearse con la cuenta ya existente
 - [ ] Posibilidad de recuperar su cuenta

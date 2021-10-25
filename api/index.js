@@ -8,7 +8,7 @@ const uri = "mongodb+srv://Tito:titoelbanbino@cluster0.khboe.mongodb.net/midlewa
 mongoose.connect(uri);
 
 mongoose.connection.once('open', _ => {
-    console.log('Database is connected to', uri);
+    console.log('Database is connected');
     app.listen(PORT, () => { console.log(`Listening in http://localhost:${PORT}/` )});
 })
 

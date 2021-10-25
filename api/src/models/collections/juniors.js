@@ -2,18 +2,67 @@ const { Schema, model } = require('mongoose');
 
 const juniorSchema = new Schema({
 
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
 
-    apellido: String,
+    lastname: {
+        type: String,
+        required: true
+    },
 
-    gmail: String,
+    gmail: {
+        type: String,
+        required: false
+    },
 
-    github: String,
+    github: {
+        type: String,
+        required: false
+    },
 
-    foto: String,
+    photograph: {
+        type: String,
+        required: false
+    },
 
-    sexo: String
+    gender: {
+        type: String,
+        required: false
+    },
 
+    phone: {
+        type: String,
+        required: false
+    },
+
+    age: {
+        type: String,
+        required: false
+    },
+
+    address: {
+        type: String,
+        required: false
+    },
+
+    languages: [{
+        type: Schema.Types.ObjectId,
+        ref: 'languages',
+        autopopulate: true,
+        required: true
+    }],
+
+    technologies: [{
+        type: Schema.Types.ObjectId,
+        ref: 'technologies',
+        autopopulate: true,
+        required: true
+    }]
+    
 })
+
+juniorSchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = model('juniors', juniorSchema)

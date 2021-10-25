@@ -1,9 +1,27 @@
-import React from 'react'
+import {useState} from 'react'
+import { auth } from "../firebaseConfig";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const Home = () => {
+   const [user, setUser] = useState(null)
+   
+   onAuthStateChanged(auth, (userFirebase) => {
+      if(userFirebase)console.log(userFirebase)
+      
+      else console.log('chau');
+   })
+   // const user = {
+   //    name : userFirebase.displayName,
+   //    email : userFirebase.email
+      
+   // }
+
+
    return (
       <div>
-         hola
+         <input  type="file" />
+         hola 
+         <button onClick={()=>signOut(auth)}>singout</button>
       </div>
    )
 }

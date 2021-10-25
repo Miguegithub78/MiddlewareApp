@@ -76,15 +76,15 @@ __Ruta principal__: La Home debe contener
         - guias
 - [ ] Publicaciones destacadas de los usuarios
 - [ ] Área donde se podra acceder a la Ruta de empresas y a la de programadores
-- [ ] Poder buscar por nombre de empresa o programador 
+- [ ] Poder buscar por nombre de empresa o programador (reveer) 
 
 __Ruta de creación de Perfil Programador__: debe contener
 - [ ] Un formulario __controlado__ con los siguientes campos como lineamiento general pudiendo ser modificados
-- [ ] Posibilidad de seleccionar/agregar varios campos en simultaneo
-- [ ] Posibilidad de eliminar/editar varios campos en simultaneo
 - [ ] Botón/Opción para crear el perfil
 - [ ] Botón/Opción para eliminar el perfil
 - [ ] Botón/Opción para redirigir a la Ruta Home
+- [ ] Posibilidad de seleccionar/agregar varios campos en simultaneo
+- [ ] Posibilidad de eliminar/editar varios campos en simultaneo
   - Datos personales
         - Nombre Completo
         - Nombre de usuario 
@@ -114,6 +114,11 @@ __Ruta de creación de Perfil Empresa__: debe contener
 - [ ] Botón/Opción para crear el perfil
 - [ ] Botón/Opción para eliminar el perfil
 - [ ] Botón/Opción para redirigir a la Ruta Home
+- [ ] Botón/Opción para eliminar/ editar pubicaciones de empleos
+- [ ] Botón/Opción para acceder a los programadores postulados en su publicacion
+- [ ] Botón/Opción para acceder a un programador postulado en su publicacion
+- [ ] Botón/Opción para ver las publicaciones de empleo
+- [ ] Botón/Opción para marcar a un programador postulado como favorito en su publicacion
   - Datos de la Compania
         - Nombre (pudiendo usar API de listado de companias)
         - Nombre de usuario 
@@ -153,17 +158,27 @@ __Ruta de creación de Perfil Empresa__: debe contener
 - [ ] Posibilidad de compartir sus Busquedas
 - [ ] Posibilidad de grabar un Video de incentivo a candidatos de 30 segundos
 - [ ] Posibilidad de acceder a la Ruta de 'Busca tu Programador'
-- [ ] 
 
-__Ruta de Programadores__: debe contener
+__Ruta de Programadores Busca tu programador__: debe contener
 
-- [ ] Input de búsqueda de programadores por 
+- [ ] Input de búsqueda de programadores por nombre
 - [ ] Área donde se verá el listado de programadores. Al iniciar deberá cargar los primeros resultados obtenidos desde la ruta `GET /developers` y deberá mostrar:
   - Imagen del programador
   - Nombre
   - Habilidades 
-- [ ] Botones/Opciones para filtrar por tecnologias y por tipo de 
-- [ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente los países por orden alfabético y por cantidad de población
-- [ ] Paginado para ir buscando y mostrando los siguientes paises, 10 paises por pagina, mostrando los primeros 9 en la primer pagina.
+- [ ] Botones/Opciones para filtrar por tecnologias y por tipo de programador
+- [ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente los programadores por orden habilidades, tecnologias, idiomas
+- [ ] Paginado para ir buscando y mostrando los programadores.
+- [ ] Botón/Opción para acceder a programadores postulados en su publicacion.
+
+__Ruta de Detalle del Programador__: debe contener
+- [ ] Los campos mostrados en la ruta de perfil de programador (imagen, nombre, usuario
+- [ ] Tecnologias
+- [ ] Challenges realizados
+- [ ] Idiomas
+- [ ] Boton/Opcion para coordinar entrevista con el programador
+
+
+
 
 

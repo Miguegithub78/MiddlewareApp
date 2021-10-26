@@ -1,12 +1,12 @@
 .container {
     width:25%;
-    margin: 25px;
+    margin: 0;
     align-items: center;
     text-align: center;
     background-color: rgba(26, 123, 188, 0.582);
     padding-top: 10px;
     padding-bottom: 100px;
-    margin-left: -600px;
+    
   }
   
   .field {

@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 60px;
+	padding: 20px 40px;
 	background-color: rgba(22, 95, 231, 0.856);
 	color: #fff;
 }
@@ -13,6 +13,7 @@
 
 .nav__container__logo h1 {
 	margin: 0px;
+	font-size: 40px;
 }
 
 .nav__container__bridge {

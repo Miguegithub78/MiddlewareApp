@@ -11,7 +11,7 @@ export default function LandingPage() {
                 <h1>Middleware</h1>
                 <h5>Un puente entre empresas y programadores</h5>
 
-                <Link to="/home">
+                <Link to="/login">
                     <button>Programador Js</button>
                     <button>Empresa</button>
                     <button>Administrador</button>

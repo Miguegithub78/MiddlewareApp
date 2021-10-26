@@ -1,31 +1,31 @@
 import React from "react";
-import "./styles.css/Search.css";
+import "./Search.css";
 
 export const Search = () => {
-  
+
   const button = "button";
 
   const handleInputChange = (e) => {
-    
-    
+
+
   };
 
   const byTypeuser = (e) => {
-    
+
   }
   const byTypePublic = (e) => {
-    
+
   }
   const submit = (e) => {
-    
+
   };
 
-  
+
   const byTecnology = (e) => {
-   
+
   }
   const byUbication = (e) => {
-   
+
   }
   return (
     <div className="container">
@@ -34,7 +34,7 @@ export const Search = () => {
           <input
             type="text"
             id="searchterm"
-            
+
             onChange={handleInputChange}
             placeholder="Realiza tu busqueda..."
           />
@@ -48,7 +48,7 @@ export const Search = () => {
           <option value="1">Empresa</option>
           <option value="2">Administrador</option>
         </select>
-        
+
         <select className={button} name="typePublic" onChange={byTypePublic}>
           <option value="">Tipo de Publicación:</option>
           <option value="0">Empleo</option>
@@ -63,16 +63,16 @@ export const Search = () => {
           <option value="Node">Node</option>
           <option value="Express">Express</option>
           <option value="Postgres">Postgres</option>
-          
+
         </select>
         <select name="ubicacion" className={button} onChange={byUbication}>
           <option value="">Ubicación:</option>
-          <option value="Cordova">Cordova</option>
+          <option value="Cordova">Cordoba</option>
           <option value="Buenos Aires">Buenos Aires</option>
           <option value="Mendoza">Mendoza</option>
           <option value="Junin">Junin</option>
         </select>
-       
+
       </div>
     </div>
   );

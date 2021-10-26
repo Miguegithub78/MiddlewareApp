@@ -1,0 +1,33 @@
+.body{
+    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+background: url("Middleware\ \(6\).gif");
+background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.conteiner{
+padding-right: 110px;
+}
+h1{
+    font-family: 'Candal', sans-serif; 
+    font-size: 70px;
+}
+h5{
+    font-size: 25px;
+    font-family: 'Arsenal', sans-serif;
+}
+
+button{
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 8px;
+padding: 8px;
+margin: 3px;
+box-shadow: black;
+margin-top: 20px;
+
+}

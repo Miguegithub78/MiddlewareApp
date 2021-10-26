@@ -62,10 +62,10 @@ const updateJuniorsProfile = async (req, res) => {
         phone: phone,
         languages: languagesGet,
         technologies: technologiesGet
-    })
+    }, {new: true})
 
     res.json(juniorsChange);
-    
+
 }
 
 module.exports = { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile };

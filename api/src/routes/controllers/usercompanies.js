@@ -84,7 +84,7 @@ const deleteCompaniesProfile = async (req, res) => {
 
     res.json(companyDelete)
 }catch(err){
-    res.status(404).json({message: err.message})
+    res.status(404).json({message: err.message}) // eliminar info q el genero
 }
 }
 

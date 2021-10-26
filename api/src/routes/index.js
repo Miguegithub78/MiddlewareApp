@@ -5,6 +5,8 @@ const router = Router()
 const { getAllUsersType } = require('./controllers/userType')
 const { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, postCompaniesProfile, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
+const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
+//const {getAllAdmins, getAdminsById, postAdminsProfile, updateAdminsProfile, deleteAdminsProfile} = require('./controllers/useradmin')
 
 router.get('/', getAllUsersType);//path del landing(en revision)
 
@@ -20,6 +22,8 @@ router.post('/companies', postCompaniesProfile);//se crea un usuario empresa
 router.put('/companies/:id', updateCompaniesProfile);//se actualiza una empresa
 router.delete('/companies/:id', deleteCompaniesProfile);//se elimina un usuario empresa
 
+router.get('/languages', getAllLaguages);//se obtienen los lenguajes
+router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
 
 
 module.exports = router;

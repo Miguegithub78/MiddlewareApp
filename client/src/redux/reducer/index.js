@@ -16,4 +16,4 @@ const rootReducer = (state = inicialState, action) => {
     }
 }
 
-export default rootReducer;
+export default rootReducer; 

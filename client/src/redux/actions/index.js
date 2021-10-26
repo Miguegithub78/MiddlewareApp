@@ -8,7 +8,7 @@ import { LOGIN_OKEY, LOGOUT_OKEY } from "../types";
 export const loginUserAction = (user) => ({
   type: LOGIN_OKEY,
   payload: user,
-});
+}); 
 export const logOutUserAction = () => ({
   type: LOGOUT_OKEY,
 });

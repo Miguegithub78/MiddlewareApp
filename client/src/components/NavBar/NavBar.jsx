@@ -7,7 +7,7 @@ function NavBar() {
 				<h1 className={s.nav__logo}>Middleware</h1>
 			</div>
 			<div className={s.nav__container__bridge}> 
-				<svg
+				<svg 
 					xmlns='http://www.w3.org/2000/svg'
 					class='h-6 w-6'
 					fill='none'

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { loginUserAction, logOutUserAction } from "../../redux/actions";
 
 const googleProvider = new GoogleAuthProvider();
-const guithubProvider = new GithubAuthProvider()
+const guithubProvider = new GithubAuthProvider() 
 
 const Login = () => {
 const dispatch = useDispatch()

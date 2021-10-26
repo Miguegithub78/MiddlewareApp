@@ -1,0 +1,74 @@
+.container {
+    width:25%;
+    margin: 25px;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(26, 123, 188, 0.582);
+    padding-top: 10px;
+    padding-bottom: 100px;
+    margin-left: -600px;
+  }
+  
+  .field {
+    display: flex;
+    position: relative;
+    margin: 5em auto;
+    margin-left: 10px;
+    flex-direction: row;
+    width: 30%;
+    margin-top: 25px;
+   
+  }
+  
+  .field > input[type="text"],
+  .field > .button {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 3px;
+  }
+  .field > .button:hover {
+    background-color: rgb(21, 38, 190);
+    filter: drop-shadow(0 0 5px #3a1c71);
+  }
+  .field > input[type="text"] {
+    flex: 1;
+    padding: 0.6em;
+    border: 0.2em solid rgb(26, 123, 188);
+    
+    
+  }
+  .field > input[type="text"]::placeholder {
+    color: rgba(167, 165, 165, 0.781);
+  }
+
+  .field > .button {
+    padding: 0.6em 0.8em;
+    background-color: rgb(26, 123, 188);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  
+  .field2 {
+    margin-top: -60px;
+    margin-bottom: -50px;
+    
+  }
+  
+  .field2 > .button {
+    padding: 0.6em 0.8em;
+    background-color: rgb(26, 123, 188);
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 30px;
+    width:200px;
+  }
+  .field2 > .button:hover {
+    background-color: rgb(21, 38, 190);
+    filter: drop-shadow(0 0 5px #3a1c71);
+  }
+ 

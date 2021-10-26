@@ -1,0 +1,10 @@
+.containerhome {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  background-image: url("Image/fondo.jpeg");
+  background-size: cover;
+  padding-bottom: 25px;
+}

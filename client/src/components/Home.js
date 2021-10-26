@@ -1,29 +1,26 @@
-import {useState} from 'react'
+// import { useState } from "react";
 import { auth } from "../firebaseConfig";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import {  signOut } from "firebase/auth";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-   const [user, setUser] = useState(null)
+  const { user } = useSelector((state) => state);
+  const history = useHistory();
+
+ 
    
-   onAuthStateChanged(auth, (userFirebase) => {
-      if(userFirebase)console.log(userFirebase)
-      
-      else console.log('chau');
-   })
-   // const user = {
-   //    name : userFirebase.displayName,
-   //    email : userFirebase.email
-      
-   // }
 
+  return (
+    <div>
+      hola {user?user.displayName:'Para Comenzar, porfavor Inicia Sesión '}
+      {user ? (
+        <button onClick={() => signOut(auth)}>singout</button>
+      ) : (
+        <button onClick={() => history.push("/login")}>login</button>
+      )}
+    </div>
+  );
+};
 
-   return (
-      <div>
-         <input  type="file" />
-         hola 
-         <button onClick={()=>signOut(auth)}>singout</button>
-      </div>
-   )
-}
-
-export default Home
+export default Home;

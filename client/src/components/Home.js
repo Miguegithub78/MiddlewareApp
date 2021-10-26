@@ -7,7 +7,9 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const { user } = useSelector((state) => state);
   const history = useHistory();
-  console.log(user, 'dehome');
+
+ 
+  
 
   return (
     <div>

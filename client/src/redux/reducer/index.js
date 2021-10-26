@@ -1,7 +1,7 @@
 import {LOGIN_OKEY, LOGOUT_OKEY} from '../types'
 
 const inicialState ={
-   loading:false,
+   loading:false, 
    user: null,
 }
 const rootReducer = (state = inicialState, action) => {

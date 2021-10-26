@@ -1,7 +1,7 @@
 import { auth } from "../../firebaseConfig";
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 import { loginUserAction, logOutUserAction } from "../../redux/actions";
 

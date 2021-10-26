@@ -7,12 +7,7 @@ const companySchema = new Schema({
         required: true
     },
 
-    lastname: {
-        type: String,
-        required: true
-    },
-
-    companyName: {
+    webpage: {
         type: String,
         required: true
     },
@@ -27,16 +22,16 @@ const companySchema = new Schema({
         required: false
     },
 
-    phone: {
-        type: String,
-        required: false
-    },
-
     country: {
         type: String,
         required: false
     },
 
+    state: {
+        type: String,
+        required: false
+    },
+    
     city: {
         type: String,
         required: false

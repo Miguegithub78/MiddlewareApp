@@ -13,4 +13,5 @@ router.put('/juniors/:id', updateJuniorsProfile);//se actualiza un usuario progr
 router.delete('/juniors/:id', deleteJuniorsProfile);//se elimina un usuario programador
 
 
+
 module.exports = router;

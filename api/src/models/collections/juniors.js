@@ -14,7 +14,7 @@ const juniorSchema = new Schema({
 
     gmail: {
         type: String,
-        required: false
+        required: false,
     },
 
     github: {

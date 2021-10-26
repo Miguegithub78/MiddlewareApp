@@ -6,9 +6,10 @@ import styles from "./LandingPage.module.css"
 export default function LandingPage() {
     return (
         <div className={styles.body}>
-            <div>
+            <div className={styles.conteiner}>
+
                 <h1>Middleware</h1>
-                <h4>Un puente entre empresas y programadores</h4>
+                <h5>Un puente entre empresas y programadores</h5>
 
                 <Link to="/home">
                     <button>Programador Js</button>

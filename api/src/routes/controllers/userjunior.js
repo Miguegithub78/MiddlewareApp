@@ -68,4 +68,13 @@ const updateJuniorsProfile = async (req, res) => {
 
 }
 
-module.exports = { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile };
+const deleteJuniorsProfile = async (req, res) => {
+
+    const { id } = req.params;
+    const juniorsDelete = await Juniors.findByIdAndDelete(id)
+
+    res.json(juniorsDelete)
+}
+
+
+module.exports = { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile };

@@ -48,8 +48,11 @@ La idea general es crear una aplicación en la cual se pueda ver información de
   #### Tecnologías necesarias:
 - [ ] React
 - [ ] Redux
-- [ ] Node/Express
-- [ ] A definir por el equipo
+- [ ] Express
+- [ ] Mongoose v6
+- [ ] Firebase
+- [ ] MongoDb
+
 
 #### Frontend
 

@@ -27,14 +27,16 @@ const Login = () => {
   });
   return (
     <div className="container-login">
-      <h2>Para Ingresar por favor Inicia Sesión</h2>
-      <button onClick={() => dispatch(loginUserAction("google"))}>
-        Google
-      </button>
-      <br />
-      <button onClick={() => dispatch(loginUserAction("guithub"))}>
-        Guithub
-      </button>
+      <div className="content">
+        <h2>Para Ingresar por favor Inicia Sesión</h2>
+        <button onClick={() => dispatch(loginUserAction("google"))}>
+          Google
+        </button>
+
+        <button onClick={() => dispatch(loginUserAction("guithub"))}>
+          Guithub
+        </button>
+      </div>
     </div>
   );
 };

@@ -5,27 +5,19 @@ const inicialState = {
   user: null,
 }
 const rootReducer = (state = inicialState, action) => {
-<<<<<<< HEAD
   switch (action.type) {
     case LOGIN_OKEY:
-      return { ...state, user: action.payload };
+      const { uuid, email, displayName, photoURL } = action.payload
+      const user = {
+        name: displayName,
+        idUser: uuid,
+        email,
+        photo: photoURL
+      }
+      return { ...state, user };
     case LOGOUT_OKEY:
       return { ...state, user: null };
-=======
-   switch (action.type) {
-      case LOGIN_OKEY:
-        const { uuid, email, displayName, photoURL  } = action.payload
-        const user = {
-          name: displayName,
-          idUser: uuid,
-          email,
-          photo: photoURL
-        }
-        return { ...state,  user };
-      case LOGOUT_OKEY:
-        return { ...state,  user:null };
-      
->>>>>>> main
+
 
     case 'GET_COMPANY_DETAILS':
       return {

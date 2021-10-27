@@ -14,6 +14,7 @@ function App() {
         <Route exact path="/home" component={Home} />
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/createuser" component={CreateUsers} />
+
         {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
       </Switch>
     </Router>

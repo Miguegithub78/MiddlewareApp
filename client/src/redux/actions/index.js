@@ -13,14 +13,14 @@ import {
 const googleProvider = new GoogleAuthProvider();
 const guithubProvider = new GithubAuthProvider();
 
-export const loginUserAction = (provider) => {
+export const loginUserAction = async (provider) => {
   return async (dispatch) => {
     try {
       if (provider === "google") {
         await signInWithPopup(auth, googleProvider).then((user) =>
-        await clienteAxios.post('/')
+
+          dispatch(loginOkey(user))
         );
-        dispatch(loginOkey(user))
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((user) =>
           dispatch(loginOkey(user))
@@ -77,7 +77,6 @@ export const logOutOkey = () => ({
 
 export function postUser(payload) {
   return async function (dispatch) {
-<<<<<<< HEAD
     const response = await axios.post('http://localhost:3001/juniors', payload)
     console.log(response)
     return response;
@@ -97,10 +96,3 @@ export const getCompanyDetails = (id) => {
     }
   };
 };
-=======
-    const response = await clienteAxios.post("/juniors", payload);
-    console.log(response);
-    return response;
-  };
-}
->>>>>>> main

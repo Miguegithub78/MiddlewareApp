@@ -22,7 +22,7 @@ const postJuniorsProfile = async (req, res) => {
         const technologiesGet = await Technologies.find({name: technologies})
         const languagesGet = await Languages.find({name: languages})
 
-        const juniorsCreate = await Junior.create({
+        const juniorsCreate = await Juniors.create({
             name: name,
             lastname: lastname,
             gmail:gmail,

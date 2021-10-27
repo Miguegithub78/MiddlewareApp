@@ -3,7 +3,7 @@ const { Juniors,
     Technologies,
     Company,
     Publication,
-    Admins } = require ('../../models/index')
+    Admins } = require ('../../models/index');
 
 const getAllJuniors = async (req, res) => {
     try{ 
@@ -17,7 +17,9 @@ const getAllJuniors = async (req, res) => {
 
 const postJuniorsProfile = async (req, res) => {
     try{
-        const { name, lastname, gmail, github, photograph, gender, phone, description, languages, technologies } = req.body;
+        const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
+
+        if(!name || gmail ? !gmail : !github) return res.status(404).json({message: "Faltan parametros"});
 
         const technologiesGet = await Technologies.find({name: technologies})
         const languagesGet = await Languages.find({name: languages})
@@ -27,10 +29,9 @@ const postJuniorsProfile = async (req, res) => {
             lastname: lastname,
             gmail:gmail,
             github: github,
-            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
+            photograph: photograph,
             gender: gender,
             phone: phone,
-            description: description,
             languages: languagesGet,
             technologies: technologiesGet
         })

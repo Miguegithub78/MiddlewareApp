@@ -26,4 +26,6 @@ router.get('/languages', getAllLaguages);//se obtienen los lenguajes
 router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
 
 
+
+
 module.exports = router;

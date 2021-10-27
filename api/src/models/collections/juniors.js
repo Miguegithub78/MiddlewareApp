@@ -46,7 +46,12 @@ const juniorSchema = new Schema({
         type: String,
         required: false
     },
-
+    description: {
+        type: String,
+        required: false,
+        maxLength: 500
+    },
+    
     languages: [{
         type: Schema.Types.ObjectId,
         ref: 'languages',

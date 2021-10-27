@@ -74,9 +74,23 @@ export const logOutOkey = () => ({
 //  });
 
 export function postUser(payload) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     const response = await axios.post('http://localhost:3001/juniors', payload)
     console.log(response)
     return response;
   }
+};
+
+export const getCompanyDetails = (id) => {
+  return async function (dispatch) {
+    try {
+      var json = await clienteAxios.get("/companies/" + id);
+      return dispatch({
+        type: 'GET_COMPANY_DETAILS',
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 };

@@ -14,7 +14,6 @@ export default function LandingPage() {
                 <Link to="/login">
                     <button>Programador Js</button>
                     <button>Empresa</button>
-                    <button>Administrador</button>
                 </Link>
             </div>
         </div >

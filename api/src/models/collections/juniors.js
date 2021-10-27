@@ -55,15 +55,13 @@ const juniorSchema = new Schema({
     languages: [{
         type: Schema.Types.ObjectId,
         ref: 'languages',
-        autopopulate: true,
-        required: true
+        autopopulate: true
     }],
 
     technologies: [{
         type: Schema.Types.ObjectId,
         ref: 'technologies',
-        autopopulate: true,
-        required: true
+        autopopulate: true
     }]
     
 })

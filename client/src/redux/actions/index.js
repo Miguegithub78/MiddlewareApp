@@ -1,5 +1,4 @@
 import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GOOGLE, LOGIN_GUITHUB } from "../types";
-import axios from "axios";
 import clienteAxios from "../../components/config/clienteAxios";
 
 import { auth } from "../../firebaseConfig";

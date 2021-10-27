@@ -17,19 +17,20 @@ const getAllJuniors = async (req, res) => {
 
 const postJuniorsProfile = async (req, res) => {
     try{
-        const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
+        const { name, lastname, gmail, github, photograph, gender, phone, description, languages, technologies } = req.body;
 
         const technologiesGet = await Technologies.find({name: technologies})
         const languagesGet = await Languages.find({name: languages})
 
-        const juniorsCreate = await Junior.create({
+        const juniorsCreate = await Juniors.create({
             name: name,
             lastname: lastname,
             gmail:gmail,
             github: github,
-            photograph: photograph,
+            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
             gender: gender,
             phone: phone,
+            description: description,
             languages: languagesGet,
             technologies: technologiesGet
         })

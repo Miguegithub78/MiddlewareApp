@@ -6,7 +6,7 @@ const { getAllUsersType } = require('./controllers/userType')
 const { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, postCompaniesProfile, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
-//const {getAllAdmins, getAdminsById, postAdminsProfile, updateAdminsProfile, deleteAdminsProfile} = require('./controllers/useradmin')
+const { adminRegister } = require('./controllers/useradmin')
 
 router.get('/', getAllUsersType);//path del landing(en revision)
 
@@ -25,7 +25,7 @@ router.delete('/companies/:id', deleteCompaniesProfile);//se elimina un usuario 
 router.get('/languages', getAllLaguages);//se obtienen los lenguajes
 router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
 
-
+router.post('/admin', adminRegister);   //se registran los administradores
 
 
 module.exports = router;

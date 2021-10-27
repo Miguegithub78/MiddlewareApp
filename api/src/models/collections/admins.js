@@ -20,7 +20,11 @@ const adminSchema = new Schema({
     github: {
         type: String,
         required: true
-    }
+    },
+    photograph: {
+        type: String,
+        required: false
+    },
 
 })
 

@@ -27,7 +27,7 @@ const postJuniorsProfile = async (req, res) => {
             lastname: lastname,
             gmail:gmail,
             github: github,
-            photograph: photograph,
+            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
             gender: gender,
             phone: phone,
             languages: languagesGet,

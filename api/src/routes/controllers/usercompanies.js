@@ -17,17 +17,18 @@ const getAllCompanies = async (req, res) => {
 const postCompaniesProfile = async (req, res) => {
     try{
 
-    const { name, webpage, gmail, photograph, country, state, languages, city } = req.body;
+    const { name, webpage, gmail, photograph, country, state, languages, description, city } = req.body;
     const languagesGet = await Languages.find({name: languages})
 
     const companyCreate = await Company.create({
         name: name,
         webpage: webpage,
         gmail:gmail,
-        photograph: photograph,
+        photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
         country: country,
         state: state,
         city: city,
+        description: description,
         languages: languagesGet,
     })
 
@@ -84,7 +85,7 @@ const deleteCompaniesProfile = async (req, res) => {
 
     res.json(companyDelete)
 }catch(err){
-    res.status(404).json({message: err.message})
+    res.status(404).json({message: err.message}) // eliminar info q el genero
 }
 }
 

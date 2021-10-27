@@ -1,15 +1,61 @@
-import { LOGIN_OKEY, LOGOUT_OKEY } from "../types";
+import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GOOGLE, LOGIN_GUITHUB } from "../types";
+<<<<<<< HEAD
 
-// export const loginUserAction = (user) => {
-//    return async (dispatch)=>{
-//       dispatch(setUser(user))
-//    } 
-// }
-export const loginUserAction = (user) => ({
+=======
+import axios from "axios";
+>>>>>>> main
+import clienteAxios from "../../components/config/clienteAxios";
+
+import { auth } from "../../firebaseConfig";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signOut,
+} from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
+const guithubProvider = new GithubAuthProvider();
+
+export const loginUserAction = (provider) => {
+  return async (dispatch) => {
+    try {
+      if (provider === "google") {
+        await signInWithPopup(auth, googleProvider).then((user) =>
+<<<<<<< HEAD
+      
+        dispatch(loginOkey(user))
+=======
+        await clienteAxios.post('/')
+>>>>>>> main
+        );
+        dispatch(loginOkey(user))
+      } else if (provider === "guithub") {
+        await signInWithPopup(auth, guithubProvider).then((user) =>
+          dispatch(loginOkey(user))
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const loginOkey = (user) => ({
   type: LOGIN_OKEY,
   payload: user,
-}); 
-export const logOutUserAction = () => ({
+});
+export const logOutUserAction = () => {
+  return async (dispatch) => {
+    try {
+      await signOut().then(() => dispatch(logOutOkey()));
+      dispatch(logOutOkey());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+export const logOutOkey = () => ({
   type: LOGOUT_OKEY,
 });
 
@@ -37,3 +83,11 @@ export const logOutUserAction = () => ({
 //    type: GET_RECIPES_ERROR,
 //    payload: error,
 //  });
+
+export function postUser(payload) {
+  return async function (dispatch) {
+    const response = await clienteAxios.post("/juniors", payload);
+    console.log(response);
+    return response;
+  };
+}

@@ -6,7 +6,8 @@ const languagesSchema = new Schema({
         type: String,
         unique: true,
         required: true
-    }
+    },
+
 })
 
 module.exports = model('languages', languagesSchema)

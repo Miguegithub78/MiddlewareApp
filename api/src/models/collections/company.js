@@ -36,6 +36,11 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    description: {
+        type: String,
+        required: false,
+        maxLength: 500
+    },
 })
 
 module.exports = model('company', companySchema)

@@ -1,9 +1,4 @@
 import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GOOGLE, LOGIN_GUITHUB } from "../types";
-<<<<<<< HEAD
-
-=======
-import axios from "axios";
->>>>>>> main
 import clienteAxios from "../../components/config/clienteAxios";
 
 import { auth } from "../../firebaseConfig";
@@ -22,12 +17,8 @@ export const loginUserAction = (provider) => {
     try {
       if (provider === "google") {
         await signInWithPopup(auth, googleProvider).then((user) =>
-<<<<<<< HEAD
-      
-        dispatch(loginOkey(user))
-=======
-        await clienteAxios.post('/')
->>>>>>> main
+
+          dispatch(loginOkey(user))
         );
         dispatch(loginOkey(user))
       } else if (provider === "guithub") {

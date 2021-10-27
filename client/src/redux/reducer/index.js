@@ -17,6 +17,7 @@ const rootReducer = (state = inicialState, action) => {
         return { ...state,  user };
       case LOGOUT_OKEY:
         return { ...state,  user:null };
+      
 
       default:
         return state;

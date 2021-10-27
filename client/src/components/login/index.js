@@ -1,35 +1,38 @@
-import { auth } from "../../firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import { useHistory } from "react-router-dom"; 
-import { useDispatch } from "react-redux";
-import { loginUserAction, logOutUserAction } from "../../redux/actions";
+import { useEffect } from "react";
 
-const googleProvider = new GoogleAuthProvider();
-const guithubProvider = new GithubAuthProvider() 
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginUserAction,
+  loginOkey,
+  logOutUserAction,
+} from "../../redux/actions";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+
+import "./Login.css";
 
 const Login = () => {
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useHistory();
+  //   const { user } = useSelector((state) => state);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
-      console.log(userFirebase);
-      dispatch(loginUserAction(userFirebase))
-      history.push("/");
+      dispatch(loginOkey(userFirebase));
+      history.push("/home");
     } else {
-      dispatch(logOutUserAction())
-      console.log('chau');
+      console.log("chau");
     }
   });
-
   return (
-    <div>
-      Logueate con google
-      <button onClick={() => signInWithPopup(auth, googleProvider)}>
+    <div className="container-login">
+      <h2>Para Ingresar por favor Inicia Sesión</h2>
+      <button onClick={() => dispatch(loginUserAction("google"))}>
         Google
       </button>
-      o
-      <button onClick={() => signInWithPopup(auth, guithubProvider)}>
+      <br />
+      <button onClick={() => dispatch(loginUserAction("guithub"))}>
         Guithub
       </button>
     </div>

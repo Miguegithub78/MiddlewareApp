@@ -1,4 +1,4 @@
-import {LOGIN_OKEY, LOGOUT_OKEY} from '../types'
+import {LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GUITHUB, LOGIN_GOOGLE} from '../types'
 
 const inicialState ={
    loading:false, 

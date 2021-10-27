@@ -1,0 +1,11 @@
+.container-login {
+   text-align: center;
+   height: 100vh;
+   background-image: url("Información.png");
+   background-size: cover;
+
+ }
+ h2{
+    color: white;
+    font-size: 2em;
+ }

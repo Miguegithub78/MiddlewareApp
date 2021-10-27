@@ -76,7 +76,7 @@ export const logOutOkey = () => ({
 
 export function postUser(payload) {
   return async function (dispatch) {
-    const response = await axios.post('http://localhost:3001/juniors', payload)
+    const response = await clienteAxios.post('http://localhost:3001/juniors', payload)
     console.log(response)
     return response;
   }

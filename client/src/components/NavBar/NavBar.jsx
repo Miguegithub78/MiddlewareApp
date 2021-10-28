@@ -12,7 +12,7 @@ const dispatch = useDispatch()
       <div className={s.nav_container_logo}>
         <h1 className={s.nav_logo}>Middleware</h1>
       </div>
-      {user && user.type === "developer" ? (
+      {user && user.type === "junior" ? (
         <div className={s.nav_puente}>Puente de los sueños</div>
       ) : null}
       <div className={s.nav_container_links}>

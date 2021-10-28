@@ -14,21 +14,28 @@ export default function CompanyDetail(props) {
     const companyFound = useSelector((state) => state.details)
     return (
         <div>
-            {companyFound ?
-                <div>
-                    <div>
-                        <h1>{companyFound.name}</h1>
-                        <img src={companyFound.photograph} alt="Imagen no encontrada" width="100px" heigth="80px" ></img>
-                        <h3></h3>
-                        <h3></h3>
-                        <h3></h3>
-                        <h3></h3>
-                        <h3></h3>
-                    </div>
-                </div>
-            
+            {
+                companyFound.length > 0 ?
 
-        }
+                    <div>
+                        <div>
+                            <h1>{companyFound.name}</h1>
+                            <img src={companyFound.photograph} alt="Imagen no encontrada" width="100px" heigth="80px" ></img>
+                            <h3>{companyFound.webpage}</h3>
+                            <h3>{companyFound.gmail}</h3>
+                            <h3>{companyFound.country}</h3>
+                            <h3>{companyFound.state}</h3>
+                            <h3>{companyFound.city}</h3>
+                            <h3>{companyFound.description}</h3>
+                        </div>
+                    </div> : <p>Loading...</p>
+            }
+            <div>
+                <Link to='/home'>
+                    <button>Volver</button>
+                </Link>
+
+            </div>
         </div>
     )
 }

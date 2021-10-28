@@ -15,24 +15,33 @@ const getAllCompanies = async (req, res) => {
 }
 
 const postCompaniesProfile = async (req, res) => {
-    try{
 
     const { name, webpage, gmail, photograph, country, state, languages, description, city } = req.body;
-    const languagesGet = await Languages.find({name: languages})
 
-    const companyCreate = await Company.create({
-        name: name,
-        webpage: webpage,
-        gmail:gmail,
-        photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
-        country: country,
-        state: state,
-        city: city,
-        description: description,
-        languages: languagesGet,
-    })
+    if(!name || !gmail || !webpage) {
+        if(!name) return res.status(404).json({message: "Falta en nombre"});
+        if(!gmail) return res.status(404).json({message: "Falta el gmail"});
+        if(!webpage) return res.status(404).json({message: "Falta el webpage"});
+    }
 
-    res.json(companyCreate)
+    try{
+
+
+        const languagesGet = await Languages.find({name: languages})
+
+        const companyCreate = await Company.create({
+            name: name,
+            webpage: webpage,
+            gmail:gmail,
+            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
+            country: country,
+            state: state,
+            city: city,
+            description: description,
+            languages: languagesGet,
+        })
+
+        res.json(companyCreate)
 }catch(err){
     res.status(404).json({message: err.message})
 }
@@ -41,14 +50,17 @@ const postCompaniesProfile = async (req, res) => {
 
 const getCompaniesById = async (req, res) => {
     try{
-    const { id } = req.params;
-    const companiesGet = await Company.findById(id)
+        const { id } = req.params;
+        const companiesGet = await Company.findById(id)
+            .populate('publications', 'description' )
+            
+        if(companiesGet) return res.json(companiesGet);
+    
+        res.status(404).json({message: "The company not exist"});
 
-    res.json(companiesGet)
-
-}catch(err){
-    res.status(404).json({message: err.message})
-}
+    }catch(err){
+        res.status(404).json({message: err.message})
+    }
 }
 
 const updateCompaniesProfile = async (req, res) => {
@@ -80,13 +92,21 @@ const updateCompaniesProfile = async (req, res) => {
 
 const deleteCompaniesProfile = async (req, res) => {
     try{
-    const { id } = req.params;
-    const companyDelete = await Company.findByIdAndDelete(id)
+        const { id } = req.params;
 
-    res.json(companyDelete)
-}catch(err){
-    res.status(404).json({message: err.message}) // eliminar info q el genero
-}
+        const getCompany = await Company.findById(id)
+        
+        getCompany.publications.forEach( async (e) => {
+
+            await Publication.findByIdAndDelete(e._id)
+        })
+
+        const companyDelete = await Company.findByIdAndDelete(id)
+
+        res.json(companyDelete)
+    }catch(err){
+        res.status(404).json({message: err.message})
+    }
 }
 
 

@@ -15,7 +15,7 @@ const getAllJuniors = async (req, res) => {
     try{ 
         const token = req.headers['x-access-token'];
         if(!token){
-            return res.status(401).json({auth: false, message: 'No token provided'})
+            return res.status(403).json({auth: false, message: 'se requiere token de autorización'})
         }
 
         const decoded = jwt.verify(token, SECRET);
@@ -93,7 +93,7 @@ const updateJuniorsProfile = async (req, res) => {
 
         const token = req.headers['x-access-token'];
         if(!token){
-            return res.status(401).json({auth: false, message: 'No token provided'})
+            return res.status(403).json({auth: false, message: 'se requiere token'})
         }
 
         const decoded = jwt.verify(token, SECRET);
@@ -106,7 +106,7 @@ const updateJuniorsProfile = async (req, res) => {
         const { id } = req.params;
 
         if(id !== decoded.id){
-            return res.status(403).json({auth: false, message: 'usuario no autorizado'})
+            return res.status(401).json({auth: false, message: 'usuario no autorizado'})
         } 
         const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
 
@@ -136,6 +136,25 @@ const updateJuniorsProfile = async (req, res) => {
 
 const deleteJuniorsProfile = async (req, res) => {
     try{
+
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(403).json({auth: false, message: 'se requiere token'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
+
+        const { id } = req.params;
+
+        if(id !== decoded.id){
+            return res.status(401).json({auth: false, message: 'usuario no autorizado'})
+        } 
+
         const { id } = req.params;
         const juniorsDelete = await Juniors.findByIdAndDelete(id)
 

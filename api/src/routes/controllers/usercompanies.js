@@ -41,14 +41,17 @@ const postCompaniesProfile = async (req, res) => {
 
 const getCompaniesById = async (req, res) => {
     try{
-    const { id } = req.params;
-    const companiesGet = await Company.findById(id)
+        const { id } = req.params;
+        const companiesGet = await Company.findById(id)
+            .populate('publications', 'description' )
+            
+        if(companiesGet) return res.json(companiesGet);
+    
+        res.status(404).json({message: "The company not exist"});
 
-    res.json(companiesGet)
-
-}catch(err){
-    res.status(404).json({message: err.message})
-}
+    }catch(err){
+        res.status(404).json({message: err.message})
+    }
 }
 
 const updateCompaniesProfile = async (req, res) => {
@@ -80,13 +83,21 @@ const updateCompaniesProfile = async (req, res) => {
 
 const deleteCompaniesProfile = async (req, res) => {
     try{
-    const { id } = req.params;
-    const companyDelete = await Company.findByIdAndDelete(id)
+        const { id } = req.params;
 
-    res.json(companyDelete)
-}catch(err){
-    res.status(404).json({message: err.message}) // eliminar info q el genero
-}
+        const getCompany = await Company.findById(id)
+        
+        getCompany.publications.forEach( async (e) => {
+
+            await Publication.findByIdAndDelete(e._id)
+        })
+
+        const companyDelete = await Company.findByIdAndDelete(id)
+
+        res.json(companyDelete)
+    }catch(err){
+        res.status(404).json({message: err.message})
+    }
 }
 
 

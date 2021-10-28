@@ -6,7 +6,9 @@ const { getAllUsersType } = require('./controllers/userType')
 const { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, postCompaniesProfile, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
-const { adminRegister } = require('./controllers/useradmin')
+const { adminRegister, getAdmins } = require('./controllers/useradmin')
+const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
+const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
 router.get('/', getAllUsersType);//path del landing(en revision)
 
@@ -25,7 +27,15 @@ router.delete('/companies/:id', deleteCompaniesProfile);//se elimina un usuario 
 router.get('/languages', getAllLaguages);//se obtienen los lenguajes
 router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
 
+router.get('/admin', getAdmins)
 router.post('/admin', adminRegister);   //se registran los administradores
 
+router.get('/publications', getPublications)
+router.get('/publications/:id', getPublicationsById)
+router.post('/publications', postPublications)
+router.put('/publications/:id', putPublication)
+
+router.get('/premiumCompany', getAllCompanyPremium)
+router.put('/premiumCompany/:id', updatePremiumCompany)
 
 module.exports = router;

@@ -14,7 +14,8 @@ const companySchema = new Schema({
 
     gmail: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     photograph: {
@@ -36,11 +37,25 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+
+    premium: {
+        type: Number,
+        default: 0
+    },
+
     description: {
         type: String,
         required: false,
         maxLength: 500
     },
+
+    publications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'publication',
+        // autopopulate: true
+    }]
 })
+
+// companySchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = model('company', companySchema)

@@ -23,4 +23,28 @@ const adminRegister = async (req, res) => {
     }
 }
 
-module.exports = { adminRegister };
+const getAdmins = async (req, res) => {
+
+    const { id } = req.query;
+
+    try{
+
+        if(id){
+            const admin = await Admins.findById(id)
+                .populate('publications', 'description')
+                .then(e => {
+                    return res.json(e)
+                })
+                return
+        }
+    
+        const admins = await Admins.find();
+    
+        res.json(admins)    
+    }
+    catch(err){
+        res.status(404).json({message: err.message})
+    }
+}
+
+module.exports = { adminRegister, getAdmins };

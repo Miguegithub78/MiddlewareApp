@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./LandingPage.module.css"
-
+import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {
+
     return (
         <div className={styles.body}>
             <div className={styles.conteiner}>
@@ -18,5 +18,10 @@ export default function LandingPage() {
             </div>
         </div >
 
-    )
+
+        <Link to="/login/programador">Programador Js</Link>
+        <Link to="/login/empresa">Empresa</Link>
+      </div>
+    </div>
+  );
 }

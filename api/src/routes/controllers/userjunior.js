@@ -40,7 +40,7 @@ const getAllJuniors = async (req, res) => {
 
 const getJuniorById = async (req, res) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)
@@ -69,7 +69,7 @@ const getJuniorById = async (req, res) => {
 
 const updateJuniorsProfile = async (req, res) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)

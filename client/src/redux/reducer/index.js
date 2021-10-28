@@ -1,10 +1,13 @@
-import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GUITHUB, LOGIN_GOOGLE } from '../types'
+import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GUITHUB, LOGIN_GOOGLE, GET_JUNIORS, GET_COMPANIES } from '../types'
 
-const inicialState = {
-  loading: false,
-  user: null,
-  details: {},
-
+const inicialState ={
+   loading:false, 
+   user: null,
+   details: {},
+   languages: [],
+   technologies: [],
+   juniors: [],
+   companies: [],
 }
 const rootReducer = (state = inicialState, action) => {
   
@@ -14,13 +17,25 @@ const rootReducer = (state = inicialState, action) => {
         return { ...state,  user: action.payload };
       case LOGOUT_OKEY:
         return { ...state,  user:null };
-      
-       case 'GET_COMPANY_DETAILS':
+      case 'GET_LANGUAGES':
+        return { ...state,  languages: action.payload };
+      case 'GET_TECHNOLOGIES':
+        return { ...state,  technologies: action.payload };
+      case 'GET_COMPANY_DETAILS':
       return {
         ...state,
         details: action.payload,
       };
-
+      case GET_JUNIORS:
+      return {
+        ...state,
+        juniors: action.payload,
+      };
+      case GET_COMPANIES:
+      return {
+        ...state,
+        companies: action.payload,
+      };
     default:
       return state;
   }

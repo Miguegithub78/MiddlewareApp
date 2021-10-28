@@ -1,26 +1,37 @@
-import React, {useState} from 'react'
-import { useDispatch } from 'react-redux';
-import { postUser } from '../../redux/actions';
+import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getLanguages, getTechnologies, getUserAction, postUser } from '../../redux/actions';
+import styles from './ProfileUser.module.css';
  
 
-const CreateUsers = () => {
+const ProfileUser = () => {
     const dispatch = useDispatch();
+    const languages = useSelector(state => state.languages);
+    const technologies = useSelector(state => state.technologies);
+    const users = useSelector(state => state.user);
     const [input, setInput] = useState ({
-        name: "",
         lastname: "",
-        gmail: "",
+        description: "",
         github: "",
-        photo: "",
         gender: "",
         phone: "",
         languages: [],
         technologies: []
     })
 
+
     function handleChange(e) {
         setInput({
             ...input,
             [e.target.name] : e.target.value
+        })
+    };
+
+    function handleReset(e) {
+        setInput({
+            ...input,
+            languages: [],
+            technologies: []
         })
     };
     
@@ -38,16 +49,15 @@ const CreateUsers = () => {
             technologies: [...input.technologies, e.target.value]
         })
     };
+    
 
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(postUser(input))
         setInput({
-            name: "",
             lastname: "",
-            gmail: "",
+            description: "",
             github: "",
-            photo: "",
             gender: "",
             phone: "",
             languages: [],
@@ -55,21 +65,35 @@ const CreateUsers = () => {
         })
     };
 
+    const user = {
+        name: 'Maximiliano',
+        idUser: 1,
+        email: 'elquememandogoogle@gmail.com',
+        photo: 'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png',
+        userType: 'programadorJR'
+    };
+
+    useEffect(() => {
+        dispatch(getLanguages());
+        dispatch(getTechnologies());
+    }, [dispatch])
+   
+
     return (
-        <div>
+        <div>   
+                 <h1 >Your profile</h1>
+                <div>
+                    <img className={styles.user} src={user.photo} alt='img' />
+                </div>
+                <div>
+                    <label>Name: {user.name}</label> 
+                </div>
+                <div>
+                    <label>Gmail: {user.email}</label> 
+                </div>
+
             <form onSubmit={e => handleSubmit(e)}>
-                <div>
-                    <h1>Your profile</h1>
-                    <h3>it's easy and fast.</h3>
-                </div>
-                <div>
-                    <label>Name:</label> 
-                    <input type='text'
-                    value={input.name}
-                    name='name'
-                    onChange={handleChange}
-                    />
-                </div>
+               
                 <div>
                     <label>Lastname:</label> 
                     <input type='text'
@@ -79,10 +103,10 @@ const CreateUsers = () => {
                     />
                 </div>
                 <div>
-                    <label>Gmail:</label> 
+                    <label>Description:</label> 
                     <input type='text'
-                    value={input.gmail}
-                    name='gmail'
+                    value={input.description}
+                    name='description'
                     onChange={handleChange}
                     />
                 </div>
@@ -91,14 +115,6 @@ const CreateUsers = () => {
                     <input type='text'
                     value={input.github}
                     name='github'
-                    onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Photo:</label> 
-                    <input type='text'
-                    value={input.photo}
-                    name='photo'
                     onChange={handleChange}
                     />
                 </div>
@@ -121,28 +137,32 @@ const CreateUsers = () => {
                 <div>
                     <label>Languages:</label> 
                     <select onChange={e => handleSelectLanguages(e)}>
-                    <option value='english'>English</option>
-                    <option value='spanish'>Spanish</option>
-                    <option value='other'>Other</option>
+                    {languages.map(el => {
+                        return (
+                            <option key={el._id} value={el.name}>{el.name}</option>
+                        )
+                    })};
                     </select>
+                     <ul><li>{input.languages.map(el => el + ', ')}</li></ul>   
                 </div>
                 <div>
                      <label>Technologies:</label> 
                     <select onChange={e => handleSelectTechnologies(e)}>
-                    <option value='javascript'>Javascript</option>
-                    <option value='java'>Java</option>
-                    <option value='phyton'>Phyton</option>
-                    <option value='c++'>C++</option>
-                    <option value='c'>C</option>
+                    {technologies.map(el => {
+                        return (
+                            <option key={el._id} value={el.name}>{el.name}</option>
+                        )
+                    })};
                     </select>
-                    
+                    <ul><li>{input.technologies.map(el => el + ', ')}</li></ul> 
                 </div>
                <div>
-                    <button type='submit'>Register</button>
+                    <button type='submit'>Update</button>
                </div> 
             </form>
+            <button onClick={e => handleReset(e)}>Reset</button> 
         </div>
     )
 }
 
-export default CreateUsers;
+export default ProfileUser;

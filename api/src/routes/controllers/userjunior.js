@@ -13,6 +13,18 @@ const { Juniors,
 
 const getAllJuniors = async (req, res) => {
     try{ 
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(403).json({auth: false, message: 'se requiere token de autorización'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
+
         const allJuniors = await Juniors.find();
         res.json(allJuniors);
     } catch (error) {
@@ -56,6 +68,7 @@ const postJuniorsProfile = async (req, res) => {
 const getJuniorById = async (req, res) => {
 
     try{
+
         const { id } = req.params;
         const juniorsGet = await Juniors.findById(id)
         .populate('publications', 'description' )
@@ -124,7 +137,25 @@ const updateJuniorsProfile = async (req, res) => {
 
 const deleteJuniorsProfile = async (req, res) => {
     try{
+
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(403).json({auth: false, message: 'se requiere token'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
+
         const { id } = req.params;
+
+        if(id !== decoded.id){
+            return res.status(401).json({auth: false, message: 'usuario no autorizado'})
+        } 
+
         const getJunior = await Juniors.findById(id)
 
         getJunior.publications.forEach( async (e) => {

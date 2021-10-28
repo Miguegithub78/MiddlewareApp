@@ -20,22 +20,23 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            email,
-            photo: photoURL,
+            gmail: email,
+            photograph: photoURL,
             userType,
           };
-          // clienteAxios.post("/login", user).then((rta) => {
-          dispatch(loginOkey(user));
-          // });
+          clienteAxios.post("/login", user).then((rta) => {
+            console.log('rta', rta);
+            // dispatch(loginOkey(user));
+            // localStorage.setItem('token', rta.token)
+          });
         });
-
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((userProvider) => {
           const { uuid, email, displayName, photoURL } = userProvider.user;
           const user = {
             name: displayName,
             idUser: uuid,
-            email,
+            gmail,
             photo: photoURL,
             userType,
           };
@@ -55,7 +56,7 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            email,
+            gmail,
             photo: photoURL,
             userType,
           };
@@ -71,15 +72,17 @@ export const loginUserAction = (provider, userType) => {
 export const getUserAction = (userProvider, type) => {
   return async (dispatch) => {
     try {
-      const { uid, email, displayName, photoURL } = userProvider;
-      const user = {
-        name: displayName,
-        idUser: uid,
-        email,
-        photo: photoURL,
-        userType: type,
-      };
-      // clienteAxios.get("/user" + id).then((rta) => {
+      // const { uid, email, displayName, photoURL } = userProvider;
+      // const user = {
+      //   name: displayName,
+      //   idUser: uid,
+      //   email,
+      //   photo: photoURL,
+      //   userType: type,
+      // };
+      //  obtengo token de local storage
+
+      // clienteAxios.get("/getUser/" + id).then((rta) => {
       dispatch(loginOkey(user));
       // });
     } catch (e) {
@@ -95,7 +98,7 @@ const loginOkey = (user) => ({
 export const logOutUserAction = () => {
   return async (dispatch) => {
     try {
-      await signOut().then(() => dispatch(logOutOkey()));
+      await signOut(auth);
       dispatch(logOutOkey());
     } catch (e) {
       console.log(e);
@@ -108,11 +111,14 @@ export const logOutOkey = () => ({
 
 export function postUser(payload) {
   return async function (dispatch) {
-    const response = await clienteAxios.post('http://localhost:3001/juniors', payload)
-    console.log(response)
+    const response = await clienteAxios.post(
+      "http://localhost:3001/juniors",
+      payload
+    );
+    console.log(response);
     return response;
-  }
-};
+  };
+}
 
 export function getLanguages(payload){
   return async function(dispatch) {
@@ -141,7 +147,7 @@ export const getCompanyDetails = (id) => {
     try {
       var json = await clienteAxios.get("/companies/" + id);
       return dispatch({
-        type: 'GET_COMPANY_DETAILS',
+        type: "GET_COMPANY_DETAILS",
         payload: json.data,
       });
     } catch (e) {

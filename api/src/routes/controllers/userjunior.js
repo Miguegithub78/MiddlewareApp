@@ -33,38 +33,6 @@ const getAllJuniors = async (req, res) => {
 
 }
 
-const postJuniorsProfile = async (req, res) => {
-    try{
-        const { name, lastname, gmail, github, photograph, gender, phone, description, languages, technologies } = req.body;
-
-        const technologiesGet = await Technologies.find({name: technologies})
-        const languagesGet = await Languages.find({name: languages})
-
-        const juniorsCreate = await Juniors.create({
-            name: name,
-            lastname: lastname,
-            gmail:gmail,
-            github: github,
-            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
-            gender: gender,
-            phone: phone,
-            description: description,
-            languages: languagesGet,
-            technologies: technologiesGet
-        })
-
-        const token = jwt.sign({id: juniorsCreate._id}, SECRET, {
-            expiresIn: 60 * 60 * 24
-        })
-        
-        res.json({auth: true, token: token, user: juniorsCreate})
-        
-    }catch(err){
-        res.status(404).json({message: err.message})
-    }
-}
-
-
 const getJuniorById = async (req, res) => {
 
     try{
@@ -182,4 +150,4 @@ const deleteJuniorsProfile = async (req, res) => {
 }
 
 
-module.exports = { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile };
+module.exports = { getAllJuniors, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile };

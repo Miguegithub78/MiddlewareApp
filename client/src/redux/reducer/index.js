@@ -7,14 +7,8 @@ const inicialState ={
 const rootReducer = (state = inicialState, action) => {
    switch (action.type) {
       case LOGIN_OKEY:
-        const { uuid, email, displayName, photoURL  } = action.payload
-        const user = {
-          name: displayName,
-          idUser: uuid,
-          email,
-          photo: photoURL
-        }
-        return { ...state,  user };
+        
+        return { ...state,  user: action.payload };
       case LOGOUT_OKEY:
         return { ...state,  user:null };
       

@@ -1,19 +1,17 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-<<<<<<< HEAD
 import Login from "./components/Login";
-=======
-
-import Login from "./components/login";
->>>>>>> 3452f200faa89d4899f089cc9353b57df47c0e5d
 import Home from "./components/Home/Home";
-import LandingPage from './components/LandingPage/LandingPage';
+import LandingPage from "./components/LandingPage/LandingPage";
 import CreateUsers from "./components/CreateUsers/CreateUsers";
 import CompanyDetail from "./components/CompanyDetails/CompanyDetails";
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    tokenAuth(token);
+  }
   return (
     <Router>
-
       <Switch>
         <Route exact path="/login/:type" component={Login} />
         <Route exact path="/home" component={Home} />

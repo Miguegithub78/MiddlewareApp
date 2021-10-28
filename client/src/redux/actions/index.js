@@ -25,8 +25,9 @@ export const loginUserAction = (provider, userType) => {
             userType,
           };
           clienteAxios.post("/login", user).then((rta) => {
-            dispatch(loginOkey(user));
-            // localStorage.setItem('token', user.token)
+            console.log('rta', rta);
+            // dispatch(loginOkey(user));
+            // localStorage.setItem('token', rta.token)
           });
         });
       } else if (provider === "guithub") {

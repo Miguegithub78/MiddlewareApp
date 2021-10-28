@@ -28,6 +28,7 @@ export const loginUserAction = (provider, userType) => {
           dispatch(loginOkey(user));
           // });
         });
+
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((userProvider) => {
           const { uuid, email, displayName, photoURL } = userProvider.user;
@@ -107,8 +108,22 @@ export const logOutOkey = () => ({
 
 export function postUser(payload) {
   return async function (dispatch) {
-    const response = await clienteAxios.post("/juniors", payload);
-    console.log(response);
+    const response = await clienteAxios.post('http://localhost:3001/juniors', payload)
+    console.log(response)
     return response;
+  }
+};
+
+export const getCompanyDetails = (id) => {
+  return async function (dispatch) {
+    try {
+      var json = await clienteAxios.get("/companies/" + id);
+      return dispatch({
+        type: 'GET_COMPANY_DETAILS',
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
-}
+};

@@ -13,6 +13,17 @@ const jwt = require('jsonwebtoken');
 
 const getAllJuniors = async (req, res) => {
     try{ 
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(401).json({auth: false, message: 'No token provided'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'No user found'})
+        }
         const allJuniors = await Juniors.find();
         res.json(allJuniors);
     } catch (error) {

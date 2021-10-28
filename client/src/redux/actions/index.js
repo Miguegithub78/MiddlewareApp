@@ -35,7 +35,7 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            gmail,
+            gmail: email,
             photo: photoURL,
             userType,
           };
@@ -55,7 +55,7 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            gmail,
+            gmail: email,
             photo: photoURL,
             userType,
           };
@@ -82,7 +82,7 @@ export const getUserAction = (userProvider, type) => {
       //  obtengo token de local storage
 
       // clienteAxios.get("/getUser/" + id).then((rta) => {
-      dispatch(loginOkey(user));
+      // dispatch(loginOkey(user));
       // });
     } catch (e) {
       console.log(e);

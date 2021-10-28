@@ -26,6 +26,11 @@ const adminSchema = new Schema({
         required: false
     },
 
+    publications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'publication'
+    }]
+
 })
 
 module.exports = model('admins', adminSchema)

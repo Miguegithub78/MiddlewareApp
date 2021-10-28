@@ -1,13 +1,40 @@
 import React from 'react';
+
 import s from './NavBar.module.css';
 function NavBar() {
+	/* let user = { type: 'business', name: 'MercadoLibre', img: '' }; */
+	let user = { type: 'developer', name: 'Hernan Gonzalez', img: '' };
+
 	return (
-		<nav className={s.nav}>
-			<div className={s.nav__container__logo}>
-				<h1 className={s.nav__logo}>Middleware</h1>
+		<nav className={s.nav_container}>
+			<div className={s.nav_container_logo}>
+				<h1 className={s.nav_logo}>Middleware</h1>
 			</div>
-			<div className={s.nav__container__bridge}>
+			{user.type === 'developer' ? (
+				<div className={s.nav_puente}>Puente de los sueños</div>
+			) : null}
+			<div className={s.nav_container_links}>
+				<p className={s.nav_link}>Empleos</p>
+				<p className={s.nav_link}>Ver Empresas</p>
+				<p className={s.nav_link}>Mis postulaciones</p>
+				<p className={s.nav_link}>Tips</p>
+			</div>
+			<div className={s.nav_container_perfil}>
 				<svg
+					xmlns='http://www.w3.org/2000/svg'
+					class='h-5 w-5'
+					viewBox='0 0 20 20'
+					fill='currentColor'
+				>
+					<path
+						fill-rule='evenodd'
+						d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z'
+						clip-rule='evenodd'
+					/>
+				</svg>
+				{<p>{user.name}</p>}
+				<svg
+					className={s.arrow}
 					xmlns='http://www.w3.org/2000/svg'
 					class='h-6 w-6'
 					fill='none'
@@ -18,96 +45,13 @@ function NavBar() {
 						stroke-linecap='round'
 						stroke-linejoin='round'
 						stroke-width='2'
-						d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+						d='M19 9l-7 7-7-7'
 					/>
 				</svg>
-				<p className={s.nav__bridge__link}>Puentes de los sueños</p>
-			</div>
-			<div className={s.nav__container__links}>
-				<div className={s.nav__container__link}>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						class='h-6 w-6'
-						fill='none'
-						viewBox='0 0 24 24'
-						stroke='currentColor'
-					>
-						<path
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							stroke-width='2'
-							d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-						/>
-					</svg>
-					<p className={s.nav__container__link__text}>Noticias</p>
+				<div className={s.nav_container_perfil_desplegable}>
+					<p>Mi perfil</p>
+					<p>Log out</p>
 				</div>
-				<div className={s.nav__container__link}>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						class='h-6 w-6'
-						fill='none'
-						viewBox='0 0 24 24'
-						stroke='currentColor'
-					>
-						<path
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							stroke-width='2'
-							d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-						/>
-					</svg>
-					<p className={s.nav__container__link__text}>Programadores</p>
-				</div>
-				<div className={s.nav__container__link}>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						class='h-6 w-6'
-						fill='none'
-						viewBox='0 0 24 24'
-						stroke='currentColor'
-					>
-						<path
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							stroke-width='2'
-							d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-						/>
-					</svg>
-					<p className={s.nav__container__link__text}>Empresas</p>
-				</div>
-				<div className={s.nav__container__link}>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						class='h-6 w-6'
-						fill='none'
-						viewBox='0 0 24 24'
-						stroke='currentColor'
-					>
-						<path
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							stroke-width='2'
-							d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-						/>
-					</svg>
-					<p className={s.nav__container__link__text}>Quienes Somos</p>
-				</div>
-			</div>
-			<div className={s.responsive__menu}>
-				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					class='h-6 w-6'
-					fill='none'
-					viewBox='0 0 24 24'
-					stroke='currentColor'
-				>
-					<path
-						stroke-linecap='round'
-						stroke-linejoin='round'
-						stroke-width='2'
-						d='M4 6h16M4 12h16M4 18h16'
-					/>
-				</svg>
 			</div>
 		</nav>
 	);

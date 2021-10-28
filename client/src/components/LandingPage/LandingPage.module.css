@@ -2,15 +2,12 @@
     margin: 0 auto;
     width: 100vw;
     height: 100vh;
-background: url("Middleware\ \(6\).gif");
+background: url("Un\ puente\ entre\ empresas\ y\ programadores\ \(3\).png");
 background-size: cover;
-display: flex;
-justify-content: center;
-align-items: center;
 
 }
 .conteiner{
-padding-right: 110px;
+padding: 200px;
 }
 h1{
     font-family: 'Candal', sans-serif; 
@@ -21,13 +18,16 @@ h5{
     font-family: 'Arsenal', sans-serif;
 }
 
-button{
-    background: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    border-radius: 8px;
-padding: 8px;
-margin: 3px;
-box-shadow: black;
-margin-top: 20px;
+.btn1{
+    background: rgb(0, 0, 0);
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin: 5px;
+    margin-top: 25px ;
+    color:white;
+}
 
+.btn2{
+    background: white;
 }

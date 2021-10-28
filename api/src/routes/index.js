@@ -12,6 +12,8 @@ const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/pr
 
 router.post('/signin', signIn);//path del landing(en revision)
 
+router.post('/signup', postJuniorsProfile)
+
 router.get('/juniors', getAllJuniors);//se obtienen los usuarios programadores
 router.get('/juniors/:id', getJuniorById); //se obtiene un usuario programador por id
 router.post('/juniors', postJuniorsProfile);//se crea un usuario programador

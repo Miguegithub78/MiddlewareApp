@@ -15,6 +15,7 @@ export const loginUserAction = (provider, userType) => {
   return async (dispatch) => {
     try {
       if (provider === "google") {
+<<<<<<< HEAD
         await signInWithPopup(auth, googleProvider).then((userProvider) => {
           const { uuid, email, displayName, photoURL } = userProvider.user;
           const user = {
@@ -28,6 +29,13 @@ export const loginUserAction = (provider, userType) => {
           dispatch(loginOkey(user));
           // });
         });
+=======
+        await signInWithPopup(auth, googleProvider).then((user) =>
+      
+        dispatch(loginOkey(user))
+        );
+        dispatch(loginOkey(user))
+>>>>>>> main
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((user) =>
           dispatch(loginOkey(user))

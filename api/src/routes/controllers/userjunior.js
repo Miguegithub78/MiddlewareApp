@@ -17,19 +17,20 @@ const getAllJuniors = async (req, res) => {
 
 const postJuniorsProfile = async (req, res) => {
     try{
-        const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
+        const { name, lastname, gmail, github, photograph, gender, phone, description, languages, technologies } = req.body;
 
         const technologiesGet = await Technologies.find({name: technologies})
         const languagesGet = await Languages.find({name: languages})
 
-        const juniorsCreate = await Junior.create({
+        const juniorsCreate = await Juniors.create({
             name: name,
             lastname: lastname,
             gmail:gmail,
             github: github,
-            photograph: photograph,
+            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
             gender: gender,
             phone: phone,
+            description: description,
             languages: languagesGet,
             technologies: technologiesGet
         })
@@ -46,8 +47,12 @@ const getJuniorById = async (req, res) => {
     try{
         const { id } = req.params;
         const juniorsGet = await Juniors.findById(id)
+        .populate('publications', 'description' )
+        .then((p) => {
+            
+            res.json(p);
+        });
 
-        res.json(juniorsGet)
     }catch(err){
         res.status(404).json({message: err.message})
     }
@@ -59,8 +64,14 @@ const updateJuniorsProfile = async (req, res) => {
         const { id } = req.params;
         const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
 
-        const technologiesGet = await Technologies.find({name: technologies})
-        const languagesGet = await Languages.find({name: languages})
+
+        if(languages || technologies){
+
+            var getJunior = await Juniors.findById(id)
+
+            var technologiesGet = await Technologies.find({name: technologies})
+            var languagesGet = await Languages.find({name: languages})
+        }
 
         const juniorsChange = await Juniors.findOneAndUpdate({
         _id: id
@@ -72,8 +83,8 @@ const updateJuniorsProfile = async (req, res) => {
             photograph: photograph,
             gender: gender,
             phone: phone,
-            languages: languagesGet,
-            technologies: technologiesGet
+            languages: getJunior.languages.concat(languagesGet),
+            technologies: getJunior.technologies.concat(technologiesGet)
         }, {new: true})
 
         res.json(juniorsChange);
@@ -86,9 +97,15 @@ const updateJuniorsProfile = async (req, res) => {
 const deleteJuniorsProfile = async (req, res) => {
     try{
         const { id } = req.params;
+        const getJunior = await Juniors.findById(id)
+
+        getJunior.publications.forEach( async (e) => {
+
+            await Publication.findByIdAndDelete(e._id)
+        })
         const juniorsDelete = await Juniors.findByIdAndDelete(id)
 
-        res.json(juniorsDelete)
+        res.json(getJunior)
     }catch(err){
         res.status(404).json({message: err.message})
     }

@@ -20,7 +20,16 @@ const adminSchema = new Schema({
     github: {
         type: String,
         required: true
-    }
+    },
+    photograph: {
+        type: String,
+        required: false
+    },
+
+    publications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'publication'
+    }]
 
 })
 

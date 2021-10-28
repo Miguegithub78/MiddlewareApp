@@ -5,6 +5,12 @@ const { Juniors,
     Publication,
     Admins } = require ('../../models/index')
 
+    require('dotenv').config();
+
+    const { SECRET } = process.env;
+    
+    const jwt = require('jsonwebtoken');
+
 const getAllJuniors = async (req, res) => {
     try{ 
         const allJuniors = await Juniors.find();
@@ -34,8 +40,13 @@ const postJuniorsProfile = async (req, res) => {
             languages: languagesGet,
             technologies: technologiesGet
         })
+
+        const token = jwt.sign({id: juniorsCreate._id}, SECRET, {
+            expiresIn: 60 * 60 * 24
+        })
         
-        res.json(juniorsCreate)
+        res.json({auth: true, token: token, user: juniorsCreate})
+        
     }catch(err){
         res.status(404).json({message: err.message})
     }
@@ -61,7 +72,24 @@ const getJuniorById = async (req, res) => {
 const updateJuniorsProfile = async (req, res) => {
 
     try{
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(403).json({auth: false, message: 'se requiere token'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
+
         const { id } = req.params;
+
+        if(id !== decoded.id){
+            return res.status(401).json({auth: false, message: 'usuario no autorizado'})
+        } 
+
         const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
 
 

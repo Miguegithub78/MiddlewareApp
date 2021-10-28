@@ -15,24 +15,33 @@ const getAllCompanies = async (req, res) => {
 }
 
 const postCompaniesProfile = async (req, res) => {
-    try{
 
     const { name, webpage, gmail, photograph, country, state, languages, description, city } = req.body;
-    const languagesGet = await Languages.find({name: languages})
 
-    const companyCreate = await Company.create({
-        name: name,
-        webpage: webpage,
-        gmail:gmail,
-        photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
-        country: country,
-        state: state,
-        city: city,
-        description: description,
-        languages: languagesGet,
-    })
+    if(!name || !gmail || !webpage) {
+        if(!name) return res.status(404).json({message: "Falta en nombre"});
+        if(!gmail) return res.status(404).json({message: "Falta el gmail"});
+        if(!webpage) return res.status(404).json({message: "Falta el webpage"});
+    }
 
-    res.json(companyCreate)
+    try{
+
+
+        const languagesGet = await Languages.find({name: languages})
+
+        const companyCreate = await Company.create({
+            name: name,
+            webpage: webpage,
+            gmail:gmail,
+            photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
+            country: country,
+            state: state,
+            city: city,
+            description: description,
+            languages: languagesGet,
+        })
+
+        res.json(companyCreate)
 }catch(err){
     res.status(404).json({message: err.message})
 }

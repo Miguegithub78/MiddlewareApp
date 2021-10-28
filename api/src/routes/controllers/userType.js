@@ -19,13 +19,9 @@ const signIn = async (req, res) => {
     try{
         
         if(userType === 'junior'){
-<<<<<<< HEAD
-            const user = await Juniors.findOne({gmail: email})
-=======
             
 
             const user = await Juniors.findOne({gmail: gmail})
->>>>>>> 727409e2a3e072e17bc5639537988e1f65afcba5
             if(!user){
                 
                 const juniorsCreate = await Juniors.create({

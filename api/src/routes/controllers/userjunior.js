@@ -15,7 +15,7 @@ const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)
@@ -140,7 +140,7 @@ const updateJuniorsProfile = async (req, res) => {
 
 const deleteJuniorsProfile = async (req, res) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)

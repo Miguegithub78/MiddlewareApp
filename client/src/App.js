@@ -12,15 +12,18 @@ import { getJuniors, getCompanies } from "./redux/actions/index.js";
 
 function App() {
   const token = localStorage.getItem("token");
-  if (token) {
-    tokenAuth(token);
-  }
+  
+  useEffect(() => {
+    if (token) {
+      tokenAuth(token);
+    }
+  }, [token])
 
-  const dispatch = useDispatch();
-    useEffect(() => {
-      dispatch(getJuniors());
-      dispatch(getCompanies());
-    });
+  // const dispatch = useDispatch();
+  //   useEffect(() => {
+  //     dispatch(getJuniors());
+  //     dispatch(getCompanies());
+  //   });
 
   return (
     <Router>

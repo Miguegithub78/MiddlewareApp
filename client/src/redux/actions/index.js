@@ -16,19 +16,25 @@ export const loginUserAction = (provider, userType) => {
     try {
       if (provider === "google") {
         await signInWithPopup(auth, googleProvider).then((userProvider) => {
-          const { uuid, email, displayName, photoURL } = userProvider.user;
+          const { uid, email, displayName, photoURL } = userProvider.user;
           const user = {
             name: displayName,
-            idUser: uuid,
+            idUser: uid,
             gmail: email,
             photograph: photoURL,
             userType,
           };
-          clienteAxios.post("/login", user).then((rta) => {
-            console.log('rta', rta);
-            // dispatch(loginOkey(user));
-            // localStorage.setItem('token', rta.token)
-          });
+          try {
+            console.log(user, 'ser');
+            clienteAxios.post('/login', user).then((rta) => {
+              console.log('rta', rta);
+              dispatch(loginOkey(rta.data.user));
+              localStorage.setItem('token', rta.data.token)
+            });
+          } catch (error) {
+            console.log(error,'error');
+          }
+           
         });
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((userProvider) => {

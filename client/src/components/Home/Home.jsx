@@ -1,8 +1,10 @@
-// import { useState } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
+import { getJuniors, getCompanies } from "../../redux/actions";
+
 import {
   loginOkey,
   logOutUserAction,
@@ -19,6 +21,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    dispatch(getJuniors());
+    dispatch(getCompanies());
+  },[]);
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;

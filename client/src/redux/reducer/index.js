@@ -3,6 +3,8 @@ import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GUITHUB, LOGIN_GOOGLE } from '../types'
 const inicialState = {
   loading: false,
   user: null,
+  details: {},
+
 }
 const rootReducer = (state = inicialState, action) => {
   switch (action.type) {

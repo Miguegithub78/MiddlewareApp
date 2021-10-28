@@ -12,7 +12,7 @@ import {
 const googleProvider = new GoogleAuthProvider();
 const guithubProvider = new GithubAuthProvider();
 
-export const loginUserAction = async (provider) => {
+export const loginUserAction = (provider) => {
   return async (dispatch) => {
     try {
       if (provider === "google") {

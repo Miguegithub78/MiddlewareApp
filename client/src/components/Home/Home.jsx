@@ -16,9 +16,9 @@ const Home = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       dispatch(loginOkey(userFirebase));
-    } //else {
-    //history.push("/login");
-    //}
+    } else {
+      history.push("/login");
+    }
   });
 
   return (

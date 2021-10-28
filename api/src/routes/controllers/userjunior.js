@@ -68,6 +68,17 @@ const postJuniorsProfile = async (req, res) => {
 const getJuniorById = async (req, res) => {
 
     try{
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(403).json({auth: false, message: 'se requiere token de autenticacion'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
 
         const { id } = req.params;
         const juniorsGet = await Juniors.findById(id)

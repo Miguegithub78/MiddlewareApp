@@ -4,9 +4,6 @@ import { useHistory, useParams, useQuery } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginUserAction,
-  loginOkey,
-  logOutUserAction,
-  getUserAction,
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";

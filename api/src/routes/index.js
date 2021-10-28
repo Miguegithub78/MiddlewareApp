@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router()
 
-const { getAllUsersType } = require('./controllers/userType')
+const { signIn } = require('./controllers/userType')
 const { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, postCompaniesProfile, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
@@ -10,7 +10,7 @@ const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
-router.get('/', getAllUsersType);//path del landing(en revision)
+router.post('/signin', signIn);//path del landing(en revision)
 
 router.get('/juniors', getAllJuniors);//se obtienen los usuarios programadores
 router.get('/juniors/:id', getJuniorById); //se obtiene un usuario programador por id

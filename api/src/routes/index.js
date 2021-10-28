@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router()
 
-const { getAllUsersType } = require('./controllers/userType')
+const { signIn } = require('./controllers/userType')
 const { getAllJuniors, postJuniorsProfile, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, postCompaniesProfile, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
@@ -10,11 +10,16 @@ const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
-router.get('/', getAllUsersType);//path del landing(en revision)
+router.post('/signin', signIn);//path del landing(en revision)
+
+router.post('/signup', postJuniorsProfile)
 
 router.get('/juniors', getAllJuniors);//se obtienen los usuarios programadores
 router.get('/juniors/:id', getJuniorById); //se obtiene un usuario programador por id
-router.post('/juniors', postJuniorsProfile);//se crea un usuario programador
+router.post('/juniors', postJuniorsProfile);
+
+router.post('/signup', postJuniorsProfile);
+//se crea un usuario programador
 router.put('/juniors/:id', updateJuniorsProfile);//se actualiza un usuario programador
 router.delete('/juniors/:id', deleteJuniorsProfile);//se elimina un usuario programador
 

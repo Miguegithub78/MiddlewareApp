@@ -27,5 +27,7 @@ router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
 
 router.post('/admin', adminRegister);   //se registran los administradores
 
+router.post('/signup', postJuniorsProfile);//se crea un usuario
+
 
 module.exports = router;

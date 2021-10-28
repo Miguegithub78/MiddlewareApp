@@ -5,6 +5,12 @@ const { Juniors,
     Publication,
     Admins } = require ('../../models/index');
 
+require('dotenv').config();
+
+const { SECRET } = process.env;
+
+const jwt = require('jsonwebtoken');
+
 const getAllJuniors = async (req, res) => {
     try{ 
         const allJuniors = await Juniors.find();
@@ -35,8 +41,12 @@ const postJuniorsProfile = async (req, res) => {
             languages: languagesGet,
             technologies: technologiesGet
         })
+
+        const token = jwt.sign({id: juniorsCreate._id}, SECRET, {
+            expiresIn: 60 * 60 * 24
+        })
         
-        res.json(juniorsCreate)
+        res.json({auth: true, token: token, user: juniorsCreate})
     }catch(err){
         res.status(404).json({message: err.message})
     }

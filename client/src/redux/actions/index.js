@@ -35,7 +35,7 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            email,
+            gmail,
             photo: photoURL,
             userType,
           };
@@ -55,7 +55,7 @@ export const loginUserAction = (provider, userType) => {
           const user = {
             name: displayName,
             idUser: uuid,
-            email,
+            gmail,
             photo: photoURL,
             userType,
           };

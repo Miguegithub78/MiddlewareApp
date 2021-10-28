@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {logOutUserAction} from '../../redux/actions'
 import s from "./NavBar.module.css";
 function NavBar() {
 const dispatch = useDispatch()
   const { user } = useSelector((state) => state);
-  //   let user = { type: "developer", name: "Hernan juan", img: "" };
 
   return (
     <nav className={s.nav_container}>
@@ -52,7 +52,7 @@ const dispatch = useDispatch()
         </svg>
         <div className={s.nav_container_perfil_desplegable}>
           <p>
-            <button>Perfil</button>
+            <Link href='/profileuser'>Perfil</Link>
           </p>
 
           <p>

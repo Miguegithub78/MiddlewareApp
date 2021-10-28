@@ -2,6 +2,11 @@ const { Schema, model } = require('mongoose');
 
 const juniorSchema = new Schema({
 
+    _id: {
+        type: String,
+        required: true
+    },
+
     name: {
         type: String,
         required: true
@@ -9,7 +14,7 @@ const juniorSchema = new Schema({
 
     lastname: {
         type: String,
-        required: true
+        required: false
     },
 
     gmail: {

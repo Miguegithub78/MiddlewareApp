@@ -68,7 +68,24 @@ const getJuniorById = async (req, res) => {
 const updateJuniorsProfile = async (req, res) => {
 
     try{
+
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(401).json({auth: false, message: 'No token provided'})
+        }
+
+        const decoded = jwt.verify(token, SECRET);
+
+        const user = await Juniors.findById(decoded.id)
+        if(!user){
+            return res.status(404).json({auth: false, message: 'usuario no registrado'})
+        }
+
         const { id } = req.params;
+
+        if(id !== decoded.id){
+            return res.status(403).json({auth: false, message: 'usuario no autorizado'})
+        } 
         const { name, lastname, gmail, github, photograph, gender, phone, languages, technologies } = req.body;
 
         const technologiesGet = await Technologies.find({name: technologies})

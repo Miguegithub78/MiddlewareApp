@@ -31,7 +31,7 @@ function App() {
 				<Route exact path='/login/:type' component={Login} />
 				<Route exact path='/home' component={Home} />
 				<Route exact path='/' component={LandingPage} />
-				<Route exact path='/profileuser' component={ProfileUser} />
+				<Route exact path='/profileuser/:id' component={ProfileUser} />
 				<Route path='/companies/:id' component={CompanyDetail} />
 
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}

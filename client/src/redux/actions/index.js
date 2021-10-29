@@ -40,6 +40,7 @@ export const loginUserAction = (provider, userType) => {
 					};
 					try {
 						console.log(user, 'ser');
+						dispatch(loginOkey(user));
 						clienteAxios.post('/login', user).then((rta) => {
 							console.log('rta', rta);
 							dispatch(loginOkey(rta.data.user));

@@ -11,25 +11,25 @@ require("dotenv").config();
 
 const { SECRET } = process.env;
 
-const jwt = require("jsonwebtoken");
+/*const jwt = require("jsonwebtoken");*/
 
 const getAllJuniors = async (req, res) => {
   try {
-    const token = req.headers["x-auth-token"];
+    /*const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)
         .json({ auth: false, message: "se requiere token de autorización" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = jwt.verify(token, SECRET);*/
 
-    const user = await Juniors.findById(decoded.id);
+    /*const user = await Juniors.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
         .json({ auth: false, message: "usuario no registrado" });
-    }
+    }*/
 
     const allJuniors = await Juniors.find();
     res.json(allJuniors);
@@ -40,7 +40,7 @@ const getAllJuniors = async (req, res) => {
 
 const getJuniorById = async (req, res) => {
   try {
-    const token = req.headers["x-auth-token"];
+    /*const token = req.headers["x-auth-token"];
     if (!token) {
       return res
         .status(403)
@@ -54,7 +54,7 @@ const getJuniorById = async (req, res) => {
       return res
         .status(404)
         .json({ auth: false, message: "usuario no registrado" });
-    }
+    }*/
 
     const { id } = req.params;
     const juniorsGet = await Juniors.findById(id)

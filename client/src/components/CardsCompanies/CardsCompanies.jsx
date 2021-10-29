@@ -18,7 +18,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
                         </div>
                         <div>
                             <p>{p.name}</p>
-                            <p>Empresa Premium: {p.premium}</p>
+                            
                         </div>
                     </Link>
                 ))

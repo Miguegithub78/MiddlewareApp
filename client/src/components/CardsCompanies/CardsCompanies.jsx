@@ -8,7 +8,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
     //const companies = useSelector((state) => state.companies);
 
     return (
-        <div className="d-flex justify-content-around " >
+        <div className="d-flex justify-content-around">
 
             {arrayCompanies.map((p) => (
                 <div className="card text-center  mx-5  bg-dark " style={{ width: " 80% " }} >

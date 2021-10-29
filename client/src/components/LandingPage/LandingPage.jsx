@@ -9,8 +9,8 @@ export default function LandingPage() {
         <h1>Middleware</h1>
         <h5>Un puente entre empresas y programadores</h5>
 
-        <Link to="/login/programador">Programador Js</Link>
-        <Link to="/login/empresa">Empresa</Link>
+      <Link to="/login/junior">Programador Js</Link>
+      <Link to="/login/company">Empresa</Link>
       </div>
     </div>
   );

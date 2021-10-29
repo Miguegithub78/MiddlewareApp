@@ -5,6 +5,8 @@ const { Juniors,
     Publication,
     Admins } = require ('../../models/index')
 
+const { jwtgenerater, finder } = require('../../helpers/index')
+
     require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +23,7 @@ const signIn = async (req, res) => {
         if(userType === 'junior'){
             
 
-            const user = await Juniors.findOne({gmail: gmail})
+            const user = finder({collection: Juniors, gmail: gmail})
             if(!user){
                 
                 const juniorsCreate = await Juniors.create({
@@ -31,15 +33,13 @@ const signIn = async (req, res) => {
                     photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
                 })
 
-                const token = jwt.sign({id: juniorsCreate._id}, SECRET, {
-                    expiresIn: 60 * 60 * 24
-                })
+                const token = jwtgenerater({id: juniorsCreate._id});
                 
                 res.json({auth: true, token: token, user: juniorsCreate});
                 return
             }
 
-            const token = jwt.sign({id: idUser}, SECRET, {
+            const token = jwtgenerater({id: idUser}, SECRET, {
                 expiresIn: 60 * 60 * 24
             })
 
@@ -49,7 +49,7 @@ const signIn = async (req, res) => {
         if(userType === 'company'){
             
 
-            const user = await Company.findOne({gmail: gmail})
+            const user = finder({collection: Company, gmail: gmail})
             if(!user){
                 
                 const CompanyCreate = await Company.create({
@@ -59,17 +59,13 @@ const signIn = async (req, res) => {
                     photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
                 })
 
-                const token = jwt.sign({id: CompanyCreate._id}, SECRET, {
-                    expiresIn: 60 * 60 * 24
-                })
+                const token = jwtgenerater({id: CompanyCreate._id});
                 
                 res.json({auth: true, token: token, user: CompanyCreate});
                 return
             }
 
-            const token = jwt.sign({id: idUser}, SECRET, {
-                expiresIn: 60 * 60 * 24
-            })
+            const token = jwtgenerater({id: idUser})
 
             res.json({auth: true, token: token, user: user})
         }

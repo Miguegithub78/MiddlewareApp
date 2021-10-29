@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyDetails } from "../../redux/actions";
+import { getJuniorsDetails } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import clienteAxios from "../../components/config/clienteAxios";
+import clienteAxios from "../config/clienteAxios";
 
-export default function CompanyDetail() {
+export default function JuniorsDetail() {
     const { id } = useParams();
 
-  const [companies, setCompanies] = useState({});
+  const [juniors, setCompanies] = useState({});
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -18,12 +18,12 @@ export default function CompanyDetail() {
 
   const detalles = async () => {
     
-    const data = await fetch(`http://localhost:3001/companies/${id}`);
+    const data = await fetch(`http://localhost:3001/juniors/${id}`);
    
-    const companies = await data.json();
+    const juniors = await data.json();
  
-    setCompanies(companies);
-    console.log('Details companies' + companies.name)
+    setCompanies(juniors);
+    
   };
   
   /*const detalles = async () => {
@@ -43,14 +43,14 @@ export default function CompanyDetail() {
         <div>
             <div>
                 <div>
-                    <h1>{companies.name}</h1>
-                    <img src={companies.photograph} alt="Imagen no encontrada" width="100px" heigth="80px" ></img>
-                    <h3>{companies.webpage}</h3>
-                    <h3>{companies.gmail}</h3>
-                    <h3>{companies.country}</h3>
-                    <h3>{companies.state}</h3>
-                    <h3>{companies.city}</h3>
-                    <h3>{companies.description}</h3>
+                    <h1>{juniors.name} {juniors.lastname}</h1>
+                    <img src={juniors.photograph} alt="Imagen no encontrada" width="100px" heigth="80px" ></img>
+                    <h3>{juniors.webpage}</h3>
+                    <h3>{juniors.gmail}</h3>
+                    <h3>{juniors.country}</h3>
+                    <h3>{juniors.state}</h3>
+                    <h3>{juniors.city}</h3>
+                    <h3>{juniors.description}</h3>
                 </div>
             </div>
             

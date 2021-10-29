@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import {Link, useHistory} from 'react-router-dom';
 import { getLanguages, getTechnologies, putJuniors, } from '../../redux/actions';
 import styles from './ProfileUser.module.css';
  
 
 const ProfileUser = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const languages = useSelector(state => state.languages);
     const technologies = useSelector(state => state.technologies);
     const users = useSelector(state => state.user);
@@ -63,6 +65,8 @@ const ProfileUser = () => {
             languages: [],
             technologies: []
         })
+        history.push('/home')
+        alert('Perfil Actualizado')
     };
 
     const user = {
@@ -81,16 +85,23 @@ const ProfileUser = () => {
 
     return (
         <div>   
+            <Link className="btn btn-outline-dark me-2" to='/home' >Volver al inicio</Link>
                  <h1 >Tu Perfil</h1>
-                <div>
-                    <img className={styles.user} src={user.photo} alt='img' />
-                </div>
-                <div>
-                    <label>Nombre: {user.name}</label> 
-                </div>
-                <div>
-                    <label>Gmail: {user.email}</label> 
-                </div>
+            <div class="card" >
+            <img className={styles.user} src={users.photograph} alt='img' />
+            <div class="card-body">
+                <h5 class="card-title">Nombre: {users.name}</h5>
+                <p class="card-text">Sobre mi: {input.description}</p>
+                <p class="card-text">Github: {input.github}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Email: {users.gmail}</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Linkedin</a>
+                <a href="#" class="card-link">Github</a>
+            </div>
+            </div>
 
             <form onSubmit={e => handleSubmit(e)}>
                 <div>
@@ -160,6 +171,7 @@ const ProfileUser = () => {
                </div> 
             </form>
             <button onClick={e => handleReset(e)}>Reiniciar</button> 
+
         </div>
     )
 }

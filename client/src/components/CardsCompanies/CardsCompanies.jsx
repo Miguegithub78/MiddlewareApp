@@ -12,7 +12,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
             <div className='container'>
             {arrayCompanies.length ? (
                 arrayCompanies.map((p) => (
-                    
+                <div className="tarjeta"> 
                     <Link to={`/companies/${p._id}`} key={p.name}>
                         <div>
                             <img src={p.photograph} alt="" />
@@ -22,6 +22,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
                             
                         </div>
                     </Link>
+                </div>
                 ))
             ) : (    <p>Loading...</p>
             )}

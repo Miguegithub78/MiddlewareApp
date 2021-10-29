@@ -24,6 +24,7 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
+
     const token = localStorage.getItem("token");
     if (token) {
       console.log("dispatch el tokeeenn", token);
@@ -32,6 +33,7 @@ const Home = () => {
       dispatch(getCompanies());
     }
   }, [user]);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
@@ -43,19 +45,24 @@ const Home = () => {
 
   const companies = useSelector((state) => state.companies);
   const juniors = useSelector((state) => state.juniors);
-  
+
   return (
     <div className='containerhome'>
-            <NavBar />
-            <div className='searchcards'>
-                <div className='search'>
-                    <Search />
-                </div>
-                <div className='cards'>
-                    <CardsCompanies arrayCompanies={companies} />
-                   
-                </div>
+      <NavBar />
+      <div className='d-flex '>
+        <div className='row'>
+          <Search />
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="">
+
+              <CardsCompanies arrayCompanies={companies} />
             </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

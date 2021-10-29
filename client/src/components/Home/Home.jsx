@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { getJuniors, getCompanies } from "../../redux/actions";
+import tokenAuth from "../config/token";
 
 import {
   loginOkey,
@@ -23,15 +24,22 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getJuniors());
-    dispatch(getCompanies());
-  }, []);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("dispatch el tokeeenn", token);
+      tokenAuth(token);
+      dispatch(getJuniors());
+      dispatch(getCompanies());
+    }
+  }, [user]);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
-      dispatch(getUserAction(userFirebase, "programador"));
+      dispatch(getUserAction(userFirebase));
     } else {
-      history.push('/')
+      history.push("/");
     }
   });
 

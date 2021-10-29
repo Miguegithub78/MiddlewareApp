@@ -1,16 +1,19 @@
 import {
-  LOGIN_OKEY,
-  LOGOUT_OKEY,
-  GET_JUNIORS,
-  GET_COMPANIES,
-  GET_LANGUAGES,
-  GET_TECHNOLOGIES,
-  GET_COMPANY_DETAILS,
-  GET_PUBLICATIONS,
-  GET_PUBLICATIONS_BY_ID,
-} from "../types";
-import clienteAxios from "../../components/config/clienteAxios";
-import { auth } from "../../firebaseConfig";
+	LOGIN_OKEY,
+	LOGOUT_OKEY,
+	LOGIN_GUITHUB,
+	LOGIN_GOOGLE,
+	GET_JUNIORS,
+	GET_JUNIORS_DETAILS,
+	GET_COMPANIES,
+	GET_LANGUAGES,
+	GET_TECHNOLOGIES,
+	GET_COMPANY_DETAILS,
+	GET_PUBLICATIONS,
+	GET_PUBLICATIONS_BY_ID,
+} from '../types';
+import clienteAxios from '../../components/config/clienteAxios';
+import { auth } from '../../firebaseConfig';
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -162,6 +165,19 @@ export function getJuniors(payload) {
   };
 }
 
+export const getJuniorsDetails = (id) => {
+	return async function (dispatch) {
+		try {
+			var json = await clienteAxios.get('/juniors/' + id);
+			return dispatch({
+				type: GET_JUNIORS_DETAILS,
+				payload: json.data,
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	};
+};
 export function putJuniors(id) {
   return async function () {
     const response = await clienteAxios.put(

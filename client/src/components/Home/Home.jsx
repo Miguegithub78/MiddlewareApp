@@ -15,6 +15,7 @@ import {
 import { Search } from "../Search/Search";
 import NavBar from "../NavBar/NavBar";
 import { CardsCompanies } from "../CardsCompanies/CardsCompanies";
+import { CardsJuniors } from "../CardsJuniors/CardsJuniors";
 import "./Home.css";
 
 const Home = () => {
@@ -40,18 +41,20 @@ const Home = () => {
   });
 
   const companies = useSelector((state) => state.companies);
-
+  const juniors = useSelector((state) => state.juniors);
+  
   return (
-    <div className="containerhome">
-      <NavBar />
-      <div className="searchcards">
-        <div className="search">
-          <Search />
-        </div>
-        <div className="cards">
-          <CardsCompanies arrayCompanies={companies} />
-        </div>
-      </div>
+    <div className='containerhome'>
+            <NavBar />
+            <div className='searchcards'>
+                <div className='search'>
+                    <Search />
+                </div>
+                <div className='cards'>
+                    <CardsCompanies arrayCompanies={companies} />
+                   
+                </div>
+            </div>
     </div>
   );
 };

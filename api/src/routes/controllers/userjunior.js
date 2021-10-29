@@ -7,7 +7,6 @@ const {
   Admins,
 } = require("../../models/index");
 
-const { finderId, decoder } = require("../../helpers/index")
 
 require("dotenv").config();
 
@@ -25,9 +24,9 @@ const getAllJuniors = async (req, res) => {
         .json({ auth: false, message: "se requiere token de autorización" });
     }
 
-    const decoded = decoder(token);
+    const decoded = await jwt.verify(token, SECRET);
 
-    const user = finderId({collections: Juniors, id:decoded.id});
+    const user = await Juniors.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
@@ -50,9 +49,9 @@ const getJuniorById = async (req, res) => {
         .json({ auth: false, message: "se requiere token de autenticacion" });
     }
 
-    const decoded = decoder(token);
+    const decoded = await jwt.verify(token, SECRET);
 
-    const user = finderId({collections: Juniors, id:decoded.id});
+    const user =  await Juniors.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
@@ -79,9 +78,9 @@ const updateJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = decoder(token);
+    const decoded = await jwt.verify(token, SECRET);
 
-    const user = finderId({collections: Juniors, id:decoded.id});
+    const user = await Juniors.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
@@ -150,9 +149,9 @@ const deleteJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = decoder(token);
+    const decoded = await jwt.verify(token, SECRET);
 
-    const user = finderId({collections: Juniors, id:decoded.id});
+    const user = await Juniors.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
@@ -186,3 +185,4 @@ module.exports = {
   updateJuniorsProfile,
   deleteJuniorsProfile,
 };
+

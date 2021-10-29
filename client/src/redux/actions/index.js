@@ -31,6 +31,7 @@ export const loginUserAction = (provider, userType) => {
               dispatch(loginOkey(rta.data.user));
               localStorage.setItem('token', rta.data.token)
             });
+            console.log('esto');
           } catch (error) {
             console.log(error,'error');
           }

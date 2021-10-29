@@ -1,67 +1,56 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {logOutUserAction} from '../../redux/actions'
-import s from "./NavBar.module.css";
+import { logOutUserAction } from '../../redux/actions'
+import styles from "./NavBar.module.css";
 function NavBar() {
-const dispatch = useDispatch()
-  const { user } = useSelector((state) => state);
+	const dispatch = useDispatch()
+	const { user } = useSelector((state) => state);
 
-  return (
-    <nav className={s.nav_container}>
-      <div className={s.nav_container_logo}>
-        <h1 className={s.nav_logo}>Middleware</h1>
-      </div>
-      {user && user.type === "junior" ? (
-        <div className={s.nav_puente}>Puente de los sueños</div>
-      ) : null}
-      <div className={s.nav_container_links}>
-        <p className={s.nav_link}>Empleos</p>
-        <p className={s.nav_link}>Ver Empresas</p>
-        <p className={s.nav_link}>Mis postulaciones</p>
-        <p className={s.nav_link}>Tips</p>
-      </div>
-      <div className={s.nav_container_perfil}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-            clipRule="evenodd"
-          />
-        </svg>
-        {<p>{user && user.name}</p>}
-        <svg
-          className={s.arrow}
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-        <div className={s.nav_container_perfil_desplegable}>
-          <p>
-            <Link href='/profileuser'>Perfil</Link>
-          </p>
 
-          <p>
-            <button onClick={()=>dispatch(logOutUserAction())}>Logout</button>
-          </p>
-        </div>
-      </div>
-    </nav>
-  );
+	return (
+		<nav className="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-60">
+			<div className="container-fluid">
+
+				<Link className={`navbar-brand ${styles.logo}`} to="/home">Middleware</Link>
+				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span className="navbar-toggler-icon"></span>
+				</button>
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav me-auto ms-5 mb-2 mb-lg-0">
+						{user && user.type === "junior" ? (
+							<li className="nav-item">
+								<a className="nav-link" aria-current="page" href="#">Puente de los sueños</a>
+							</li>
+						) : null}
+						<li className="nav-item">
+							<a className="nav-link" aria-current="page" href="#">Empleos</a>
+						</li>
+						<li className="nav-item">
+							<a className="nav-link" href="#">Mis empleos</a>
+						</li>
+						<li className="nav-item">
+							<a className="nav-link" href="#">Mis postulaciones</a>
+						</li>
+						<li className="nav-item">
+							<a className="nav-link" href="#">Tips</a>
+						</li>
+						<li className="nav-item dropdown">
+							<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{user ? user.name : "Usuario"}
+							</a>
+							<ul className="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+								<li><Link className="dropdown-item" to='/profileuser'>Mi perfil</Link></li>
+								<li><hr className="dropdown-divider" /></li>
+								<li><button className="dropdown-item" onClick={() => dispatch(logOutUserAction())}>Cerrar sesión</button></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	);
 }
 
 export default NavBar;

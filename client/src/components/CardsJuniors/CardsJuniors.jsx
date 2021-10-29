@@ -11,7 +11,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
             <div className='container'>
                 {arrayJuniors?.map((p) => (
                     
-                     <Link to={`/JuniorDetail/${p._id}`} key={p.name}>
+                    <Link to={`/juniors/${p._id}`} key={p.name}>
                     <img src={p.photograph} alt="" />
                     <p>{p.name}{p.lastname}</p>
                     

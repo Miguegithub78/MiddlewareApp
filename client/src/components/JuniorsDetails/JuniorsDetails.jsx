@@ -5,6 +5,7 @@ import { getJuniorsDetails } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clienteAxios from "../config/clienteAxios";
+
 export default function JuniorsDetail() {
     const { id } = useParams();
 

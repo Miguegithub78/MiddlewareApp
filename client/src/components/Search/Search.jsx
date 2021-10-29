@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from 'react-redux';
+
 import "./Search.css";
 
 export const Search = () => {
 
   const button = "button";
+  
+  const options = useSelector((store) => store.technologies);
 
   const handleInputChange = (e) => {
 
@@ -11,8 +15,9 @@ export const Search = () => {
   };
 
   const byTypeuser = (e) => {
-
+    
   }
+  
   const byTypePublic = (e) => {
 
   }
@@ -55,15 +60,14 @@ export const Search = () => {
           <option value="1">Proyectos</option>
           <option value="2">Guias, Tutoriales</option>
         </select>
-        <select name="tecnology" className={button} onChange={byTecnology}>
+        
+        <select className={button} name="Technologies" onChange={byTecnology}>
           <option value="">Tipo de Tecnología:</option>
-          <option value="React">React</option>
-          <option value="Redux">Redux</option>
-          <option value="Css">Css</option>
-          <option value="Node">Node</option>
-          <option value="Express">Express</option>
-          <option value="Postgres">Postgres</option>
-
+          {options?.map((p) => (
+            <option value={p.name} key={p.id}>
+              {p.name}
+            </option>
+          ))}
         </select>
         <select name="ubicacion" className={button} onChange={byUbication}>
           <option value="">Ubicación:</option>

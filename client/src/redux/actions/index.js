@@ -4,6 +4,7 @@ import {
 	LOGIN_GUITHUB,
 	LOGIN_GOOGLE,
 	GET_JUNIORS,
+	GET_JUNIORS_DETAILS,
 	GET_COMPANIES,
 	GET_LANGUAGES,
 	GET_TECHNOLOGIES,
@@ -162,7 +163,19 @@ export function getJuniors(payload) {
 	};
 }
 
-
+export const getJuniorsDetails = (id) => {
+	return async function (dispatch) {
+		try {
+			var json = await clienteAxios.get('/juniors/' + id);
+			return dispatch({
+				type: GET_JUNIORS_DETAILS,
+				payload: json.data,
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	};
+};
 export function putJuniors(id) {
 	return async function () {
 		const response = await clienteAxios.put(

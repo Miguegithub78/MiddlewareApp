@@ -6,17 +6,25 @@ import { Link } from "react-router-dom";
 export const CardsCompanies = ({ arrayCompanies }) => {
     //const companies = useSelector((state) => state.companies);
     
+    
     return (
         <>
             <div className='container'>
-                {arrayCompanies.map((p) => (
+            {arrayCompanies.length ? (
+                arrayCompanies.map((p) => (
                     
-                     <Link to={`/CompanyDetail/${p._id}`} key={p.name}>
-                    <img src={p.photograph} alt="" />
-                    <p>{p.name}</p>
-                    <p>Empresa Premium: {p.premium}</p>
+                    <Link to={`/companies/${p._id}`} key={p.name}>
+                        <div>
+                            <img src={p.photograph} alt="" />
+                        </div>
+                        <div>
+                            <p>{p.name}</p>
+                            
+                        </div>
                     </Link>
-                ))}
+                ))
+            ) : (    <p>Loading...</p>
+            )}
             </div>
         </>
     );

@@ -25,7 +25,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getJuniors());
     dispatch(getCompanies());
-  },[]);
+  }, []);
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
@@ -37,19 +37,25 @@ const Home = () => {
 
   const companies = useSelector((state) => state.companies);
   const juniors = useSelector((state) => state.juniors);
-  
+
   return (
     <div className='containerhome'>
-            <NavBar />
-            <div className='searchcards'>
-                <div className='search'>
-                    <Search />
-                </div>
-                <div className='cards'>
-                    <CardsCompanies arrayCompanies={companies} />
-                    {/*<CardsJuniors arrayJuniors={juniors} />*/}
-                </div>
+      <NavBar />
+      <div className='d-flex '>
+        <div className='row'>
+          <Search />
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="">
+
+              <CardsCompanies arrayCompanies={companies} />
+              <CardsJuniors arrayJuniors={juniors} />
             </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

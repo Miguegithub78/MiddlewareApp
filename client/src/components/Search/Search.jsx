@@ -28,7 +28,7 @@ export const Search = () => {
 
   }
   return (
-    <div className="container">
+    <div className="cont">
       <form onSubmit={submit}>
         <div className="field">
           <input

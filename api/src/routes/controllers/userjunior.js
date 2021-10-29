@@ -7,6 +7,8 @@ const {
   Admins,
 } = require("../../models/index");
 
+const { finderId, decoder } = require("../../helpers/index")
+
 require("dotenv").config();
 
 const { SECRET } = process.env;
@@ -22,9 +24,9 @@ const getAllJuniors = async (req, res) => {
         .json({ auth: false, message: "se requiere token de autorización" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = decoder(token);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = finderId({collections: Juniors, id:decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -47,9 +49,9 @@ const getJuniorById = async (req, res) => {
         .json({ auth: false, message: "se requiere token de autenticacion" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = decoder(token);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = finderId({collections: Juniors, id:decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -76,9 +78,9 @@ const updateJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = decoder(token);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = finderId({collections: Juniors, id:decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -147,9 +149,9 @@ const deleteJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = decoder(token);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = finderId({collections: Juniors, id:decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -164,7 +166,7 @@ const deleteJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "usuario no autorizado" });
     }
 
-    const getJunior = await Juniors.findById(id);
+    const getJunior = user;
 
     getJunior.publications.forEach(async (e) => {
       await Publication.findByIdAndDelete(e._id);

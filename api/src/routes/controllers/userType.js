@@ -50,7 +50,7 @@ const signIn = async (req, res) => {
         if(userType === 'company'){
             
 
-            const user = Company.findOne({ gmail:gmail});
+            const user = await Company.findOne({ gmail:gmail});
             if(!user){
                 
                 const CompanyCreate = await Company.create({

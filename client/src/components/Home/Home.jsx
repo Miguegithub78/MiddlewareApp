@@ -26,7 +26,8 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      console.log("dispatch", token);
+      console.log("dispatch el tokeeenn", token);
+      tokenAuth(token);
       dispatch(getJuniors());
       dispatch(getCompanies());
     }
@@ -34,7 +35,7 @@ const Home = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
-      dispatch(getUserAction(userFirebase, "programador"));
+      dispatch(getUserAction(userFirebase));
     } else {
       history.push("/");
     }

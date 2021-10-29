@@ -14,16 +14,11 @@ const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 
 const signIn = async (req, res) => {
-
     const { name, idUser, gmail, photograph, userType } = req.body;
-
     try{
-        
-        if(userType === 'junior'){
-            
+        if(userType === 'juniors'){
             const user = await Juniors.findOne({ gmail:gmail});
             if(!user){
-                
                 const juniorsCreate = await Juniors.create({
                     _id: idUser,
                     name: name,

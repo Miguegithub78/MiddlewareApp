@@ -1,19 +1,19 @@
 import {
-	LOGIN_OKEY,
-	LOGOUT_OKEY,
-	LOGIN_GUITHUB,
-	LOGIN_GOOGLE,
-	GET_JUNIORS,
-	GET_JUNIORS_DETAILS,
-	GET_COMPANIES,
-	GET_LANGUAGES,
-	GET_TECHNOLOGIES,
-	GET_COMPANY_DETAILS,
-	GET_PUBLICATIONS,
-	GET_PUBLICATIONS_BY_ID,
-} from '../types';
-import clienteAxios from '../../components/config/clienteAxios';
-import { auth } from '../../firebaseConfig';
+  LOGIN_OKEY,
+  LOGOUT_OKEY,
+  LOGIN_GUITHUB,
+  LOGIN_GOOGLE,
+  GET_JUNIORS,
+  GET_JUNIORS_DETAILS,
+  GET_COMPANIES,
+  GET_LANGUAGES,
+  GET_TECHNOLOGIES,
+  GET_COMPANY_DETAILS,
+  GET_PUBLICATIONS,
+  GET_PUBLICATIONS_BY_ID,
+} from "../types";
+import clienteAxios from "../../components/config/clienteAxios";
+import { auth } from "../../firebaseConfig";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -30,28 +30,26 @@ export const loginUserAction = (provider, userType) => {
   return async (dispatch) => {
     try {
       if (provider === "google") {
-        await signInWithPopup(auth, googleProvider).then((userProvider) => {
-          const { uid, email, displayName, photoURL } = userProvider.user;
-          const user = {
-            name: displayName,
-            idUser: uid,
-            gmail: email,
-            photograph: photoURL,
-            userType: "junior",
-          };
-          try {
-            console.log(user, "ser");
-            clienteAxios.post("/login", user).then((rta) => {
-              console.log("rta", rta);
-              dispatch(loginOkey(rta.data.user));
-              localStorage.setItem("token", rta.data.token);
-              tokenAuth(rta.data.token);
-            });
-            console.log("esto");
-          } catch (error) {
-            console.log(error, "error");
-          }
-        });
+        const userProvider = await signInWithPopup(auth, googleProvider);
+        const { uid, email, displayName, photoURL } = userProvider.user;
+        const user = {
+          name: displayName,
+          idUser: uid,
+          gmail: email,
+          photograph: photoURL,
+          userType: "juniors",
+        };
+        try {
+          clienteAxios.post("/login", user).then((rta) => {
+            dispatch(loginOkey(rta.data.user));
+            localStorage.setItem("token", rta.data.token);
+            localStorage.setItem("userType", "juniors");
+            tokenAuth(rta.data.token);
+          });
+        } catch (error) {
+          console.log(error, "error");
+        }
+        // });
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((userProvider) => {
           const { uuid, email, displayName, photoURL } = userProvider.user;
@@ -74,10 +72,10 @@ export const loginUserAction = (provider, userType) => {
         "Firebase: Error (auth/account-exists-with-different-credential)."
       ) {
         await signInWithPopup(auth, googleProvider).then((userProvider) => {
-          const { uuid, email, displayName, photoURL } = userProvider.user;
+          const { uid, email, displayName, photoURL } = userProvider.user;
           const user = {
             name: displayName,
-            idUser: uuid,
+            idUser: uid,
             gmail: email,
             photo: photoURL,
             userType,
@@ -91,21 +89,17 @@ export const loginUserAction = (provider, userType) => {
   };
 };
 
-export const getUserAction = (userProvider, type) => {
+export const getUserAction = (userProvider) => {
   return async (dispatch) => {
     try {
-      // const { uid, email, displayName, photoURL } = userProvider;
-      // const user = {
-      //   name: displayName,
-      //   idUser: uid,
-      //   email,
-      //   photo: photoURL,
-      //   userType: type,
-      // };
-      //  obtengo token de local storage
-      // clienteAxios.get("/getUser/" + id).then((rta) => {
-      // dispatch(loginOkey(user));
-      // });
+      const userType = localStorage.getItem("userType");
+      // console.log(userProvider,'userProvider');
+      if (userType) {
+        clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
+          console.log(rta, "rta");
+          dispatch(loginOkey(rta.data));
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -122,6 +116,7 @@ export const logOutUserAction = () => {
     try {
       await signOut(auth);
       localStorage.removeItem("token");
+      localStorage.removeItem("userType");
       dispatch(logOutOkey());
     } catch (e) {
       console.log(e);
@@ -166,17 +161,17 @@ export function getJuniors(payload) {
 }
 
 export const getJuniorsDetails = (id) => {
-	return async function (dispatch) {
-		try {
-			var json = await clienteAxios.get('/juniors/' + id);
-			return dispatch({
-				type: GET_JUNIORS_DETAILS,
-				payload: json.data,
-			});
-		} catch (e) {
-			console.log(e);
-		}
-	};
+  return async function (dispatch) {
+    try {
+      var json = await clienteAxios.get("/juniors/" + id);
+      return dispatch({
+        type: GET_JUNIORS_DETAILS,
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 };
 export function putJuniors(id) {
   return async function () {

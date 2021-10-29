@@ -11,7 +11,13 @@ import { useDispatch } from 'react-redux';
 import { getJuniors, getCompanies } from './redux/actions/index.js';
 import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
 function App() {
-	const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+  
+  // useEffect(() => {
+  //   if (token) {
+  //     tokenAuth(token);
+  //   }
+  // }, [token])
 
 	useEffect(() => {
 		if (token) {

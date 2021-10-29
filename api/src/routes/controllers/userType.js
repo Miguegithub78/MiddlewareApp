@@ -1,30 +1,24 @@
-const { Juniors,
-    Languages,
-    Technologies,
-    Company,
-    Publication,
-    Admins } = require ('../../models/index')
+const {
+  Juniors,
+  Languages,
+  Technologies,
+  Company,
+  Publication,
+  Admins,
+} = require("../../models/index");
 
 
-
-    require('dotenv').config();
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const { SECRET } = process.env;
 
-
-
 const signIn = async (req, res) => {
-
     const { name, idUser, gmail, photograph, userType } = req.body;
-
     try{
-        
-        if(userType === 'junior'){
-            
+        if(userType === 'juniors'){
             const user = await Juniors.findOne({ gmail:gmail});
             if(!user){
-                
                 const juniorsCreate = await Juniors.create({
                     _id: idUser,
                     name: name,
@@ -77,6 +71,8 @@ const signIn = async (req, res) => {
     }catch(err){
         res.status(404).json({message: err.message})
     }
-}
+
+  
+};
 
 module.exports = { signIn };

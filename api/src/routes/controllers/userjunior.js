@@ -17,6 +17,7 @@ const jwt = require("jsonwebtoken");
 const getAllJuniors = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
+    console.log(req.headers,'token');
     if (!token) {
       return res
         .status(403)

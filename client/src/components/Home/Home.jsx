@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { getJuniors, getCompanies } from "../../redux/actions";
+import tokenAuth from "../config/token";
 
 import {
   loginOkey,
@@ -23,33 +24,45 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getJuniors());
-    dispatch(getCompanies());
-  },[]);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("dispatch el tokeeenn", token);
+      tokenAuth(token);
+      dispatch(getJuniors());
+      dispatch(getCompanies());
+    }
+  }, [user]);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
-      dispatch(getUserAction(userFirebase, "programador"));
+      dispatch(getUserAction(userFirebase));
     } else {
-      history.push('/')
+      history.push("/");
     }
   });
 
   const companies = useSelector((state) => state.companies);
   const juniors = useSelector((state) => state.juniors);
-  
+
   return (
     <div className='containerhome'>
-            <NavBar />
-            <div className='searchcards'>
-                <div className='search'>
-                    <Search />
-                </div>
-                <div className='cards'>
-                    <CardsCompanies arrayCompanies={companies} />
-                   
-                </div>
+      <NavBar />
+      <div className='d-flex '>
+        <div className='row'>
+          <Search />
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="">
+
+              <CardsCompanies arrayCompanies={companies} />
             </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { getCompanyDetails } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clienteAxios from "../../components/config/clienteAxios";
+
 export default function CompanyDetail() {
     const { id } = useParams();
 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export const CardsCompanies = ({ arrayCompanies }) => {
     //const companies = useSelector((state) => state.companies);
     
+    
     return (
         <>
             <div className='container'>

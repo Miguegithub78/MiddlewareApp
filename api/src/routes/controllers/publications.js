@@ -5,7 +5,7 @@ const postPublications = async (req, res) => {
     const { nameUser, gmailUser } = req.query;
     const { description, photograph } = req.body;
 
-    try{
+    // try{
         
         if(!description) return res.status(404).json({message: "Falta la descripción"});
         if(!nameUser) return res.status(404).json({message: "No se le asigno un usuario a la publicación"});
@@ -63,10 +63,10 @@ const postPublications = async (req, res) => {
             }
         }
         res.status(404).json({message: "Parametros incorrectos"})
-    }
-    catch(err){
-        res.status(404).json({message: err.message})
-    }
+    // }
+    // catch(err){
+    //     res.status(404).json({message: err.message})
+    // }
 
 }
 

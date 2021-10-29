@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
 import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
+import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getJuniors, getCompanies } from './redux/actions/index.js';
@@ -33,6 +34,7 @@ function App() {
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser' component={ProfileUser} />
 				<Route path='/companies/:id' component={CompanyDetail} />
+				<Route exact path='/publicaciones' component={Publications}/>
 
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>

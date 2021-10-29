@@ -1,5 +1,13 @@
-import { LOGIN_OKEY, LOGOUT_OKEY, LOGIN_GOOGLE, LOGIN_GUITHUB, GET_JUNIORS, GET_COMPANIES } from "../types";
+import {
+  LOGIN_OKEY,
+  LOGOUT_OKEY,
+  LOGIN_GOOGLE,
+  LOGIN_GUITHUB,
+  GET_JUNIORS,
+  GET_COMPANIES,
+} from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
+import tokenAuth from '../../components/config/token'
 import { auth } from "../../firebaseConfig";
 import {
   signInWithPopup,
@@ -22,20 +30,20 @@ export const loginUserAction = (provider, userType) => {
             idUser: uid,
             gmail: email,
             photograph: photoURL,
-            userType,
+            userType: "junior",
           };
           try {
-            console.log(user, 'ser');
-            clienteAxios.post('/login', user).then((rta) => {
-              console.log('rta', rta);
+            console.log(user, "ser");
+            clienteAxios.post("/login", user).then((rta) => {
+              console.log("rta", rta);
               dispatch(loginOkey(rta.data.user));
-              localStorage.setItem('token', rta.data.token)
+              localStorage.setItem("token", rta.data.token);
+              tokenAuth(rta.data.token);
             });
-            console.log('esto');
+            console.log("esto");
           } catch (error) {
-            console.log(error,'error');
+            console.log(error, "error");
           }
-           
         });
       } else if (provider === "guithub") {
         await signInWithPopup(auth, guithubProvider).then((userProvider) => {
@@ -88,7 +96,6 @@ export const getUserAction = (userProvider, type) => {
       //   userType: type,
       // };
       //  obtengo token de local storage
-
       // clienteAxios.get("/getUser/" + id).then((rta) => {
       // dispatch(loginOkey(user));
       // });
@@ -106,6 +113,7 @@ export const logOutUserAction = () => {
   return async (dispatch) => {
     try {
       await signOut(auth);
+      localStorage.removeItem('token')
       dispatch(logOutOkey());
     } catch (e) {
       console.log(e);
@@ -118,36 +126,29 @@ export const logOutOkey = () => ({
 
 export function postUser(payload) {
   return async function (dispatch) {
-    const response = await clienteAxios.post(
-      "http://localhost:3001/juniors",
-      payload
-    );
-    console.log(response);
+    const response = await clienteAxios.post("/juniors", payload);
+    console.log(response, "response postuser ");
     return response;
   };
 }
 
-export function getLanguages(payload){
-  return async function(dispatch) {
+export function getLanguages(payload) {
+  return async function (dispatch) {
     try {
-      const json = await clienteAxios.get('/languages');
-      return dispatch( {type: 'GET_LANGUAGES', payload: json.data})
-    } catch (error) {
-      
-    }
-  }
-};
+      const json = await clienteAxios.get("/languages");
+      return dispatch({ type: "GET_LANGUAGES", payload: json.data });
+    } catch (error) {}
+  };
+}
 
-export function getTechnologies(payload){
-  return async function(dispatch) {
+export function getTechnologies(payload) {
+  return async function (dispatch) {
     try {
-      const json = await clienteAxios.get('/technologies');
-      return dispatch( {type: 'GET_TECHNOLOGIES', payload: json.data})
-    } catch (error) {
-      
-    }
-  }
-};
+      const json = await clienteAxios.get("/technologies");
+      return dispatch({ type: "GET_TECHNOLOGIES", payload: json.data });
+    } catch (error) {}
+  };
+}
 
 export const getCompanyDetails = (id) => {
   return async function (dispatch) {
@@ -160,27 +161,23 @@ export const getCompanyDetails = (id) => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 };
 
-export function getJuniors(payload){
-  return async function(dispatch) {
+export function getJuniors(payload) {
+  return async function (dispatch) {
     try {
-      const json = await clienteAxios.get('/juniors');
-      return dispatch( {type: 'GET_JUNIORS', payload: json.data})
-    } catch (error) {
-      
-    }
-  }
-};
+      const json = await clienteAxios.get("/juniors");
+      return dispatch({ type: "GET_JUNIORS", payload: json.data });
+    } catch (error) {}
+  };
+}
 
-export function getCompanies(payload){
-  return async function(dispatch) {
+export function getCompanies(payload) {
+  return async function (dispatch) {
     try {
-      const json = await clienteAxios.get('/companies');
-      return dispatch( {type: 'GET_COMPANIES', payload: json.data})
-    } catch (error) {
-      
-    }
-  }
-};
+      const json = await clienteAxios.get("/companies");
+      return dispatch({ type: "GET_COMPANIES", payload: json.data });
+    } catch (error) {}
+  };
+}

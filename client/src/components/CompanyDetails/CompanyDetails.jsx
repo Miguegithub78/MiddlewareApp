@@ -38,7 +38,7 @@ export default function CompanyDetail() {
                     <h3>{companies.description}</h3>
                 </div>
             </div>
-    
+            
             <div>
                 <Link to='/home'>
                     <button>Volver</button>

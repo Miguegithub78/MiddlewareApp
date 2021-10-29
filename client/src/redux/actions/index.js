@@ -24,66 +24,45 @@ import tokenAuth from "../../components/config/token";
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
 const guithubProvider = new GithubAuthProvider();
-
-/*LOGIN*/
 export const loginUserAction = (provider, userType) => {
   return async (dispatch) => {
     try {
-      if (provider === "google") {
-        const userProvider = await signInWithPopup(auth, googleProvider);
-        const { uid, email, displayName, photoURL } = userProvider.user;
+      if (provider === "google")
+        var userFirebase = await signInWithPopup(auth, googleProvider);
+      if (provider === "guithub")
+        var userFirebase = await signInWithPopup(auth, guithubProvider);
+      const { uid, email, displayName, photoURL } = userFirebase.user;
+      const user = {
+        name: displayName,
+        idUser: uid,
+        gmail: email,
+        photograph: photoURL,
+        userType,
+      };
+      const rta = await clienteAxios.post("/login", user);
+      dispatch(loginOkey(rta.data.user));
+      localStorage.setItem("token", rta.data.token);
+      localStorage.setItem("userType", "juniors");
+      tokenAuth(rta.data.token);
+    } catch (e) {
+      if (
+        e.message ===
+        "Firebase: Error (auth/account-exists-with-different-credential)."
+      ) {
+        var userFirebase = await signInWithPopup(auth, googleProvider);
+        const { uid, email, displayName, photoURL } = userFirebase.user;
         const user = {
           name: displayName,
           idUser: uid,
           gmail: email,
           photograph: photoURL,
-          userType: "juniors",
+          userType,
         };
-        try {
-          clienteAxios.post("/login", user).then((rta) => {
-            dispatch(loginOkey(rta.data.user));
-            localStorage.setItem("token", rta.data.token);
-            localStorage.setItem("userType", "juniors");
-            tokenAuth(rta.data.token);
-          });
-        } catch (error) {
-          console.log(error, "error");
-        }
-        // });
-      } else if (provider === "guithub") {
-        await signInWithPopup(auth, guithubProvider).then((userProvider) => {
-          const { uuid, email, displayName, photoURL } = userProvider.user;
-          const user = {
-            name: displayName,
-            idUser: uuid,
-            gmail: email,
-            photo: photoURL,
-            userType,
-          };
-          // clienteAxios.post("/login", user).then((rta) => {
-          dispatch(loginOkey(user));
-          // })
-        });
-      }
-    } catch (e) {
-      console.log(e.message);
-      if (
-        e.message ===
-        "Firebase: Error (auth/account-exists-with-different-credential)."
-      ) {
-        await signInWithPopup(auth, googleProvider).then((userProvider) => {
-          const { uid, email, displayName, photoURL } = userProvider.user;
-          const user = {
-            name: displayName,
-            idUser: uid,
-            gmail: email,
-            photo: photoURL,
-            userType,
-          };
-          // clienteAxios.post("/login", user).then((rta) => {
-          dispatch(loginOkey(user));
-          // });
-        });
+        const rta = await clienteAxios.post("/login", user);
+        dispatch(loginOkey(rta.data.user));
+        localStorage.setItem("token", rta.data.token);
+        localStorage.setItem("userType", "juniors");
+        tokenAuth(rta.data.token);
       }
     }
   };
@@ -93,10 +72,8 @@ export const getUserAction = (userProvider) => {
   return async (dispatch) => {
     try {
       const userType = localStorage.getItem("userType");
-      // console.log(userProvider,'userProvider');
       if (userType) {
         clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
-          console.log(rta, "rta");
           dispatch(loginOkey(rta.data));
         });
       }

@@ -27,10 +27,10 @@ const rootReducer = (state = inicialState, action) => {
         details: action.payload,
       };
       case GET_JUNIORS:
-      return {
-        ...state,
-        juniors: action.payload,
-      };
+        return {
+          ...state,
+          juniors: action.payload,
+        };
       case GET_COMPANIES:
       return {
         ...state,

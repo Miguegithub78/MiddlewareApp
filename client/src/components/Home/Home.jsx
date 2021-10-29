@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
+import { getJuniors, getCompanies } from "../../redux/actions";
+
 import {
   loginOkey,
   logOutUserAction,
@@ -29,7 +31,8 @@ const Home = () => {
   });
 
   const companies = useSelector((state) => state.companies);
-
+  const juniors = useSelector((state) => state.juniors);
+  
   return (
     <div className='containerhome'>
             <NavBar />

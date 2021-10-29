@@ -154,6 +154,7 @@ export function getJuniors(payload){
   return async function(dispatch) {
     try {
       const json = await clienteAxios.get('/juniors');
+      console.log('juniors actions' + json.data)
       return dispatch( {type: 'GET_JUNIORS', payload: json.data})
     } catch (error) {
       
@@ -165,6 +166,7 @@ export function getCompanies(payload){
   return async function(dispatch) {
     try {
       const json = await clienteAxios.get('/companies');
+      console.log('companies actions' + json.data)
       return dispatch( {type: 'GET_COMPANIES', payload: json.data})
     } catch (error) {
       

@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { getJuniors, getCompanies } from './redux/actions/index.js';
 
 function App() {
-  // const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   
   // useEffect(() => {
   //   if (token) {

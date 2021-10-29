@@ -20,7 +20,7 @@ import {
 	GithubAuthProvider,
 	signOut,
 } from 'firebase/auth';
-
+import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
 const guithubProvider = new GithubAuthProvider();
@@ -230,7 +230,7 @@ export function getPublicationsById(id) {
 export function postPublications(payload) {
 	return async function () {
 		const response = await clienteAxios.post(
-			'http://localhost:3001/publications',
+			'/publications',
 			payload
 		);
 		return response;
@@ -240,7 +240,7 @@ export function postPublications(payload) {
 export function putPublications(id) {
 	return async function () {
 		const response = await clienteAxios.put(
-			`http://localhost:3001/publications/${id}`
+			`/publications/${id}`
 		);
 		return response;
 	};
@@ -250,7 +250,7 @@ export function putPublications(id) {
 export function deletePublications(id) {
 	return async function () {
 		const response = await clienteAxios.delete(
-			`http://localhost:3001/publications${id}`
+			`/publications${id}`
 		);
 		return response;
 	};

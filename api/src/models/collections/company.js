@@ -2,6 +2,11 @@ const { Schema, model } = require('mongoose');
 
 const companySchema = new Schema({
 
+    _id: {
+        type: String,
+        required: true
+    },
+
     name: {
         type: String,
         required: true
@@ -9,7 +14,7 @@ const companySchema = new Schema({
 
     webpage: {
         type: String,
-        required: true
+        required: false
     },
 
     gmail: {

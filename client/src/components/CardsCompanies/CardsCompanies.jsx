@@ -24,7 +24,6 @@ export const CardsCompanies = ({ arrayCompanies }) => {
                 ))
             ) : (    <p>Loading...</p>
             )}
-
             </div>
         </>
     );

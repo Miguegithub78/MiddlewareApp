@@ -7,7 +7,7 @@ const {
   Admins,
 } = require("../../models/index");
 
-const { jwtgenerater, finder } = require("../../helpers/index");
+
 
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -28,13 +28,13 @@ const signIn = async (req, res) => {
           photograph:
             photograph || "https://www.w3schools.com/howto/img_avatar.png",
         });
-        const token = jwt.sign({ id: juniorsCreate._id }, SECRET, {
+        const token = await jwt.sign({ id: juniorsCreate._id }, SECRET, {
           expiresIn: 60 * 60 * 24,
         });
         res.json({ auth: true, token: token, user: juniorsCreate });
         return;
       }
-      const token = jwt.sign({ id: idUser }, SECRET, {
+      const token = await jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,
       });
 

@@ -149,9 +149,9 @@ const deleteJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = decoder(token);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = finderId({collections: Juniors, id:decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -166,7 +166,7 @@ const deleteJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "usuario no autorizado" });
     }
 
-    const getJunior = await Juniors.findById(id);
+    const getJunior = user;
 
     getJunior.publications.forEach(async (e) => {
       await Publication.findByIdAndDelete(e._id);

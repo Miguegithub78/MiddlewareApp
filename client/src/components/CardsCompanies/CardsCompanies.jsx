@@ -8,10 +8,10 @@ export const CardsCompanies = ({ arrayCompanies }) => {
     //const companies = useSelector((state) => state.companies);
 
     return (
-        <div className="card-deck" >
+        <div className="d-flex justify-content-around " >
 
-            <div className="card text-center   bg-dark " style={{ width: " 70% " }} >
-                {arrayCompanies.map((p) => (
+            {arrayCompanies.map((p) => (
+                <div className="card text-center  mx-5  bg-dark " style={{ width: " 80% " }} >
                     <Link to={`/companies/${p._id}`} key={p.name}>
 
                         <img src={p.photograph} className="card-img-top" style={{ width: " 80% " }} alt="Card image cap" />
@@ -21,9 +21,8 @@ export const CardsCompanies = ({ arrayCompanies }) => {
                             <p>Empresa Premium: {p.premium}</p>
                         </div>
                     </Link>
-                ))
-                }
-            </div >
+                </div >
+            ))}
         </div >
 
 

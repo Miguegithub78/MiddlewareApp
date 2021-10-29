@@ -41,13 +41,13 @@ const Home = () => {
   return (
     <div className='containerhome'>
       <NavBar />
-      <div className='d-flex justify-content-center align-items-center h-100'>
+      <div className='d-flex '>
         <div className='row'>
           <Search />
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-md-4">
+            <div className="">
 
               <CardsCompanies arrayCompanies={companies} />
             </div>

@@ -1,9 +1,6 @@
 .containerhome {
 
- 
-  text-align: center;
-  height: 100%;
   background-image: url("fondo.jpeg");
-  background-size: cover;
-  padding-bottom: 25px;
+background-repeat: no-repeat;
+
 }

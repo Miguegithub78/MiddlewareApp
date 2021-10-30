@@ -50,7 +50,7 @@ const Home = () => {
   return (
     <div className='containerhome'>
       <NavBar />
-      <div className='d-flex '>
+      <div className='container-fluid'>
         <div className='row'>
           <Search />
         </div>

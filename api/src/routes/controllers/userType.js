@@ -1,31 +1,24 @@
-const { Juniors,
-    Languages,
-    Technologies,
-    Company,
-    Publication,
-    Admins } = require ('../../models/index')
+const {
+  Juniors,
+  Languages,
+  Technologies,
+  Company,
+  Publication,
+  Admins,
+} = require("../../models/index");
 
-const { jwtgenerater, finder } = require('../../helpers/index')
 
-    require('dotenv').config();
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const { SECRET } = process.env;
 
-
-
 const signIn = async (req, res) => {
-
     const { name, idUser, gmail, photograph, userType } = req.body;
-
     try{
-        
-        if(userType === 'junior'){
-            
-
-            const user = finder({collection: Juniors, gmail: gmail})
+        if(userType === 'juniors'){
+            const user = await Juniors.findOne({ gmail:gmail});
             if(!user){
-                
                 const juniorsCreate = await Juniors.create({
                     _id: idUser,
                     name: name,
@@ -33,23 +26,25 @@ const signIn = async (req, res) => {
                     photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
                 })
 
-                const token = jwtgenerater({id: juniorsCreate._id});
+                const token = await jwt.sign({id: idUser}, SECRET, {
+                    expiresIn: 60 * 60 * 24
+                });
                 
-                res.json({auth: true, token: token, user: juniorsCreate});
-                return
+                return res.json({auth: true, token: token, user: juniorsCreate});
+                
             }
 
-            const token = jwtgenerater({id: idUser}, SECRET, {
+            const token = jwt.sign({id: idUser}, SECRET, {
                 expiresIn: 60 * 60 * 24
             })
-
-            res.json({auth: true, token: token, user: user})
+            console.log(user)
+            return res.json({auth: true, token: token, user: user})
         }
 
         if(userType === 'company'){
             
 
-            const user = finder({collection: Company, gmail: gmail})
+            const user = await Company.findOne({ gmail:gmail});
             if(!user){
                 
                 const CompanyCreate = await Company.create({
@@ -59,19 +54,25 @@ const signIn = async (req, res) => {
                     photograph: photograph || 'https://www.w3schools.com/howto/img_avatar.png',
                 })
 
-                const token = jwtgenerater({id: CompanyCreate._id});
+                const token = await jwt.sign({id: idUser}, SECRET, {
+                    expiresIn: 60 * 60 * 24
+                });
                 
                 res.json({auth: true, token: token, user: CompanyCreate});
                 return
             }
 
-            const token = jwtgenerater({id: idUser})
+            const token = await jwt.sign({id: idUser}, SECRET, {
+                expiresIn: 60 * 60 * 24
+            });
 
             res.json({auth: true, token: token, user: user})
         }
     }catch(err){
         res.status(404).json({message: err.message})
     }
-}
+
+  
+};
 
 module.exports = { signIn };

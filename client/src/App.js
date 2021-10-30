@@ -10,9 +10,15 @@ import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getJuniors, getCompanies } from './redux/actions/index.js';
-
+import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
 function App() {
-	const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+  
+  // useEffect(() => {
+  //   if (token) {
+  //     tokenAuth(token);
+  //   }
+  // }, [token])
 
 	useEffect(() => {
 		if (token) {
@@ -32,10 +38,10 @@ function App() {
 				<Route exact path='/login/:type' component={Login} />
 				<Route exact path='/home' component={Home} />
 				<Route exact path='/' component={LandingPage} />
-				<Route exact path='/profileuser' component={ProfileUser} />
+				<Route exact path='/profileuser/:id' component={ProfileUser} />
 				<Route path='/companies/:id' component={CompanyDetail} />
 				<Route exact path='/publicaciones' component={Publications}/>
-
+				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

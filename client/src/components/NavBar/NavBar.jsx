@@ -6,6 +6,8 @@ import styles from "./NavBar.module.css";
 function NavBar() {
 	const dispatch = useDispatch()
 	const { user } = useSelector((state) => state);
+	const junior = useSelector((state) => state.companies);
+	console.log(junior)
 
 
 	return (
@@ -40,7 +42,7 @@ function NavBar() {
 								{user ? user.name : "Usuario"}
 							</a>
 							<ul className="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
-								<li><Link className="dropdown-item" to='/profileuser'>Mi perfil</Link></li>
+								<li><Link className="dropdown-item" to={`/profileuser/1`}>Mi perfil</Link></li>
 								<li><hr className="dropdown-divider" /></li>
 								<li><button className="dropdown-item" onClick={() => dispatch(logOutUserAction())}>Cerrar sesión</button></li>
 							</ul>

@@ -8,21 +8,33 @@ export const CardsCompanies = ({ arrayCompanies }) => {
     //const companies = useSelector((state) => state.companies);
 
     return (
-        <div className="d-flex mt-5">
+        <div className="">
+            <div className="row">
+                <div className="col-lg-12 text-center">
+                    <div className="row">
 
-            {arrayCompanies.map((p) => (
-                <div className={`card text-center  mx-4  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
-                    <Link to={`/companies/${p._id}`} key={p.name}>
+                        {arrayCompanies.map((p) => (
+                            <div className="col-lg-3 col-md 12 mb-4">
+                                <div className="card-section border rounded p-3">
 
-                        <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 80% " }} alt="Card image cap" />
+                                    <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
+                                        <Link to={`/companies/${p._id}`} key={p.name}>
 
-                        <div className="card-body  text-dark">
-                            <h6 className="card-title">{p.name}</h6>
-                        </div>
-                    </Link>
-                </div >
-            ))}
-        </div >
+                                            <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 80% " }} alt="Card image cap" />
+
+                                            <div className="card-body  text-dark">
+                                                <h6 className="card-title">{p.name}</h6>
+                                            </div>
+                                        </Link>
+                                    </div >
+                                </div>
+                            </div>
+                        ))}
+                    </div >
+                </div>
+
+            </div>
+        </div>
 
 
     );

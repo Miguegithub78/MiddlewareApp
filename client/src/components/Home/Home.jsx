@@ -48,14 +48,16 @@ const Home = () => {
   const juniors = useSelector((state) => state.juniors);
 
   return (
-    <div className='containerhome'>
+    <div className="">
       <NavBar />
-      <div className='container-fluid'>
-        <div className='row'>
-          <Search />
+      <div className=''>
+        <div className=''>
+          <div className="">
+            <Search />
+          </div>
         </div>
-        <div className="container">
-          <div className="row">
+        <div className="">
+          <div className="">
             <div className="">
 
               <CardsCompanies arrayCompanies={companies} />

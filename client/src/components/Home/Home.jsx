@@ -59,7 +59,7 @@ const Home = () => {
             <div className="">
 
               <CardsCompanies arrayCompanies={companies} />
-              {/*<CardsJuniors arrayJuniors={juniors} />*/}
+              {/*<CardsJuniors arrayJuniors={juniors} / >*/}
             </div>
 
           </div>

@@ -18,7 +18,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
 
                         <div className="card-body  text-light">
                             <p className="card-title">{p.name}</p>
-                            <p>Empresa Premium: {p.premium}</p>
+                            
                         </div>
                     </Link>
                 </div >

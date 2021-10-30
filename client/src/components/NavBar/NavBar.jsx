@@ -26,7 +26,7 @@ function NavBar() {
 							</li>
 						) : null}
 						<li className="nav-item">
-							<a className="nav-link" aria-current="page" href="#">Empleos</a>
+							<Link className="nav-link" aria-current="page" to="/publicaciones">Publicaciones</Link>
 						</li>
 						<li className="nav-item">
 							<a className="nav-link" href="#">Mis empleos</a>

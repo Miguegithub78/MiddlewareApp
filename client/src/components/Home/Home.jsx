@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
-import { getJuniors, getCompanies } from "../../redux/actions";
+import { getJuniors, getCompanies, getTechnologies } from "../../redux/actions";
 import tokenAuth from "../config/token";
 
 import {
@@ -31,6 +31,7 @@ const Home = () => {
       tokenAuth(token);
       dispatch(getJuniors());
       dispatch(getCompanies());
+      dispatch(getTechnologies());
     }
   }, [user]);
 
@@ -47,17 +48,20 @@ const Home = () => {
   const juniors = useSelector((state) => state.juniors);
 
   return (
-    <div className='containerhome'>
+    <div className="">
       <NavBar />
-      <div className='d-flex '>
-        <div className='row'>
-          <Search />
+      <div className=''>
+        <div className=''>
+          <div className="">
+            <Search />
+          </div>
         </div>
-        <div className="container">
-          <div className="row">
+        <div className="">
+          <div className="">
             <div className="">
 
               <CardsCompanies arrayCompanies={companies} />
+              {/*<CardsJuniors arrayJuniors={juniors} / >*/}
             </div>
 
           </div>

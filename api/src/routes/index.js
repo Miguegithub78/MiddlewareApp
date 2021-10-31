@@ -10,12 +10,12 @@ const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
-router.post('/login', signIn);//path del landing(en revision)
+router.post('/login', signIn);//se obtiene el token
 
 router.get('/juniors', getAllJuniors);//se obtienen los usuarios programadores
 router.get('/juniors/:id', getJuniorById); //se obtiene un usuario programador por id
 
-//se crea un usuario programador
+
 router.put('/juniors/:id', updateJuniorsProfile);//se actualiza un usuario programador
 router.delete('/juniors/:id', deleteJuniorsProfile);//se elimina un usuario programador
 

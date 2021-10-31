@@ -104,6 +104,7 @@ const updateJuniorsProfile = async (req, res) => {
 			phone,
 			languages,
 			technologies,
+			description
 		} = req.body;
 
 		if (languages || technologies) {
@@ -125,6 +126,7 @@ const updateJuniorsProfile = async (req, res) => {
 				photograph: photograph,
 				gender: gender,
 				phone: phone,
+				description: description,
 				languages: getJunior.languages.concat(languagesGet),
 				technologies: getJunior.technologies.concat(technologiesGet),
 			},

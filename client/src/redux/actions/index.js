@@ -1,8 +1,6 @@
 import {
   LOGIN_OKEY,
   LOGOUT_OKEY,
-  LOGIN_GUITHUB,
-  LOGIN_GOOGLE,
   GET_JUNIORS,
   GET_JUNIORS_DETAILS,
   GET_COMPANIES,
@@ -42,9 +40,10 @@ export const loginUserAction = (provider, userType) => {
       const rta = await clienteAxios.post("/login", user);
       dispatch(loginOkey(rta.data.user));
       localStorage.setItem("token", rta.data.token);
-      localStorage.setItem("userType", "juniors");
-      tokenAuth(rta.data.token);
+      localStorage.setItem("userType", userType);
+      tokenAuth(rta.data.token); //firmar el token a header
     } catch (e) {
+      console.log(e);
       if (
         e.message ===
         "Firebase: Error (auth/account-exists-with-different-credential)."
@@ -150,11 +149,12 @@ export const getJuniorsDetails = (id) => {
     }
   };
 };
-export function putJuniors(id) {
+export function putJuniors(data, id) {
   return async function () {
     const response = await clienteAxios.put(
-      `http://localhost:3001/juniors/${id}`
+      `/juniors/${id}`, data
     );
+
     return response;
   };
 }
@@ -162,7 +162,7 @@ export function putJuniors(id) {
 export function deleteJuniors(id) {
   return async function () {
     const response = await clienteAxios.delete(
-      `http://localhost:3001/juniors/${id}`
+      `/juniors/${id}`
     );
     return response;
   };

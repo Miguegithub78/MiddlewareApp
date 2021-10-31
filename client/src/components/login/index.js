@@ -23,11 +23,11 @@ const Login = () => {
     <div className="container-login">
       <div className="content">
         <h2>Para Ingresar por favor Inicia Sesión</h2>
-        <button onClick={() => dispatch(loginUserAction("google", type))}>
+        <button className="btn btn-outline-dark me-2" onClick={() => dispatch(loginUserAction("google", type))}>
           Google
         </button>
 
-        <button onClick={() => dispatch(loginUserAction("guithub", type))}>
+        <button className="btn btn-outline-dark" onClick={() => dispatch(loginUserAction("guithub", type))}>
           Guithub
         </button>
       </div>

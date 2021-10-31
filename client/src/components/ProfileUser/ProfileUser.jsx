@@ -186,10 +186,10 @@ const ProfileUser = () => {
 					</ul>
 				</div>
 				<div>
-					<button type='submit'>Actualizar</button>
+					<button className='btn btn-outline-dark me-2' type='submit'>Actualizar</button>
 				</div>
 			</form>
-			<button onClick={(e) => handleReset(e)}>Reiniciar</button>
+			<button className='btn btn-outline-dark me-2' onClick={(e) => handleReset(e)}>Reiniciar</button>
 		</div>
 	);
 };

@@ -1,10 +1,7 @@
 const {
   Juniors,
-  Languages,
-  Technologies,
   Company,
-  Publication,
-  Admins,
+
 } = require("../../models/index");
 
 
@@ -14,8 +11,9 @@ const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 
 const signIn = async (req, res) => {
-    const { name, idUser, gmail, photograph, userType } = req.body;
+    
     try{
+        const { name, idUser, gmail, photograph, userType } = req.body;
         if(userType === 'juniors'){
             const user = await Juniors.findOne({ gmail:gmail});
             if(!user){
@@ -37,7 +35,7 @@ const signIn = async (req, res) => {
             const token = jwt.sign({id: idUser}, SECRET, {
                 expiresIn: 60 * 60 * 24
             })
-            console.log(user)
+
             return res.json({auth: true, token: token, user: user})
         }
 
@@ -46,7 +44,7 @@ const signIn = async (req, res) => {
 
             const user = await Company.findOne({ gmail:gmail});
             if(!user){
-                
+
                 const CompanyCreate = await Company.create({
                     _id: idUser,
                     name: name,
@@ -61,8 +59,8 @@ const signIn = async (req, res) => {
                 res.json({auth: true, token: token, user: CompanyCreate});
                 return
             }
-
-            const token = await jwt.sign({id: idUser}, SECRET, {
+            
+            const token = await jwt.sign({id: user._id}, SECRET, {
                 expiresIn: 60 * 60 * 24
             });
 
@@ -71,8 +69,6 @@ const signIn = async (req, res) => {
     }catch(err){
         res.status(404).json({message: err.message})
     }
-
-  
 };
 
 module.exports = { signIn };

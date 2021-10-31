@@ -8,17 +8,19 @@ export const CardsJuniors = ({ arrayJuniors }) => {
     
     
     return (
-        <>
-            <div className='container'>
+        
+            <div className="">
                 {arrayJuniors?.map((p) => (
-                    
-                    <Link to={`/juniors/${p._id}`} key={p.name}>
-                    <img src={p.photograph} alt="" />
-                    <p>{p.name}{p.lastname}</p>
-                    
-                    </Link>
+                    <div className="" >
+                        <Link to={`/juniors/${p._id}`} key={p.name}>
+                            <img src={p.photograph} alt="" />
+                            <div className="">
+                                <p>{p.name}{p.lastname}</p>
+                            </div>
+                        </Link>
+                    </div>
                 ))}
             </div>
-        </>
+        
     );
 };

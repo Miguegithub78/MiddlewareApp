@@ -1,0 +1,18 @@
+.container-login {
+   display: flex;
+   flex-direction: row;
+   justify-content: left;
+   align-items: center;
+   height: 100vh;
+   background-image: url("Información.png");
+   background-size: cover;
+ }
+ .content{
+   margin-left: 70px;
+
+   max-width: 300px;
+ }
+ h2{
+    color: white;
+    font-size: 2em;
+ }

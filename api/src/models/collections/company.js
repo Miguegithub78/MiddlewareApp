@@ -1,10 +1,19 @@
-const { Schema, model } = require('mongoose');
+const { model } = require('mongoose');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectIdSchema = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 const companySchema = new Schema({
 
     _id: {
         type: String,
         required: true
+    },
+    
+    idMongo: {
+        type: ObjectIdSchema,
+        default: new ObjectId()
     },
 
     name: {

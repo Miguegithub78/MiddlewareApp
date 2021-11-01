@@ -25,8 +25,10 @@ function NavBar() {
 								<a className="nav-link" aria-current="page" href="#">Puente de los sueños</a>
 							</li>
 						) : null}
+
 						<li className="nav-item active">
-							<a className="nav-link fw-normal " aria-current="page" href="#">Empleos</a>
+							<Link className="nav-link fw-normal " aria-current="page" to="/publicaciones">Publicaciones</Link>
+
 						</li>
 						<li className="nav-item">
 							<a className="nav-link fw-normal " href="#">Mis empleos</a>

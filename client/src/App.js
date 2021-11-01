@@ -1,11 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login/index';
+import Login from './components/login/index';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
 import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
+import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getJuniors, getCompanies } from './redux/actions/index.js';
@@ -39,6 +40,7 @@ function App() {
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser/:id' component={ProfileUser} />
 				<Route path='/companies/:id' component={CompanyDetail} />
+				<Route exact path='/publicaciones' component={Publications}/>
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>

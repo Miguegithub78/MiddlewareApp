@@ -215,9 +215,9 @@ export function postPublications(payload) {
 	};
 }
 
-export function putPublications(id) {
+export function putPublications(id, data) {
 	return async function () {
-		const response = await clienteAxios.put(`/publications/${id}`);
+		const response = await clienteAxios.put(`/publications/${id}`, data);
 		return response;
 	};
 }

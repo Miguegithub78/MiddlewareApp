@@ -57,7 +57,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
         </div>
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Celular</h6>
+            <h6 className="mb-0">Algo</h6>
           </div>
           <div className="col-sm-9 text-secondary">
             <input
@@ -72,7 +72,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
         </div>
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Ciudad</h6>
+            <h6 className="mb-0">Algo</h6>
           </div>
           <div className="col-sm-9 text-secondary">
             <input

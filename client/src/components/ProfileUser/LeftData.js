@@ -38,7 +38,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
                 className={`form-control ${!editValue && "green-shadow"}`}
                 type="text"
                 value={infoUser.description}
-                placeholder="Cuenta sobre vos.."
+                placeholder="Quien eres? . . ."
                 onChange={handleChange}
                 name="description"
                 disabled={editValue}

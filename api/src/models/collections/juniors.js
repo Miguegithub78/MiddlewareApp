@@ -21,11 +21,6 @@ const juniorSchema = new Schema({
         required: true
     },
 
-    lastname: {
-        type: String,
-        required: false
-    },
-
     gmail: {
         type: String,
         required: false,
@@ -42,7 +37,11 @@ const juniorSchema = new Schema({
         required: false
     },
 
-    gender: {
+    website: {
+        type: String,
+        required: false
+    },
+    title: {
         type: String,
         required: false
     },
@@ -52,15 +51,16 @@ const juniorSchema = new Schema({
         required: false
     },
 
-    age: {
+    linkedin: {
         type: String,
         required: false
     },
 
-    address: {
+    city: {
         type: String,
         required: false
     },
+
     description: {
         type: String,
         required: false,
@@ -82,8 +82,34 @@ const juniorSchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication'
-    }]
+    }],
     
+    softSkills: [{
+        type: Schema.Types.ObjectId,
+        ref: 'softSkills',
+        autopopulate: true
+    }],
+
+    jobsExperience: [{
+        type: Schema.Types.ObjectId,
+        ref: 'jobsExperience',
+        autopopulate: true
+    }],
+
+    openToRelocate: {
+        type: Boolean,
+        required: false
+    },
+
+    openToRemote: {
+        type: Boolean,
+        required: false
+    },
+
+    openToFullTime: {
+        type: Boolean,
+        required: false
+    },
 })
 
 juniorSchema.plugin(require('mongoose-autopopulate'));

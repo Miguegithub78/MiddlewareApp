@@ -9,6 +9,8 @@ const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities'
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
+const { jobPost, getJobById } = require('./controllers/jobs');
+//, getAllJobs, getJobById, updateJob
 
 router.post('/login', signIn);//path del landing(en revision)
 
@@ -34,6 +36,11 @@ router.get('/publications', getPublications)
 router.get('/publications/:id', getPublicationsById)
 router.post('/publications', postPublications)
 router.put('/publications/:id', putPublication)
+
+// router.get('/jobs', getAllJobs)
+router.get('/jobs/:id', getJobById)
+router.post('/jobs/:id', jobPost)
+// router.put('/jobs/:id', updateJob) 
 
 router.get('/premiumCompany', getAllCompanyPremium)
 router.put('/premiumCompany/:id', updatePremiumCompany)

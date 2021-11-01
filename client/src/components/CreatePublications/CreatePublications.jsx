@@ -89,7 +89,7 @@ const CreatePublications = () => {
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Dolares:</h6>
                         <select onChange={e => handleSelect(e)}className="text-muted bg-light mt-4 mb-3">
-                        <option className="text-muted bg-light mt-4 mb-3" selected >Selecciona</option>
+                        <option className="text-muted bg-light mt-4 mb-3" >Selecciona</option>
                         <option className="text-muted bg-light mt-4 mb-3" value='true'>Si</option>
                         <option className="text-muted bg-light mt-4 mb-3" value='false'>No</option>
                         </select>

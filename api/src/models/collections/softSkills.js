@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose');
 
-const softSkillsSchema = new Schema({
+const softskillsSchema = new Schema({
 
     name: {
         type: String,
         unique: true,
-        required: true
+        required: false
     }
 })
 
-module.exports = model('softskills', softSkillsSchema)
+module.exports = model('softskills', softskillsSchema)

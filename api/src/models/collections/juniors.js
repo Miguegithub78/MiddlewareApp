@@ -84,17 +84,21 @@ const juniorSchema = new Schema({
         ref: 'publication'
     }],
     
-    softSkills: [{
+    softskills: [{
         type: Schema.Types.ObjectId,
-        ref: 'softSkills',
+        ref: 'softskills',
         autopopulate: true
     }],
 
-    jobsExperience: [{
-        type: Schema.Types.ObjectId,
-        ref: 'jobsExperience',
-        autopopulate: true
-    }],
+    jobsExperience: [
+        {
+        
+        companyName: String,
+		 industry: String,
+		 workPosition: String,
+		 workingTime: String
+    }
+],
 
     openToRelocate: {
         type: Boolean,

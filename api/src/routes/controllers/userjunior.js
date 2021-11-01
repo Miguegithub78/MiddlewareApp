@@ -5,6 +5,7 @@ const {
 	Company,
 	Publication,
 	Admins,
+	Softskills
 } = require('../../models/index');
 
 require('dotenv').config();
@@ -59,10 +60,8 @@ const getJuniorById = async (req, res) => {
 
 		const { id } = req.params;
 		const juniorsGet = await Juniors.findById(id)
-			.populate('publications', 'description')
-			.then((p) => {
-				res.json(p);
-			});
+			.populate('publications', 'description', 'softskills')
+				res.json(juniorsGet);
 	} catch (err) {
 		res.status(404).json({ message: err.message });
 	}
@@ -105,13 +104,21 @@ const updateJuniorsProfile = async (req, res) => {
 			description,
 			languages,
 			technologies,
+			publications,
+			softskills,
+			jobsExperience,
+			openToRelocate,
+			openToRemote,
+			openToFullTime,
 		} = req.body;
-
+		
 		if (languages || technologies) {
 			var getJunior = await Juniors.findById(id);
 
 			var technologiesGet = await Technologies.find({ name: technologies });
 			var languagesGet = await Languages.find({ name: languages });
+			var softSkillsGet = await Softskills.create({ name: softskills });
+			var softSkillsGet = await Softskills.find({ name: softskills });
 		}
 
 		const juniorsChange = await Juniors.findOneAndUpdate(
@@ -119,16 +126,24 @@ const updateJuniorsProfile = async (req, res) => {
 				_id: id,
 			},
 			{
-				name: name,
-				lastname: lastname,
-				gmail: gmail,
-				github: github,
-				photograph: photograph,
-				gender: gender,
-				phone: phone,
-				description: description,
-				languages: getJunior.languages.concat(languagesGet),
-				technologies: getJunior.technologies.concat(technologiesGet),
+			name,
+			gmail,
+			github,
+			photograph,
+			website,
+			title,
+			phone,
+			linkedin,
+			city,
+			description,
+			languages: getJunior.languages.concat(languagesGet),
+			technologies: getJunior.technologies.concat(technologiesGet),
+			publications,
+			softskills: getJunior.softskills.concat(softSkillsGet),
+			jobsExperience,
+			openToRelocate,
+			openToRemote,
+			openToFullTime,
 			},
 			{ new: true }
 		);

@@ -82,8 +82,38 @@ const juniorSchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication'
-    }]
+    }],
     
+    softskills: [{
+        type: Schema.Types.ObjectId,
+        ref: 'softskills',
+        autopopulate: true
+    }],
+
+    jobsExperience: [
+        {
+        
+        companyName: String,
+		 industry: String,
+		 workPosition: String,
+		 workingTime: String
+    }
+],
+
+    openToRelocate: {
+        type: Boolean,
+        required: false
+    },
+
+    openToRemote: {
+        type: Boolean,
+        required: false
+    },
+
+    openToFullTime: {
+        type: Boolean,
+        required: false
+    },
 })
 
 juniorSchema.plugin(require('mongoose-autopopulate'));

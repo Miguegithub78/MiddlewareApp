@@ -62,7 +62,7 @@ const updateCompaniesProfile = async (req, res) => {
 				.json({ auth: false, message: 'usuario no autorizado' });
 		}
 
-    const { name, webpage, gmail, photograph, country, state, languages, city } = req.body;
+    const { name, webpage, gmail, description, photograph, country, state, languages, city } = req.body;
 
     const languagesGet = await Languages.find({name: languages})
 
@@ -76,6 +76,7 @@ const updateCompaniesProfile = async (req, res) => {
         country: country,
         state: state,
         city: city,
+        description: description,
         languages: languagesGet,
     }, {new: true})
 

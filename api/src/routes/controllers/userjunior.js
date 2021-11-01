@@ -102,6 +102,7 @@ const updateJuniorsProfile = async (req, res) => {
 			photograph,
 			gender,
 			phone,
+			description,
 			languages,
 			technologies,
 		} = req.body;
@@ -125,6 +126,7 @@ const updateJuniorsProfile = async (req, res) => {
 				photograph: photograph,
 				gender: gender,
 				phone: phone,
+				description: description,
 				languages: getJunior.languages.concat(languagesGet),
 				technologies: getJunior.technologies.concat(technologiesGet),
 			},

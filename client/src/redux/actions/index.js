@@ -22,6 +22,22 @@ import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
 const guithubProvider = new GithubAuthProvider();
+
+const loginHelper = async (userFirebase, dispatch, userType) =>{
+  const { uid, email, displayName, photoURL } = userFirebase.user;
+  const user = {
+    name: displayName,
+    idUser: uid,
+    gmail: email,
+    photograph: photoURL,
+    userType,
+  };
+  const rta = await clienteAxios.post("/login", user);
+  dispatch(loginOkey(rta.data.user));
+  localStorage.setItem("token", rta.data.token);
+  localStorage.setItem("userType", userType);
+  tokenAuth(rta.data.token); //firmar el token a header
+}
 export const loginUserAction = (provider, userType) => {
   return async (dispatch) => {
     try {
@@ -29,19 +45,7 @@ export const loginUserAction = (provider, userType) => {
         var userFirebase = await signInWithPopup(auth, googleProvider);
       if (provider === "guithub")
         var userFirebase = await signInWithPopup(auth, guithubProvider);
-      const { uid, email, displayName, photoURL } = userFirebase.user;
-      const user = {
-        name: displayName,
-        idUser: uid,
-        gmail: email,
-        photograph: photoURL,
-        userType,
-      };
-      const rta = await clienteAxios.post("/login", user);
-      dispatch(loginOkey(rta.data.user));
-      localStorage.setItem("token", rta.data.token);
-      localStorage.setItem("userType", userType);
-      tokenAuth(rta.data.token); //firmar el token a header
+        loginHelper(userFirebase, dispatch, userType)
     } catch (e) {
       console.log(e);
       if (
@@ -49,19 +53,7 @@ export const loginUserAction = (provider, userType) => {
         "Firebase: Error (auth/account-exists-with-different-credential)."
       ) {
         var userFirebase = await signInWithPopup(auth, googleProvider);
-        const { uid, email, displayName, photoURL } = userFirebase.user;
-        const user = {
-          name: displayName,
-          idUser: uid,
-          gmail: email,
-          photograph: photoURL,
-          userType,
-        };
-        const rta = await clienteAxios.post("/login", user);
-        dispatch(loginOkey(rta.data.user));
-        localStorage.setItem("token", rta.data.token);
-        localStorage.setItem("userType", userType);
-        tokenAuth(rta.data.token);
+        loginHelper(userFirebase, dispatch, userType)
       }
     }
   };
@@ -100,7 +92,7 @@ export const logOutUserAction = () => {
 	};
 };
 
-export const logOutOkey = () => ({
+ const logOutOkey = () => ({
 	type: LOGOUT_OKEY,
 });
 

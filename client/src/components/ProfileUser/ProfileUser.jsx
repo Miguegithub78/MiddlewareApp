@@ -1,36 +1,56 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "./helper.css";
 import {
   getLanguages,
   getTechnologies,
   getUserAction,
-  putJuniors
+  putJuniors,
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
-import Languages from "./Languages";
+import LeftData from "./LeftData";
+import PersonalData from "./PersonalData";
+import Prueba2Skill from "./Prueba2Skill";
+import CareerData from "./CareerData";
 
 const ProfileUser = () => {
-
+  const { user } = useSelector((state) => state);
   const history = useHistory();
   const dispatch = useDispatch();
-  const { languages, technologies, user } = useSelector((state) => state);
   const [infoUser, setInfoUser] = useState({
+    name: "",
+    gmail: "",
     description: "",
     github: "",
-    gender: "",
+    website: "",
+    facebook: "",
     phone: "",
+    city: "",
     languages: [],
     technologies: [],
+    title: "",
   });
 
   useEffect(() => {
     dispatch(getLanguages());
     dispatch(getTechnologies());
-  }, []);
+    setInfoUser({
+      name: user && user.name,
+      gmail: user && user.gmail,
+      description: user && user.description,
+      city: user && user.city,
+      github: "",
+      phone: "",
+      website: "",
+      facebook: "",
+      languages: [],
+      technologies: [],
+      title: user && user.title,
+    });
+  }, [user]);
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
@@ -40,329 +60,33 @@ const ProfileUser = () => {
       history.push("/");
     }
   });
-  const handleChange = (e) => {
-    setInfoUser((info) => ({
-      ...info,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  
-  function handleSelectTechnologies(e) {
-    setInfoUser((infoUser) => ({
-      ...infoUser,
-      technologies: [...infoUser.technologies, e.target.value],
-    }));
-  }
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-    setInfoUser({
-      description: "",
-      github: "",
-      gender: "",
-      phone: "",
-      languages: [],
-      technologies: [],
-    });
-  }
 
   return user ? (
     <div>
-      <Link className="btn btn-outline-dark me-2" to="/home">
+      <Link className="btn btn-outline-dark ml-2 mt-2" to="/home">
         Volver al inicio
       </Link>
-      <h2>Tu Perfil</h2>
-      <div className="container text-center">
-        <img className="" src={user.photograph} alt="user-img" />
-        <div className="">
-          <h5 className="">Nombre: {user.name}</h5>
-          <p className="">Sobre mi: {infoUser.description}</p>
-          <p className="">Github: {infoUser.github}</p>
-        </div>
-        <div className=" ">
-          <p className="">Email: {user.gmail}</p>
-        </div>
-        <div className="">
-          <a href="#" className="">
-            Linkedin
-          </a>
-          <a href="#" className="">
-            Github
-          </a>
+      <div className="container mt-3">
+        <div className="main-body">
+          <div className="row">
+            <LeftData
+              setInfoUser={setInfoUser}
+              infoUser={infoUser}
+              user={user}
+            />
+            <div className="col-lg-8">
+              <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <Prueba2Skill />
+            </div>
+          </div>
         </div>
       </div>
-
-      <form onSubmit={handleSubmit} className="container text-center ">
-        <div>
-          <label>Sobre mi: </label>
-          <textarea
-            type="text"
-            value={infoUser.description}
-            name="description"
-            onChange={handleChange}
-            cols="31"
-            rows="3"
-            minLength="5"
-            maxLength="500"
-            placeholder="Introduce una descripción..."
-          />
-        </div>
-        <div>
-          <label>Github: </label>
-          <input
-            type="text"
-            size="30"
-            value={infoUser.github}
-            name="github"
-            onChange={handleChange}
-            placeholder="Your Github"
-          />
-        </div>
-        <div>
-          <label>Género: </label>
-          <input
-            type="text"
-            value={infoUser.gender}
-            size="30"
-            name="gender"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Celular: </label>
-          <input
-            type="text"
-            value={infoUser.phone}
-            // placeholder="Your Github"
-            size="30"
-            name="phone"
-            onChange={handleChange}
-          />
-        </div>
-        <Languages  setInfoUser={setInfoUser} infoUser={infoUser}  />
-        <div>
-          <label>Tecnologías: </label>
-          <select onChange={(e) => handleSelectTechnologies(e)}>
-            {technologies.map((el) => {
-              return (
-                <option key={el._id} value={el.name}>
-                  {el.name}
-                </option>
-              );
-            })}
-            ;
-          </select>
-          <ul>
-            {infoUser.technologies.map((el, i) => (
-              <li key={i}>{el}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <button type="submit">Actualizar</button>
-        </div>
-      </form>
-      {/* <button onClick={(e) => handleReset(e)}>Reiniciar</button> */}
+      <br />
     </div>
   ) : (
     "cargando...."
   );
-=======
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { getLanguages, getTechnologies, putJuniors } from '../../redux/actions';
-import styles from './ProfileUser.module.css';
-
-const ProfileUser = () => {
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const languages = useSelector((state) => state.languages);
-	const technologies = useSelector((state) => state.technologies);
-	const users = useSelector((state) => state.user);
-	const [input, setInput] = useState({
-		lastname: '',
-		description: '',
-		github: '',
-		gender: '',
-		phone: '',
-		languages: [],
-		technologies: [],
-	});
-
-	function handleChange(e) {
-		setInput({
-			...input,
-			[e.target.name]: e.target.value,
-		});
-	}
-
-	function handleReset(e) {
-		setInput({
-			...input,
-			languages: [],
-			technologies: [],
-		});
-	}
-
-	function handleSelectLanguages(e) {
-		setInput({
-			...input,
-			languages: [...input.languages, e.target.value],
-		});
-	}
-
-	function handleSelectTechnologies(e) {
-		setInput({
-			...input,
-			technologies: [...input.technologies, e.target.value],
-		});
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		dispatch(putJuniors(users._id, input));
-		setInput({
-			lastname: '',
-			description: '',
-			github: '',
-			gender: '',
-			phone: '',
-			languages: [],
-			technologies: [],
-		});
-		history.push('/home');
-		alert('Perfil Actualizado');
-	}
-
-	console.log(users);
-
-	const user = {
-		name: 'Maximiliano',
-		idUser: 1,
-		email: 'elquememandogoogle@gmail.com',
-		photo:
-			'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png',
-		userType: 'programadorJR',
-	};
-
-	useEffect(() => {
-		dispatch(getLanguages());
-		dispatch(getTechnologies());
-	}, [dispatch]);
-
-	return (
-		<div>
-			<Link className='btn btn-outline-dark me-2' to='/home'>
-				Volver al inicio
-			</Link>
-			<h1>Tu Perfil</h1>
-			<div class='card'>
-				<img className={styles.user} src={users.photograph} alt='img' />
-				<div class='card-body'>
-					<h5 class='card-title'>Nombre: {users.name}</h5>
-					<p class='card-text'>Sobre mi: {input.description}</p>
-					<p class='card-text'>Github: {input.github}</p>
-				</div>
-				<ul class='list-group list-group-flush'>
-					<li class='list-group-item'>Email: {users.gmail}</li>
-				</ul>
-				<div class='card-body'>
-					<a href='#' class='card-link'>
-						Linkedin
-					</a>
-					<a href='#' class='card-link'>
-						Github
-					</a>
-				</div>
-			</div>
-
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<div>
-					<label>Apellido:</label>
-					<input
-						type='text'
-						value={input.lastname}
-						name='lastname'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Sobre mi:</label>
-					<input
-						type='text'
-						value={input.description}
-						name='description'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Github:</label>
-					<input
-						type='text'
-						value={input.github}
-						name='github'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Género:</label>
-					<input
-						type='text'
-						value={input.gender}
-						name='gender'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Celular:</label>
-					<input
-						type='text'
-						value={input.phone}
-						name='phone'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Idiomas:</label>
-					<select onChange={(e) => handleSelectLanguages(e)}>
-						{languages.map((el) => {
-							return (
-								<option key={el._id} value={el.name}>
-									{el.name}
-								</option>
-							);
-						})}
-						;
-					</select>
-					<ul>
-						<li>{input.languages.map((el) => el + ', ')}</li>
-					</ul>
-				</div>
-				<div>
-					<label>Tecnologías:</label>
-					<select onChange={(e) => handleSelectTechnologies(e)}>
-						{technologies.map((el) => {
-							return (
-								<option key={el._id} value={el.name}>
-									{el.name}
-								</option>
-							);
-						})}
-						;
-					</select>
-					<ul>
-						<li>{input.technologies.map((el) => el + ', ')}</li>
-					</ul>
-				</div>
-				<div>
-					<button className='btn btn-outline-dark me-2' type='submit'>Actualizar</button>
-				</div>
-			</form>
-			<button className='btn btn-outline-dark me-2' onClick={(e) => handleReset(e)}>Reiniciar</button>
-		</div>
-	);
->>>>>>> main
 };
 
 export default ProfileUser;

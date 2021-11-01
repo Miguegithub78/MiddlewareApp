@@ -5,7 +5,6 @@ const {
 	Company,
 	Publication,
 	Admins,
-	SoftSkills
 } = require('../../models/index');
 
 require('dotenv').config();
@@ -97,24 +96,15 @@ const updateJuniorsProfile = async (req, res) => {
 		console.log(req.body);
 		const {
 			name,
+			lastname,
 			gmail,
 			github,
 			photograph,
-			website,
-			title,
+			gender,
 			phone,
-			linkedin,
-			city,
 			description,
 			languages,
 			technologies,
-			publications,
-			softSkills,
-			jobsExperience,
-			openToRelocate,
-			openToRemote,
-			openToFullTime,
-
 		} = req.body;
 
 		if (languages || technologies) {
@@ -122,7 +112,6 @@ const updateJuniorsProfile = async (req, res) => {
 
 			var technologiesGet = await Technologies.find({ name: technologies });
 			var languagesGet = await Languages.find({ name: languages });
-			var softSkillsGet = await SoftSkills.find({ name: softSkills });
 		}
 
 		const juniorsChange = await Juniors.findOneAndUpdate(
@@ -130,24 +119,16 @@ const updateJuniorsProfile = async (req, res) => {
 				_id: id,
 			},
 			{
-				name,
-			gmail,
-			github,
-			photograph,
-			website,
-			title,
-			phone,
-			linkedin,
-			city,
-			description,
-			languages: getJunior.languages.concat(languagesGet),
-			technologies: getJunior.technologies.concat(technologiesGet),
-			publications,
-			softSkills: getJunior.softSkills.concat(softSkillsGet),
-			jobsExperience,
-			openToRelocate,
-			openToRemote,
-			openToFullTime,
+				name: name,
+				lastname: lastname,
+				gmail: gmail,
+				github: github,
+				photograph: photograph,
+				gender: gender,
+				phone: phone,
+				description: description,
+				languages: getJunior.languages.concat(languagesGet),
+				technologies: getJunior.technologies.concat(technologiesGet),
 			},
 			{ new: true }
 		);

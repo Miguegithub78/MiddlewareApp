@@ -1,197 +1,92 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { getLanguages, getTechnologies, putJuniors } from '../../redux/actions';
-import styles from './ProfileUser.module.css';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import "./helper.css";
+import {
+  getLanguages,
+  getTechnologies,
+  getUserAction,
+  putJuniors,
+} from "../../redux/actions";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+import { useHistory } from "react-router-dom";
+import LeftData from "./LeftData";
+import PersonalData from "./PersonalData";
+import Prueba2Skill from "./Prueba2Skill";
+import CareerData from "./CareerData";
 
 const ProfileUser = () => {
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const languages = useSelector((state) => state.languages);
-	const technologies = useSelector((state) => state.technologies);
-	const users = useSelector((state) => state.user);
-	const [input, setInput] = useState({
-		lastname: '',
-		description: '',
-		github: '',
-		gender: '',
-		phone: '',
-		languages: [],
-		technologies: [],
-	});
+  const { user } = useSelector((state) => state);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [infoUser, setInfoUser] = useState({
+    name: "",
+    gmail: "",
+    description: "",
+    github: "https://github.com/",
+    website: "",
+    facebook: "https://facebook.com/",
+    phone: "",
+    city: "",
+    languages: [],
+    technologies: [],
+    title: "",
+  });
 
-	function handleChange(e) {
-		setInput({
-			...input,
-			[e.target.name]: e.target.value,
-		});
-	}
+  useEffect(() => {
+    dispatch(getLanguages());
+    dispatch(getTechnologies());
+    setInfoUser({
+      name: user && user.name,
+      gmail: user && user.gmail,
+      description: user && user.description,
+      city: user && user.city,
+      github:user && user.github ,
+      phone: "",
+      website: "",
+      // facebook: user && user.github?"https://facebook.com/":user.github,
+      languages: [],
+      technologies: [],
+      title: user && user.title,
+    });
+  }, [user]);
 
-	function handleReset(e) {
-		setInput({
-			...input,
-			languages: [],
-			technologies: [],
-		});
-	}
+  onAuthStateChanged(auth, (userFirebase) => {
+    if (userFirebase) {
+      if (user) return;
+      dispatch(getUserAction(userFirebase));
+    } else {
+      history.push("/");
+    }
+  });
 
-	function handleSelectLanguages(e) {
-		setInput({
-			...input,
-			languages: [...input.languages, e.target.value],
-		});
-	}
-
-	function handleSelectTechnologies(e) {
-		setInput({
-			...input,
-			technologies: [...input.technologies, e.target.value],
-		});
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		dispatch(putJuniors(users._id, input));
-		setInput({
-			lastname: '',
-			description: '',
-			github: '',
-			gender: '',
-			phone: '',
-			languages: [],
-			technologies: [],
-		});
-		history.push('/home');
-		alert('Perfil Actualizado');
-	}
-
-	console.log(users);
-
-	const user = {
-		name: 'Maximiliano',
-		idUser: 1,
-		email: 'elquememandogoogle@gmail.com',
-		photo:
-			'https://dthezntil550i.cloudfront.net/f4/latest/f41908291942413280009640715/1280_960/1b2d9510-d66d-43a2-971a-cfcbb600e7fe.png',
-		userType: 'programadorJR',
-	};
-
-	useEffect(() => {
-		dispatch(getLanguages());
-		dispatch(getTechnologies());
-	}, [dispatch]);
-
-	return (
-		<div>
-			<Link className='btn btn-outline-dark me-2' to='/home'>
-				Volver al inicio
-			</Link>
-			<h1>Tu Perfil</h1>
-			<div class='card'>
-				<img className={styles.user} src={users.photograph} alt='img' />
-				<div class='card-body'>
-					<h5 class='card-title'>Nombre: {users.name}</h5>
-					<p class='card-text'>Sobre mi: {input.description}</p>
-					<p class='card-text'>Github: {input.github}</p>
-				</div>
-				<ul class='list-group list-group-flush'>
-					<li class='list-group-item'>Email: {users.gmail}</li>
-				</ul>
-				<div class='card-body'>
-					<a href='#' class='card-link'>
-						Linkedin
-					</a>
-					<a href='#' class='card-link'>
-						Github
-					</a>
-				</div>
-			</div>
-
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<div>
-					<label>Apellido:</label>
-					<input
-						type='text'
-						value={input.lastname}
-						name='lastname'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Sobre mi:</label>
-					<input
-						type='text'
-						value={input.description}
-						name='description'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Github:</label>
-					<input
-						type='text'
-						value={input.github}
-						name='github'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Género:</label>
-					<input
-						type='text'
-						value={input.gender}
-						name='gender'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Celular:</label>
-					<input
-						type='text'
-						value={input.phone}
-						name='phone'
-						onChange={handleChange}
-					/>
-				</div>
-				<div>
-					<label>Idiomas:</label>
-					<select onChange={(e) => handleSelectLanguages(e)}>
-						{languages.map((el) => {
-							return (
-								<option key={el._id} value={el.name}>
-									{el.name}
-								</option>
-							);
-						})}
-						;
-					</select>
-					<ul>
-						<li>{input.languages.map((el) => el + ', ')}</li>
-					</ul>
-				</div>
-				<div>
-					<label>Tecnologías:</label>
-					<select onChange={(e) => handleSelectTechnologies(e)}>
-						{technologies.map((el) => {
-							return (
-								<option key={el._id} value={el.name}>
-									{el.name}
-								</option>
-							);
-						})}
-						;
-					</select>
-					<ul>
-						<li>{input.technologies.map((el) => el + ', ')}</li>
-					</ul>
-				</div>
-				<div>
-					<button className='btn btn-outline-dark me-2' type='submit'>Actualizar</button>
-				</div>
-			</form>
-			<button className='btn btn-outline-dark me-2' onClick={(e) => handleReset(e)}>Reiniciar</button>
-		</div>
-	);
+  return user ? (
+    <div>
+      <Link className="btn btn-outline-dark ml-2 mt-2" to="/home">
+        Volver al inicio
+      </Link>
+      <div className="container mt-3">
+        <div className="main-body">
+          <div className="row">
+            <LeftData
+              setInfoUser={setInfoUser}
+              infoUser={infoUser}
+              user={user}
+            />
+            <div className="col-lg-8">
+              <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <Prueba2Skill />
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+  ) : (
+    "cargando...."
+  );
 };
 
 export default ProfileUser;

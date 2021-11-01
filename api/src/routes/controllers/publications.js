@@ -3,7 +3,7 @@ const { Juniors, Company, Publication, Admins } = require ('../../models/index')
 const postPublications = async (req, res) => {
 
     const { nameUser, gmailUser } = req.query;
-    const { description, photograph } = req.body;
+    const { description, photograph, country, dollar, tech, title } = req.body;
 
     try{
         
@@ -34,6 +34,10 @@ const postPublications = async (req, res) => {
                 var postCreated = await Publication.create({
                     description: description,
                     photograph: photograph,
+                    country: country,
+                    dollar: dollar,
+                    tech: tech,
+                    title: title,
                     company: getCompany,
                     junior: getJunior,
                     admin: getAdmin

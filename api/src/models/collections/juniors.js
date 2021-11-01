@@ -1,10 +1,19 @@
-const { Schema, model } = require('mongoose');
+const { model } = require('mongoose');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectIdSchema = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 const juniorSchema = new Schema({
 
     _id: {
-        type: Schema.Types.ObjectId,
-        required: true
+        type: String,
+        required: true 
+    },
+
+    idMongo: {
+        type: ObjectIdSchema,
+        default: new ObjectId()
     },
 
     name: {
@@ -73,8 +82,38 @@ const juniorSchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication'
-    }]
+    }],
     
+    softskills: [{
+        type: Schema.Types.ObjectId,
+        ref: 'softskills',
+        autopopulate: true
+    }],
+
+    jobsExperience: [
+        {
+        
+        companyName: String,
+		 industry: String,
+		 workPosition: String,
+		 workingTime: String
+    }
+],
+
+    openToRelocate: {
+        type: Boolean,
+        required: false
+    },
+
+    openToRemote: {
+        type: Boolean,
+        required: false
+    },
+
+    openToFullTime: {
+        type: Boolean,
+        required: false
+    },
 })
 
 juniorSchema.plugin(require('mongoose-autopopulate'));

@@ -67,12 +67,6 @@ const companySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'publication',
         // autopopulate: true
-    }],
-
-    jobs: [{
-        type: Schema.Types.ObjectId,
-        ref: 'publication',
-        // autopopulate: true
     }]
 })
 

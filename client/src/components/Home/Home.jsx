@@ -48,18 +48,20 @@ const Home = () => {
   const juniors = useSelector((state) => state.juniors);
 
   return (
-    <div className='containerhome'>
+    <div className="">
       <NavBar />
-      <div className='d-flex '>
-        <div className='row'>
-          <Search />
+      <div className=''>
+        <div className=''>
+          <div className="">
+            <Search />
+          </div>
         </div>
-        <div className="container">
-          <div className="row">
+        <div className="">
+          <div className="">
             <div className="">
 
               <CardsCompanies arrayCompanies={companies} />
-              {/*<CardsJuniors arrayJuniors={juniors} />*/}
+              {/*<CardsJuniors arrayJuniors={juniors} / >*/}
             </div>
 
           </div>

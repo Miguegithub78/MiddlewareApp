@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const companySchema = new Schema({
 
     _id: {
-        type: String,
+        type: Schema.Types.ObjectId,
         required: true
     },
 

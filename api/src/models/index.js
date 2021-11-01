@@ -6,7 +6,6 @@ const Publication = require('./collections/publication');
 const Admins = require('./collections/admins')
 const Softskills = require('./collections/softskills')
 
-
 module.exports = {
     Juniors,
     Languages,

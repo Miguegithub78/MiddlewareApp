@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
-import LoginImage from "./loginImage.png"
+import LoginImage from "./image.png"
 export default function LandingPage() {
   return (
     <div className="">
@@ -10,8 +10,8 @@ export default function LandingPage() {
         <div className="">
           <h1>Middleware</h1>
           <h5>Un puente entre empresas y programadores</h5>
-          <Link className="btn btn-outline-dark me-2" to="/login/juniors">Programador Js</Link>
-          <Link className="btn btn-outline-dark " to="/login/company">Empresa</Link>
+          <Link className="btn btn-block btn-dark btn-outline-light me-2" to="/login/juniors">Programador Js</Link>
+          <Link className="btn btn-block btn-dark btn-outline-light" to="/login/company">Empresa</Link>
         </div>
 
         <div className="">

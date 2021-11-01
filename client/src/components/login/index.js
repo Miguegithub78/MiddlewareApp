@@ -20,16 +20,26 @@ const Login = () => {
   });
 
   return (
-    <div className="container-login">
-      <div className="content">
-        <h2>Para Ingresar por favor Inicia Sesión</h2>
-        <button onClick={() => dispatch(loginUserAction("google", type))}>
-          Google
-        </button>
-
-        <button onClick={() => dispatch(loginUserAction("guithub", type))}>
-          Guithub
-        </button>
+    <div class="form-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-1 ">
+            <div class="form-container ">
+              <div class="form-img"></div>
+              <form class="form-horizontal">
+                <h2 class="title">Para Ingresar por favor Inicia Sesión</h2>
+                <div class="form-group">
+                  <button className="btn btn-block btn-dark btn-outline-light me-2" onClick={() => dispatch(loginUserAction("google", type))}>
+                    Google
+                  </button>
+                  <button className="btn btn-block btn-dark btn-outline-light " onClick={() => dispatch(loginUserAction("guithub", type))}>
+                    Guithub
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

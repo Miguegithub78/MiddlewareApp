@@ -110,9 +110,8 @@ const updateJuniorsProfile = async (req, res) => {
 			openToRelocate,
 			openToRemote,
 			openToFullTime,
-
 		} = req.body;
-
+		
 		if (languages || technologies) {
 			var getJunior = await Juniors.findById(id);
 

@@ -29,13 +29,8 @@ const adminSchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication'
-    }],
-    
-    jobs: [{
-        type: Schema.Types.ObjectId,
-        ref: 'publication',
-        // autopopulate: true
     }]
+
 })
 
 module.exports = model('admins', adminSchema)

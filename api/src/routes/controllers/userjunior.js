@@ -5,7 +5,7 @@ const {
 	Company,
 	Publication,
 	Admins,
-	SoftSkills
+	Softskills
 } = require('../../models/index');
 
 require('dotenv').config();
@@ -60,10 +60,8 @@ const getJuniorById = async (req, res) => {
 
 		const { id } = req.params;
 		const juniorsGet = await Juniors.findById(id)
-			.populate('publications', 'description')
-			.then((p) => {
-				res.json(p);
-			});
+			.populate('publications', 'description', 'softskills')
+				res.json(juniorsGet);
 	} catch (err) {
 		res.status(404).json({ message: err.message });
 	}
@@ -109,7 +107,7 @@ const updateJuniorsProfile = async (req, res) => {
 			languages,
 			technologies,
 			publications,
-			softSkills,
+			softskills,
 			jobsExperience,
 			openToRelocate,
 			openToRemote,
@@ -122,7 +120,8 @@ const updateJuniorsProfile = async (req, res) => {
 
 			var technologiesGet = await Technologies.find({ name: technologies });
 			var languagesGet = await Languages.find({ name: languages });
-			var softSkillsGet = await SoftSkills.find({ name: softSkills });
+			var softSkillsGet = await Softskills.create({ name: softskills });
+			var softSkillsGet = await Softskills.find({ name: softskills });
 		}
 
 		const juniorsChange = await Juniors.findOneAndUpdate(
@@ -143,7 +142,7 @@ const updateJuniorsProfile = async (req, res) => {
 			languages: getJunior.languages.concat(languagesGet),
 			technologies: getJunior.technologies.concat(technologiesGet),
 			publications,
-			softSkills: getJunior.softSkills.concat(softSkillsGet),
+			softskills: getJunior.softskills.concat(softSkillsGet),
 			jobsExperience,
 			openToRelocate,
 			openToRemote,

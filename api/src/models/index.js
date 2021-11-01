@@ -5,7 +5,7 @@ const Company = require('./collections/company');
 const Publication = require('./collections/publication');
 const Admins = require('./collections/admins')
 const Jobs = require('./collections/jobs');
-const SoftSkills = require('./collections/softSkills')
+const Softskills = require('./collections/softskills')
 
 module.exports = {
     Juniors,
@@ -15,5 +15,5 @@ module.exports = {
     Publication,
     Admins,
     Jobs,
-    SoftSkills
+    Softskills
 }

@@ -12,6 +12,27 @@ const publicationSchema = new Schema({
         required: false
     },
 
+    title: {
+        type: String
+    },
+
+    country: {
+        type: String
+    },
+
+    dollar: {
+        type: Boolean
+    },
+
+    tech: {
+        type: String
+    },
+
+    date: {
+        type: Date,
+        default: Date.now
+    },
+
     company: {
         type: Schema.Types.ObjectId,
         ref: 'company'

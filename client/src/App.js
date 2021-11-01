@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login/index';
+import Login from './components/login/index';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';

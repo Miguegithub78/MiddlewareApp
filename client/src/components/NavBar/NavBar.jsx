@@ -26,24 +26,24 @@ function NavBar() {
 							</li>
 						) : null}
 
-						<li className="nav-item active">
+						<li className={`nav-item  ${styles.items}`}>
 							<Link className="nav-link fw-normal " aria-current="page" to="/publicaciones">Publicaciones</Link>
 
 						</li>
-						<li className="nav-item">
+						<li className={`nav-item  ${styles.items}`}>
 							<a className="nav-link fw-normal " href="#">Mis empleos</a>
 						</li>
-						<li className="nav-item">
+						<li className={`nav-item  ${styles.items}`}>
 							<a className="nav-link fw-normal " href="#">Mis postulaciones</a>
 						</li>
-						<li className="nav-item">
+						<li className={`nav-item  ${styles.items}`}>
 							<a className="nav-link fw-normal " href="#">Tips</a>
 						</li>
 						<li className={`nav-item dropdown ${styles.items}`}>
 							<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								{user ? user.name : "Usuario"}
 							</a>
-							<ul className="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+							<ul className="dropdown-menu dropdown-menu-start text-right" aria-labelledby="navbarDropdown">
 								<li><Link className="dropdown-item " to={`/profileuser/1`}>Mi perfil</Link></li>
 								<li><hr className="dropdown-divider" /></li>
 								<li><button className="dropdown-item" onClick={() => dispatch(logOutUserAction())}>Cerrar sesión</button></li>

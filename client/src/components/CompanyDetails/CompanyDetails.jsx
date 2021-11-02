@@ -56,7 +56,7 @@ export default function CompanyDetail() {
 
       <div>
         <Link to='/home'>
-          <button className='btn btn-outline-dark me-2'>Volver</button>
+          <button className="btn btn-block btn-dark btn-outline-light">Volver</button>
         </Link>
 
       </div>

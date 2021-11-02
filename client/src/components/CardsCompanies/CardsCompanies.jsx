@@ -15,12 +15,12 @@ export const CardsCompanies = ({ arrayCompanies }) => {
 
                         {arrayCompanies.map((p) => (
                             <div className="col-lg-3 col-md 12 mb-4">
-                                <div className="card-section border rounded p-3">
+                                <div className="card-section">
 
                                     <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
                                         <Link to={`/companies/${p._id}`} key={p.name}>
 
-                                            <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 80% " }} alt="Card image cap" />
+                                            <img src={p.photograph} className="card-img-top mt-3 m" style={{ width: " 80% " }} alt="Card image cap" />
 
                                             <div className="card-body  text-dark">
                                                 <h6 className="card-title">{p.name}</h6>

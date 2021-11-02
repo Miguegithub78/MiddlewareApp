@@ -65,6 +65,9 @@ const CreatePublications = () => {
                     <div className="row px-3"> 
                     <img  alt="img" className="user"  src={compania.img} />
                     </div>  
+                    <div className="row px-3"> 
+                    <h4 className="mb-4">{compania.company}</h4>
+                    </div>  
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Titulo:</h6>
                         <input className="text-muted bg-light mt-4 mb-3"

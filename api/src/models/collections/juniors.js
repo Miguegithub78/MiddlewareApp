@@ -21,11 +21,6 @@ const juniorSchema = new Schema({
         required: true
     },
 
-    lastname: {
-        type: String,
-        required: false
-    },
-
     gmail: {
         type: String,
         required: false,
@@ -42,7 +37,12 @@ const juniorSchema = new Schema({
         required: false
     },
 
-    gender: {
+    website:{
+        type: String,
+        required: false
+    },
+    
+    title: {
         type: String,
         required: false
     },
@@ -52,15 +52,16 @@ const juniorSchema = new Schema({
         required: false
     },
 
-    age: {
+    linkedin: {
         type: String,
         required: false
     },
 
-    address: {
+    city: {
         type: String,
         required: false
     },
+
     description: {
         type: String,
         required: false,
@@ -92,11 +93,10 @@ const juniorSchema = new Schema({
 
     jobsExperience: [
         {
-        
         companyName: String,
-		 industry: String,
-		 workPosition: String,
-		 workingTime: String
+		industry: String,
+		workPosition: String,
+		workingTime: String
     }
 ],
 

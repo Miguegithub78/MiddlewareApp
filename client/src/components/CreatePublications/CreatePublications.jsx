@@ -81,7 +81,7 @@ const CreatePublications = () => {
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Imagen:</h6>
-                        <input type='text' className="text-muted bg-light mt-4 mb-3"
+                        <input type='file' className="text-muted bg-light mt-4 mb-3"
                         value={input.img}
                         onChange={handleChange}
                         name='img'></input>
@@ -102,7 +102,7 @@ const CreatePublications = () => {
                         name='salary'></input>
                     </div>
                     <div className="row px-3 form-group">
-                        <h6 className="mb-0">Technologias:</h6>
+                        <h6 className="mb-0">Tecnologias:</h6>
                         <select onChange={e => handleSelectTwo(e)}className="text-muted bg-light mt-4 mb-3">
                             {
                                 technologies?.map(el => 

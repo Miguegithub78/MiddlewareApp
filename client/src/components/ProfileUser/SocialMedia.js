@@ -65,7 +65,7 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
               value={infoUser.github}
-              placeholder="https://yourportfolio.com"
+              placeholder="https://github.com"
               onChange={handleChange}
               name="github"
               disabled={editValue}
@@ -84,20 +84,20 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="feather feather-facebook me-2 icon-inline text-primary"
+                className="feather feather-linkedin me-2 icon-inline text-primary"
               >
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
               </svg>
-              Facebook
+              LinkedIn
             </h6>
             <input
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
-              value={infoUser.facebook}
+              value='http://www.linkedin.com'
               placeholder="https://yourportfolio.com"
               onChange={handleChange}
               name="facebook"
-              disabled={editValue}
+              disabled={true}
             />
           </li>
         </ul>

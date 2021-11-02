@@ -4,15 +4,13 @@ import { useSelector } from "react-redux";
 const Technologies = ({ setInfoUser, infoUser }) => {
   const { technologies, user } = useSelector((state) => state);
 
-  const techs = ["react", "redux", "javascript"];
-
   const handleSelectTechnologies = (tech) => {
     setInfoUser((r) => {
       if (!r.technologies.length === 0) return { ...r, technologies: [tech] };
       if (!r.technologies.includes(tech)) {
         return { ...r, technologies: [...r.technologies, tech] };
       } else {
-        const filter = r.technologies.filter((c) => c !== tech);
+        const filter = r.technologies.filter((c) => c._id !== tech._id);
         return { ...r, technologies: filter };
       }
     });
@@ -31,7 +29,7 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             className="btn btn-outline-dark m-1 btn-checkbox-focus"
             htmlFor={tec._id}
             style={{ padding: "1px 5px" }}
-            onClick={() => handleSelectTechnologies(tec.name)}
+            onClick={() => handleSelectTechnologies(tec)}
           >
             {tec.name}
           </label>

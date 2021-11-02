@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './helper.css';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import "./helper.css";
 import {
-	getLanguages,
-	getTechnologies,
-	getUserAction,
-	putJuniors,
-} from '../../redux/actions';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
-import { useHistory } from 'react-router-dom';
-import LeftData from './LeftData';
-import PersonalData from './PersonalData';
-import Prueba2Skill from './Prueba2Skill';
-import CareerData from './CareerData';
-
+  getLanguages,
+  getTechnologies,
+  getUserAction,
+  putJuniors,
+} from "../../redux/actions";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+import { useHistory } from "react-router-dom";
+import LeftData from "./LeftData";
+import PersonalData from "./PersonalData";
+// import Prueba2Skill from './Prueba2Skill';
+import CareerData from "./CareerData";
+// import Softskills from './SoftSkills';
 
 const ProfileUser = () => {
   const { user } = useSelector((state) => state);
@@ -25,17 +25,17 @@ const ProfileUser = () => {
     name: "",
     gmail: "",
     // details: "",
-    // github: "https://github.com/",
+    github: "",
     // linkedIn: "https://linkedin.com/",
-    // website: "",
+    website: "",
     // facebook: "https://facebook.com/",
-    // phone: "",
+    phone: "",
     // city: "",
     photography: "",
     publications: [],
     languages: [],
     technologies: [],
-    // title: "",
+    title: "",
     jobsExperience: [],
     softskills: [],
     idUser: "",
@@ -46,8 +46,13 @@ const ProfileUser = () => {
     dispatch(getTechnologies());
     setInfoUser({
       name: user.name,
+      phone: user.phone,
       gmail: user.gmail,
-      photography: user.photography,
+      github: user.github,
+      website: user.website,
+      title: user.title,
+      photo: user.photo,
+      photograph: user.photograph,
       publications: user.publications,
       languages: user.languages,
       technologies: user.technologies,
@@ -66,7 +71,7 @@ const ProfileUser = () => {
     }
   });
   const handleClick = () => {
-    dispatch(putJuniors(infoUser));
+    dispatch(putJuniors(infoUser, user._id));
   };
 
   return user ? (

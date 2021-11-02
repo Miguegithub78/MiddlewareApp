@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Languages from "./Languages";
 import Technologies from "./Technologies";
+import Softskills from "./SoftSkills";
 
 const CareerData = ({ infoUser, setInfoUser }) => {
-  const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -13,11 +13,6 @@ const CareerData = ({ infoUser, setInfoUser }) => {
   };
   const [editValue, setEditValue] = useState(true);
 
-  //en cada edicion de datos tiene que viajar a la db
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-  }
   return (
     <div className="card">
       <div className="card-body">
@@ -34,7 +29,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
               onChange={handleChange}
               name="title"
               placeholder="ej: Front End | Javascript | Back End"
-              disabled={true}
+              disabled={editValue}
             />
           </div>
         </div>
@@ -47,6 +42,16 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <br />
           </div>
         </div>
+        {/* <div className="row mb-3">
+          <div className="col-sm-3">
+            <h6 className="mb-0">Technologies</h6>
+          </div>
+          <div className="col-sm-9 text-secondary">
+            <Softskills setInfoUser={setInfoUser} infoUser={infoUser} />
+
+            <br />
+          </div>
+        </div> */}
         <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Languages</h6>
@@ -65,7 +70,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 className="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckDefault"
-                disabled={editValue}
+                disabled={true}
               />
               <label className="form-check-label" for="flexSwitchCheckDefault">
                 Relocate
@@ -76,7 +81,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 className="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckDefault"
-                disabled={editValue}
+                disabled={true}
               />
               <label className="form-check-label" for="flexSwitchCheckDefault">
                 Remote
@@ -87,7 +92,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 className="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckDefault"
-                disabled={editValue}
+                disabled={true}
               />
               <label className="form-check-label" for="flexSwitchCheckDefault">
                 Full Time

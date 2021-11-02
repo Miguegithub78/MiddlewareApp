@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Languages from "./Languages";
-import Technologies from "./Technologies";
 
 const SocialMedia = ({ infoUser, setInfoUser }) => {
-  const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -13,11 +9,6 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
   };
   const [editValue, setEditValue] = useState(true);
 
-  //en cada edicion de datos tiene que viajar a la db
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-  }
   return (
     <div className="card">
       <div className="card-body">
@@ -80,8 +71,7 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
               disabled={editValue}
             />
           </li>
-          
-          
+
           <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
             <h6 className="mb-0">
               <svg

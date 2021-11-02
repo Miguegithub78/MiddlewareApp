@@ -16,6 +16,7 @@ import PersonalData from "./PersonalData";
 import Prueba2Skill from "./Prueba2Skill";
 import CareerData from "./CareerData";
 
+
 const ProfileUser = () => {
   const { user } = useSelector((state) => state);
   const history = useHistory();
@@ -39,7 +40,6 @@ const ProfileUser = () => {
     softskills: [],
     idUser: "",
   });
-
   useEffect(() => {
     if (!user) return;
     dispatch(getLanguages());
@@ -47,18 +47,10 @@ const ProfileUser = () => {
     setInfoUser({
       name: user.name,
       gmail: user.gmail,
-      // details: "",
-      // github: "https://github.com/",
-      // linkedIn: "https://linkedin.com/",
-      // website: "",
-      // facebook: "https://facebook.com/",
-      // phone: "",
-      // city: "",
       photography: user.photography,
       publications: user.publications,
       languages: user.languages,
       technologies: user.technologies,
-      // title: "",
       jobsExperience: user.jobsExperience,
       softskills: user.softskills,
       idUser: user._id,
@@ -73,6 +65,9 @@ const ProfileUser = () => {
       history.push("/");
     }
   });
+  const handleClick = () => {
+    dispatch(putJuniors(infoUser));
+  };
 
   return user ? (
     <div>
@@ -90,10 +85,17 @@ const ProfileUser = () => {
             <div className="col-lg-8">
               <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
               <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-              <Prueba2Skill />
+              {/* <Prueba2Skill /> */}
             </div>
           </div>
         </div>
+        <button
+          className="btn btn-outline-dark"
+          type="button"
+          onClick={handleClick}
+        >
+          Guardar cambios{" "}
+        </button>
       </div>
       <br />
     </div>

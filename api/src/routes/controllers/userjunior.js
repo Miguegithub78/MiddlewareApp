@@ -5,7 +5,7 @@ const {
 	Company,
 	Publication,
 	Admins,
-	Softskills
+	SoftSkills
 } = require('../../models/index');
 
 require('dotenv').config();
@@ -17,7 +17,7 @@ const jwt = require('jsonwebtoken');
 const getAllJuniors = async (req, res) => {
 	try {
 		const token = req.headers['x-auth-token'];
-		console.log(req.headers, 'token');
+		// console.log(req.headers, 'token');
 		if (!token) {
 			return res
 				.status(403)
@@ -59,10 +59,20 @@ const getJuniorById = async (req, res) => {
 		}
 
 		const { id } = req.params;
-		const juniorsGet = await Juniors.findById(id)
-			.populate('publications', 'description', 'softskills')
-				res.json(juniorsGet);
-	} catch (err) {
+		
+		Juniors.findById(id)
+			.populate('languages')
+			.populate('technologies')
+			.populate('softskills')
+			.populate('publications')
+			.exec((err, junior) => {
+				if (err) {
+					res.status(404).json({ message: err.message });
+				} else {
+					res.status(200).send(junior);
+				}
+			})
+		} catch (err) {
 		res.status(404).json({ message: err.message });
 	}
 };
@@ -92,20 +102,22 @@ const updateJuniorsProfile = async (req, res) => {
 				.status(401)
 				.json({ auth: false, message: 'usuario no autorizado' });
 		}
-		console.log(req.body);
+		// console.log(req.body);
 		const {
 			name,
-			lastname,
 			gmail,
 			github,
 			photograph,
-			gender,
 			phone,
+			title,
+			linkedin,
+			city,
 			description,
 			languages,
 			technologies,
 			publications,
 			softskills,
+			website,
 			jobsExperience,
 			openToRelocate,
 			openToRemote,
@@ -117,8 +129,8 @@ const updateJuniorsProfile = async (req, res) => {
 
 			var technologiesGet = await Technologies.find({ name: technologies });
 			var languagesGet = await Languages.find({ name: languages });
-			var softSkillsGet = await Softskills.create({ name: softskills });
-			var softSkillsGet = await Softskills.find({ name: softskills });
+			// var softSkillsGet = await SoftSkills.create({ name: softskills });//esta hasta q carguemos en base de datos
+			var softSkillsGet = await SoftSkills.find({ name: softskills });
 		}
 
 		const juniorsChange = await Juniors.findOneAndUpdate(

@@ -1,17 +1,24 @@
 import {
-  LOGIN_OKEY,
-  LOGOUT_OKEY,
-  GET_JUNIORS,
-  GET_JUNIORS_DETAILS,
-  GET_COMPANIES,
-  GET_LANGUAGES,
-  GET_TECHNOLOGIES,
-  GET_COMPANY_DETAILS,
-  GET_PUBLICATIONS,
-  GET_PUBLICATIONS_BY_ID,
-} from "../types";
-import clienteAxios from "../../components/config/clienteAxios";
-import { auth } from "../../firebaseConfig";
+	LOGIN_OKEY,
+	LOGOUT_OKEY,
+	GET_JUNIORS,
+	GET_JUNIORS_DETAILS,
+	GET_COMPANIES,
+	GET_LANGUAGES,
+	GET_TECHNOLOGIES,
+	GET_COMPANY_DETAILS,
+	GET_PUBLICATIONS,
+	GET_PUBLICATIONS_BY_ID,
+	SORT_JOBS_BY,
+	FILTER_JOBS_BY_COUNTRIES,
+	FILTER_JOBS_BY_CITIES,
+	FILTER_JOBS_BY_SALARIES,
+	FILTER_JOBS_BY_TECHS,
+	SEARCH_JOBS_BY_TITLE,
+	RESET_JOBS_FILTER,
+} from '../types';
+import clienteAxios from '../../components/config/clienteAxios';
+import { auth } from '../../firebaseConfig';
 import {
 	signInWithPopup,
 	GoogleAuthProvider,
@@ -21,42 +28,42 @@ import {
 import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
-const guithubProvider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
-const loginHelper = async (userFirebase, dispatch, userType) =>{
-  const { uid, email, displayName, photoURL } = userFirebase.user;
-  const user = {
-    name: displayName,
-    idUser: uid,
-    gmail: email,
-    photograph: photoURL,
-    userType,
-  };
-  const rta = await clienteAxios.post("/login", user);
-  dispatch(loginOkey(rta.data.user));
-  localStorage.setItem("token", rta.data.token);
-  localStorage.setItem("userType", userType);
-  tokenAuth(rta.data.token); //firmar el token a header
-}
+const loginHelper = async (userFirebase, dispatch, userType) => {
+	const { uid, email, displayName, photoURL } = userFirebase.user;
+	const user = {
+		name: displayName,
+		idUser: uid,
+		gmail: email,
+		photograph: photoURL,
+		userType,
+	};
+	const rta = await clienteAxios.post('/login', user);
+	dispatch(loginOkey(rta.data.user));
+	localStorage.setItem('token', rta.data.token);
+	localStorage.setItem('userType', userType);
+	tokenAuth(rta.data.token); //firmar el token a header
+};
 export const loginUserAction = (provider, userType) => {
-  return async (dispatch) => {
-    try {
-      if (provider === "google")
-        var userFirebase = await signInWithPopup(auth, googleProvider);
-      if (provider === "guithub")
-        var userFirebase = await signInWithPopup(auth, guithubProvider);
-        loginHelper(userFirebase, dispatch, userType)
-    } catch (e) {
-      console.log(e);
-      if (
-        e.message ===
-        "Firebase: Error (auth/account-exists-with-different-credential)."
-      ) {
-        var userFirebase = await signInWithPopup(auth, googleProvider);
-        loginHelper(userFirebase, dispatch, userType)
-      }
-    }
-  };
+	return async (dispatch) => {
+		try {
+			if (provider === 'google')
+				var userFirebase = await signInWithPopup(auth, googleProvider);
+			if (provider === 'github')
+				var userFirebase = await signInWithPopup(auth, githubProvider);
+			loginHelper(userFirebase, dispatch, userType);
+		} catch (e) {
+			console.log(e);
+			if (
+				e.message ===
+				'Firebase: Error (auth/account-exists-with-different-credential).'
+			) {
+				var userFirebase = await signInWithPopup(auth, googleProvider);
+				loginHelper(userFirebase, dispatch, userType);
+			}
+		}
+	};
 };
 
 export const getUserAction = (userProvider) => {
@@ -93,7 +100,7 @@ export const logOutUserAction = () => {
 	};
 };
 
- const logOutOkey = () => ({
+const logOutOkey = () => ({
 	type: LOGOUT_OKEY,
 });
 
@@ -143,22 +150,18 @@ export const getJuniorsDetails = (id) => {
 	};
 };
 export function putJuniors(data, id) {
-  return async function () {
-    const response = await clienteAxios.put(
-      `/juniors/${id}`, data
-    );
- // llamar al dispatch
-    return response;
-  };
+	return async function () {
+		const response = await clienteAxios.put(`/juniors/${id}`, data);
+		// llamar al dispatch
+		return response;
+	};
 }
 
 export function deleteJuniors(id) {
-  return async function () {
-    const response = await clienteAxios.delete(
-      `/juniors/${id}`
-    );
-    return response;
-  };
+	return async function () {
+		const response = await clienteAxios.delete(`/juniors/${id}`);
+		return response;
+	};
 }
 
 /*COMPANIES*/
@@ -223,5 +226,70 @@ export function deletePublications(id) {
 	return async function () {
 		const response = await clienteAxios.delete(`/publications${id}`);
 		return response;
+	};
+}
+
+/*JOBS*/
+
+export function sortJobsBy(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: SORT_JOBS_BY,
+			payload,
+		});
+	};
+}
+
+export function filterJobsByCountries(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_COUNTRIES,
+			payload,
+		});
+	};
+}
+
+export function filterJobsByCities(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_CITIES,
+			payload,
+		});
+	};
+}
+
+export function filterJobsBySalaries(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_SALARIES,
+			payload,
+		});
+	};
+}
+
+export function filterJobsByTechs(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_TECHS,
+			payload,
+		});
+	};
+}
+
+export function searchJobsByTitle(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: SEARCH_JOBS_BY_TITLE,
+			payload,
+		});
+	};
+}
+
+export function resetFilterJobs(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: RESET_JOBS_FILTER,
+			payload,
+		});
 	};
 }

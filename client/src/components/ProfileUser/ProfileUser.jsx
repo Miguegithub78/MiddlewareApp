@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import "./helper.css";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import './helper.css';
 import {
-  getLanguages,
-  getTechnologies,
-  getUserAction,
-  putJuniors,
-} from "../../redux/actions";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
-import { useHistory } from "react-router-dom";
-import LeftData from "./LeftData";
-import PersonalData from "./PersonalData";
-import Prueba2Skill from "./Prueba2Skill";
-import CareerData from "./CareerData";
+	getLanguages,
+	getTechnologies,
+	getUserAction,
+	putJuniors,
+} from '../../redux/actions';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
+import { useHistory } from 'react-router-dom';
+import LeftData from './LeftData';
+import PersonalData from './PersonalData';
+import Prueba2Skill from './Prueba2Skill';
+import CareerData from './CareerData';
 
 
 const ProfileUser = () => {

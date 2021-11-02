@@ -16,7 +16,7 @@ export const Search = () => {
 	const options = useSelector((store) => store.technologies);
 
 	const handleInputChange = (e) => {
-		dispatch(searchJobsByTitle(e.target.value));
+		dispatch(searchJobsByTitle(e.target.value.toLowerCase().trim()));
 	};
 
 	const byTypeSalary = (e) => {

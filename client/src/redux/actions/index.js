@@ -66,10 +66,11 @@ export const getUserAction = (userProvider) => {
 			if (userType) {
 				clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
 					dispatch(loginOkey(rta.data));
+					console.log(rta.data,'//////////');
 				});
 			}
 		} catch (e) {
-			console.log(e);
+			console.log(e, 'algo ');
 		}
 	};
 };

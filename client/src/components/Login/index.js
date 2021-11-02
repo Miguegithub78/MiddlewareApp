@@ -26,7 +26,7 @@ const Login = () => {
           <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-1 ">
             <div class="form-container ">
               <div class="form-img"></div>
-              <form class="form-horizontal">
+              <div class="form-horizontal">
                 <h2 class="title">Para Ingresar por favor Inicia Sesión</h2>
                 <div class="form-group">
                   <button className="btn btn-block btn-dark btn-outline-light me-2" onClick={() => dispatch(loginUserAction("google", type))}>
@@ -36,7 +36,7 @@ const Login = () => {
                     Github
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

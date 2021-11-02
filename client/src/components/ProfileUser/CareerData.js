@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Languages from "./Languages";
 import Technologies from "./Technologies";
+import Softskills from "./SoftSkills";
 
 const CareerData = ({ infoUser, setInfoUser }) => {
-  const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -13,11 +13,6 @@ const CareerData = ({ infoUser, setInfoUser }) => {
   };
   const [editValue, setEditValue] = useState(true);
 
-  //en cada edicion de datos tiene que viajar a la db
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-  }
   return (
     <div className="card">
       <div className="card-body">
@@ -33,7 +28,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
               value={infoUser.title}
               onChange={handleChange}
               name="title"
-              placeholder='ej: Front End | Javascript | Back End'
+              placeholder="ej: Front End | Javascript | Back End"
               disabled={editValue}
             />
           </div>
@@ -43,34 +38,69 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <h6 className="mb-0">Technologies</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Technologies setInfoUser={setInfoUser} />
+            <Technologies setInfoUser={setInfoUser} infoUser={infoUser} />
             <br />
           </div>
         </div>
+        {/* <div className="row mb-3">
+          <div className="col-sm-3">
+            <h6 className="mb-0">Technologies</h6>
+          </div>
+          <div className="col-sm-9 text-secondary">
+            <Softskills setInfoUser={setInfoUser} infoUser={infoUser} />
+
+            <br />
+          </div>
+        </div> */}
         <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Languages</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Languages setInfoUser={setInfoUser} />
+            <Languages setInfoUser={setInfoUser} infoUser={infoUser} />
           </div>
         </div>
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Algo</h6>
+            <h6 className="mb-0">Open to </h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <input
-              type="number"
-              className={`form-control ${!editValue && "green-shadow"}`}
-              value={infoUser.phone}
-              onChange={handleChange}
-              name="phone"
-              disabled={editValue}
-            />
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={true}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Relocate
+              </label>
+            </div>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={true}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Remote
+              </label>
+            </div>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={true}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Full Time
+              </label>
+            </div>
           </div>
         </div>
-        <div className="row mb-3">
+        {/* <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Algo</h6>
           </div>
@@ -84,7 +114,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
               disabled={editValue}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-sm-3"></div>

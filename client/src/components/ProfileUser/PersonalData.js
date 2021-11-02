@@ -67,7 +67,7 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
             />
           </div>
         </div>
-        <div className="row mb-3">
+        {/* <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Ciudad</h6>
           </div>
@@ -81,7 +81,7 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
               disabled={editValue}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-sm-3"></div>

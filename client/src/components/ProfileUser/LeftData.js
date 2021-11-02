@@ -16,18 +16,18 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
         <div className="card-body">
           <div className="d-flex flex-column align-items-center text-center">
             <img
-              src={user.photograph}
+              src={infoUser.photograph}
               alt="Admin"
               className="rounded-circle p-1 bg-primary"
               width="140"
             />
             <div className="mt-3">
-              <h4>{user.name}</h4>
+              <h4>{infoUser.name}</h4>
               <p className="text-secondary mb-1">
-                {user.title !== "" ? "Full Stack Developer" : user.title}
+                {infoUser.title === "" ? "Full Stack Developer" : infoUser.title}
               </p>
               <p className="text-muted font-size-sm">
-                {user.city !== "" ? "Córdoba, Argentina" : user.city}
+                {infoUser.city !== "" ? "Córdoba, Argentina" : infoUser.city}
               </p>
             </div>
           </div>

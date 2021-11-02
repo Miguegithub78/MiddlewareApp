@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Languages from "./Languages";
-import Technologies from "./Technologies";
 
 const SocialMedia = ({ infoUser, setInfoUser }) => {
-  const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -13,11 +9,6 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
   };
   const [editValue, setEditValue] = useState(true);
 
-  //en cada edicion de datos tiene que viajar a la db
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-  }
   return (
     <div className="card">
       <div className="card-body">
@@ -74,14 +65,13 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
               value={infoUser.github}
-              placeholder="https://yourportfolio.com"
+              placeholder="https://github.com"
               onChange={handleChange}
               name="github"
               disabled={editValue}
             />
           </li>
-          
-          
+
           <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
             <h6 className="mb-0">
               <svg
@@ -94,20 +84,20 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="feather feather-facebook me-2 icon-inline text-primary"
+                className="feather feather-linkedin me-2 icon-inline text-primary"
               >
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
               </svg>
-              Facebook
+              LinkedIn
             </h6>
             <input
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
-              value={infoUser.facebook}
+              value='http://www.linkedin.com'
               placeholder="https://yourportfolio.com"
               onChange={handleChange}
               name="facebook"
-              disabled={editValue}
+              disabled={true}
             />
           </li>
         </ul>

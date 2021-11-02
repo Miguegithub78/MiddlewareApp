@@ -73,10 +73,11 @@ export const getUserAction = (userProvider) => {
 			if (userType) {
 				clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
 					dispatch(loginOkey(rta.data));
+					console.log(rta.data,'//////////');
 				});
 			}
 		} catch (e) {
-			console.log(e);
+			console.log(e, 'algo ');
 		}
 	};
 };
@@ -152,7 +153,7 @@ export function putJuniors(data, id) {
 	return async function () {
 		const response = await clienteAxios.put(`/juniors/${id}`, data);
 		// llamar al dispatch
-		return response;
+		console.log(response.data, 'editar usuario ok');
 	};
 }
 

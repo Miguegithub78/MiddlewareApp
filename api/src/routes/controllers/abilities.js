@@ -11,7 +11,7 @@ const getAllLaguages = async (req, res) => {
         res.status(404).json({ error: error.message });
     }
 }
-0
+
 const getAllTechnologies = async (req, res) => {
     try{
     const allTechnologies = await Technologies.find();

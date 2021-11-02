@@ -1,5 +1,11 @@
 const { Juniors, Company, Publication, Admins } = require ('../../models/index');
 
+require('dotenv').config();
+
+const { SECRET } = process.env;
+
+const jwt = require('jsonwebtoken');
+
 const postPublications = async (req, res) => {
 
     const { nameUser, gmailUser } = req.query;
@@ -106,7 +112,55 @@ const getPublicationsById = async (req, res) => {
 
 const putPublication = async (req, res) => {
 
-    const { id } = req.params;
+    const token = req.headers['x-auth-token'];
+		if (!token) {
+			return res
+				.status(403)
+				.json({ auth: false, message: 'Token is required' });
+		}
+
+		const decoded = await jwt.verify(token, SECRET);
+
+
+        const { id } = req.params;
+
+        const getPublication = await Publication.findById(id)
+        .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}])
+
+
+        if(getPublication.junior){
+            const user = await Juniors.findById(decoded.id);
+
+            if (!user) {
+                return res
+                    .status(404)
+                    .json({ auth: false, message: 'user not found' });
+            }
+        }
+
+        if(getPublication.company){
+            const user = await JuniorsCompany.findById(decoded.id);
+
+            if (!user) {
+                return res
+                    .status(404)
+                    .json({ auth: false, message: 'user not found' });
+            }
+        }
+
+		if ((getPublication.junior)&&(getPublication.junior._id !== decoded.id)) {
+			return res
+				.status(401)
+				.json({ auth: false, message: 'unauthorizad user' });
+		}
+
+        if((getPublication.company)&&(getPublication.company._id !== decoded.id)) {
+            return res
+				.status(401)
+				.json({ auth: false, message: 'unauthorizad user' });
+        }
+
+    
     const { description, photograph } = req.body;
 
     try{

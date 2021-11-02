@@ -1,14 +1,14 @@
 import {
-  LOGIN_OKEY,
-  LOGOUT_OKEY,
-  GET_JUNIORS,
-  GET_JUNIORS_DETAILS,
-  GET_COMPANIES,
-  GET_LANGUAGES,
-  GET_TECHNOLOGIES,
-  GET_COMPANY_DETAILS,
-  GET_PUBLICATIONS,
-  GET_PUBLICATIONS_BY_ID,
+	LOGIN_OKEY,
+	LOGOUT_OKEY,
+	GET_JUNIORS,
+	GET_JUNIORS_DETAILS,
+	GET_COMPANIES,
+	GET_LANGUAGES,
+	GET_TECHNOLOGIES,
+	GET_COMPANY_DETAILS,
+	GET_PUBLICATIONS,
+	GET_PUBLICATIONS_BY_ID,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
 import { auth } from "../../firebaseConfig";
@@ -21,42 +21,42 @@ import {
 import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
-const guithubProvider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
-const loginHelper = async (userFirebase, dispatch, userType) =>{
-  const { uid, email, displayName, photoURL } = userFirebase.user;
-  const user = {
-    name: displayName,
-    idUser: uid,
-    gmail: email,
-    photograph: photoURL,
-    userType,
-  };
-  const rta = await clienteAxios.post("/login", user);
-  dispatch(loginOkey(rta.data.user));
-  localStorage.setItem("token", rta.data.token);
-  localStorage.setItem("userType", userType);
-  tokenAuth(rta.data.token); //firmar el token a header
+const loginHelper = async (userFirebase, dispatch, userType) => {
+	const { uid, email, displayName, photoURL } = userFirebase.user;
+	const user = {
+		name: displayName,
+		idUser: uid,
+		gmail: email,
+		photograph: photoURL,
+		userType,
+	};
+	const rta = await clienteAxios.post("/login", user);
+	dispatch(loginOkey(rta.data.user));
+	localStorage.setItem("token", rta.data.token);
+	localStorage.setItem("userType", userType);
+	tokenAuth(rta.data.token); //firmar el token a header
 }
 export const loginUserAction = (provider, userType) => {
-  return async (dispatch) => {
-    try {
-      if (provider === "google")
-        var userFirebase = await signInWithPopup(auth, googleProvider);
-      if (provider === "guithub")
-        var userFirebase = await signInWithPopup(auth, guithubProvider);
-        loginHelper(userFirebase, dispatch, userType)
-    } catch (e) {
-      console.log(e);
-      if (
-        e.message ===
-        "Firebase: Error (auth/account-exists-with-different-credential)."
-      ) {
-        var userFirebase = await signInWithPopup(auth, googleProvider);
-        loginHelper(userFirebase, dispatch, userType)
-      }
-    }
-  };
+	return async (dispatch) => {
+		try {
+			if (provider === "google")
+				var userFirebase = await signInWithPopup(auth, googleProvider);
+			if (provider === "github")
+				var userFirebase = await signInWithPopup(auth, githubProvider);
+			loginHelper(userFirebase, dispatch, userType)
+		} catch (e) {
+			console.log(e);
+			if (
+				e.message ===
+				"Firebase: Error (auth/account-exists-with-different-credential)."
+			) {
+				var userFirebase = await signInWithPopup(auth, googleProvider);
+				loginHelper(userFirebase, dispatch, userType)
+			}
+		}
+	};
 };
 
 export const getUserAction = (userProvider) => {
@@ -92,7 +92,7 @@ export const logOutUserAction = () => {
 	};
 };
 
- const logOutOkey = () => ({
+const logOutOkey = () => ({
 	type: LOGOUT_OKEY,
 });
 
@@ -102,7 +102,7 @@ export function getLanguages(payload) {
 		try {
 			const json = await clienteAxios.get('/languages');
 			return dispatch({ type: GET_LANGUAGES, payload: json.data });
-		} catch (error) {}
+		} catch (error) { }
 	};
 }
 
@@ -112,7 +112,7 @@ export function getTechnologies(payload) {
 		try {
 			const json = await clienteAxios.get('/technologies');
 			return dispatch({ type: GET_TECHNOLOGIES, payload: json.data });
-		} catch (error) {}
+		} catch (error) { }
 	};
 }
 
@@ -142,22 +142,22 @@ export const getJuniorsDetails = (id) => {
 	};
 };
 export function putJuniors(data, id) {
-  return async function () {
-    const response = await clienteAxios.put(
-      `/juniors/${id}`, data
-    );
- // llamar al dispatch
-    return response;
-  };
+	return async function () {
+		const response = await clienteAxios.put(
+			`/juniors/${id}`, data
+		);
+		// llamar al dispatch
+		return response;
+	};
 }
 
 export function deleteJuniors(id) {
-  return async function () {
-    const response = await clienteAxios.delete(
-      `/juniors/${id}`
-    );
-    return response;
-  };
+	return async function () {
+		const response = await clienteAxios.delete(
+			`/juniors/${id}`
+		);
+		return response;
+	};
 }
 
 /*COMPANIES*/
@@ -166,7 +166,7 @@ export function getCompanies(payload) {
 		try {
 			const json = await clienteAxios.get('/companies');
 			return dispatch({ type: GET_COMPANIES, payload: json.data });
-		} catch (error) {}
+		} catch (error) { }
 	};
 }
 
@@ -190,7 +190,7 @@ export function getPublications() {
 		try {
 			const json = await clienteAxios.get('/publications');
 			return dispatch({ type: GET_PUBLICATIONS, payload: json.data });
-		} catch (error) {}
+		} catch (error) { }
 	};
 }
 
@@ -199,7 +199,7 @@ export function getPublicationsById(id) {
 		try {
 			const json = await clienteAxios.get(`/publications/${id}`);
 			return dispatch({ type: GET_PUBLICATIONS_BY_ID, payload: json.data });
-		} catch (error) {}
+		} catch (error) { }
 	};
 }
 

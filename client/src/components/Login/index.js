@@ -32,8 +32,8 @@ const Login = () => {
                   <button className="btn btn-block btn-dark btn-outline-light me-2" onClick={() => dispatch(loginUserAction("google", type))}>
                     Google
                   </button>
-                  <button className="btn btn-block btn-dark btn-outline-light " onClick={() => dispatch(loginUserAction("guithub", type))}>
-                    Guithub
+                  <button className="btn btn-block btn-dark btn-outline-light " onClick={() => dispatch(loginUserAction("github", type))}>
+                    Github
                   </button>
                 </div>
               </form>

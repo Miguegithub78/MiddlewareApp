@@ -153,7 +153,7 @@ export function putJuniors(data, id) {
 	return async function () {
 		const response = await clienteAxios.put(`/juniors/${id}`, data);
 		// llamar al dispatch
-		return response;
+		console.log(response.data, 'editar usuario ok');
 	};
 }
 

@@ -33,8 +33,8 @@ const CareerData = ({ infoUser, setInfoUser }) => {
               value={infoUser.title}
               onChange={handleChange}
               name="title"
-              placeholder='ej: Front End | Javascript | Back End'
-              disabled={editValue}
+              placeholder="ej: Front End | Javascript | Back End"
+              disabled={true}
             />
           </div>
         </div>
@@ -57,17 +57,42 @@ const CareerData = ({ infoUser, setInfoUser }) => {
         </div>
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Algo</h6>
+            <h6 className="mb-0">Open to </h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <input
-              type="number"
-              className={`form-control ${!editValue && "green-shadow"}`}
-              value={infoUser.phone}
-              onChange={handleChange}
-              name="phone"
-              disabled={editValue}
-            />
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={editValue}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Relocate
+              </label>
+            </div>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={editValue}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Remote
+              </label>
+            </div>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+                disabled={editValue}
+              />
+              <label className="form-check-label" for="flexSwitchCheckDefault">
+                Full Time
+              </label>
+            </div>
           </div>
         </div>
         <div className="row mb-3">

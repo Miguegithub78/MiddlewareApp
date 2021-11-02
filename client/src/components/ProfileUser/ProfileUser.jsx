@@ -23,32 +23,45 @@ const ProfileUser = () => {
   const [infoUser, setInfoUser] = useState({
     name: "",
     gmail: "",
-    description: "",
-    github: "https://github.com/",
-    website: "",
-    facebook: "https://facebook.com/",
-    phone: "",
-    city: "",
+    // details: "",
+    // github: "https://github.com/",
+    // linkedIn: "https://linkedin.com/",
+    // website: "",
+    // facebook: "https://facebook.com/",
+    // phone: "",
+    // city: "",
+    photography: "",
+    publications: [],
     languages: [],
     technologies: [],
-    title: "",
+    // title: "",
+    jobsExperience: [],
+    softskills: [],
+    idUser: "",
   });
 
   useEffect(() => {
+    if (!user) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
     setInfoUser({
-      name: user && user.name,
-      gmail: user && user.gmail,
-      description: user && user.description,
-      city: user && user.city,
-      github:user && user.github ,
-      phone: "",
-      website: "",
-      // facebook: user && user.github?"https://facebook.com/":user.github,
-      languages: [],
-      technologies: [],
-      title: user && user.title,
+      name: user.name,
+      gmail: user.gmail,
+      // details: "",
+      // github: "https://github.com/",
+      // linkedIn: "https://linkedin.com/",
+      // website: "",
+      // facebook: "https://facebook.com/",
+      // phone: "",
+      // city: "",
+      photography: user.photography,
+      publications: user.publications,
+      languages: user.languages,
+      technologies: user.technologies,
+      // title: "",
+      jobsExperience: user.jobsExperience,
+      softskills: user.softskills,
+      idUser: user._id,
     });
   }, [user]);
 

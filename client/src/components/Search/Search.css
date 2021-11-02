@@ -10,12 +10,12 @@
 	align-items: center;
 }
 
-.field2 {
-	width: 1000px;
-}
+/* .field2 {
+	width: 8000px;
+} */
 
 .field2 select {
-	width: 250px;
+	width: 200px;
 	padding: 0 5px;
 }
 

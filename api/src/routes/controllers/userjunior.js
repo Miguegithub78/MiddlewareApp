@@ -17,7 +17,7 @@ const jwt = require('jsonwebtoken');
 const getAllJuniors = async (req, res) => {
 	try {
 		const token = req.headers['x-auth-token'];
-		console.log(req.headers, 'token');
+		// console.log(req.headers, 'token');
 		if (!token) {
 			return res
 				.status(403)
@@ -102,7 +102,7 @@ const updateJuniorsProfile = async (req, res) => {
 				.status(401)
 				.json({ auth: false, message: 'usuario no autorizado' });
 		}
-		console.log(req.body);
+		// console.log(req.body);
 		const {
 			name,
 			gmail,

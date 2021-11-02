@@ -24,6 +24,7 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             type="checkbox"
             className="btn-check btn-checkbox-focus"
             id={tec._id}
+            checked={infoUser.technologies.find(e=>e._id===tec._id)?true:false}
           />
           <label
             className="btn btn-outline-dark m-1 btn-checkbox-focus"

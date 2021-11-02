@@ -38,7 +38,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <h6 className="mb-0">Technologies</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Technologies setInfoUser={setInfoUser} />
+            <Technologies setInfoUser={setInfoUser} infoUser={infoUser} />
             <br />
           </div>
         </div>
@@ -57,7 +57,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <h6 className="mb-0">Languages</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Languages setInfoUser={setInfoUser} />
+            <Languages setInfoUser={setInfoUser} infoUser={infoUser} />
           </div>
         </div>
         <div className="row mb-3">
@@ -100,7 +100,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             </div>
           </div>
         </div>
-        <div className="row mb-3">
+        {/* <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Algo</h6>
           </div>
@@ -114,7 +114,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
               disabled={editValue}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-sm-3"></div>

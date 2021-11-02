@@ -15,16 +15,21 @@ const Languages = ({ setInfoUser, infoUser }) => {
       }
     });
   };
+  console.log(infoUser.languages,'infoUser');
   return (
     <>
-      {languages.map((lang, i) => (
+      {languages.map((lang, i) => {
+        // console.log(infoUser.languages, lang , '//');
+        // console.log(infoUser.languages.find(e=>e._id===lang._id)&&'hola');
+        // console.log(infoUser.languages.name===lang.name);
+      return (
         <span key={i}>
           <input
             style={{ focus: "none" }}
             type="checkbox"
             className="btn-check btn-checkbox-focus"
             id={lang._id}
-            // checked={true}
+            checked={infoUser.languages.find(e=>e._id===lang._id)?true:false}
           />
           <label
             className="btn btn-outline-dark m-1 btn-checkbox-focus"
@@ -35,9 +40,9 @@ const Languages = ({ setInfoUser, infoUser }) => {
             {lang.name}
           </label>
         </span>
-      ))}
+      )})}
     </>
-  );
+  )
 };
 
 export default Languages;

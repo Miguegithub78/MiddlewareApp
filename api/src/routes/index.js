@@ -7,7 +7,7 @@ const { getAllJuniors, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile
 const {getAllCompanies, getCompaniesById, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
-const { postPublications, getPublications, getPublicationsById, putPublication } = require('./controllers/publications');
+const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
 router.post('/login', signIn);//path del landing(en revision)
@@ -33,7 +33,8 @@ router.post('/admin', adminRegister);   //se registran los administradores
 router.get('/publications', getPublications)
 router.get('/publications/:id', getPublicationsById)
 router.post('/publications', postPublications)
-router.put('/publications/:id', putPublication)
+router.put('/publications', putPublication)
+router.delete('/publications/:id', deletePublication)
 
 router.get('/premiumCompany', getAllCompanyPremium)
 router.put('/premiumCompany/:id', updatePremiumCompany)

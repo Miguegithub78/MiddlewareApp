@@ -65,7 +65,7 @@ const juniorSchema = new Schema({
     description: {
         type: String,
         required: false,
-        maxLength: 500
+        
     },
     
     languages: [{

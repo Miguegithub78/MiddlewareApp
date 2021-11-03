@@ -50,17 +50,12 @@ export default function JuniorsDetail() {
 						width='100px'
 						heigth='80px'
 					></img>
-					<h3>{juniors.webpage || ''}</h3>
-					<h3>{juniors.gmail || ''}</h3>
-					<h3>{juniors.country || ''}</h3>
-					<h3>{juniors.state || ''}</h3>
-					<h3>{juniors.city || ''}</h3>
-					<h3>{juniors.description || ''}</h3>
+					
 				</div>
 			</div>
 
 			<div>
-				<Link to='/home'>
+				<Link to='/home/juniors'>
 					<button>Volver</button>
 				</Link>
 			</div>

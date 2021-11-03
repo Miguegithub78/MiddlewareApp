@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import { getCompanies, getTechnologies } from "../../redux/actions";
+import { getCompanies, getTechnologies, postPublications } from "../../redux/actions";
 import  './CreatePublications.css'
 
 const CreatePublications = () => {
@@ -17,6 +17,7 @@ const CreatePublications = () => {
         title: '',
         description: '',
         img: '',
+        country: '',
         dollar: false,
         salary: 0,
         technologies: [],
@@ -41,6 +42,11 @@ const CreatePublications = () => {
             technologies: [...input.technologies, e.target.value]
         })
     };
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(postPublications(input))
+    }
 
     const compania = {
         id: 10,
@@ -73,14 +79,24 @@ const CreatePublications = () => {
                         <input className="text-muted bg-light mt-4 mb-3"
                         value={input.title}
                         onChange={handleChange}
-                        name='title'></input>
+                        name='title'
+                        placeholder='Ej: Front/Back-End Jr'></input>
                     </div>
                     <div className="row px-3 form-group"> 
                         <h6 className="mb-0">Descripción:</h6>
-                        <textarea className="text-muted bg-light mt-4 mb-3" placeholder="Agrega una descripción a tu publicación"
+                        <textarea className="text-muted bg-light mt-4 mb-3" 
+                        placeholder="Agrega una descripción a tu publicación"
                          value={input.description}
                          onChange={handleChange}
                          name='description'></textarea>
+                    </div>
+                    <div className="row px-3 form-group">
+                        <h6 className="mb-0">Ubicación:</h6>
+                        <input className="text-muted bg-light mt-4 mb-3"
+                        value={input.country}
+                        onChange={handleChange}
+                        name='country'
+                        placeholder='Ej: Remoto/Buenos Aires'></input>
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Imagen:</h6>
@@ -113,7 +129,7 @@ const CreatePublications = () => {
                             )}
                         </select>
                     </div>
-                        <button className="btn btn-outline-dark px-4">Publicar</button>
+                        <button onClick={e => handleSubmit(e)}type='submit' className="btn btn-outline-dark px-4">Publicar</button>
                     </div>
                 </div>
             </div>

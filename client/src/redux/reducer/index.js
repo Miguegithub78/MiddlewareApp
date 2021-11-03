@@ -15,6 +15,7 @@ import {
 	FILTER_JOBS_BY_TECHS,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
+	CHANGE_PROFILE_PICTURE,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -492,6 +493,11 @@ const rootReducer = (state = inicialState, action) => {
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
+		case CHANGE_PROFILE_PICTURE:
+			return{
+				...state,
+				user : {...state.user, photograph:action.payload}
+			}
 		default:
 			return state;
 	}

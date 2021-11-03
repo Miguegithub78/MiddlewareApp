@@ -27,7 +27,7 @@ const Home = () => {
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
-		if (token) {
+		if (token&&user) {
 			console.log('dispatch el tokeeenn', token);
 			tokenAuth(token);
 			dispatch(getJuniors());

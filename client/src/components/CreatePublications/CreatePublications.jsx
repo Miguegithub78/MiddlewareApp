@@ -1,18 +1,38 @@
 import { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import { getCompanies, getTechnologies, postPublications } from "../../redux/actions";
+import {Link, useHistory} from 'react-router-dom';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+import tokenAuth from '../config/token';
+import { getCompanies, getTechnologies, postPublications, changePicturePublicationAction, getUserAction } from "../../redux/actions";
 import  './CreatePublications.css'
 
 const CreatePublications = () => {
-    const { companies } = useSelector((state) => state);
+    const { user } = useSelector((state) => state);
     const { technologies } = useSelector((state) => state);
     const dispatch = useDispatch();
+    const history = useHistory();
+    console.log(user)
 
     useEffect(() => {
-        dispatch(getCompanies())
+        const token = localStorage.getItem('token');
+		if (token&&user) {
+			console.log('dispatch el tokeeenn', token);
+			tokenAuth(token);
         dispatch(getTechnologies())
-    }, [])
+        }
+    }, [user])
 
+    onAuthStateChanged(auth, (userFirebase) => {
+        if (userFirebase) {
+          if (user) return;
+          dispatch(getUserAction(userFirebase));
+        } else {
+          history.push("/");
+        }
+      });
+
+    const [picture, setPicture] = useState(null);
     const [input, setInput] = useState({
         title: '',
         description: '',
@@ -43,36 +63,36 @@ const CreatePublications = () => {
         })
     };
 
+    const handleChangePicture = (e) => {
+        const picture = e.target.files[0];
+        setPicture(picture);
+        if (picture) {
+            dispatch(changePicturePublicationAction(picture));
+            }
+    };
+    
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(postPublications(input))
     }
 
-    const compania = {
-        id: 10,
-				img: 'https://www.globant.com/sites/default/files/2021-04/Globant_.png',
-				company: 'Globant',
-				title: 'frontend',
-				description: '',
-				country: 'remote',
-				city: '',
-				dollar: true,
-				salary: 1000,
-				tech: ['javascript', 'react', 'node'],
-				date: '10/31/2021',
-				premium: 0,
-    }
 
 
-    return companies ? (   
+    return user ? (   
             <div className="container px-4 py-5 mx-auto">
             <div className="row d-flex justify-content-center">
+            <Link
+                className="btn btn-block btn-dark btn-outline-light"
+                to="/home/companies"
+            >
+                Volver al inicio
+            </Link>
                 <div className="card">
                     <div className="row px-3"> 
-                    <img  alt="img" className="user"  src={compania.img} />
+                    <img  alt="img" className="user"  src={user.photograph} />
                     </div>  
                     <div className="row px-3"> 
-                    <h4 className="mb-4">{compania.company}</h4>
+                    <h4 className="mb-4">{user.name}</h4>
                     </div>  
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Titulo:</h6>
@@ -100,10 +120,9 @@ const CreatePublications = () => {
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Imagen:</h6>
-                        <input type='file' className="text-muted bg-light mt-4 mb-3"
-                        value={input.img}
-                        onChange={handleChange}
-                        name='img'></input>
+                        <input type='file' id='loadfile'className="text-muted bg-light mt-4 mb-3"
+                        onChange={handleChangePicture}
+                        ></input>
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Dolares:</h6>
@@ -129,7 +148,7 @@ const CreatePublications = () => {
                             )}
                         </select>
                     </div>
-                        <button onClick={e => handleSubmit(e)}type='submit' className="btn btn-outline-dark px-4">Publicar</button>
+                        <button onClick={e => handleSubmit(e)}type='submit' className="btn btn-block btn-dark btn-outline-light">Publicar</button>
                     </div>
                 </div>
             </div>

@@ -312,3 +312,20 @@ const urlProfilePic = (urlPicture) => ({
 	type: CHANGE_PROFILE_PICTURE,
 	payload:urlPicture
 });
+
+export const changePicturePublicationAction = (picture) =>{
+	return async function (dispatch){
+		try {
+			const fileRef = ref(storage, `documents/${picture.name}`)
+			await uploadBytes(fileRef, picture)
+			const urlPicture =  await getDownloadURL(fileRef)
+			dispatch(urlUploadPic(urlPicture))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}
+const urlUploadPic = (urlPicture) => ({
+	type: 'UPLOAD_PICTURE',
+	payload:urlPicture
+});

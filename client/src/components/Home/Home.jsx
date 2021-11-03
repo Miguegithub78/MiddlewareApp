@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
@@ -53,6 +53,12 @@ const Home = () => {
 	return (
 		<div className=''>
 			<NavBar />
+			<Link
+                className="btn btn-block btn-dark btn-outline-light"
+                to="/createpublications"
+            >
+                Publicar Empleo
+            </Link>
 			<div className=''>
 				<div className=''>{tipo && tipo === 'empleos' && <Search />}</div>
 				<div className=''>

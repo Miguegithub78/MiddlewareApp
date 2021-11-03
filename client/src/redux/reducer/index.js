@@ -16,6 +16,7 @@ import {
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
+	UPLOAD_PICTURE,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -498,6 +499,11 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				user : {...state.user, photograph:action.payload}
 			}
+		case UPLOAD_PICTURE:
+			return{
+				...state,
+				publication : {...state.publication, photograph:action.payload}
+				}
 		default:
 			return state;
 	}

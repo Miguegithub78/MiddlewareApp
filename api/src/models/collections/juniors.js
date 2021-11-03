@@ -65,6 +65,7 @@ const juniorSchema = new Schema({
     description: {
         type: String,
         required: false,
+        default: 'Completa tu descripción'
         
     },
     

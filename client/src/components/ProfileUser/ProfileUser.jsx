@@ -39,6 +39,7 @@ const ProfileUser = () => {
     jobsExperience: [],
     softskills: [],
     idUser: "",
+    infoUserChanged: false,
   });
   useEffect(() => {
     if (!user) return;
@@ -62,6 +63,12 @@ const ProfileUser = () => {
     });
   }, [user]);
 
+  useEffect(() => {
+    if (infoUser.infoUserChanged) {
+      console.log("hubo cambio");
+    }
+  }, [infoUser]);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
@@ -72,6 +79,10 @@ const ProfileUser = () => {
   });
   const handleClick = () => {
     dispatch(putJuniors(infoUser, user._id));
+    setInfoUser(info=>({
+      ...info,
+      infoUserChanged: false,
+    }))
   };
 
   return user ? (
@@ -85,6 +96,15 @@ const ProfileUser = () => {
       <div className="container mt-3">
         <div className="main-body">
           <div className="row">
+            {infoUser.infoUserChanged && (
+              <button
+                className="btn btn-block btn-dark btn-outline-light"
+                type="button"
+                onClick={handleClick}
+              >
+                Guardar cambios
+              </button>
+            )}
             <LeftData
               setInfoUser={setInfoUser}
               infoUser={infoUser}
@@ -97,13 +117,6 @@ const ProfileUser = () => {
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-block btn-dark btn-outline-light"
-          type="button"
-          onClick={handleClick}
-        >
-          Guardar cambios{" "}
-        </button>
       </div>
       <br />
     </div>

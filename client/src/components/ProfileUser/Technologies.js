@@ -16,7 +16,11 @@ const Technologies = ({ setInfoUser, infoUser }) => {
         };
       } else {
         const filter = r.technologies.filter((c) => c._id !== tech._id);
+<<<<<<< HEAD
         return { ...r, infoUserChanged: true, technologies: filter };
+=======
+        return { ...r, technologies: filter };
+>>>>>>> main
       }
     });
   };
@@ -29,11 +33,15 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             type="checkbox"
             className="btn-check btn-checkbox-focus"
             id={tec._id}
+<<<<<<< HEAD
             defaultChecked={
               infoUser.technologies.find((e) => e._id === tec._id)
                 ? true
                 : false
             }
+=======
+            checked={infoUser.technologies.find(e=>e._id===tec._id)?true:false}
+>>>>>>> main
           />
           <label
             className="btn btn-outline-dark m-1 btn-checkbox-focus"

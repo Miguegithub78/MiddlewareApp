@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CareerData from "./CareerData";
+import ChangePicture from "./ChangePicture";
 import SocialMedia from "./SocialMedia";
 
 const Prueba2left = ({ user, setInfoUser, infoUser }) => {
@@ -7,6 +8,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
+      infoUserChanged:true,
       description: e.target.value,
     }));
   };
@@ -21,10 +23,13 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
               className="rounded-circle p-1 bg-primary"
               width="140"
             />
+            <ChangePicture setInfoUser={setInfoUser}  />
             <div className="mt-3">
               <h4>{infoUser.name}</h4>
               <p className="text-secondary mb-1">
-                {infoUser.title === "" ? "Full Stack Developer" : infoUser.title}
+                {infoUser.title === ""
+                  ? "Full Stack Developer"
+                  : infoUser.title}
               </p>
               <p className="text-muted font-size-sm">
                 {infoUser.city !== "" ? "Córdoba, Argentina" : infoUser.city}

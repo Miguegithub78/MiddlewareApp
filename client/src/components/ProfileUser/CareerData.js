@@ -8,6 +8,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
+      infoUserChanged:true,
       [e.target.name]: e.target.value,
     }));
   };
@@ -72,7 +73,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 id="flexSwitchCheckDefault"
                 disabled={true}
               />
-              <label className="form-check-label" for="flexSwitchCheckDefault">
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
                 Relocate
               </label>
             </div>
@@ -83,7 +84,10 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 id="flexSwitchCheckDefault"
                 disabled={true}
               />
-              <label className="form-check-label" for="flexSwitchCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="flexSwitchCheckDefault"
+              >
                 Remote
               </label>
             </div>
@@ -94,7 +98,10 @@ const CareerData = ({ infoUser, setInfoUser }) => {
                 id="flexSwitchCheckDefault"
                 disabled={true}
               />
-              <label className="form-check-label" for="flexSwitchCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="flexSwitchCheckDefault"
+              >
                 Full Time
               </label>
             </div>

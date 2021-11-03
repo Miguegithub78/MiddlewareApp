@@ -71,13 +71,13 @@ const juniorSchema = new Schema({
     languages: [{
         type: Schema.Types.ObjectId,
         ref: 'languages',
-        autopopulate: true
+        autopopulate: false
     }],
 
     technologies: [{
         type: Schema.Types.ObjectId,
         ref: 'technologies',
-        autopopulate: true
+        autopopulate: false
     }],
 
     publications: [{
@@ -88,7 +88,7 @@ const juniorSchema = new Schema({
     softskills: [{
         type: Schema.Types.ObjectId,
         ref: 'softskills',
-        autopopulate: true
+        autopopulate: false
     }],
 
     jobsExperience: [
@@ -102,17 +102,23 @@ const juniorSchema = new Schema({
 
     openToRelocate: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 
     openToRemote: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 
     openToFullTime: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 })
 

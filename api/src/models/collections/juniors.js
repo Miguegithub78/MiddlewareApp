@@ -101,6 +101,15 @@ const juniorSchema = new Schema({
     }
 ],
 
+    academicHistory: [
+    {
+    institute: String,
+    title: String,
+    date: Date,
+    description: String
+}
+],
+
     openToRelocate: {
         type: Boolean,
         required: false, 

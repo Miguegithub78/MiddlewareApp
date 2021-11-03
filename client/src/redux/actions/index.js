@@ -16,20 +16,22 @@ import {
 	FILTER_JOBS_BY_TECHS,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
+	CHANGE_PROFILE_PICTURE,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
-import { auth } from '../../firebaseConfig';
+import { auth, firebase } from '../../firebaseConfig';
 import {
 	signInWithPopup,
 	GoogleAuthProvider,
 	GithubAuthProvider,
 	signOut,
 } from 'firebase/auth';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
-
+const storage = getStorage(firebase)
 const loginHelper = async (userFirebase, dispatch, userType) => {
 	const { uid, email, displayName, photoURL } = userFirebase.user;
 	const user = {
@@ -293,3 +295,20 @@ export function resetFilterJobs(payload) {
 		});
 	};
 }
+
+export const changePictureProfileAction = (picture) =>{
+	return async function (dispatch){
+		try {
+			const fileRef = ref(storage, `documents/${picture.name}`)
+			await uploadBytes(fileRef, picture)
+			const urlPicture =  await getDownloadURL(fileRef)
+			dispatch(urlProfilePic(urlPicture))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}
+const urlProfilePic = (urlPicture) => ({
+	type: CHANGE_PROFILE_PICTURE,
+	payload:urlPicture
+});

@@ -8,11 +8,12 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
+      infoUserChanged: true,
       [e.target.name]: e.target.value,
     }));
   };
   const [editValue, setEditValue] = useState(true);
- 
+
   //en cada edicion de datos tiene que viajar a la db
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +28,7 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
           </div>
           <div className="col-sm-9 text-secondary">
             <input
-              className={`form-control ${!editValue&&'green-shadow'}`}
+              className={`form-control ${!editValue && "green-shadow"}`}
               type="text"
               name="name"
               value={infoUser.name}
@@ -42,7 +43,7 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
           </div>
           <div className="col-sm-9 text-secondary">
             <input
-              className={`form-control ${!editValue&&'green-shadow'}`}
+              className={`form-control ${!editValue && "green-shadow"}`}
               type="text"
               value={infoUser.gmail}
               onChange={handleChange}
@@ -59,7 +60,7 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
           <div className="col-sm-9 text-secondary">
             <input
               type="number"
-              className={`form-control ${!editValue&&'green-shadow'}`}
+              className={`form-control ${!editValue && "green-shadow"}`}
               value={infoUser.phone}
               onChange={handleChange}
               name="phone"

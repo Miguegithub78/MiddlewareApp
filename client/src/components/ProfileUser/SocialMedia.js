@@ -5,6 +5,7 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
     setInfoUser((info) => ({
       ...info,
       [e.target.name]: e.target.value,
+      infoUserChanged: true,
     }));
   };
   const [editValue, setEditValue] = useState(true);
@@ -93,7 +94,7 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
             <input
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
-              value='http://www.linkedin.com'
+              value="http://www.linkedin.com"
               placeholder="https://yourportfolio.com"
               onChange={handleChange}
               name="facebook"

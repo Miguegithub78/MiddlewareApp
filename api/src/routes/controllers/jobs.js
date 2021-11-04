@@ -100,7 +100,7 @@ const putJobs = async (req, res) => {
               currency,
               date,
               technologies,
-              company: company.idMongo,
+              company: company,
               premium,
               status
           };

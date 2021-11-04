@@ -24,7 +24,7 @@ const getCompaniesById = async (req, res) => {
     try{
         const { id } = req.params;
         const companiesGet = await Company.findById(id)
-            .populate('publications', 'description' )
+            .populate('jobs');
             
         if(companiesGet) return res.json(companiesGet);
     

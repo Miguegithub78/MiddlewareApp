@@ -39,7 +39,7 @@ const jobsSchema = new Schema({
 
   currency: {
     type: String,
-    required: true,
+    required: false,
   },
 
   date: {
@@ -66,6 +66,13 @@ const jobsSchema = new Schema({
     type: Boolean,
     default: false,
   },
+
+  status: {
+    type: String,
+    enum: ["active", "rejected"],
+    default: "active",
+  }
+
 });
 
 module.exports = model("jobs", jobsSchema);

@@ -1,24 +1,91 @@
-// const { Juniors, Company, Publication, Admins } = require ('../../models/index');
+const { Juniors, Company, Jobs, Admins } = require ('../../models/index');
 
-// require('dotenv').config();
+require('dotenv').config();
 
-// const { SECRET } = process.env;
+const { SECRET } = process.env;
 
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-// const postPublications = async (req, res) => {
+const postJobs = async (req, res) => {
 
-//     const { nameUser, idUser } = req.query;
-//     const { description, photograph } = req.body;
+    const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
 
-//     try{
-        
-//         if(!description) return res.status(404).json({message: "Falta la descripción"});
-//         if(!nameUser) return res.status(404).json({message: "No se le asigno un usuario a la publicación"});
-//         if(!idUser) return res.status(404).json({message: "No se le asigno un id a la publicación"});
+      const company = await Company.findOne({ idMongo : companyId} );
+
+        if(!title){
+          
+          return res.status(404).json({ error: 'required "content" is missing'})
+        }
+
+        const newJob = new Jobs({
+            title,
+            description,
+            photograph,
+            country,
+            city,
+            salary,
+            currency,
+            date,
+            technologies,
+            company: company.idMongo,
+            premium,
+            status
+
+        });
+
+        try{
+          const savedJob = await newJob.save();
+
+          company.jobs = company.jobs.concat(savedJob._id);
+          await company.save();
+
+          res.json(savedJob);
+        }
+        catch(err){
+          res.status(404).json({message: err.message})
+        }
+    }
+
+const getAllJobs = async (req, res) => {
+
+    try{
+
+        const jobs = await Jobs.find();
+    
+        res.json(jobs)
+    }
+    catch(err){
+        res.status(404).json({message: err.message})
+    }
+}
 
 
-//         if(nameUser && idUser){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //             if(nameUser == 'company'){
 //                 var company = idUser
@@ -77,19 +144,7 @@
 
 // }
 
-// const getPublications = async (req, res) => {
 
-//     try{
-
-//         const publications = await Publication.find()
-//             .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}])
-    
-//         res.json(publications)
-//     }
-//     catch(err){
-//         res.status(404).json({message: err.message})
-//     }
-// }
 
 // const getPublicationsById = async (req, res) => {
 
@@ -200,10 +255,8 @@
 //     }
 // }
 
-// module.exports = {
-//     postPublications,
-//     getPublications,
-//     getPublicationsById,
-//     putPublication,
-//     deletePublication
-// }
+module.exports = {
+  postJobs,
+  getAllJobs
+};
+

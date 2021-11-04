@@ -10,7 +10,7 @@ const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 
-const {  postJobs } = require('./controllers/jobs');
+const {  postJobs, getAllJobs } = require('./controllers/jobs');
 //getAllJobs, getJobsById, putJobs, deleteJobs
 
 const { putLikes } = require('./controllers/addLikes');
@@ -45,7 +45,7 @@ router.get('/premiumCompany', getAllCompanyPremium)
 router.put('/premiumCompany/:id', updatePremiumCompany)
 
 
-// router.get('/jobs', getAllJobs)
+router.get('/jobs', getAllJobs)
 // router.get('/jobs/:id', getJobsById)
 router.post('/jobs', postJobs)
 // router.put('/jobs', putJobs)

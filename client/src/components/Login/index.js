@@ -52,7 +52,7 @@ const Login = () => {
               <div className="form-img"></div>
               <form className="form-horizontal">
                 <h2 className="title">Te damos la bienvenida a Middleware</h2>
-                <h3 className="title ">Inicia sesion </h3>
+                <h3 className="title ">Inicia sesión </h3>
 
                 <div className="form-group">
                   <div className="form-group">
@@ -75,7 +75,7 @@ const Login = () => {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-warning btn-outline-ligth w-100"
+                    className="btn btn-dark w-100"
                     onClick={handleClick}
                   >
                     Iniciar sesión
@@ -84,18 +84,19 @@ const Login = () => {
                 <div className="mt-2">
                   <h3 className="title">o ingresa con:</h3>
                   <button
+
                     type="button"
-                    className="btn btn-ligth  btn-outline-warning me-2"
+                    className="btn btn-dark   me-4 bi bi-google w-3 "
                     onClick={() => dispatch(loginUserAction("google", type))}
                   >
                     Google
                   </button>
                   <button
                     type="button"
-                    className="btn btn-ligth  btn-outline-warning"
+                    className="btn btn-dark   bi bi-github w-"
                     onClick={() => dispatch(loginUserAction("github", type))}
                   >
-                    Github
+                    GitHub
                   </button>
                 </div>
               </form>

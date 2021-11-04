@@ -14,15 +14,16 @@
 
 }
 .form-container .form-img{
-  background-image: url('https://i.pinimg.com/564x/a3/49/eb/a349eb8b1e68394f40654ec954daad12.jpg');
+  background-image: url('imagen2.png');
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
   width: 50%;
   height: 600px;
   vertical-align: top;
   display: inline-block;
 
 }
+
 .form-container .form-horizontal{
   background: #000;
   width: 50%;
@@ -71,12 +72,3 @@
   .form-container .form-horizontal{ width: 100%; }
 }
 
-
-
-
-
-.bg-image {
-  background-image: url('https://i.pinimg.com/564x/a3/49/eb/a349eb8b1e68394f40654ec954daad12.jpg');
-  background-size: cover;
-  background-position: center center
-}

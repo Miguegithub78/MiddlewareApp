@@ -33,7 +33,7 @@ const Login = () => {
     }
   });
   const handleClick = () => {
-    if (email !== "" && password !== "") {
+    if (email !== "" && password !== "" && emailVerification) {
       dispatch(loginUserEmailPassAction(email, password));
       setPassword("");
       setEmail("");

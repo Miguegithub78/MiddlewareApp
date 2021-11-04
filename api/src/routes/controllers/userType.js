@@ -26,7 +26,7 @@ const createObect = (idUser, name, gmail, photograph, userType) => {
     openToRelocate: false,
     openToRemote: false,
     openToFullTime: false,
-    userType
+    userType,
   };
   return userObject;
 };
@@ -51,14 +51,21 @@ const signIn = async (req, res) => {
     if (userType === "juniors") {
       const user = await Juniors.findOne({ gmail });
       if (!user) {
-        const userCreated = createObect(
+        // const userCreated = createObect(
+        //   name,
+        //   idUser,
+        //   gmail,
+        //   photograph,
+        //   userType
+        // );
+        var juniorsCreate = await Juniors.create({
+          _id: idUser,
           name,
-          idUser,
           gmail,
-          photograph,
-          userType
-        );
-        var juniorsCreate = await Juniors.create(userCreated);
+          userType,
+          photograph:
+            photograph || "https://www.w3schools.com/howto/img_avatar.png",
+        });
       }
       const token = jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,

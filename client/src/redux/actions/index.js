@@ -96,13 +96,15 @@ export const loginUserEmailPassAction = (email, pass) => {
             name: "Sin Nombre",
             idUser: uid,
             gmail: email,
-            userType
+            userType,
+            emailAndPass: false,
           };
           //creo al usuario en la db
+          console.log(user, "esto mando al post");
           await clienteAxios.post("/login", user);
           dispatch(emailVerificationAction(false));
-			 await signOut(auth)
-			 console.log('deslogueado');
+          await signOut(auth);
+          console.log("deslogueado");
         } catch (error) {
           console.log(error, "create error");
         }
@@ -130,7 +132,7 @@ export const getUserAction = (userProvider) => {
     try {
       const userType = localStorage.getItem("userType");
       const token = localStorage.getItem("token");
-      if (userType&&token) {
+      if (userType && token) {
         clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
           dispatch(loginOkey(rta.data));
         });

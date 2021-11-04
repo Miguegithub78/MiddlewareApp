@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const jobsSchema = new Schema({
+  
   photograph: {
     type: String,
     required: false,
@@ -9,6 +10,7 @@ const jobsSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
     ref: "company",
+    // autopopulate: true
   },
 
   title: {
@@ -69,10 +71,11 @@ const jobsSchema = new Schema({
 
   status: {
     type: String,
-    enum: ["active", "rejected"],
+    enum: ["active", "paused", "closed"],
     default: "active",
   }
 
 });
+
 
 module.exports = model("jobs", jobsSchema);

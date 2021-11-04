@@ -17,6 +17,7 @@ import {
   RESET_JOBS_FILTER,
   CHANGE_PROFILE_PICTURE,
   EMAIL_VERIFICATION,
+  GET_JUNIORS_DETAILS
 } from "../types";
 
 import { calculateDate } from "../helpers";
@@ -508,7 +509,7 @@ const rootReducer = (state = inicialState, action) => {
     case EMAIL_VERIFICATION:
       return {
         ...state,
-		  emailVerification:false
+		  emailVerification:action.payload
       };
     default:
       return state;

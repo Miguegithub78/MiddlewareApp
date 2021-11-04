@@ -20,7 +20,7 @@ import {
   EMAIL_VERIFICATION,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
-import { auth, firebase } from "../../firebaseConfig";
+import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -44,7 +44,7 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
     idUser: uid,
     gmail: email,
     photograph: photoURL || false,
-    userType:'juniors'
+    userType,
   };
   const rta = await clienteAxios.post("/login", user);
   dispatch(loginOkey(rta.data.user));
@@ -59,7 +59,7 @@ export const loginUserAction = (provider, userType) => {
         var userFirebase = await signInWithPopup(auth, googleProvider);
       if (provider === "github")
         var userFirebase = await signInWithPopup(auth, githubProvider);
-      loginHelper(userFirebase, dispatch, 'juniors');
+      loginHelper(userFirebase, dispatch, userType);
     } catch (e) {
       console.log(e);
       if (
@@ -67,68 +67,70 @@ export const loginUserAction = (provider, userType) => {
         "Firebase: Error (auth/account-exists-with-different-credential)."
       ) {
         var userFirebase = await signInWithPopup(auth, googleProvider);
-        loginHelper(userFirebase, dispatch, 'juniors');
+        loginHelper(userFirebase, dispatch, userType);
       }
     }
   };
 };
-export const loginUserEmailPassAction = (email, pass, userType) => {
+export const loginUserEmailPassAction = (email, pass) => {
   return async (dispatch) => {
+    const userType = localStorage.getItem("userType");
     try {
       const rta = await clienteAxios.post(`/login`, {
         gmail: email,
-        userType: "juniors",
+        userType,
         emailAndPass: true,
       });
-      console.log(rta, "rta");
       if (rta.data.noUser) {
         try {
-			  console.log('entro aca!');
+          console.log("entro aca!");
           const userFirebase = await createUserWithEmailAndPassword(
             auth,
             rta.data.gmail,
             pass
           );
-			//  console.log(userFirebase, 'userFirebase');
-          await sendEmailVerification(userFirebase.user);
+          await sendEmailVerification(userFirebase.user, actionCodeSettings);
+          //envio mail de verificacion
           const { uid, email } = userFirebase.user;
           const user = {
             name: "Sin Nombre",
             idUser: uid,
             gmail: email,
-            userType: "juniors",
+            userType
           };
-          clienteAxios.post("/login", user);
-          console.log(user, "me estaria devolviendo esto");
-
-          dispatch(emailVerification());
-
-          await signOut(auth);
+          //creo al usuario en la db
+          await clienteAxios.post("/login", user);
+          dispatch(emailVerificationAction(false));
+			 await signOut(auth)
+			 console.log('deslogueado');
         } catch (error) {
           console.log(error, "create error");
         }
-      } else { // si hay user
+      } else {
+        // si hay user
         const userFirebase = await signInWithEmailAndPassword(
           auth,
           email,
           pass
         );
-        loginHelper(userFirebase, dispatch, 'juniors');
+        loginHelper(userFirebase, dispatch, userType);
       }
     } catch (e) {
       console.log(e);
     }
   };
 };
-const emailVerification = () => ({
+export const emailVerificationAction = (boolean) => ({
   type: EMAIL_VERIFICATION,
+  payload: boolean,
 });
 
 export const getUserAction = (userProvider) => {
   return async (dispatch) => {
     try {
       const userType = localStorage.getItem("userType");
-      if (userType) {
+      const token = localStorage.getItem("token");
+      if (userType&&token) {
         clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
           dispatch(loginOkey(rta.data));
         });

@@ -2,7 +2,12 @@ import { useState } from "react";
 
 import { useHistory, useParams, useQuery } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserAction, loginUserEmailPassAction } from "../../redux/actions";
+import {
+  loginUserAction,
+  loginUserEmailPassAction,
+  emailVerificationAction,
+  getUserAction,
+} from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 
@@ -12,17 +17,19 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { type } = useParams();
+  if (type) {
+    localStorage.setItem("userType", type);
+  }
   const { emailVerification } = useSelector((state) => state);
   const [email, setEmail] = useState("guilletempo1@gmail.com");
   const [password, setPassword] = useState("123456");
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;
-	 console.log(userFirebase, 'el user devulto por firebase');
     if (userFirebase.emailVerified) {
       history.push("/home/companies");
     } else {
-      console.log("usuario no verificado, revisa tu correo");
+      if (emailVerification) dispatch(emailVerificationAction(false));
     }
   });
   const handleClick = () => {
@@ -37,7 +44,7 @@ const Login = () => {
     <div className="form-bg ">
       <div className="container">
         <div className="row">
-          <div className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-1  ">
+          <div className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-1 mx-auto ">
             <h2 className="danger">
               {!emailVerification && "verifica tu cuenta "}
             </h2>
@@ -48,13 +55,12 @@ const Login = () => {
                 <h3 className="title ">Inicia sesion </h3>
 
                 <div className="form-group">
-
                   <div className="form-group">
                     <input
                       type="email"
                       className="form-control"
                       placeholder="Email"
-							 value={email}
+                      value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
@@ -63,7 +69,7 @@ const Login = () => {
                       type="password"
                       className="form-control"
                       placeholder="Password"
-							 value={password}
+                      value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
@@ -75,7 +81,6 @@ const Login = () => {
                     Iniciar sesión
                   </button>
                 </div>
-                <h3 className="title btn btn-dark mt-2">o crea una cuenta</h3>
                 <div className="mt-2">
                   <h3 className="title">o ingresa con:</h3>
                   <button

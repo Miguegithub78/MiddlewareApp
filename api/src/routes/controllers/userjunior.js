@@ -16,10 +16,26 @@ const jwt = require('jsonwebtoken');
 
 const getAllJuniors = async (req, res) => {
 	try {
+		const token = req.headers['x-auth-token'];
+		// console.log(req.headers, 'token');
+		if (!token) {
+			return res
+				.status(403)
+				.json({ auth: false, message: 'se requiere token de autorización' });
+		}
 
-		const allJuniors = await Juniors.find();
+		const decoded = await jwt.verify(token, SECRET);
+
+		const user = await Juniors.findById(decoded.id);
+		if (!user) {
+			return res
+				.status(404)
+				.json({ auth: false, message: 'usuario no registrado' });
+		}
+
+		const allJuniors = await Juniors.find()
+		.populate([{ path: 'languages'},{ path: 'technologies'},{ path: 'softskills'}, { path: 'publications'}]);
 		res.json(allJuniors);
-		
 	} catch (error) {
 		res.status(404).json({ error: error.message });
 	}
@@ -80,14 +96,14 @@ const updateJuniorsProfile = async (req, res) => {
 				.json({ auth: false, message: 'usuario no registrado' });
 		}
 
-		const { id } = req.params;
+		 const { id } = req.params;
 
 		if (id !== decoded.id) {
 			return res
 				.status(401)
 				.json({ auth: false, message: 'usuario no autorizado' });
 		}
-		// console.log(req.body);
+		console.log(req.body);
 		const {
 			name,
 			gmail,
@@ -104,19 +120,11 @@ const updateJuniorsProfile = async (req, res) => {
 			softskills,
 			website,
 			jobsExperience,
+			academicHistory,
 			openToRelocate,
 			openToRemote,
 			openToFullTime,
 		} = req.body;
-		
-		if (languages || technologies) {
-			var getJunior = await Juniors.findById(id);
-
-			var technologiesGet = await Technologies.find({ name: technologies });
-			var languagesGet = await Languages.find({ name: languages });
-			// var softSkillsGet = await SoftSkills.create({ name: softskills });//esta hasta q carguemos en base de datos
-			var softSkillsGet = await SoftSkills.find({ name: softskills });
-		}
 
 		const juniorsChange = await Juniors.findOneAndUpdate(
 			{
@@ -133,11 +141,12 @@ const updateJuniorsProfile = async (req, res) => {
 			linkedin,
 			city,
 			description,
-			languages: languages,
-			technologies: technologies,
+			languages,
+			technologies,
 			publications,
-			softskills: getJunior.softskills.concat(softSkillsGet),
+			softskills,
 			jobsExperience,
+			academicHistory,
 			openToRelocate,
 			openToRemote,
 			openToFullTime,

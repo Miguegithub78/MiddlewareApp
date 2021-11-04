@@ -1,75 +1,71 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const jobsSchema = new Schema({
-
-    photograph: {
-        type: String,
-        required: false
-    },
-    
-    company: {
-      type: Schema.Types.ObjectId,
-      ref: 'company'
-  },
-  
-    title: {
-        type: String,
-        required: true
-    },
-
-    description: {
-      type: String,
-      required: true,
-      defalut: 'No description'
+  photograph: {
+    type: String,
+    required: false,
   },
 
-    country: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String, 
-        required: true  
-    },
-    address: {
-        type: String,
-        required: false
-    },
-    salary: {
-        type: Number,
-        required: true
-    },
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "company",
+  },
 
-    currency: {
-        type: String,
-        required: true  
-    },  
+  title: {
+    type: String,
+    required: true,
+  },
 
-    date: {
-        type: Date,
-        default: Date.now
-    },
+  description: {
+    type: String,
+    required: true,
+    defalut: "Complete job description",
+  },
 
-    junior: {
-        type: Schema.Types.ObjectId,
-        ref: 'juniors'
-    },
+  country: {
+    type: String,
+    required: true,
+  },
 
-    admin: {
-        type: Schema.Types.ObjectId,
-        ref: 'admins'
-    },
+  city: {
+    type: String,
+    required: true,
+  },
 
-    technologies: {
-        type: Schema.Types.ObjectId,
-        ref: 'technologies'
-    },
+  salary: {
+    type: Number,
+    required: true,
+  },
 
-    premium: {
-        type: Boolean,
-        default: false
-    }
+  currency: {
+    type: String,
+    required: true,
+  },
 
-})
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 
-module.exports = model('jobs', jobsSchema)
+  junior: {
+    type: Schema.Types.ObjectId,
+    ref: "juniors",
+  },
+
+  admin: {
+    type: Schema.Types.ObjectId,
+    ref: "admins",
+  },
+
+  technologies: {
+    type: Schema.Types.ObjectId,
+    ref: "technologies",
+  },
+
+  premium: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+module.exports = model("jobs", jobsSchema);

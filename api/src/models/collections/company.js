@@ -53,8 +53,8 @@ const companySchema = new Schema({
     },
 
     premium: {
-        type: Number,
-        default: 0
+        type: Boolean,
+        default: false
     },
 
     description: {
@@ -66,6 +66,12 @@ const companySchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication',
+        // autopopulate: true
+    }],
+
+    jobs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'jobs',
         // autopopulate: true
     }]
 })

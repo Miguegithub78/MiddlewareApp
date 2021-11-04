@@ -137,7 +137,7 @@ const CreatePublications = () => {
                         name='title'
                         placeholder='Ej: Front/Back-End Jr' required></input>
                         {errors.title && (
-                        <p>{errors.title}</p>
+                        <p className='perror'>{errors.title}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group"> 
@@ -148,7 +148,7 @@ const CreatePublications = () => {
                          onChange={handleChange}
                          name='description' required></textarea>
                            {errors.description && (
-                        <p>{errors.description}</p>
+                        <p className='perror'>{errors.description}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">
@@ -159,7 +159,7 @@ const CreatePublications = () => {
                         name='country'
                         placeholder='Ej: Remoto/Buenos Aires' required></input>
                           {errors.country && (
-                        <p>{errors.country}</p>
+                        <p className='perror'>{errors.country}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">
@@ -176,7 +176,7 @@ const CreatePublications = () => {
                         <option className="text-muted bg-light mt-4 mb-3" value='false'>No</option>
                         </select>
                         {errors.dollar && (
-                        <p>{errors.dollar}</p>
+                        <p className='perror'>{errors.dollar}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">
@@ -186,7 +186,7 @@ const CreatePublications = () => {
                         onChange={handleChange}
                         name='salary' required></input>
                           {errors.salary && (
-                        <p>{errors.salary}</p>
+                        <p className='perror'>{errors.salary}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">

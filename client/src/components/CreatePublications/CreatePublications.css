@@ -8,7 +8,7 @@
     background-position: center center;
     background-size: cover;
   }
-p {
+.perror {
     color: #cc0033;
     display: inline-block;
     font-size: 13px;

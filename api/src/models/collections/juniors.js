@@ -65,19 +65,20 @@ const juniorSchema = new Schema({
     description: {
         type: String,
         required: false,
-        maxLength: 500
+        default: 'Completa tu descripción'
+        
     },
     
     languages: [{
         type: Schema.Types.ObjectId,
         ref: 'languages',
-        autopopulate: true
+        autopopulate: false
     }],
 
     technologies: [{
         type: Schema.Types.ObjectId,
         ref: 'technologies',
-        autopopulate: true
+        autopopulate: false
     }],
 
     publications: [{
@@ -88,7 +89,7 @@ const juniorSchema = new Schema({
     softskills: [{
         type: Schema.Types.ObjectId,
         ref: 'softskills',
-        autopopulate: true
+        autopopulate: false
     }],
 
     jobsExperience: [
@@ -100,19 +101,34 @@ const juniorSchema = new Schema({
     }
 ],
 
+    academicHistory: [
+    {
+    institute: String,
+    title: String,
+    date: Date,
+    description: String
+}
+],
+
     openToRelocate: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 
     openToRemote: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 
     openToFullTime: {
         type: Boolean,
-        required: false
+        required: false, 
+        default: false
+        
     },
 })
 

@@ -17,7 +17,6 @@ const CreatePublications = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 		if (token&&user) {
-			console.log('dispatch el tokeeenn', token);
 			tokenAuth(token);
         dispatch(getTechnologies())
         }
@@ -31,14 +30,26 @@ const CreatePublications = () => {
           history.push("/");
         }
       });
+    
+      function validate(input) {
+        let errors = {};
+        if(!input.title) errors.title = 'Campo requerido!' 
+        if(!input.description) errors.description = 'Campo requerido!'
+        if(!input.country) errors.country = 'Campo requerido!'
+        if(input.dollar === null) errors.dollar = 'Campo requerido!'
+        if(!input.salary) errors.salary = 'Campo requerido!'
+        if(!input.technologies) errors.technologies = 'Campo requerido!'
+        return errors;
+    }
 
     const [picture, setPicture] = useState(null);
+    const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         title: '',
         description: '',
         img: '',
         country: '',
-        dollar: false,
+        dollar: null,
         salary: 0,
         technologies: [],
     });
@@ -48,7 +59,11 @@ const CreatePublications = () => {
             ...input,
             [e.target.name] : e.target.value
         }))
-    }
+        setErrors(validate({
+            ...input,
+            [e.target.value] : e.target.value
+        }));
+    };
 
     function handleSelect(e) {
         setInput({
@@ -76,7 +91,26 @@ const CreatePublications = () => {
         dispatch(postPublications(input))
     }
 
-
+    // funcion que desabilita el poder enviar el form si no tiene campos rellenados
+    (function () {
+        'use strict'
+    
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+    
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+    
+            form.classList.add('was-validated')
+            }, false)
+        })
+    })()
 
     return user ? (   
             <div className="container px-4 py-5 mx-auto">
@@ -88,11 +122,12 @@ const CreatePublications = () => {
                 Volver al inicio
             </Link>
                 <div className="card">
+                    <form onSubmit={handleSubmit}className='needs-validation' novalidate>
                     <div className="row px-3"> 
                     <img  alt="img" className="user"  src={user.photograph} />
                     </div>  
                     <div className="row px-3"> 
-                    <h4 className="mb-4">{user.name}</h4>
+                    <h4 className="mt-3 mb-5">{user.name}</h4>
                     </div>  
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Titulo:</h6>
@@ -100,7 +135,10 @@ const CreatePublications = () => {
                         value={input.title}
                         onChange={handleChange}
                         name='title'
-                        placeholder='Ej: Front/Back-End Jr'></input>
+                        placeholder='Ej: Front/Back-End Jr' required></input>
+                        {errors.title && (
+                        <p>{errors.title}</p>
+                         )}
                     </div>
                     <div className="row px-3 form-group"> 
                         <h6 className="mb-0">Descripción:</h6>
@@ -108,7 +146,10 @@ const CreatePublications = () => {
                         placeholder="Agrega una descripción a tu publicación"
                          value={input.description}
                          onChange={handleChange}
-                         name='description'></textarea>
+                         name='description' required></textarea>
+                           {errors.description && (
+                        <p>{errors.description}</p>
+                         )}
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Ubicación:</h6>
@@ -116,28 +157,37 @@ const CreatePublications = () => {
                         value={input.country}
                         onChange={handleChange}
                         name='country'
-                        placeholder='Ej: Remoto/Buenos Aires'></input>
+                        placeholder='Ej: Remoto/Buenos Aires' required></input>
+                          {errors.country && (
+                        <p>{errors.country}</p>
+                         )}
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Imagen:</h6>
                         <input type='file' id='loadfile'className="text-muted bg-light mt-4 mb-3"
-                        onChange={handleChangePicture}
+                        onChange={handleChangePicture} 
                         ></input>
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Dolares:</h6>
-                        <select onChange={e => handleSelect(e)}className="text-muted bg-light mt-4 mb-3">
+                        <select onChange={e => handleSelect(e)}className="text-muted bg-light mt-4 mb-3" required>
                         <option className="text-muted bg-light mt-4 mb-3" >Selecciona</option>
                         <option className="text-muted bg-light mt-4 mb-3" value='true'>Si</option>
                         <option className="text-muted bg-light mt-4 mb-3" value='false'>No</option>
                         </select>
+                        {errors.dollar && (
+                        <p>{errors.dollar}</p>
+                         )}
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Salario:</h6>
                         <input type='number'className="text-muted bg-light mt-4 mb-3"
                         value={input.salary}
                         onChange={handleChange}
-                        name='salary'></input>
+                        name='salary' required></input>
+                          {errors.salary && (
+                        <p>{errors.salary}</p>
+                         )}
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Tecnologias:</h6>
@@ -148,7 +198,8 @@ const CreatePublications = () => {
                             )}
                         </select>
                     </div>
-                        <button onClick={e => handleSubmit(e)}type='submit' className="btn btn-block btn-dark btn-outline-light">Publicar</button>
+                        <button type='submit' className="btn btn-block btn-dark btn-outline-light">Publicar</button>
+                        </form>
                     </div>
                 </div>
             </div>

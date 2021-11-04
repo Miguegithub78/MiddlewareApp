@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/Login/index';
+import LoginPrueba from './components/Login/LoginPrueba';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
@@ -36,6 +37,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Route exact path='/login/:type' component={Login} />
+				{/* <Route exact path='/login/:type' component={LoginPrueba} /> */}
 				<Route path='/home/:tipo' component={Home} />
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser/:id' component={ProfileUser} />

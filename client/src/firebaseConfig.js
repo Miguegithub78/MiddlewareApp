@@ -18,6 +18,14 @@ const firebaseConfig = {
   appId: "1:253903258363:web:005517be5c43da0200265e",
   measurementId: "G-ZSYZTH0V60"
 };
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: 'http://localhost:3000/home/companies',
+  // This must be true.
+  handleCodeInApp: true,
+  // dynamicLinkDomain: 'example.page.link'
+};
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
@@ -27,4 +35,4 @@ const auth = getAuth()
 
 
 // const analytics = getAnalytics(app);
-export { firebase, auth } 
+export { firebase, auth ,actionCodeSettings} 

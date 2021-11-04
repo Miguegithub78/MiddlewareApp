@@ -14,7 +14,7 @@ const postJobs = async (req, res) => {
 
         if(!title){
           
-          return res.status(404).json({ error: 'required "content" is missing'})
+          return res.status(404).json({ error: 'required "Title" is missing'})
         }
 
         const newJob = new Jobs({
@@ -77,6 +77,55 @@ const getJobsById = async (req, res) => {
     }
 }
 
+const putJobs = async (req, res) => {
+  
+  const token = req.headers['x-auth-token'];
+		if (!token) {
+			return res
+				.status(403)
+				.json({ auth: false, message: 'Token is required' });
+		}
+
+		const decoded = await jwt.verify(token, SECRET);    
+  
+    const { id } = req.params;
+  
+      const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
+  
+        const company = await Company.findOne({ idMongo : companyId} );
+  
+          if(!title){
+            
+            return res.status(404).json({ error: 'required "Title" is missing'})
+          }
+  
+          const newJob = {
+              title,
+              description,
+              photograph,
+              country,
+              city,
+              salary,
+              currency,
+              date,
+              technologies,
+              company: company.idMongo,
+              premium,
+              status
+  
+          };
+  
+          try{
+            const updatedJob = await Jobs.findByIdAndUpdate(id, newJob, {new: true})
+  
+            res.json(updatedJob)
+          }
+          catch(err){
+            res.status(404).json({message: err.message})
+          }
+      }
+
+
 const deleteJob = async (req, res) => {
 
   const { id } = req.params;
@@ -84,7 +133,6 @@ const deleteJob = async (req, res) => {
   try{
 
       const jobDeleted = await Jobs.findByIdAndDelete(id)
-
       res.json({message: "Job deleted"})
 
   }
@@ -99,6 +147,8 @@ module.exports = {
   postJobs,
   getAllJobs,
   getJobsById,
-  deleteJob
+  deleteJob,
+  putJobs
 };
+
 

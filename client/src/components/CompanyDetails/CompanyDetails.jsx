@@ -1,42 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyDetails } from '../../redux/actions';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import clienteAxios from '../../components/config/clienteAxios';
+import { getCompanyDetails } from "../../redux/actions";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 
 export default function CompanyDetail() {
-  const { id } = useParams();
-
-  const [companies, setCompanies] = useState({});
+  const { id } = useParams(); 
   const dispatch = useDispatch();
-
   useEffect(() => {
-    detalles();
-  }, []);
-
-  const detalles = async () => {
-    const data = await fetch(`http://localhost:3001/companies/${id}`);
-
-    const companies = await data.json();
-
-    setCompanies(companies);
-    console.log('Details companies' + companies.name);
-  };
-
-  /*const detalles = async () => {
-    
-      try {
-        const data = await clienteAxios.get(`/companies/${id}`);
-        const companies = await data.json();
-        console.log('companies' + companies.name)
-        setCompanies(companies);
-      } catch (error) {
-        
-      }
-    
-  };*/
+    dispatch(getCompanyDetails(id))
+  }, [dispatch]);
+  
+  const companies = useSelector(state => state.details)
 
   return (
     <div className='container-fluid '>

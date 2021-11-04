@@ -78,16 +78,7 @@ const getJobsById = async (req, res) => {
 }
 
 const putJobs = async (req, res) => {
-  
-  const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'Token is required' });
-		}
-
-		const decoded = await jwt.verify(token, SECRET);    
-  
+    
     const { id } = req.params;
   
       const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;

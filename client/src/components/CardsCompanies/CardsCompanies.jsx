@@ -24,6 +24,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
 
                                             <div className="card-body  text-dark">
                                                 <h6 className="card-title">{p.name}</h6>
+                                                <h6 className="mb-0">País: {p.country}</h6>
                                             </div>
                                         </Link>
                                     </div >

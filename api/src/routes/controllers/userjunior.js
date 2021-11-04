@@ -103,7 +103,6 @@ const updateJuniorsProfile = async (req, res) => {
 				.status(401)
 				.json({ auth: false, message: 'usuario no autorizado' });
 		}
-
 		const {
 			name,
 			gmail,

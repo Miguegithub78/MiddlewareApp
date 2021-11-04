@@ -62,7 +62,9 @@ const Home = () => {
 								<CardsCompanies arrayCompanies={companies} />
 							)}
 							{tipo && tipo === 'empleos' && <CardsJobs jobs={jobs} />}
-							{/* <CardsJuniors arrayJuniors={juniors} /> */}
+							{tipo && tipo === 'juniors' && (
+							 <CardsJuniors arrayJuniors={juniors} />
+							 )}
 							{/* 	<CardsJobs jobs={jobs} /> */}
 						</div>
 					</div>

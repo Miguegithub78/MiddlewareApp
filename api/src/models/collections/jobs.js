@@ -1,12 +1,11 @@
 const { Schema, model } = require('mongoose');
 
-const publicationSchema = new Schema({
+const jobsSchema = new Schema({
 
     photograph: {
         type: String,
         required: false
     },
-
     
     company: {
       type: Schema.Types.ObjectId,
@@ -20,8 +19,10 @@ const publicationSchema = new Schema({
 
     description: {
       type: String,
-      required: true
+      required: true,
+      defalut: 'No description'
   },
+
     country: {
         type: String,
         required: true
@@ -29,6 +30,10 @@ const publicationSchema = new Schema({
     city: {
         type: String, 
         required: true  
+    },
+    address: {
+        type: String,
+        required: false
     },
     salary: {
         type: Number,
@@ -45,7 +50,6 @@ const publicationSchema = new Schema({
         default: Date.now
     },
 
-
     junior: {
         type: Schema.Types.ObjectId,
         ref: 'juniors'
@@ -54,7 +58,18 @@ const publicationSchema = new Schema({
     admin: {
         type: Schema.Types.ObjectId,
         ref: 'admins'
+    },
+
+    technologies: {
+        type: Schema.Types.ObjectId,
+        ref: 'technologies'
+    },
+
+    premium: {
+        type: Boolean,
+        default: false
     }
+
 })
 
-module.exports = model('publication', publicationSchema)
+module.exports = model('jobs', jobsSchema)

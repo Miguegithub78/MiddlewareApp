@@ -36,7 +36,6 @@ router.post('/publications', postPublications)
 router.put('/publications', putPublication)
 router.delete('/publications/:id', deletePublication)
 
-router.get('/premiumCompany', getAllCompanyPremium)
-router.put('/premiumCompany/:id', updatePremiumCompany)
+
 
 module.exports = router;

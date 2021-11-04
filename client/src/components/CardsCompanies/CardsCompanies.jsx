@@ -5,38 +5,41 @@ import styles from "./card.css";
 
 
 export const CardsCompanies = ({ arrayCompanies }) => {
-    //const companies = useSelector((state) => state.companies);
+  //const companies = useSelector((state) => state.companies);
 
-    return (
-        <div className="">
-            <div className="row">
-                <div className="col-lg-12 text-center">
-                    <div className="row">
+  return (
 
-                        {arrayCompanies.map((p) => (
-                            <div className="col-lg-3 col-md 12 mb-4">
-                                <div className="card-section">
+    <div className="container">
 
-                                    <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}>
-                                        <Link to={`/companies/${p._id}`} key={p.name}>
+      <div className="row">
+        <div className="col-lg-12 text-center">
+          <div className="row">
 
-                                            <img src={p.photograph} className="card-img-top mt-3 m" style={{ width: " 80% " }} alt="Card cap" />
+            {arrayCompanies.map((p) => (
 
-                                            <div className="card-body  text-dark">
-                                                <h6 className="card-title">{p.name}</h6>
-                                                <h6 className="mb-0">País: {p.country}</h6>
-                                            </div>
-                                        </Link>
-                                    </div >
-                                </div>
-                            </div>
-                        ))}
-                    </div >
+              <div className="col-lg-3 col-md 12 mb-4">
+
+                <div className="card-section">
+
+                  <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}>
+                    <Link to={`/companies/${p._id}`} key={p.name}>
+
+                      <img src={p.photograph} className="card-img-top mt-3 m" style={{ width: " 80% " }} alt="Card cap" />
+
+                      <div className="card-body  text-dark">
+                        <h6 className="card-title">{p.name}</h6>
+                      </div>
+                    </Link>
+                  </div >
                 </div>
-
-            </div>
+              </div>
+            ))}
+          </div >
         </div>
 
+      </div>
+    </div>
 
-    );
+
+  );
 };

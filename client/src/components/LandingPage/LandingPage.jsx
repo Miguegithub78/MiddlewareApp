@@ -15,7 +15,7 @@ export default function LandingPage() {
         </div>
 
         <div className="">
-          <img src={LoginImage} alt="Login Image" className={styles.loginImage} />
+          <img src={LoginImage} alt="Login Image" className={` ${styles.loginImage}`} />
         </div>
 
 

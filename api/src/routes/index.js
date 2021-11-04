@@ -9,6 +9,7 @@ const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities'
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
+const { putLikes } = require('./controllers/addLikes');
 
 router.post('/login', signIn);//path del landing(en revision)
 
@@ -38,5 +39,7 @@ router.delete('/publications/:id', deletePublication)
 
 router.get('/premiumCompany', getAllCompanyPremium)
 router.put('/premiumCompany/:id', updatePremiumCompany)
+
+router.put('/addLike', putLikes)
 
 module.exports = router;

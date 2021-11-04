@@ -6,6 +6,7 @@ import {
 	GET_LANGUAGES,
 	GET_TECHNOLOGIES,
 	GET_COMPANY_DETAILS,
+	GET_JUNIORS_DETAILS,
 	GET_PUBLICATIONS,
 	GET_PUBLICATIONS_BY_ID,
 	SORT_JOBS_BY,
@@ -24,6 +25,7 @@ const inicialState = {
 	loading: false,
 	user: null,
 	details: {},
+	juniorsdetails: {},
 	languages: [],
 	technologies: [],
 	juniors: [],
@@ -415,7 +417,11 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				details: action.payload,
 			};
-
+		case GET_JUNIORS_DETAILS:
+			return {
+				...state,
+				juniorsdetails: action.payload,
+			};
 		case GET_JUNIORS:
 			return {
 				...state,

@@ -103,7 +103,6 @@ const putJobs = async (req, res) => {
               company: company.idMongo,
               premium,
               status
-  
           };
   
           try{

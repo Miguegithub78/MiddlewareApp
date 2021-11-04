@@ -31,6 +31,15 @@ const publicationSchema = new Schema({
     admin: {
         type: Schema.Types.ObjectId,
         ref: 'admins'
+    },
+
+    likes: [{
+        type: String,
+    }],
+
+    likesNumber: {
+        type: Number,
+        default: 0
     }
 })
 

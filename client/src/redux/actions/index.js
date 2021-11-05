@@ -239,6 +239,12 @@ export function deletePublications(id) {
 }
 
 /*JOBS*/
+export function postJobs(payload) {
+	return async function() {
+		const response = await clienteAxios.post('/jobs', payload);
+		return response;
+	};
+}
 
 export function sortJobsBy(payload) {
 	return async function (dispatch) {
@@ -317,5 +323,22 @@ export const changePictureProfileAction = (picture) =>{
 }
 const urlProfilePic = (urlPicture) => ({
 	type: CHANGE_PROFILE_PICTURE,
+	payload:urlPicture
+});
+
+export const changePicturePublicationAction = (picture) =>{
+	return async function (dispatch){
+		try {
+			const fileRef = ref(storage, `documents/${picture.name}`)
+			await uploadBytes(fileRef, picture)
+			const urlPicture =  await getDownloadURL(fileRef)
+			dispatch(urlUploadPic(urlPicture))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}
+const urlUploadPic = (urlPicture) => ({
+	type: 'UPLOAD_PICTURE',
 	payload:urlPicture
 });

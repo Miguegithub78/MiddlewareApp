@@ -47,6 +47,15 @@ function NavBar() {
               <Link
                 className="nav-link fw-normal "
                 aria-current="page"
+                to="/createpublications"
+              >
+                Crear Empleo
+              </Link>
+            </li>
+            <li className={`nav-item  ${styles.items}`}>
+              <Link
+                className="nav-link fw-normal "
+                aria-current="page"
                 to="/home/publications"
               >
                 Publicaciones

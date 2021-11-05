@@ -130,6 +130,12 @@ const juniorSchema = new Schema({
         default: false
         
     },
+
+    postulationsJobs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'jobs',
+    }],
+    
 })
 
 juniorSchema.plugin(require('mongoose-autopopulate'));

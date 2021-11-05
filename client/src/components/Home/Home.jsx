@@ -17,6 +17,7 @@ import { Search } from '../Search/Search';
 import NavBar from '../NavBar/NavBar';
 import { CardsCompanies } from '../CardsCompanies/CardsCompanies';
 import { CardsJuniors } from '../CardsJuniors/CardsJuniors';
+import { Publications } from '../Publications/Publications';
 import CardsJobs from '../CardsJobs/CardsJobs';
 import './Home.css';
 
@@ -47,7 +48,7 @@ const Home = () => {
 	const { tipo } = useParams();
 	const companies = useSelector((state) => state.companies);
 	const juniors = useSelector((state) => state.juniors);
-
+	
 	const jobs = useSelector((state) => state.jobs.filterData);
 
 	return (
@@ -65,6 +66,8 @@ const Home = () => {
 							{tipo && tipo === 'juniors' && (
 							 <CardsJuniors arrayJuniors={juniors} />
 							 )}
+							 {tipo && tipo === 'publications' && <Publications />}
+							
 							{/* 	<CardsJobs jobs={jobs} /> */}
 						</div>
 					</div>

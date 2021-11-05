@@ -47,7 +47,7 @@ function NavBar() {
               <Link
                 className="nav-link fw-normal "
                 aria-current="page"
-                to="/publicaciones"
+                to="/home/publications"
               >
                 Publicaciones
               </Link>

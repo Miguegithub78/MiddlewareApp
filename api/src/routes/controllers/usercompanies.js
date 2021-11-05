@@ -13,6 +13,23 @@ const jwt = require('jsonwebtoken');
 
 const getAllCompanies = async (req, res) => {
     try{
+
+        const token = req.headers['x-auth-token'];
+		if (!token) {
+			return res
+				.status(403)
+				.json({ auth: false, message: 'se requiere token' });
+		}
+
+		const decoded = await jwt.verify(token, SECRET);
+
+		const user = await Company.findById(decoded.id);
+		if (!user) {
+			return res
+				.status(404)
+				.json({ auth: false, message: 'usuario no registrado' });
+		}
+
     const allCompanies = await Company.find().populate('jobs');
     res.json(allCompanies);
     } catch (error) {
@@ -22,6 +39,23 @@ const getAllCompanies = async (req, res) => {
 
 const getCompaniesById = async (req, res) => {
     try{
+
+        const token = req.headers['x-auth-token'];
+		if (!token) {
+			return res
+				.status(403)
+				.json({ auth: false, message: 'se requiere token' });
+		}
+
+		const decoded = await jwt.verify(token, SECRET);
+
+		const user = await Company.findById(decoded.id);
+		if (!user) {
+			return res
+				.status(404)
+				.json({ auth: false, message: 'usuario no registrado' });
+		}
+
         const { id } = req.params;
         const companiesGet = await Company.findById(id)
             .populate('jobs');

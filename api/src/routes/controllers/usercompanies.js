@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 
 const getAllCompanies = async (req, res) => {
     try{
-    const allCompanies = await Company.find();
+    const allCompanies = await Company.find().populate('jobs');
     res.json(allCompanies);
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -24,7 +24,7 @@ const getCompaniesById = async (req, res) => {
     try{
         const { id } = req.params;
         const companiesGet = await Company.findById(id)
-            .populate('publications', 'description' )
+            .populate('jobs');
             
         if(companiesGet) return res.json(companiesGet);
     

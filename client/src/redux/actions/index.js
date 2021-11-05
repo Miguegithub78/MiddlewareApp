@@ -209,9 +209,9 @@ export function getPublicationsById(id) {
 	};
 }
 
-export function postPublications(payload) {
+export function postPublications(payload, nameUser, idUser) {
 	return async function () {
-		const response = await clienteAxios.post('/publications', payload);
+		const response = await clienteAxios.post(`/publications?nameUser=${nameUser}&idUser=${idUser}`, payload);
 		return response;
 	};
 }
@@ -219,6 +219,13 @@ export function postPublications(payload) {
 export function putPublications(id, data) {
 	return async function () {
 		const response = await clienteAxios.put(`/publications/${id}`, data);
+		return response;
+	};
+}
+
+export function putLike(idPublication, idUser){
+	return async function () {
+		const response = await clienteAxios.put(`/addLike?idPublication=${idPublication}&idUser=${idUser}`);
 		return response;
 	};
 }

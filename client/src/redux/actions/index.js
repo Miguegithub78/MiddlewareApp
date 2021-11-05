@@ -239,6 +239,12 @@ export function deletePublications(id) {
 }
 
 /*JOBS*/
+export function postJobs(payload) {
+	return async function() {
+		const response = await clienteAxios.post('/jobs', payload);
+		return response;
+	};
+}
 
 export function sortJobsBy(payload) {
 	return async function (dispatch) {

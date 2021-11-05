@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import tokenAuth from '../config/token';
-import { getCompanies, getTechnologies, postPublications, changePicturePublicationAction, getUserAction } from "../../redux/actions";
+import {getTechnologies, postJobs, changePicturePublicationAction, getUserAction } from "../../redux/actions";
 import  './CreatePublications.css'
 
 const CreatePublications = () => {
@@ -12,7 +12,6 @@ const CreatePublications = () => {
     const { technologies } = useSelector((state) => state);
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(user)
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -36,9 +35,11 @@ const CreatePublications = () => {
         if(!input.title) errors.title = 'Campo requerido!' 
         if(!input.description) errors.description = 'Campo requerido!'
         if(!input.country) errors.country = 'Campo requerido!'
-        if(input.dollar === null) errors.dollar = 'Campo requerido!'
+        if(!input.city) errors.city = 'Campo requerido!'
+        if(!input.currency) errors.currency = 'Campo requerido!'
         if(!input.salary) errors.salary = 'Campo requerido!'
         if(!input.technologies) errors.technologies = 'Campo requerido!'
+        if(!input.date) errors.date = 'Campo requerido!'
         return errors;
     }
 
@@ -47,13 +48,19 @@ const CreatePublications = () => {
     const [input, setInput] = useState({
         title: '',
         description: '',
-        img: '',
+        photograph: '',
         country: '',
-        dollar: null,
-        salary: 0,
+        city: '',
+        currency: '',
         technologies: [],
+        salary: 0,
+        date: '',
+        companyId: user.idMongo,
+        premium: user.premium,
+        status: 'active',
     });
-
+    console.log(user)
+    console.log(input)
     function handleChange(e) {
         setInput(input => ({
             ...input,
@@ -68,13 +75,13 @@ const CreatePublications = () => {
     function handleSelect(e) {
         setInput({
             ...input,
-            dollar: e.target.value
+            currency: e.target.value
         })
     };
     function handleSelectTwo(e) {
         setInput({
             ...input,
-            technologies: [...input.technologies, e.target.value]
+            technologies:  [...input.technologies, e.target.value]
         })
     };
 
@@ -88,7 +95,8 @@ const CreatePublications = () => {
     
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(postPublications(input))
+        dispatch(postJobs(input))
+        history.push("/home/empleos");
     }
 
     // funcion que desabilita el poder enviar el form si no tiene campos rellenados
@@ -111,6 +119,7 @@ const CreatePublications = () => {
             }, false)
         })
     })()
+    
 
     return user ? (   
             <div className="container px-4 py-5 mx-auto">
@@ -152,14 +161,25 @@ const CreatePublications = () => {
                          )}
                     </div>
                     <div className="row px-3 form-group">
-                        <h6 className="mb-0">Ubicación:</h6>
+                        <h6 className="mb-0">País:</h6>
                         <input className="text-muted bg-light mt-4 mb-3"
                         value={input.country}
                         onChange={handleChange}
                         name='country'
-                        placeholder='Ej: Remoto/Buenos Aires' required></input>
+                        placeholder='Ej: Argentina/Uruguay' required></input>
                           {errors.country && (
                         <p className='perror'>{errors.country}</p>
+                         )}
+                    </div>
+                    <div className="row px-3 form-group">
+                        <h6 className="mb-0">Ciudad:</h6>
+                        <input className="text-muted bg-light mt-4 mb-3"
+                        value={input.city}
+                        onChange={handleChange}
+                        name='city'
+                        placeholder='Ej: Buenos Aires/Montevideo' required></input>
+                          {errors.city && (
+                        <p className='perror'>{errors.city}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">
@@ -169,14 +189,15 @@ const CreatePublications = () => {
                         ></input>
                     </div>
                     <div className="row px-3 form-group">
-                        <h6 className="mb-0">Dolares:</h6>
+                        <h6 className="mb-0">Moneda:</h6>
                         <select onChange={e => handleSelect(e)}className="text-muted bg-light mt-4 mb-3" required>
                         <option className="text-muted bg-light mt-4 mb-3" >Selecciona</option>
-                        <option className="text-muted bg-light mt-4 mb-3" value='true'>Si</option>
-                        <option className="text-muted bg-light mt-4 mb-3" value='false'>No</option>
+                        <option className="text-muted bg-light mt-4 mb-3" value='dollar'>Dolar</option>
+                        <option className="text-muted bg-light mt-4 mb-3" value='euro'>Euros</option>
+                        <option className="text-muted bg-light mt-4 mb-3" value='otro'>Otro</option>
                         </select>
-                        {errors.dollar && (
-                        <p className='perror'>{errors.dollar}</p>
+                        {errors.currency && (
+                        <p className='perror'>{errors.currency}</p>
                          )}
                     </div>
                     <div className="row px-3 form-group">
@@ -191,12 +212,24 @@ const CreatePublications = () => {
                     </div>
                     <div className="row px-3 form-group">
                         <h6 className="mb-0">Tecnologias:</h6>
-                        <select onChange={e => handleSelectTwo(e)}className="text-muted bg-light mt-4 mb-3">
+                        <select onChange={e => handleSelectTwo(e)}className="text-muted bg-light mt-4 mb-3" required>
                             {
                                 technologies?.map(el => 
-                                    <option key={el._id} className="text-muted bg-light mt-4 mb-3" value={el.name}>{el.name}</option>
+                                    <option key={el._id} className="text-muted bg-light mt-4 mb-3" value={el._id}>{el.name}</option>
                             )}
                         </select>
+                    </div>
+                    <div className="row px-3 form-group">
+                        <h6 className="mb-0">Fecha:</h6>
+                        <input className="text-muted bg-light mt-4 mb-3"
+                        value={input.date}
+                        onChange={handleChange}
+                        name='date'
+                        type='date'
+                        placeholder='Ej: Buenos Aires/Montevideo' required></input>
+                          {errors.date && (
+                        <p className='perror'>{errors.date}</p>
+                         )}
                     </div>
                         <button type='submit' className="btn btn-block btn-dark btn-outline-light">Publicar</button>
                         </form>

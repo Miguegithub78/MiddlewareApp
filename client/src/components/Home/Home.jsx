@@ -53,12 +53,6 @@ const Home = () => {
 	return (
 		<div className=''>
 			<NavBar />
-			<Link
-                className="btn btn-block btn-dark btn-outline-light"
-                to="/createpublications"
-            >
-                Publicar Empleo
-            </Link>
 			<div className=''>
 				<div className=''>{tipo && tipo === 'empleos' && <Search />}</div>
 				<div className=''>

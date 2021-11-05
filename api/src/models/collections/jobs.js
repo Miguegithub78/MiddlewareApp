@@ -54,11 +54,6 @@ const jobsSchema = new Schema({
     ref: "juniors",
   },
 
-  admin: {
-    type: Schema.Types.ObjectId,
-    ref: "admins",
-  },
-
   technologies: {
     type: Schema.Types.ObjectId,
     ref: "technologies",

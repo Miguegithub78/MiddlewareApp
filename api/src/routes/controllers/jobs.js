@@ -50,7 +50,7 @@ const getAllJobs = async (req, res) => {
 
     try{
 
-        const jobs = await Jobs.find().populate('company')
+        const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}])
     
         res.json(jobs)
     }
@@ -66,7 +66,7 @@ const getJobsById = async (req, res) => {
     try{
 
         const getJobs = await Jobs.findById(id)
-        .populate('company')
+        .populate([{path: 'company'}, {path: 'technologies'}])
 
         if(!getJobs) return res.status(404).json({message: "The job doesn't exists"})
     

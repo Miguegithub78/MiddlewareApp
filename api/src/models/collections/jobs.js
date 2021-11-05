@@ -72,7 +72,7 @@ const jobsSchema = new Schema({
   status: {
     type: String,
     enum: ["active", "paused", "closed"],
-    default: "active",
+    default: "active" 
   }
 
 });

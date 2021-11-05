@@ -15,28 +15,28 @@ const jobsSchema = new Schema({
 
   title: {
     type: String,
-    required: true,
+    required: false,
   },
 
   description: {
     type: String,
-    required: true,
+    required: false,
     defalut: "Complete job description",
   },
 
   country: {
     type: String,
-    required: true,
+    required: false,
   },
 
   city: {
     type: String,
-    required: true,
+    required: false,
   },
 
   salary: {
     type: Number,
-    required: true,
+    required: false,
   },
 
   currency: {
@@ -49,16 +49,20 @@ const jobsSchema = new Schema({
     default: Date.now,
   },
 
-  junior: [{
+  junior: {
     type: Schema.Types.ObjectId,
     ref: "juniors",
-  }],
+  },
 
+  admin: {
+    type: Schema.Types.ObjectId,
+    ref: "admins",
+  },
 
-  technologies: {
+  technologies: [{
     type: Schema.Types.ObjectId,
     ref: "technologies",
-  },
+  }],
 
   premium: {
     type: Boolean,
@@ -75,3 +79,4 @@ const jobsSchema = new Schema({
 
 
 module.exports = model("jobs", jobsSchema);
+

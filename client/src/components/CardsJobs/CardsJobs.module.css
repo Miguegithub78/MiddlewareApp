@@ -127,3 +127,72 @@
 .textNone {
 	text-transform: none;
 }
+
+@media screen and (max-width: 700px) {
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(80vw, 1fr));
+		padding: 20px 20px;
+		grid-gap: 20px 0;
+		justify-items: start;
+		align-items: center;
+		align-self: center;
+	}
+
+	.card_container_info {
+		align-items: center;
+		justify-content: center;
+		height: 140px;
+	}
+
+	.card {
+		height: 400px;
+		width: 100%;
+		padding: 10px;
+		justify-content: start;
+		flex-direction: column;
+	}
+
+	.card_container_logo {
+		width: 100%;
+		max-width: 300px;
+		margin: 0 0 40px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		box-shadow: none;
+	}
+
+	.card_logo {
+		max-width: 300px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.card_container_info_extra_general {
+		flex-direction: column;
+	}
+
+	.card_container_info h3 {
+		font-size: 35px;
+		margin: 0px 0 10px;
+	}
+
+	.card_container_info_extra_city,
+	.card_container_info_extra_salary {
+		margin: 5px 0 10px;
+	}
+
+	.country {
+		top: 0px;
+		right: 0px;
+		border-radius: 5px;
+		background-color: rgb(73, 71, 216);
+	}
+
+	.country2 {
+		top: 0px;
+		right: 0px;
+		border-radius: 5px;
+		background-color: rgb(224, 49, 131);
+	}
+}

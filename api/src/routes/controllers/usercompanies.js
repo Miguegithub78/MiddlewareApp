@@ -24,7 +24,8 @@ const getAllCompanies = async (req, res) => {
 
     const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Juniors.findById(decoded.id);
+    let user = await Juniors.findById(decoded.id);
+    if (!user) user = await Company.findById(decoded.id);
     if (!user) {
       return res
         .status(404)
@@ -47,8 +48,8 @@ const getCompaniesById = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
     const decoded = await jwt.verify(token, SECRET);
-   //  let user = await Juniors.findById(decoded.id);
-   let user = await Company.findById(decoded.id);
+    let user = await Juniors.findById(decoded.id);
+    if (!user) user = await Company.findById(decoded.id);
     if (!user) {
       return res
         .status(404)

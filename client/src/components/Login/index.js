@@ -37,13 +37,14 @@ const Login = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
+      console.log(userFirebase);
       history.push("/home/companies");
       if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
-      // if (emailVerification) {
-      //   dispatch(emailVerificationAction(false));
-      //   dispatch(errorLoginAction("Cuenta NO Verificada"));
-      // }
+      if (emailVerification) {
+        dispatch(emailVerificationAction(false));
+        dispatch(errorLoginAction("Cuenta NO Verificada"));
+      }
     }
   });
   //resetear errores automatico

@@ -37,7 +37,11 @@ const Login = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
+<<<<<<< HEAD
       console.log(userFirebase);
+=======
+
+>>>>>>> main
       history.push("/home/companies");
       if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {

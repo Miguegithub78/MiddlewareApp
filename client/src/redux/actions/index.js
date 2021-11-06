@@ -39,7 +39,6 @@ const githubProvider = new GithubAuthProvider();
 const storage = getStorage(firebase);
 
 const loginHelper = async (userFirebase, dispatch, userType) => {
-  console.log('userFirebase',userFirebase);
   const { uid, email, displayName, photoURL } = userFirebase.user;
   const user = {
     name: displayName || "Sin Nombre",

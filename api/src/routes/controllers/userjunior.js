@@ -24,15 +24,8 @@ const getAllJuniors = async (req, res) => {
     }
     const decoded = await jwt.verify(token, SECRET);
 
-<<<<<<< HEAD
     let user = await Company.findById(decoded.id);
     if(!user) user = await Juniors.findById(decoded.id);
-=======
-
-    let user = await Company.findById(decoded.id);
-    if(!user) user = await Juniors.findById(decoded.id);
-
->>>>>>> main
     if (!user) {
       return res
         .status(404)
@@ -63,13 +56,7 @@ const getJuniorById = async (req, res) => {
     const decoded = await jwt.verify(token, SECRET);
 	 
     let user = await Juniors.findById(decoded.id);
-<<<<<<< HEAD
 	  if(!user) user = await Company.findById(decoded.id);
-=======
-
-	  if(!user) user = await Company.findById(decoded.id);
-
->>>>>>> main
     if (!user) {
       return res
         .status(404)

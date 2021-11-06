@@ -62,7 +62,7 @@ const juniorSchema = new Schema({
   },
   userType: {
     type: String,
-    required: false,
+    required: true,
   },
 
   description: {

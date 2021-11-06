@@ -36,6 +36,10 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    userType: {
+        type: String,
+        required: true
+    },
 
     country: {
         type: String,

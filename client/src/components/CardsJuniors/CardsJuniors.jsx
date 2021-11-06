@@ -9,7 +9,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
 
   return (
 
-    <div className="">
+    <div className="container">
       <div className="row">
         <div className="col-lg-12 text-center">
           <div className="row">
@@ -18,7 +18,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
                 <div className="card-section">
                   <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
                     <Link to={`/juniors/${p._id}`} key={p.name}>
-                      <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 80% " }} alt="Card cap" />
+                      <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 150px ", height: " 180px " }} alt="Card cap" />
                       <div className="card-body  text-dark">
                         <h6 className="card-title">{p.name}{p.lastname}</h6>
                       </div>
@@ -35,4 +35,3 @@ export const CardsJuniors = ({ arrayJuniors }) => {
 
   );
 };
-

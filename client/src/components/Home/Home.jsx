@@ -57,34 +57,44 @@ const Home = () => {
     if (userType===null) history.push("/");
   }, []);
 
-  const { tipo } = useParams();
-  const companies = useSelector((state) => state.companies);
-  const juniors = useSelector((state) => state.juniors);
+	onAuthStateChanged(auth, (userFirebase) => {
+		if (userFirebase) {
+			if (user) return;
+			dispatch(getUserAction(userFirebase));
+		} else {
+			history.push('/');
+		}
+	});
+	const { tipo } = useParams();
+	const companies = useSelector((state) => state.companies);
+	const juniors = useSelector((state) => state.juniors);
+	
+	const jobs = useSelector((state) => state.jobs.filterData);
 
-  const jobs = useSelector((state) => state.jobs.filterData);
-
-  return (
-    <div className="">
-      <NavBar />
-      <div className="">
-        <div className="">{tipo && tipo === "empleos" && <Search />}</div>
-        <div className="">
-          <div className="">
-            <div className="">
-              {tipo && tipo === "companies" && (
-                <CardsCompanies arrayCompanies={companies} />
-              )}
-              {tipo && tipo === "empleos" && <CardsJobs jobs={jobs} />}
-              {tipo && tipo === "juniors" && (
-                <CardsJuniors arrayJuniors={juniors} />
-              )}
-              {/* 	<CardsJobs jobs={jobs} /> */}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className=''>
+			<NavBar />
+			<div className=''>
+				<div className=''>{tipo && tipo === 'empleos' && <Search />}</div>
+				<div className=''>
+					<div className=''>
+						<div className=''>
+							{tipo && tipo === 'companies' && (
+								<CardsCompanies arrayCompanies={companies} />
+							)}
+							{tipo && tipo === 'empleos' && <CardsJobs jobs={jobs} />}
+							{tipo && tipo === 'juniors' && (
+							 <CardsJuniors arrayJuniors={juniors} />
+							 )}
+							 {tipo && tipo === 'publications' && <Publications />}
+							
+							{/* 	<CardsJobs jobs={jobs} /> */}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Home;

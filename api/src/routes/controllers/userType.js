@@ -19,7 +19,7 @@ const signIn = async (req, res) => {
       if (user) return res.json(user);
       return res.json({ noUser: true, gmail });
     }
-  }
+  } 
   try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {

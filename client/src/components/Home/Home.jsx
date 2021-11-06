@@ -24,6 +24,7 @@ import { CardsCompanies } from "../CardsCompanies/CardsCompanies";
 import { CardsJuniors } from "../CardsJuniors/CardsJuniors";
 import CardsJobs from "../CardsJobs/CardsJobs";
 import "./Home.css";
+import { Publications } from "../Publications/Publications";
 
 const Home = () => {
   const { user, emailVerification } = useSelector((state) => state);

@@ -24,7 +24,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { type } = useParams();
-  if(type==='null')history.push('/')
+  if (type === "null") history.push("/");
   if (type) {
     localStorage.setItem("userType", type);
   }
@@ -37,13 +37,13 @@ const Login = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
-      if (!emailVerification) dispatch(emailVerificationAction(true));
       history.push("/home/companies");
+      if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
-      if (emailVerification) {
-        dispatch(emailVerificationAction(false));
-        dispatch(errorLoginAction("Cuenta NO Verificada"));
-      }
+      // if (emailVerification) {
+      //   dispatch(emailVerificationAction(false));
+      //   dispatch(errorLoginAction("Cuenta NO Verificada"));
+      // }
     }
   });
   //resetear errores automatico

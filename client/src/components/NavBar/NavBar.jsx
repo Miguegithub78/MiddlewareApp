@@ -38,8 +38,12 @@ function NavBar() {
                 </a>
               </li>
             ) : null}
-
-              <li className={`nav-item  ${styles.items}`}>
+            <li className={`nav-item  ${styles.items}`}>
+              <Link className="nav-link fw-normal " to={"/home/juniors"}>
+                Juniors
+              </Link>
+            </li>
+            <li className={`nav-item  ${styles.items}`}>
               <Link
                 className="nav-link fw-normal "
                 aria-current="page"
@@ -52,7 +56,7 @@ function NavBar() {
               <Link
                 className="nav-link fw-normal "
                 aria-current="page"
-                to="/publicaciones"
+                to="/home/publications"
               >
                 Publicaciones
               </Link>

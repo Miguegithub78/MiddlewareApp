@@ -282,11 +282,11 @@ export function getPublicationsById(id) {
   };
 }
 
-export function postPublications(payload) {
-  return async function () {
-    const response = await clienteAxios.post("/publications", payload);
-    return response;
-  };
+export function postPublications(payload, nameUser, idUser) {
+	return async function () {
+		const response = await clienteAxios.post(`/publications?nameUser=${nameUser}&idUser=${idUser}`, payload);
+		return response;
+	};
 }
 
 export function putPublications(id, data) {
@@ -294,6 +294,13 @@ export function putPublications(id, data) {
     const response = await clienteAxios.put(`/publications/${id}`, data);
     return response;
   };
+}
+
+export function putLike(idPublication, idUser){
+	return async function () {
+		const response = await clienteAxios.put(`/addLike?idPublication=${idPublication}&idUser=${idUser}`);
+		return response;
+	};
 }
 
 /*no existe en el back*/
@@ -305,6 +312,12 @@ export function deletePublications(id) {
 }
 
 /*JOBS*/
+export function postJobs(payload) {
+	return async function() {
+		const response = await clienteAxios.post('/jobs', payload);
+		return response;
+	};
+}
 
 export function sortJobsBy(payload) {
   return async function (dispatch) {
@@ -382,6 +395,23 @@ export const changePictureProfileAction = (picture) => {
   };
 };
 const urlProfilePic = (urlPicture) => ({
-  type: CHANGE_PROFILE_PICTURE,
-  payload: urlPicture,
+	type: CHANGE_PROFILE_PICTURE,
+	payload:urlPicture
+});
+
+export const changePicturePublicationAction = (picture) =>{
+	return async function (dispatch){
+		try {
+			const fileRef = ref(storage, `documents/${picture.name}`)
+			await uploadBytes(fileRef, picture)
+			const urlPicture =  await getDownloadURL(fileRef)
+			dispatch(urlUploadPic(urlPicture))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}
+const urlUploadPic = (urlPicture) => ({
+	type: 'UPLOAD_PICTURE',
+	payload:urlPicture
 });

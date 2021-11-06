@@ -29,6 +29,12 @@ const adminSchema = new Schema({
     publications: [{
         type: Schema.Types.ObjectId,
         ref: 'publication'
+    }],
+
+    jobs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'jobs',
+        autopopulate: true
     }]
 
 })

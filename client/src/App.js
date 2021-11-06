@@ -9,7 +9,7 @@ import ProfileUser from './components/ProfileUser/ProfileUser';
 import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
 import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
-
+import CreatePublications from './components/CreatePublications/CreatePublications';
 function App() {
 	const token = localStorage.getItem('token');
 
@@ -27,7 +27,8 @@ function App() {
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser/:id' component={ProfileUser} />
 				<Route path='/companies/:id' component={CompanyDetail} />
-				<Route exact path='/publicaciones' component={Publications} />
+				<Route exact path='/createpublications' component={CreatePublications}/>
+				<Route exact path='/publicaciones' component={Publications}/>
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>

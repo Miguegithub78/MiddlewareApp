@@ -18,6 +18,7 @@ import {
   RESET_JOBS_FILTER,
   CHANGE_PROFILE_PICTURE,
   EMAIL_VERIFICATION,
+  ERROR_LOGIN,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
 import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
@@ -38,6 +39,7 @@ const githubProvider = new GithubAuthProvider();
 const storage = getStorage(firebase);
 
 const loginHelper = async (userFirebase, dispatch, userType) => {
+  console.log('loginhelper');
   const { uid, email, displayName, photoURL } = userFirebase.user;
   const user = {
     name: displayName || "Sin Nombre",
@@ -47,6 +49,7 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
     userType,
   };
   const rta = await clienteAxios.post("/login", user);
+  //tengo que checkear si el que se loguea como program tiene una cuenta comom junior y asi
   dispatch(loginOkey(rta.data.user));
   localStorage.setItem("token", rta.data.token);
   localStorage.setItem("userType", userType);
@@ -72,56 +75,66 @@ export const loginUserAction = (provider, userType) => {
     }
   };
 };
-export const loginUserEmailPassAction = (email, pass) => {
+export const loginUserEmailPassAction = (email, pass, name) => {
   return async (dispatch) => {
     const userType = localStorage.getItem("userType");
-    try {
-      const rta = await clienteAxios.post(`/login`, {
-        gmail: email,
-        userType,
-        emailAndPass: true,
-      });
-      if (rta.data.noUser) {
-        try {
-          console.log("entro aca!");
-          const userFirebase = await createUserWithEmailAndPassword(
-            auth,
-            rta.data.gmail,
-            pass
-          );
-          await sendEmailVerification(userFirebase.user, actionCodeSettings);
-          //envio mail de verificacion
-          const { uid, email } = userFirebase.user;
-          const user = {
-            name: "Sin Nombre",
-            idUser: uid,
-            gmail: email,
-            userType,
-            emailAndPass: false,
-          };
-          //creo al usuario en la db
-          console.log(user, "esto mando al post");
-          await clienteAxios.post("/login", user);
-          dispatch(emailVerificationAction(false));
-          await signOut(auth);
-          console.log("deslogueado");
-        } catch (error) {
-          console.log(error, "create error");
-        }
-      } else {
-        // si hay user
+    const gmail = email;
+
+    if (name) {
+      try {
+        console.log("entro aca!");
+        const userFirebase = await createUserWithEmailAndPassword(
+          auth,
+          gmail,
+          pass
+        );
+        await sendEmailVerification(userFirebase.user, actionCodeSettings);
+        //envio mail de verificacion
+        const { uid, email } = userFirebase.user;
+        const user = {
+          name,
+          idUser: uid,
+          gmail: email,
+          userType,
+          emailAndPass: false,
+        };
+        //creo al usuario en la db
+        console.log(user, "esto mando al post");
+        const rta = await clienteAxios.post("/login", user);
+        console.log(rta.data);
+        dispatch(emailVerificationAction(false));
+        await signOut(auth);
+        console.log("deslogueado");
+      } catch (error) {
+        console.log(error, "create error");
+      }
+    } else {
+      // si hay user
+      try {
+        console.log(" aca!");
         const userFirebase = await signInWithEmailAndPassword(
           auth,
           email,
           pass
         );
         loginHelper(userFirebase, dispatch, userType);
+      } catch (error) {
+        console.log(error.code, "asdasd");
+        if (error.code === "auth/wrong-password") {
+          dispatch(errorLoginAction("Usuario o Contraseña incorrecta"));
+        } else if (error.code === "auth/too-many-requests") {
+          dispatch(errorLoginAction("Usuario bloqueado, Resetea la clave"));
+        }else if ( error.code === "auth/user-not-found"){
+          dispatch(errorLoginAction("Usuario No Registrado"));
+        }
       }
-    } catch (e) {
-      console.log(e);
     }
   };
 };
+export const errorLoginAction = (msg) => ({
+  type: ERROR_LOGIN,
+  payload: msg,
+});
 export const emailVerificationAction = (boolean) => ({
   type: EMAIL_VERIFICATION,
   payload: boolean,
@@ -132,6 +145,7 @@ export const getUserAction = (userProvider) => {
     try {
       const userType = localStorage.getItem("userType");
       const token = localStorage.getItem("token");
+      if(!userProvider)console.log(auth.currentUser,'auth');
       if (userType && token) {
         clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
           dispatch(loginOkey(rta.data));

@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login/index';
+import Login from './components/Login';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
@@ -8,9 +8,8 @@ import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
 import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { getJuniors, getCompanies } from './redux/actions/index.js';
 import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
+
 function App() {
 	const token = localStorage.getItem('token');
 

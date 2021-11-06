@@ -31,6 +31,7 @@ const Home = () => {
   const history = useHistory();
 
   const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
   useEffect(() => {
     if (token && user) {
       console.log("dispatch el tokeeenn", token);
@@ -43,12 +44,18 @@ const Home = () => {
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
-		if(!user&&userFirebase.emailVerified)
+      if (!user && userFirebase.emailVerified)
         dispatch(getUserAction(userFirebase));
     } else {
       history.push("/");
     }
   });
+  useEffect(() => {
+    if (!user) dispatch(getUserAction());
+  }, []);
+  useEffect(() => {
+    if (userType===null) history.push("/");
+  }, []);
 
   const { tipo } = useParams();
   const companies = useSelector((state) => state.companies);

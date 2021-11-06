@@ -17,13 +17,15 @@ import {
   RESET_JOBS_FILTER,
   CHANGE_PROFILE_PICTURE,
   EMAIL_VERIFICATION,
-  GET_JUNIORS_DETAILS
+  GET_JUNIORS_DETAILS,
+  ERROR_LOGIN,
 } from "../types";
 
 import { calculateDate } from "../helpers";
 
 const inicialState = {
 	loading: false,
+	errorLogin:null,
 	user: null,
 	details: {},
 	juniorsdetails: {},
@@ -510,6 +512,11 @@ const rootReducer = (state = inicialState, action) => {
       return {
         ...state,
 		  emailVerification:action.payload
+      };
+    case ERROR_LOGIN:
+      return {
+        ...state,
+		  errorLogin:action.payload
       };
     default:
       return state;

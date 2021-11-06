@@ -25,6 +25,8 @@ const signIn = async (req, res) => {
     if (userType === "juniors") {
       const user = await Juniors.findOne({ gmail });
       if (!user) {
+        const userCompany = await Juniors.findOne({ gmail });
+        if(userCompany) res.json('Usuario tiene una cuenta como junior')
         var juniorsCreate = await Juniors.create({
           _id: idUser,
           name,

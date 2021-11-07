@@ -5,15 +5,11 @@ var ObjectIdSchema = Schema.ObjectId;
 var ObjectId = mongoose.Types.ObjectId;
 
 const juniorSchema = new Schema({
-  // _id: {
-  //   type: String,
-  //   required: true,
-  // },
 
-  // idMongo: {
-  //   type: ObjectIdSchema,
-  //   default: new ObjectId(),
-  // },
+  idFireBase: {
+    type: String,
+    required: true
+  },
 
   name: {
     type: String,

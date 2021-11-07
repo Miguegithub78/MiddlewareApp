@@ -23,15 +23,21 @@ const signIn = async (req, res) => {
   try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {
+
       const user = await Juniors.findOne({ gmail });
+
       if (!user) {
+
         const userCompany = await Company.findOne({ gmail });
+
         if (userCompany)
           return res.json({
             auth: false,
             msg: "Usuario tiene una cuenta como Company",
           });
+
         var juniorsCreate = await Juniors.create({
+          idFireBase: idUser,
           name,
           gmail,
           userType,
@@ -39,22 +45,30 @@ const signIn = async (req, res) => {
             photograph || "https://www.w3schools.com/howto/img_avatar.png",
         });
       }
+
       const token = jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,
       });
+
       return res.json({ auth: true, token: token, user: juniorsCreate });
     }
+
     if (userType === "companies") {
+
       const user = await Company.findOne({ gmail });
+
       if (!user) {
+
         const userJunior = await Juniors.findOne({ gmail });
+
         if (userJunior)
           return res.json({
             auth: false,
             msg: "Usuario tiene una cuenta como Junior",
           });
+
         var CompanyCreate = await Company.create({
-          _id: idUser,
+          idFireBase: idUser,
           name,
           gmail,
           userType,
@@ -62,6 +76,7 @@ const signIn = async (req, res) => {
             photograph || "https://www.w3schools.com/howto/img_avatar.png",
         });
       }
+
       const token = jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,
       });

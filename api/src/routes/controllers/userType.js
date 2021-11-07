@@ -23,16 +23,28 @@ const signIn = async (req, res) => {
   try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {
+
       const user = await Juniors.findOne({ gmail });
+
       if (!user) {
+<<<<<<< HEAD
         const userCompany = await Company.findOne({ gmail });
+=======
+
+        const userCompany = await Company.findOne({ gmail });
+
+>>>>>>> main
         if (userCompany)
           return res.json({
             auth: false,
             msg: "Usuario tiene una cuenta como Company",
           });
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
         var juniorsCreate = await Juniors.create({
-          _id: idUser,
+          idFireBase: idUser,
           name,
           gmail,
           userType,
@@ -40,22 +52,40 @@ const signIn = async (req, res) => {
             photograph || "https://www.w3schools.com/howto/img_avatar.png",
         });
       }
+
       const token = jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,
       });
+
       return res.json({ auth: true, token: token, user: juniorsCreate });
     }
+<<<<<<< HEAD
     if (userType === "companies") {
       const user = await Company.findOne({ gmail });
       if (!user) {
         const userJunior = await Juniors.findOne({ gmail });
+=======
+
+    if (userType === "companies") {
+
+      const user = await Company.findOne({ gmail });
+
+      if (!user) {
+
+        const userJunior = await Juniors.findOne({ gmail });
+
+>>>>>>> main
         if (userJunior)
           return res.json({
             auth: false,
             msg: "Usuario tiene una cuenta como Junior",
           });
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
         var CompanyCreate = await Company.create({
-          _id: idUser,
+          idFireBase: idUser,
           name,
           gmail,
           userType,
@@ -63,6 +93,7 @@ const signIn = async (req, res) => {
             photograph || "https://www.w3schools.com/howto/img_avatar.png",
         });
       }
+
       const token = jwt.sign({ id: idUser }, SECRET, {
         expiresIn: 60 * 60 * 24,
       });

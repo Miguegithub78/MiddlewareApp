@@ -57,6 +57,7 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
       console.log("deslogueado");
       dispatch(errorLoginAction(rta.data.msg));
       return;
+  
     }
     dispatch(loginOkey(rta.data.user));
 
@@ -159,8 +160,8 @@ export const getUserAction = (userProvider) => {
       const token = localStorage.getItem("token");
       if (!userProvider) console.log(auth.currentUser, "auth");
       if (userType && token) {
-        clienteAxios.get(`/${userType}/${userProvider.uid}`,{firebase:true}).then((rta) => {
-          console.log(rta.data, "dato de cuando obtengo ");
+        clienteAxios.get(`/${userType}/${userProvider.uid}?firebase=true`).then((rta) => {
+          console.log(rta.data, 'dato de cuando obtengo ');
           dispatch(loginOkey(rta.data));
         });
       }

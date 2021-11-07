@@ -9,6 +9,7 @@ const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities'
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
+const { juniorsPostulations } = require ('./controllers/juniorPostulation')
 
 const { postJobs, getAllJobs, getJobsById, deleteJob, putJobs } = require('./controllers/jobs');
 
@@ -50,6 +51,7 @@ router.post('/jobs', postJobs)
 router.put('/jobs/:id', putJobs)
 router.delete('/jobs/:id', deleteJob)
 
+router.put('/jobs/postulation/:id', juniorsPostulations )
 
 router.put('/addLike', putLikes)
 

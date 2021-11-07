@@ -18,7 +18,9 @@ export const Publications = () => {
   const dispatch = useDispatch();
   const publications = useSelector((state) => state.publications);
   const user = useSelector((state) => state.user);
+
   var [idPost, setIdPost] = useState(null);
+
   var [postPublication, setPostPublication] = useState({
     description: "",
   });
@@ -31,7 +33,7 @@ export const Publications = () => {
 
   function postDescription() {
     if (postPublication.description !== "") {
-      dispatch(postPublications(postPublication, "junior", user.idMongo));
+      dispatch(postPublications(postPublication, "junior", user._id));
       window.location.reload(true);
     }
   }

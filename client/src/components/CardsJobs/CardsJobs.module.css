@@ -6,6 +6,10 @@
 	justify-items: center;
 }
 
+.link {
+	text-decoration: none;
+}
+
 .card {
 	position: relative;
 	display: flex;

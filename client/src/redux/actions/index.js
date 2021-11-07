@@ -17,6 +17,8 @@ import {
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
+	GET_JOB_DETAILS,
+	GET_JOBS,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
 import { auth, firebase } from '../../firebaseConfig';
@@ -26,12 +28,12 @@ import {
 	GithubAuthProvider,
 	signOut,
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import tokenAuth from '../../components/config/token';
 /*LOGIN*/
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
-const storage = getStorage(firebase)
+const storage = getStorage(firebase);
 const loginHelper = async (userFirebase, dispatch, userType) => {
 	const { uid, email, displayName, photoURL } = userFirebase.user;
 	const user = {
@@ -75,7 +77,7 @@ export const getUserAction = (userProvider) => {
 			if (userType) {
 				clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
 					dispatch(loginOkey(rta.data));
-					console.log(rta.data,'//////////');
+					console.log(rta.data, '//////////');
 				});
 			}
 		} catch (e) {
@@ -296,19 +298,38 @@ export function resetFilterJobs(payload) {
 	};
 }
 
-export const changePictureProfileAction = (picture) =>{
-	return async function (dispatch){
+export const changePictureProfileAction = (picture) => {
+	return async function (dispatch) {
 		try {
-			const fileRef = ref(storage, `documents/${picture.name}`)
-			await uploadBytes(fileRef, picture)
-			const urlPicture =  await getDownloadURL(fileRef)
-			dispatch(urlProfilePic(urlPicture))
+			const fileRef = ref(storage, `documents/${picture.name}`);
+			await uploadBytes(fileRef, picture);
+			const urlPicture = await getDownloadURL(fileRef);
+			dispatch(urlProfilePic(urlPicture));
 		} catch (error) {
 			console.log(error);
 		}
-	}
-}
+	};
+};
 const urlProfilePic = (urlPicture) => ({
 	type: CHANGE_PROFILE_PICTURE,
-	payload:urlPicture
+	payload: urlPicture,
 });
+
+/* export function getJobDetails(id) {
+	return async function (dispatch) {
+		try {
+			const job = await clienteAxios.get(`/jobs/${id}`);
+			return dispatch({ type: GET_JOB_DETAILS, payload: job.data });
+		} catch (error) {}
+	};
+}
+
+export function getJobs() {
+	return async function (dispatch) {
+		try {
+			const allJobs = await clienteAxios.get(`/jobs`);
+			return dispatch({ type: GET_JOBS, payload: allJobs.data });
+		} catch (error) {}
+	};
+}
+ */

@@ -17,6 +17,8 @@ import {
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
+	GET_JOB_DETAILS,
+	GET_JOBS,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -324,6 +326,7 @@ const inicialState = {
 			techs: [],
 		},
 	},
+	jobsDetails: {},
 };
 
 function calculateSalary(value, state) {
@@ -500,10 +503,22 @@ const rootReducer = (state = inicialState, action) => {
 			};
 		}
 		case CHANGE_PROFILE_PICTURE:
-			return{
+			return {
 				...state,
-				user : {...state.user, photograph:action.payload}
-			}
+				user: { ...state.user, photograph: action.payload },
+			};
+		/* 		case GET_JOBS:
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: action.payload },
+				jobs: { ...state.jobs, data: action.payload },
+			};
+		case GET_JOB_DETAILS:
+			return {
+				...state,
+				jobsDetails: action.payload,
+			}; */
+
 		default:
 			return state;
 	}

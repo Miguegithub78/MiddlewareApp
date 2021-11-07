@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
 import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
+import JobsDetails from './components/JobsDetails/JobsDetails';
 import Publications from './components/Publications/Publications';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -39,6 +40,7 @@ function App() {
 				<Route path='/home/:tipo' component={Home} />
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser/:id' component={ProfileUser} />
+				<Route exact path='/jobs/:id' component={JobsDetails} />
 				<Route path='/companies/:id' component={CompanyDetail} />
 				<Route exact path='/publicaciones' component={Publications} />
 				<Route path='/juniors/:id' component={JuniorsDetail} />

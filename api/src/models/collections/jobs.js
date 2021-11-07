@@ -49,10 +49,10 @@ const jobsSchema = new Schema({
     default: Date.now,
   },
 
-  junior: {
+  junior: [{
     type: Schema.Types.ObjectId,
     ref: "juniors",
-  },
+  }],
 
   admin: {
     type: Schema.Types.ObjectId,

@@ -50,6 +50,7 @@ router.post('/jobs', postJobs)
 router.put('/jobs/:id', putJobs)
 router.delete('/jobs/:id', deleteJob)
 
+// router.put('/jobs', juniorsPostulations)
 
 router.put('/addLike', putLikes)
 

@@ -16,22 +16,22 @@ const jwt = require('jsonwebtoken');
 
 const getAllJuniors = async (req, res) => {
 	try {
-		const token = req.headers['x-auth-token'];
-		// console.log(req.headers, 'token');
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autorización' });
-		}
+		// const token = req.headers['x-auth-token'];
+		// // console.log(req.headers, 'token');
+		// if (!token) {
+		// 	return res
+		// 		.status(403)
+		// 		.json({ auth: false, message: 'se requiere token de autorización' });
+		// }
 
-		const decoded = await jwt.verify(token, SECRET);
+		// const decoded = await jwt.verify(token, SECRET);
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+		// const user = await Juniors.findById(decoded.id);
+		// if (!user) {
+		// 	return res
+		// 		.status(404)
+		// 		.json({ auth: false, message: 'usuario no registrado' });
+		// }
 
 		const allJuniors = await Juniors.find()
 		.populate([{ path: 'languages'},{ path: 'technologies'},{ path: 'softskills'}, { path: 'publications'}]);
@@ -43,21 +43,21 @@ const getAllJuniors = async (req, res) => {
 
 const getJuniorById = async (req, res) => {
 	try {
-		const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autenticacion' });
-		}
+		// const token = req.headers['x-auth-token'];
+		// if (!token) {
+		// 	return res
+		// 		.status(403)
+		// 		.json({ auth: false, message: 'se requiere token de autenticacion' });
+		// }
 
-		const decoded = await jwt.verify(token, SECRET);
+		// const decoded = await jwt.verify(token, SECRET);
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+		// const user = await Juniors.findById(decoded.id);
+		// if (!user) {
+		// 	return res
+		// 		.status(404)
+		// 		.json({ auth: false, message: 'usuario no registrado' });
+		// }
 
 		const { id } = req.params;
 		

@@ -3,18 +3,18 @@ const { Juniors, Company, Jobs } = require ('../../models/index');
 const juniorsPostulations = async (req, res) => {
   const { id } = req.params; //id del job
   const { idMongo } = req.body //id del junior
-  const junior = await Juniors.findOne({ idMongo : idMongo} );
-
-  if(!idMongo){         
+  
+  try{
+  const junior = await Juniors.findOne({ idMongo : idMongo } );
+  
+  if(!junior){         
             return res.status(404).json({ error: 'required "Junior" is missing'})
           }
 
-  const newPostulation = {
-    junior: junior
-  }
+  const allJobPostulation = Jobs.findById(id)
 
-  try{
-          const juniorPostulation = await Jobs.findByIdAndUpdate(id, newPostulation, {new: true})
+ 
+          const juniorPostulation = await Jobs.findByIdAndUpdate(id, {junior:allJobPostulation.junior.concat( junior.idMongo ) }, {new: true})
   
             res.json(juniorPostulation)
           }

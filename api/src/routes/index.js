@@ -51,7 +51,7 @@ router.post('/jobs', postJobs)
 router.put('/jobs/:id', putJobs)
 router.delete('/jobs/:id', deleteJob)
 
-router.put('/jobs/:id', juniorsPostulations )
+router.put('/jobs/postulation/:id', juniorsPostulations )
 
 router.put('/addLike', putLikes)
 

@@ -15,83 +15,22 @@ const { SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		// console.log(req.headers, 'token');
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autorización' });
-		}
-
-		const decoded = await jwt.verify(token, SECRET);
-
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
-
-		const allJuniors = await Juniors.find()
-		.populate([{ path: 'languages'},{ path: 'technologies'},{ path: 'softskills'}, { path: 'publications'}]);
-		res.json(allJuniors);
-	} catch (error) {
-		res.status(404).json({ error: error.message });
-	}
-};
-
-const getJuniorById = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autenticacion' });
-		}
-
-		const decoded = await jwt.verify(token, SECRET);
-
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
-
-		const { id } = req.params;
-		
-		Juniors.findById(id)
-			.populate('languages')
-			.populate('technologies')
-			.populate('softskills')
-			.populate('publications')
-			.exec((err, junior) => {
-				if (err) {
-					res.status(404).json({ message: err.message });
-				} else {
-					res.status(200).send(junior);
-				}
-			})
-		} catch (err) {
-		res.status(404).json({ message: err.message });
-	}
   try {
-    const token = req.headers["x-auth-token"];
-    if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "se requiere token de autorización" });
-    }
-    const decoded = await jwt.verify(token, SECRET);
+    // const token = req.headers["x-auth-token"];
+    // if (!token) {
+    //   return res
+    //     .status(403)
+    //     .json({ auth: false, message: "se requiere token de autorización" });
+    // }
+    // const decoded = await jwt.verify(token, SECRET);
 
-    let user = await Company.findById(decoded.id);
-    if(!user) user = await Juniors.findById(decoded.id);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
+    // let user = await Company.findById(decoded.id);
+    // if(!user) user = await Juniors.findById(decoded.id);
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
     const allJuniors = await Juniors.find().populate([
       { path: "languages" },
@@ -102,6 +41,44 @@ const getJuniorById = async (req, res) => {
     res.json(allJuniors);
   } catch (error) {
     res.status(404).json({ error: error.message });
+  }
+};
+
+const getJuniorById = async (req, res) => {
+  try {
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "se requiere token de autenticacion" });
+    }
+
+    const decoded = await jwt.verify(token, SECRET);
+	 
+    let user = await Juniors.findById(decoded.id);
+	  if(!user) user = await Company.findById(decoded.id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ auth: false, message: "usuario no registrado" });
+    }
+
+    const { id } = req.params;
+
+    Juniors.findById(id)
+      .populate("languages")
+      .populate("technologies")
+      .populate("softskills")
+      .populate("publications")
+      .exec((err, junior) => {
+        if (err) {
+          res.status(404).json({ message: err.message });
+        } else {
+          res.status(200).send(junior);
+        }
+      });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
   }
 };
 

@@ -3,8 +3,9 @@ const Languages = require('./collections/languages');
 const Technologies = require('./collections/technologies');
 const Company = require('./collections/company');
 const Publication = require('./collections/publication');
-const Admins = require('./collections/admins')
-const SoftSkills = require('./collections/softSkills')
+const Admins = require('./collections/admins');
+const SoftSkills = require('./collections/softSkills');
+const Jobs = require('./collections/jobs');
 
 module.exports = {
     Juniors,
@@ -13,6 +14,8 @@ module.exports = {
     Company,
     Publication,
     Admins,
-    SoftSkills
+    SoftSkills,
+    Jobs
 }
+
 

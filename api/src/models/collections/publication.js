@@ -12,6 +12,15 @@ const publicationSchema = new Schema({
         required: false
     },
 
+    likes: {
+        type: Array
+    },
+
+    likesNumber: {
+        type: Number,
+        default: 0
+    },
+
     date: {
         type: Date,
         default: Date.now
@@ -33,14 +42,6 @@ const publicationSchema = new Schema({
         ref: 'admins'
     },
 
-    likes: [{
-        type: String,
-    }],
-
-    likesNumber: {
-        type: Number,
-        default: 0
-    }
 })
 
 module.exports = model('publication', publicationSchema)

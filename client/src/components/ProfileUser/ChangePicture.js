@@ -21,7 +21,7 @@ const ChangePicture = ({ setInfoUser }) => {
   };
   return (
     <>
-      <div className="height-100 d-flex mt-2 justify-content-center align-items-center">
+      <div className="height-10 d-flex mt-2 justify-content-center align-items-center">
         <button
           type="button"
           className="btn btn-primary"

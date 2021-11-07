@@ -1,7 +1,20 @@
-.cards{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.card {
+	text-decoration: none;
+	margin-top: 2rem;
+	margin-left: 1rem;
+}
+
+.card:hover {
+	box-shadow: 5px 10px 20px 1px rgba(128, 126, 126, 0.273) !important;
+}
+
+.card-body {
+	padding: 2rem 0 !important;
+}
+
+.card-text {
+	padding: 0.3rem 1rem;
+	font-size: 1rem;
 }
 
 .cardJunior{
@@ -62,10 +75,10 @@
     transition: all 0.5s;
 }
 .btnBlue:hover{
-    background-color: cornflowerblue;
+    background-color: rgba(255, 255, 255, 0.294);
 }
 
-.btnPink{
+/* .btnPink{
     background-color: transparent;
     border: black solid 2px;
     width: 6em;
@@ -74,9 +87,9 @@
 }
 .btnPink:hover{
     background-color: rgb(226, 60, 255);
-}
+} */
 
-.ventanaEmergenteOculta{
+/* .ventanaEmergenteOculta{
     position: absolute;
     top: 0;
     left: 0;
@@ -101,9 +114,9 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-}
+} */
 
-.cuadradoDelInput{
+/* .cuadradoDelInput{
     background-color: black;
     width: 18em;
     height: 10em;
@@ -113,9 +126,9 @@
     position: relative;
     transition: all 0.5s;
     transform: scale(1);
-}
+} */
 
-.cuadradoDelInputOcultar{
+/* .cuadradoDelInputOcultar{
     background-color: black;
     width: 18em;
     height: 10em;
@@ -125,10 +138,10 @@
     position: relative;
     transition: all 0.5s;
     transform: scale(0);
-}
+} */
 
-.btnInput{
+/* .btnInput{
     position: absolute;
     bottom: 0.3em;
     right: 0.3em;
-}
+} */

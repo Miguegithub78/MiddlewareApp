@@ -37,7 +37,7 @@ const getAllJuniors = async (req, res) => {
       { path: "technologies" },
       { path: "softskills" },
       { path: "publications" },
-      { path: "jobs" },
+      { path: "postulationsJobs" },
     ]);
     res.json(allJuniors);
   // } catch (error) {
@@ -55,9 +55,9 @@ const getJuniorById = async (req, res) => {
     }
 
     const decoded = await jwt.verify(token, SECRET);
-
-    let user = await Juniors.findOne({ idFireBase: decoded.id });
-    if (!user) user = await Company.findOne({ idFireBase: decoded.id });
+	 
+    let user = await Juniors.findOne({idFireBase: decoded.id});
+	  if(!user) user = await Company.findOne({idFireBase: decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -67,16 +67,13 @@ const getJuniorById = async (req, res) => {
     const { id } = req.params;
     const { firebase } = req.query;
 
-    if (firebase === "true") {
-      const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
-        { path: "languages" },
-        { path: "technologies" },
-        { path: "softskills" },
-        { path: "publications" },
-      ]);
+    if(firebase === 'true'){
 
-      res.json(getJunior);
-      return;
+      const getJunior = await Juniors.findOne({idFireBase: id})
+      .populate([{path: "languages"}, {path: "technologies"}, {path: "softskills"}, {path: "publications"}])
+    
+      res.json(getJunior)
+      return
     }
 
     Juniors.findById(id)

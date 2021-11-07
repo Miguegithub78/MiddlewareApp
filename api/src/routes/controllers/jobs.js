@@ -11,7 +11,7 @@ const postJobs = async (req, res) => {
     const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
 
       const company = await Company.findOne({ idMongo : companyId} );
-console.log(company)
+
         if(!title){
           
           return res.status(404).json({ error: 'required "Title" is missing'})
@@ -50,7 +50,7 @@ const getAllJobs = async (req, res) => {
 
     try{
 
-        const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}])
+        const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}, {path: 'juniors'}])
     
         res.json(jobs)
     }

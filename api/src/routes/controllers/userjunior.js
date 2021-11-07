@@ -70,6 +70,7 @@ const getJuniorById = async (req, res) => {
       .populate("technologies")
       .populate("softskills")
       .populate("publications")
+      .populate("jobs")
       .exec((err, junior) => {
         if (err) {
           res.status(404).json({ message: err.message });

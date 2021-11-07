@@ -15,22 +15,22 @@ const { SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
-  try {
-    const token = req.headers["x-auth-token"];
-    if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "se requiere token de autorización" });
-    }
-    const decoded = await jwt.verify(token, SECRET);
+  // try {
+    // const token = req.headers["x-auth-token"];
+    // if (!token) {
+    //   return res
+    //     .status(403)
+    //     .json({ auth: false, message: "se requiere token de autorización" });
+    // }
+    // const decoded = await jwt.verify(token, SECRET);
 
-    let user = await Company.findOne({ idFireBase: decoded.id });
-    if (!user) user = await Juniors.findOne({ idFireBase: decoded.id });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
+    // let user = await Company.findOne({ idFireBase: decoded.id });
+    // if (!user) user = await Juniors.findOne({ idFireBase: decoded.id });
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
     const allJuniors = await Juniors.find().populate([
       { path: "languages" },
@@ -40,9 +40,9 @@ const getAllJuniors = async (req, res) => {
       { path: "jobs" },
     ]);
     res.json(allJuniors);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
+  // } catch (error) {
+  //   res.status(404).json({ error: error.message });
+  // }
 };
 
 const getJuniorById = async (req, res) => {

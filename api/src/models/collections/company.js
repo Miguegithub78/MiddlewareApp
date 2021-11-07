@@ -31,10 +31,7 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
-<<<<<<< HEAD
-=======
     
->>>>>>> main
     userType: {
         type: String,
         required: true

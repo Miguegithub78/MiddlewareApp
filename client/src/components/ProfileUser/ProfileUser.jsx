@@ -49,7 +49,7 @@ const ProfileUser = () => {
     dispatch(getLanguages());
     dispatch(getTechnologies());
     setInfoUser({
-      idUser: user._id,
+      idUser: user.idFireBase,
       name: user.name,
       gmail: user.gmail,
       photograph: user.photograph,
@@ -88,7 +88,7 @@ const ProfileUser = () => {
     }
   });
   const handleClick = () => {
-    dispatch(putJuniors(infoUser, user._id));
+    dispatch(putJuniors(infoUser, infoUser.idUser));
     setInfoUser((info) => ({
       ...info,
       infoUserChanged: false,

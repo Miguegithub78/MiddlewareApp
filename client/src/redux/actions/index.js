@@ -240,9 +240,13 @@ export const getJuniorsDetails = (id) => {
 };
 export function putJuniors(data, id) {
   return async function () {
+  try {
     const response = await clienteAxios.put(`/juniors/${id}`, data);
     // llamar al dispatch
-    console.log(response.data, "editar usuario ok");
+    console.log(response.data, "editar usuario ok");  
+  } catch (e) {
+    console.log(e,'e');
+  }
   };
 }
 

@@ -37,7 +37,7 @@ const getAllJuniors = async (req, res) => {
       { path: "technologies" },
       { path: "softskills" },
       { path: "publications" },
-      { path: "jobs" },
+      { path: "postulationsJobs" },
     ]);
     res.json(allJuniors);
   } catch (error) {

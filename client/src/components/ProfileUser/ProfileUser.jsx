@@ -18,19 +18,18 @@ import CareerData from "./CareerData";
 // import Softskills from './SoftSkills';
 
 const ProfileUser = () => {
-  const { user } = useSelector((state) => state);
+  const { user, languages, technologies } = useSelector((state) => state);
   const history = useHistory();
   const dispatch = useDispatch();
   const [infoUser, setInfoUser] = useState({
     name: "",
     gmail: "",
-    // details: "",
+    details: "",
     github: "",
-    // linkedIn: "https://linkedin.com/",
+    linkedin: "https://linkedin.com/",
     website: "",
-    // facebook: "https://facebook.com/",
     phone: "",
-    // city: "",
+    city: "",
     photography: "",
     publications: [],
     languages: [],
@@ -40,26 +39,37 @@ const ProfileUser = () => {
     softskills: [],
     idUser: "",
     infoUserChanged: false,
+    openToRelocate: null,
+    openToRemote: null,
+    openToFullTime: null,
+    academicHistory: [],
   });
   useEffect(() => {
-    if (!user) return;
+    if (!user || languages.length > 0 || technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
     setInfoUser({
+      idUser: user._id,
       name: user.name,
-      phone: user.phone,
       gmail: user.gmail,
-      github: user.github,
-      website: user.website,
-      title: user.title,
-      photo: user.photo,
       photograph: user.photograph,
-      publications: user.publications,
+      description: user.description,
       languages: user.languages,
       technologies: user.technologies,
-      jobsExperience: user.jobsExperience,
+      publications: user.publications,
       softskills: user.softskills,
-      idUser: user._id,
+      openToRelocate: user.openToRelocate,
+      openToRemote: user.openToRemote,
+      openToFullTime: user.openToFullTime,
+      postulationsJobs: user.postulationsJobs,
+      jobsExperience: user.jobsExperience,
+      academicHistory: user.academicHistory,
+      phone: user.phone,
+      github: user.github,
+      website: user.website,
+      city:user.city,
+      title: user.title,
+      linkedin: user.linkedin,
     });
   }, [user]);
 
@@ -79,10 +89,10 @@ const ProfileUser = () => {
   });
   const handleClick = () => {
     dispatch(putJuniors(infoUser, user._id));
-    setInfoUser(info=>({
+    setInfoUser((info) => ({
       ...info,
       infoUserChanged: false,
-    }))
+    }));
   };
 
   return user ? (

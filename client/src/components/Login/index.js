@@ -7,6 +7,7 @@ import {
   loginUserEmailPassAction,
   emailVerificationAction,
   errorLoginAction,
+  getUserAction
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -28,7 +29,7 @@ const Login = () => {
   if (type) {
     localStorage.setItem("userType", type);
   }
-  const { emailVerification, errorLogin } = useSelector((state) => state);
+  const { emailVerification, errorLogin, user } = useSelector((state) => state);
   const [singOrCreate, setSingOrCreate] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("guilletempo1@gmail.com");
@@ -38,9 +39,11 @@ const Login = () => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
       // console.log(userFirebase);
-      if(errorLogin)return
-      history.push("/home/companies");
-      if (!emailVerification) dispatch(emailVerificationAction(true));
+      if (errorLogin || user) return;
+      console.log(user, "useeer de login");
+          history.push("/home/companies");
+      // dispatch(getUserAction(userFirebase));
+      // if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
       if (emailVerification) {
         dispatch(emailVerificationAction(false));
@@ -48,6 +51,10 @@ const Login = () => {
       }
     }
   });
+  // useEffect(() => {
+  //   if (user) {
+  //   }
+  // }, [user]);
   //resetear errores automatico
   useEffect(() => {
     if (errorLogin) {

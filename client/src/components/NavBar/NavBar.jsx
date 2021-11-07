@@ -31,7 +31,7 @@ function NavBar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto ">
-            {user && user.type === "junior" ? (
+            {user && user.userType === "junior" ? (
               <li className="nav-item p-2 ">
                 <a className="nav-link" aria-current="page" href="#">
                   Puente de los sueños

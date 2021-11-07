@@ -55,7 +55,8 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
     if (!rta.data.auth) {
       await signOut(auth);
       console.log("deslogueado");
-      dispatch(errorLoginAction(rta.data.msg))
+      dispatch(errorLoginAction(rta.data.msg));
+      return;
     }
     dispatch(loginOkey(rta.data.user));
 
@@ -158,8 +159,8 @@ export const getUserAction = (userProvider) => {
       const token = localStorage.getItem("token");
       if (!userProvider) console.log(auth.currentUser, "auth");
       if (userType && token) {
-        clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
-          console.log(rta.data, 'dato de cuando obtengo ');
+        clienteAxios.get(`/${userType}/${userProvider.uid}`,{firebase:true}).then((rta) => {
+          console.log(rta.data, "dato de cuando obtengo ");
           dispatch(loginOkey(rta.data));
         });
       }
@@ -323,7 +324,7 @@ export function putLike(idPublication, idUser) {
 /*no existe en el back*/
 export function deletePublications(id) {
   return async function () {
-    const response = await clienteAxios.delete(`/publications${id}`);
+    const response = await clienteAxios.delete(`/publications/${id}`);
     return response;
   };
 }

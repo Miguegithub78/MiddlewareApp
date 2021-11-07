@@ -6,7 +6,6 @@ import {
 	GET_LANGUAGES,
 	GET_TECHNOLOGIES,
 	GET_COMPANY_DETAILS,
-	GET_JUNIORS_DETAILS,
 	GET_PUBLICATIONS,
 	GET_PUBLICATIONS_BY_ID,
 	SORT_JOBS_BY,
@@ -17,6 +16,10 @@ import {
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
+	EMAIL_VERIFICATION,
+	GET_JUNIORS_DETAILS,
+	ERROR_LOGIN,
+	UPLOAD_PICTURE,
 	GET_JOB_DETAILS,
 	GET_JOBS,
 } from '../types';
@@ -25,6 +28,7 @@ import { calculateDate } from '../helpers';
 
 const inicialState = {
 	loading: false,
+	errorLogin: null,
 	user: null,
 	details: {},
 	juniorsdetails: {},
@@ -34,6 +38,7 @@ const inicialState = {
 	companies: [],
 	publications: [],
 	publication: {},
+	emailVerification: true,
 	jobs: {
 		data: [
 			{
@@ -326,7 +331,6 @@ const inicialState = {
 			techs: [],
 		},
 	},
-	jobsDetails: {},
 };
 
 function calculateSalary(value, state) {
@@ -507,7 +511,23 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				user: { ...state.user, photograph: action.payload },
 			};
-		/* 		case GET_JOBS:
+		case EMAIL_VERIFICATION:
+			return {
+				...state,
+				emailVerification: action.payload,
+			};
+		case ERROR_LOGIN:
+			return {
+				...state,
+				errorLogin: action.payload,
+			};
+
+		case UPLOAD_PICTURE:
+			return {
+				...state,
+				publication: { ...state.publication, photograph: action.payload },
+			};
+		case GET_JOBS:
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: action.payload },
@@ -517,7 +537,7 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				jobsDetails: action.payload,
-			}; */
+			};
 
 		default:
 			return state;

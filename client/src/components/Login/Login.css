@@ -1,40 +1,91 @@
-h2{
-  color: white;
-  font-size: 2em;
-  font-family: 'Poppins', sans-serif;
+.container {
+  font-family: "Poppins", sans-serif;
+}
+.height-100 {
+  height: 600px;
 }
 
-.form-container{
-overflow: hidden;
-padding-top: 15px;
-display: flex;
-text-align: center;
-}
-.form-container .form-img{
-background-image: url("image.png");
-background-repeat: no-repeat;
-background-position: center center;
-width: 50%;
-height: 554px;
-vertical-align: top;
-}
-.form-container .form-horizontal{
-background: #000;
-width: 50%;
-padding: 33px 35px 32.5px;
-}
-.form-container .title{
-color:#fff;
-font-size: 25px;
-margin: 0 0 35px;
+.sidebar {
+  position: relative;
+  overflow: hidden;
 }
 
-.form-container .form-horizontal .btn:hover{ text-shadow: 2px 2px 2px rgba(0,0,0,.6); }
-.form-container .form-horizontal .btn:focus{ outline: none; }
-@media only screen and (max-width:576px){
-.form-container .form-img{
-    width: 100%;
-    height: 400px;
+.chart-design {
+  list-style: none;
 }
-.form-container .form-horizontal{ width: 100%; }
+
+.form-data {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.main-heading {
+  font-size: 28px;
+  text-align: center;
+}
+
+.form-data label {
+  font-size: 13px;
+  margin-left: 2px;
+}
+
+.form-data input {
+  height: 50px;
+  border: 2px solid #eee;
+  transition: all 1s;
+  border-radius: 5px;
+}
+
+.form-data input:focus {
+  outline: none;
+  border: 2px solid #000;
+  box-shadow: none;
+}
+
+.social-list {
+  list-style: none;
+  display: flex;
+}
+
+.social-list li {
+  width: 110px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+  cursor: pointer;
+  color: #fff;
+}
+
+.forgot-text {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+.forgot-text:hover {
+  background-color: rgba(239, 12, 12, 0.318);
+  font-size: 1.01rem;
+}
+
+.signin-btn .btn {
+  width: 100%;
+  height: 46px;
+  margin-top: 10px;
+}
+
+.form-img {
+  background-image: url("imagen2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  vertical-align: center;
+  display: inline-block;
+}
+
+.crea-cuenta {
+  cursor: pointer;
+}
+.crea-cuenta:hover {
+  background-color: rgba(238, 238, 238, 0.291);
+  font-size: 1.01rem;
 }

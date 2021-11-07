@@ -105,44 +105,6 @@ const getJuniorById = async (req, res) => {
   }
 };
 
-const getJuniorById = async (req, res) => {
-  try {
-    const token = req.headers["x-auth-token"];
-    if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "se requiere token de autenticacion" });
-    }
-
-    const decoded = await jwt.verify(token, SECRET);
-	 
-    let user = await Juniors.findById(decoded.id);
-	  if(!user) user = await Company.findById(decoded.id);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
-
-    const { id } = req.params;
-
-    Juniors.findById(id)
-      .populate("languages")
-      .populate("technologies")
-      .populate("softskills")
-      .populate("publications")
-      .exec((err, junior) => {
-        if (err) {
-          res.status(404).json({ message: err.message });
-        } else {
-          res.status(200).send(junior);
-        }
-      });
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
-};
-
 const updateJuniorsProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];

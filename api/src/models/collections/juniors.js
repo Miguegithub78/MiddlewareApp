@@ -143,7 +143,9 @@ const juniorSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "jobs",
-    },    
+    }, 
+  ]   
+  
 })
 
 juniorSchema.plugin(require("mongoose-autopopulate"));

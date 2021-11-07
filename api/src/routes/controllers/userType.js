@@ -32,7 +32,6 @@ const signIn = async (req, res) => {
             msg: "Usuario tiene una cuenta como Company",
           });
         var juniorsCreate = await Juniors.create({
-          _id: idUser,
           name,
           gmail,
           userType,

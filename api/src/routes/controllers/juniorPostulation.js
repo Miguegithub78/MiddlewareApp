@@ -6,20 +6,25 @@ const juniorsPostulations = async (req, res) => {
 
   try{
 
-  const junior = await Juniors.findOne({ idMongo : idMongo } );
+    // const junior = await Juniors.findOne({ idMongo : idMongo });
 
-  if(!junior){         
-            return res.status(404).json({ error: 'required "Junior" is missing'})
-          }
+    // if(!junior){         
+    //           return res.status(404).json({ error: 'required "Junior" is missing'})
+    //         }
 
-  const job = await Jobs.findOne({ _id : id });
-          const putJob = await Jobs.findByIdAndUpdate(id, {juniors: junior}, {new: true}); 
-          res.json( putJob );
+    const job = await Jobs.findOne({ _id : id });
+    // const putJob = await Jobs.findByIdAndUpdate(id, {juniors: junior.idMongo});
+    // res.json( putJob );
 
-          }
-          catch(err){
-            res.status(404).json({message: err.message})
-          }
+    job.juniors = job.juniors.concat(idMongo)
+    const abc = await job.save()
+
+    res.json(abc)
+
+  }
+  catch(err){
+    res.status(404).json({message: err.message})
+  }
 }
 
 module.exports = {

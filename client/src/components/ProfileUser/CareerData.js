@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Languages from "./Languages";
 import Technologies from "./Technologies";
 import Softskills from "./SoftSkills";
+import OpenTo from "./OpenTo";
 
 const CareerData = ({ infoUser, setInfoUser }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
-      infoUserChanged:true,
+      infoUserChanged: true,
       [e.target.name]: e.target.value,
     }));
   };
@@ -61,52 +62,11 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <Languages setInfoUser={setInfoUser} infoUser={infoUser} />
           </div>
         </div>
-        <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Open to </h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-                disabled={true}
-              />
-              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                Relocate
-              </label>
-            </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-                disabled={true}
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                Remote
-              </label>
-            </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-                disabled={true}
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                Full Time
-              </label>
-            </div>
-          </div>
-        </div>
+        <OpenTo
+          editValue={editValue}
+          infoUser={infoUser}
+          setInfoUser={setInfoUser}
+        />
         {/* <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Algo</h6>

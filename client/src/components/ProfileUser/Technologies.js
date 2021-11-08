@@ -29,7 +29,7 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             type="checkbox"
             className="btn-check btn-checkbox-focus"
             id={tec._id}
-            defaultChecked={
+            checked={
               infoUser.technologies.find((e) => e._id === tec._id)
                 ? true
                 : false

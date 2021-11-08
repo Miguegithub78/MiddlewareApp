@@ -30,6 +30,8 @@ import {
   sendEmailVerification,
   createUserWithEmailAndPassword,
   signOut,
+  deleteUser,
+  getAuth,
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import tokenAuth from "../../components/config/token";
@@ -55,7 +57,8 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
     if (!rta.data.auth) {
       await signOut(auth);
       console.log("deslogueado");
-      dispatch(errorLoginAction(rta.data.msg))
+      dispatch(errorLoginAction(rta.data.msg));
+      return;
     }
     dispatch(loginOkey(rta.data.user));
 
@@ -158,10 +161,12 @@ export const getUserAction = (userProvider) => {
       const token = localStorage.getItem("token");
       if (!userProvider) console.log(auth.currentUser, "auth");
       if (userType && token) {
-        clienteAxios.get(`/${userType}/${userProvider.uid}?firebase=true`).then((rta) => {
-          console.log(rta.data, 'dato de cuando obtengo ');
-          dispatch(loginOkey(rta.data));
-        });
+        clienteAxios
+          .get(`/${userType}/${userProvider.uid}?firebase=true`)
+          .then((rta) => {
+            console.log(rta.data, "dato de cuando obtengo ");
+            dispatch(loginOkey(rta.data));
+          });
       }
     } catch (e) {
       console.log(e, "algo ");
@@ -238,16 +243,25 @@ export const getJuniorsDetails = (id) => {
 };
 export function putJuniors(data, id) {
   return async function () {
-    const response = await clienteAxios.put(`/juniors/${id}`, data);
-    // llamar al dispatch
-    console.log(response.data, "editar usuario ok");
+    try {
+      const response = await clienteAxios.put(`/juniors/${id}`, data);
+      // llamar al dispatch
+      console.log(response.data, "editar usuario ok");
+    } catch (e) {
+      console.log(e, "e");
+    }
   };
 }
 
 export function deleteJuniors(id) {
-  return async function () {
+  return async function (dispatch) {
+    const auth = getAuth();
+    const user = auth.currentUser;
     const response = await clienteAxios.delete(`/juniors/${id}`);
-    return response;
+    if (response.data.deleted) {
+      dispatch(logOutUserAction());
+      await deleteUser(user);
+    }
   };
 }
 
@@ -323,7 +337,7 @@ export function putLike(idPublication, idUser) {
 /*no existe en el back*/
 export function deletePublications(id) {
   return async function () {
-    const response = await clienteAxios.delete(`/publications${id}`);
+    const response = await clienteAxios.delete(`/publications/${id}`);
     return response;
   };
 }

@@ -10,6 +10,7 @@ import ProfileUser from './components/ProfileUser/ProfileUser';
 import { useEffect } from 'react';
 import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
 import CreatePublications from './components/CreatePublications/CreatePublications';
+import Mapa from './components/Mapa/Mapa';
 function App() {
 	const token = localStorage.getItem('token');
 
@@ -31,6 +32,7 @@ function App() {
 				
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+				<Route path='/mapa' component={Mapa} />
 			</Switch>
 		</Router>
 	);

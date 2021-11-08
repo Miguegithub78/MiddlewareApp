@@ -38,6 +38,11 @@ function NavBar() {
                 </a>
               </li>
             ) : null}
+           <li className={`nav-item  ${styles.items}`}>
+              <Link className="nav-link fw-normal " to={"/home/mapa"}>
+                Mapa
+              </Link>
+            </li>
             <li className={`nav-item  ${styles.items}`}>
               <Link className="nav-link fw-normal " to={"/home/juniors"}>
                 Juniors

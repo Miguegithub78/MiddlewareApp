@@ -25,6 +25,7 @@ import { CardsJuniors } from "../CardsJuniors/CardsJuniors";
 import CardsJobs from "../CardsJobs/CardsJobs";
 import "./Home.css";
 import { Publications } from "../Publications/Publications";
+import Mapa from "../Mapa/Mapa";
 
 const Home = () => {
   const { user, emailVerification } = useSelector((state) => state);
@@ -88,7 +89,7 @@ const Home = () => {
 							 <CardsJuniors arrayJuniors={juniors} />
 							 )}
 							 {tipo && tipo === 'publications' && <Publications />}
-							
+               {tipo && tipo === 'mapa' && <Mapa />}
 							{/* 	<CardsJobs jobs={jobs} /> */}
 						</div>
 					</div>

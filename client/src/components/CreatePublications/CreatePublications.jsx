@@ -56,11 +56,11 @@ const CreatePublications = () => {
         technologies: [],
         salary: 0,
         date: '',
-        companyId: user.idMongo,
+        companyId: user._id,
         premium: user.premium,
         status: 'active',
     });
-    console.log(input)
+    
     function handleChange(e) {
         setInput(input => ({
             ...input,

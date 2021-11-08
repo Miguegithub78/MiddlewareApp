@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CareerData from "./CareerData";
-import ChangePicture from "./ChangePicture";
-import SocialMedia from "./SocialMedia";
+// import CareerData from "./CareerData";
+// import ChangePicture from "./ChangePicture";
+// import SocialMedia from "./SocialMedia";
 
-import ModalDeletAccount from "./ModalDeletAccount";
+// import ModalDeletAccount from "./ModalDeletAccount";
 
 const Prueba2left = ({ user, setInfoUser, infoUser }) => {
   const [editValue, setEditValue] = useState(true);
@@ -25,7 +25,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
               className="rounded-circle p-1 bg-primary"
               width="140"
             />
-            <ChangePicture setInfoUser={setInfoUser} />
+            {/* <ChangePicture setInfoUser={setInfoUser} /> */}
             <div className="mt-3">
               <h4>{infoUser.name}</h4>
               <p className="text-secondary mb-1">
@@ -57,9 +57,9 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
             {editValue ? "editar" : "aceptar"}
           </button>
         </div>
-        <ModalDeletAccount infoUser={infoUser} />
+        {/* <ModalDeletAccount infoUser={infoUser} /> */}
       </div>
-      <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} />
+      {/* <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} /> */}
     </div>
   ) : (
     "Cargando...."

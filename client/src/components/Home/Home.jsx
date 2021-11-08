@@ -61,6 +61,7 @@ const Home = () => {
 
 	onAuthStateChanged(auth, (userFirebase) => {
 		if (userFirebase) {
+      console.log(user, 'user de home');
 			if (user) return;
 			dispatch(getUserAction(userFirebase));
 		} else {

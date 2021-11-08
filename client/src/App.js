@@ -6,19 +6,27 @@ import LandingPage from './components/LandingPage/LandingPage';
 import tokenAuth from './components/config/token';
 import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
+import JobsDetails from './components/JobsDetails/JobsDetails';
 //import Publications from './components/Publications/Publications';
+<<<<<<< HEAD
 import { useEffect } from 'react';
 import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
 import CreatePublications from './components/CreatePublications/CreatePublications';
 
+=======
+import { useEffect } from "react";
+import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
+import CreatePublications from "./components/CreatePublications/CreatePublications";
+import ProfileCompany from "./components/ProfileCompany";
+>>>>>>> main
 function App() {
-	const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
-	useEffect(() => {
-		if (token) {
-			tokenAuth(token);
-		}
-	}, [token]);
+  useEffect(() => {
+    if (token) {
+      tokenAuth(token);
+    }
+  }, [token]);
 
 	return (
 		<Router>
@@ -27,9 +35,16 @@ function App() {
 				<Route path='/home/:tipo' component={Home} />
 				<Route exact path='/' component={LandingPage} />
 				<Route exact path='/profileuser/:id' component={ProfileUser} />
+        <Route exact path="/profilecompany/:id" component={ProfileCompany} />
+				<Route exact path='/jobs/:id' component={JobsDetails} />
 				<Route path='/companies/:id' component={CompanyDetail} />
-				<Route exact path='/createpublications' component={CreatePublications}/>
-				
+				<Route path='/empleos/:id' component={JobsDetails} />
+				<Route
+					exact
+					path='/createpublications'
+					component={CreatePublications}
+				/>
+
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 				

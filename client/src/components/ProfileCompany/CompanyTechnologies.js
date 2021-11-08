@@ -1,7 +1,7 @@
 // import React from "react";
 import { useSelector } from "react-redux";
 
-const Technologies = ({ setInfoUser, infoUser }) => {
+const CompanyTechnologies = ({ setInfoUser, infoUser }) => {
   const { technologies, user } = useSelector((state) => state);
 
   const handleSelectTechnologies = (tech) => {
@@ -51,4 +51,4 @@ const Technologies = ({ setInfoUser, infoUser }) => {
   );
 };
 
-export default Technologies;
+export default CompanyTechnologies;

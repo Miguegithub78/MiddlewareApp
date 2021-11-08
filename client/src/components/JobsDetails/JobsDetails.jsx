@@ -9,13 +9,13 @@ import s from './JobsDetails.module.css';
 export default function JuniorsDetail() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	/* 	useEffect(() => {
+	useEffect(() => {
 		dispatch(getJobDetails(id));
-	}, [dispatch]); */
+	}, []);
 
-	/* const jobDetails = useSelector((state) => state.jobDetails); */
-
-	const jobsDetails = {
+	const jobDetails = useSelector((state) => state.jobDetails);
+	console.log(jobDetails);
+	/* const jobsDetails = {
 		id: 1,
 		img: 'https://www.reportur.com/wp-content/uploads/2020/09/desp-e1599536919110.jpg',
 		company: 'despegar',
@@ -29,10 +29,19 @@ export default function JuniorsDetail() {
 		tech: ['javascript', 'sql'],
 		date: '10/31/2021',
 		premium: 3,
-	};
+	}; */
+
+	function handlePostulation() {}
 
 	return (
 		<div className={s.container}>
+			{/* 	<Link to='/home/empleos'>
+				<button
+					className={`btn btn-block btn-dark btn-outline-light ${s.btnVolver}`}
+				>
+					Volver
+				</button>
+			</Link>
 			<div className={s.card}>
 				<div className={s.cardHeader}>
 					<div className={s.containerImg}>
@@ -50,7 +59,7 @@ export default function JuniorsDetail() {
 						</div>
 						<div className={s.info_box}>
 							<p className={s.info_title}>Ciudad:</p>
-							<p>{jobsDetails.city}</p>
+							<p>{jobsDetails.city !== '' ? jobsDetails.city : 'all world'}</p>
 						</div>
 					</div>
 					<div className={s.containerTechs}>
@@ -63,8 +72,10 @@ export default function JuniorsDetail() {
 					</div>
 				</div>
 
-				<button className={s.btnPostularse}>Postularse</button>
-			</div>
+				<button onClick={handlePostulation} className={s.btnPostularse}>
+					Postularse
+				</button>
+			</div> */}
 		</div>
 	);
 }

@@ -331,6 +331,7 @@ const inicialState = {
 			techs: [],
 		},
 	},
+	jobDetails: {},
 };
 
 function calculateSalary(value, state) {
@@ -530,8 +531,11 @@ const rootReducer = (state = inicialState, action) => {
 		case GET_JOBS:
 			return {
 				...state,
-				jobs: { ...state.jobs, filterData: action.payload },
-				jobs: { ...state.jobs, data: action.payload },
+				jobs: {
+					...state.jobs,
+					data: action.payload,
+					filterData: action.payload,
+				},
 			};
 		case GET_JOB_DETAILS:
 			return {

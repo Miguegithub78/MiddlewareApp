@@ -436,7 +436,7 @@ const urlUploadPic = (urlPicture) => ({
 	payload: urlPicture,
 });
 
-/* export function getJobDetails(id) {
+export function getJobDetails(id) {
 	return async function (dispatch) {
 		try {
 			const job = await clienteAxios.get(`/jobs/${id}`);
@@ -453,4 +453,3 @@ export function getJobs() {
 		} catch (error) {}
 	};
 }
- */

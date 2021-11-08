@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './CardsJobs.module.css';
 import { NavLink } from 'react-router-dom';
-function CardsJobs({ jobs }) {
+import { useDispatch, useSelector } from 'react-redux';
+import { getJobs } from '../../redux/actions';
+function CardsJobs() {
 	function calculateDate(date) {
 		const date1 = new Date().getTime();
 		const date2 = new Date(date).getTime();
@@ -34,23 +36,31 @@ function CardsJobs({ jobs }) {
 			return `$${salary}`;
 		}
 	}
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getJobs());
+	}, [dispatch]);
+	const jobs = useSelector((state) => state.jobs.filterData);
+	console.log(jobs);
 	return (
 		<div className={s.cards}>
 			{jobs.map((j) => (
-				<NavLink className={s.link} to={`/jobs/${j.id}`}>
+				<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
 					<div className={s.card}>
-						{j.country !== 'remote' ? (
+						{j.country.toLowerCase() !== 'remote' ? (
 							<p className={s.country}>{j.country}</p>
 						) : (
 							<p className={s.country2}>{j.country}</p>
 						)}
 						<p className={s.date}>{calculateDate(j.date)}</p>
 						<div className={s.card_container_logo}>
-							<img className={s.card_logo} src={j.img} alt='' />
+							<img className={s.card_logo} src={j.photograph} alt='' />
 						</div>
 						<div className={s.card_container_info}>
 							<h3>{j.title}</h3>
-							<p className={s.card_container_info_extra_company}>{j.company}</p>
+							<p className={s.card_container_info_extra_company}>
+								{j.company.name}
+							</p>
 							<div className={s.card_container_info_extra}>
 								<div className={s.card_container_info_extra_general}>
 									<div className={s.card_container_info_extra_city}>

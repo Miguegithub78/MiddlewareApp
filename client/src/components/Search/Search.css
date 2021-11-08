@@ -47,13 +47,13 @@ form {
 	width: 150px;
 	text-align: center;
 	margin-left: 10px;
-	background-color: rgba(20, 110, 212, 0.966);
+	background-color: rgba(20, 97, 241, 0.884);
 	border-radius: 5px;
 	color: white;
 }
 
 .clear:hover {
-	background-color: rgb(20, 110, 212);
+	background-color: rgb(20, 97, 241);
 }
 
 @media screen and (max-width: 700px) {

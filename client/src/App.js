@@ -29,7 +29,7 @@ function App() {
 				<Route exact path='/profileuser/:id' component={ProfileUser} />
 				<Route exact path='/jobs/:id' component={JobsDetails} />
 				<Route path='/companies/:id' component={CompanyDetail} />
-				<Route path='/jobs/:id' component={JobsDetails} />
+				<Route path='/empleos/:id' component={JobsDetails} />
 				<Route
 					exact
 					path='/createpublications'

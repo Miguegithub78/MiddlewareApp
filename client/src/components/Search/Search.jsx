@@ -64,7 +64,9 @@ export const Search = () => {
 				</select>
 
 				<select className={button} name='Technologies' onChange={byTecnology}>
-					<option value=''>Tipo de Tecnología:</option>
+					<option value='' disabled selected>
+						Tipo de Tecnología:
+					</option>
 					{options?.map((p) => (
 						<option value={p.name} key={p.id}>
 							{p.name}

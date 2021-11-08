@@ -1,11 +1,12 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Home from "./components/Home/Home";
-import LandingPage from "./components/LandingPage/LandingPage";
-import tokenAuth from "./components/config/token";
-import CompanyDetail from "./components/CompanyDetails/CompanyDetails";
-import ProfileUser from "./components/ProfileUser/ProfileUser";
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Home from './components/Home/Home';
+import LandingPage from './components/LandingPage/LandingPage';
+import tokenAuth from './components/config/token';
+import CompanyDetail from './components/CompanyDetails/CompanyDetails';
+import ProfileUser from './components/ProfileUser/ProfileUser';
+import JobsDetails from './components/JobsDetails/JobsDetails';
 //import Publications from './components/Publications/Publications';
 import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
@@ -20,26 +21,28 @@ function App() {
     }
   }, [token]);
 
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/login/:type" component={Login} />
-        <Route exact path="/home/:tipo" component={Home} />
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/profileuser/:id" component={ProfileUser} />
+	return (
+		<Router>
+			<Switch>
+				<Route exact path='/login/:type' component={Login} />
+				<Route path='/home/:tipo' component={Home} />
+				<Route exact path='/' component={LandingPage} />
+				<Route exact path='/profileuser/:id' component={ProfileUser} />
         <Route exact path="/profilecompany/:id" component={ProfileCompany} />
-        <Route exact path="/companies/:id" component={CompanyDetail} />
-        <Route
-          exact
-          path="/createpublications"
-          component={CreatePublications}
-        />
+				<Route exact path='/jobs/:id' component={JobsDetails} />
+				<Route path='/companies/:id' component={CompanyDetail} />
+				<Route path='/empleos/:id' component={JobsDetails} />
+				<Route
+					exact
+					path='/createpublications'
+					component={CreatePublications}
+				/>
 
-        <Route path="/juniors/:id" component={JuniorsDetail} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

@@ -12,6 +12,7 @@ import {
   getTechnologies,
   getUserAction,
   putJuniors,
+  getJuniors
 } from "../../redux/actions";
 
 const ProfileCompany = () => {
@@ -58,8 +59,8 @@ const ProfileCompany = () => {
         gmail: user.gmail,
         photograph: user.photograph,
         linkedin: "https://linkedin.com/",
-      //   website: "",
-      //   city: "",
+        //   website: "",
+        //   city: "",
         publications: user.publications,
         jobs: user.jobs,
         technologies: user.technologies,
@@ -68,6 +69,7 @@ const ProfileCompany = () => {
     if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
+    dispatch(getJuniors())
   }, [user]);
 
   return user ? (
@@ -86,8 +88,17 @@ const ProfileCompany = () => {
           <LeftData setInfoUser={setInfoUser} infoUser={infoUser} user={user} />
           <div className="col-lg-8">
             <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
-            <JobsPublications setInfoUser={setInfoUser} infoUser={infoUser} />
             <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
+            {infoUser.jobs.map((job) => (
+              <div key={job._id}>
+                <JobsPublications
+                  job={job}
+                  setInfoUser={setInfoUser}
+                  infoUser={infoUser}
+                />
+              </div>
+            ))}
+
             {/* <Prueba2Skill /> */}
           </div>
         </div>

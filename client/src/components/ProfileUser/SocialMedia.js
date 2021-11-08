@@ -94,11 +94,11 @@ const SocialMedia = ({ infoUser, setInfoUser }) => {
             <input
               className={`form-control mt-1 ${!editValue && "green-shadow"}`}
               type="text"
-              value="http://www.linkedin.com"
-              placeholder="https://yourportfolio.com"
+              value={infoUser.linkedin}
+              placeholder="http://www.linkedin.com"
               onChange={handleChange}
-              name="facebook"
-              disabled={true}
+              name="linkedin"
+              disabled={editValue}
             />
           </li>
         </ul>

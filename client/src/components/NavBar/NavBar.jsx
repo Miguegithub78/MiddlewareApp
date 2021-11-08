@@ -99,12 +99,21 @@ function NavBar() {
                 aria-labelledby="navbarDropdown"
               >
                 <li>
-                  <Link
-                    className="dropdown-item "
-                    to={`/profileuser/${user && user._id}`}
-                  >
-                    Mi perfil
-                  </Link>
+                  {user && user.userType === "juniors" ? (
+                    <Link
+                      className="dropdown-item "
+                      to={`/profileuser/${user && user._id}`}
+                    >
+                      Mi perfil
+                    </Link>
+                  ) : (
+                    <Link
+                      className="dropdown-item "
+                      to={`/profilecompany/${user && user._id}`}
+                    >
+                      Mi perfil
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <hr className="dropdown-divider" />

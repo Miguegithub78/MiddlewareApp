@@ -49,14 +49,14 @@ const Home = () => {
       if (!user && userFirebase.emailVerified)
         dispatch(getUserAction(userFirebase));
     } else {
-      history.push("/");
+      history.push("/login");
     }
   });
   useEffect(() => {
     if (!user) dispatch(getUserAction());
   }, []);
   useEffect(() => {
-    if (userType===null) history.push("/");
+    if (userType==='null') history.push("/");
   }, []);
 
 	onAuthStateChanged(auth, (userFirebase) => {
@@ -64,7 +64,7 @@ const Home = () => {
 			if (user) return;
 			dispatch(getUserAction(userFirebase));
 		} else {
-			history.push('/');
+			history.push(`/login/${userType}`);
 		}
 	});
 	const { tipo } = useParams();

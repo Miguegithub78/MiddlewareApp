@@ -20,7 +20,7 @@ const Languages = ({ setInfoUser, infoUser }) => {
     });
   };
   console.log(infoUser.languages, "infoUser");
-  return  (
+  return (
     <>
       {languages.map((lang, i) => {
         // console.log(infoUser.languages, lang , '//');
@@ -33,6 +33,8 @@ const Languages = ({ setInfoUser, infoUser }) => {
               type="checkbox"
               className="btn-check btn-checkbox-focus"
               id={lang._id}
+              onChange={() => handleSelectLanguages(lang)}
+              value={lang.name}
               checked={
                 infoUser.languages.find((e) => e._id === lang._id)
                   ? true
@@ -43,7 +45,6 @@ const Languages = ({ setInfoUser, infoUser }) => {
               className="btn btn-outline-dark m-1 btn-checkbox-focus"
               htmlFor={lang._id}
               style={{ padding: "1px 5px" }}
-              onClick={() => handleSelectLanguages(lang)}
             >
               {lang.name}
             </label>
@@ -51,7 +52,7 @@ const Languages = ({ setInfoUser, infoUser }) => {
         );
       })}
     </>
-  ) 
+  );
 };
 
 export default Languages;

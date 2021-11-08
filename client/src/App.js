@@ -8,17 +8,10 @@ import CompanyDetail from './components/CompanyDetails/CompanyDetails';
 import ProfileUser from './components/ProfileUser/ProfileUser';
 import JobsDetails from './components/JobsDetails/JobsDetails';
 //import Publications from './components/Publications/Publications';
-<<<<<<< HEAD
-import { useEffect } from 'react';
-import JuniorsDetail from './components/JuniorsDetails/JuniorsDetails';
-import CreatePublications from './components/CreatePublications/CreatePublications';
-
-=======
 import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
->>>>>>> main
 function App() {
   const token = localStorage.getItem("token");
 
@@ -47,7 +40,6 @@ function App() {
 
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-				
 			</Switch>
 		</Router>
 	);

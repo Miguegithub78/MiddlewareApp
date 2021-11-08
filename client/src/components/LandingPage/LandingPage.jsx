@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="container">
       <div className="row g-5">
         <div className="col-md-5">
-          <div className="d-flex flex-column align-content-center ">
+          <div className="d-flex flex-column justify-content-center h-100">
             <h1>Middleware</h1>
             <h5>Un puente entre empresas y programadores</h5>
 

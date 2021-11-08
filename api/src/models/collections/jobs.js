@@ -79,4 +79,3 @@ const jobsSchema = new Schema({
 
 
 module.exports = model("jobs", jobsSchema);
-

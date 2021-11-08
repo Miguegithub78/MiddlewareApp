@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const JobsPublications = ({ infoUser, setInfoUser, job }) => {
   const [juniorsAplied, setJuniorsAplied] = useState([]);
-  const { juniors } = useSelector((state) => state);
+  const [postulatiosTechnoliges, setPostulatiosTechnoliges] = useState([]);
+  const { juniors, technologies } = useSelector((state) => state);
 
   useEffect(() => {
-    
     const juniorsAplieded = job.juniors.map((junior) => {
       const juniorData = juniors.find((j) => j._id === junior);
       return juniorData;
     });
+    console.log(juniorsAplieded,'juniorsAplieded');
     setJuniorsAplied(juniorsAplieded);
+    const techUsed = job.technologies.map((tech) => {
+      const techn = technologies.find((t) => t._id === tech);
+      return techn;
+    });
+    setPostulatiosTechnoliges(techUsed);
   }, []);
 
   return (
@@ -59,8 +66,8 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
             <h6 className="mb-0">Tecnologia</h6>
           </div>
           <div className="col-sm-8 text-secondary">
-            {job.technologies.map((tech, i) => (
-              <span key={i}>{tech} , </span>
+            {postulatiosTechnoliges.map((tech, i) => (
+              <span key={tech._id}>{tech.name} , </span>
             ))}
           </div>
         </div>
@@ -71,7 +78,8 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
           <div className="col-sm-8 text-secondary">
             {juniorsAplied.map((jun, i) => (
               // getPostulators(jun)
-              <span key={jun._id}>{jun.name} ,</span>
+              <span key={jun._id}>
+                <Link to={`/juniors/${jun._id}`}>{jun.name}</Link> ,</span>
             ))}
           </div>
         </div>

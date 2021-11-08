@@ -11,7 +11,6 @@ import {
   getLanguages,
   getTechnologies,
   getUserAction,
-  putJuniors,
   getJuniors
 } from "../../redux/actions";
 
@@ -89,7 +88,7 @@ const ProfileCompany = () => {
           <div className="col-lg-8">
             <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
             <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-            {infoUser.jobs.map((job) => (
+            {infoUser.jobs.length>0&&infoUser.jobs.map((job) => (
               <div key={job._id}>
                 <JobsPublications
                   job={job}

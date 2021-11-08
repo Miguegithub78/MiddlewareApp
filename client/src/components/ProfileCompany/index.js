@@ -88,8 +88,8 @@ const ProfileCompany = () => {
           <div className="col-lg-8">
             <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
             <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-            {infoUser.jobs.length>0&&infoUser.jobs.map((job) => (
-              <div key={job._id}>
+            {infoUser.jobs.length>0&&infoUser.jobs.map((job, i) => (
+              <div key={i}>
                 <JobsPublications
                   job={job}
                   setInfoUser={setInfoUser}

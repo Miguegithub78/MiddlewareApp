@@ -67,7 +67,7 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
           </div>
           <div className="col-sm-8 text-secondary">
             {postulatiosTechnoliges.map((tech, i) => (
-              <span key={tech._id}>{tech.name} , </span>
+              <span key={i}>{tech.name} , </span>
             ))}
           </div>
         </div>
@@ -78,7 +78,7 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
           <div className="col-sm-8 text-secondary">
             {juniorsAplied.map((jun, i) => (
               // getPostulators(jun)
-              <span key={jun._id}>
+              <span key={i}>
                 <Link to={`/juniors/${jun._id}`}>{jun.name}</Link> ,</span>
             ))}
           </div>

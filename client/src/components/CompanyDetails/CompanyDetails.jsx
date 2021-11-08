@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyDetails } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import Mapa from "../MapDetails/Mapa";
 
 export default function CompanyDetail() {
   const { id } = useParams();
@@ -16,6 +16,7 @@ export default function CompanyDetail() {
   const companies = useSelector(state => state.details)
 
   return (
+    
     <div className='container-fluid  '>
       <div className=''>
         <Link to='/home/companies'>
@@ -69,7 +70,14 @@ export default function CompanyDetail() {
           <h6 className="mb-0 p-3">Ciudad: {companies.city}</h6>
           <h6 className="mb-0 p-3">Acerca de: {companies.description}</h6>
         </div>
+      
+        <div className='col-6 text-center p-3 mb-2 bg-white text-dark border border-3'>
+          <Mapa />
+        </div>
       </div>
     </div>
+    
+    
+    
   );
 }

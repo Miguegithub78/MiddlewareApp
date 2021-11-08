@@ -23,8 +23,8 @@ import mapStyles from "./mapStyles";
 import "./index.css";
 const libraries = ["places"];
 const mapContainerStyle = {
-  height: "75vh",
-  width: "85vw",
+  height: "60vh",
+  width: "50vw",
 };
 const options = {
   styles: mapStyles,
@@ -72,12 +72,12 @@ export default function Mapa() {
 
   return (
     <div>
-      <h1>
-        Companies{" "}
+      <h2>
+        Empresas{" "}
         <span role="img" aria-label="tent">
         👩‍💻
         </span>
-      </h1>
+      </h2>
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />

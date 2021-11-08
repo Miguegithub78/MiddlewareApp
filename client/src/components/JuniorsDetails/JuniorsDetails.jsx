@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getJuniorsDetails } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import Mapa from "../Mapa/Mapa";
 
 export default function JuniorsDetail() {
   const { id } = useParams(); 
@@ -139,6 +139,9 @@ export default function JuniorsDetail() {
           ))}
 		  </div>
 		</div>
+      <div>
+        <Mapa />
+      </div>
 	  </div>
 	);
   }

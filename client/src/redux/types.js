@@ -23,3 +23,4 @@ export const GET_JOBS = 'GET_JOBS';
 export const EMAIL_VERIFICATION = 'EMAIL_VERIFICATION';
 export const ERROR_LOGIN = 'ERROR_LOGIN';
 export const UPLOAD_PICTURE = 'UPLOAD_PICTURE';
+export const POSTULATION = 'POSTULATION';

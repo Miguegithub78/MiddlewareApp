@@ -15,6 +15,7 @@ import './CreatePublications.css';
 const CreatePublications = () => {
 	const { user } = useSelector((state) => state);
 	const { technologies } = useSelector((state) => state);
+	const { publication } = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -53,7 +54,7 @@ const CreatePublications = () => {
 	const [input, setInput] = useState({
 		title: '',
 		description: '',
-		photograph: '',
+		photograph: '' || publication.photograph,
 		country: '',
 		city: '',
 		currency: '',

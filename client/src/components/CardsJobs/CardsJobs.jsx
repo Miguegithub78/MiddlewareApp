@@ -41,7 +41,7 @@ function CardsJobs() {
 		dispatch(getJobs());
 	}, [dispatch]);
 	const jobs = useSelector((state) => state.jobs.filterData);
-	console.log(jobs);
+
 	return (
 		<div className={s.cards}>
 			{jobs.map((j) => (
@@ -54,7 +54,7 @@ function CardsJobs() {
 						)}
 						<p className={s.date}>{calculateDate(j.date)}</p>
 						<div className={s.card_container_logo}>
-							<img className={s.card_logo} src={j.photograph} alt='' />
+							<img className={s.card_logo} src={j.company.photograph} alt='' />
 						</div>
 						<div className={s.card_container_info}>
 							<h3>{j.title}</h3>

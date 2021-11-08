@@ -21,6 +21,7 @@ import {
 	ERROR_LOGIN,
 	GET_JOB_DETAILS,
 	GET_JOBS,
+	POSTULATION,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
 import { auth, firebase, actionCodeSettings } from '../../firebaseConfig';
@@ -48,6 +49,7 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
 		photograph: photoURL || false,
 		userType,
 	};
+
 	try {
 		const rta = await clienteAxios.post('/login', user);
 		//tengo que checkear si el que se loguea como program tiene una cuenta comom junior y asilo
@@ -450,6 +452,17 @@ export function getJobs() {
 		try {
 			const allJobs = await clienteAxios.get(`/jobs`);
 			return dispatch({ type: GET_JOBS, payload: allJobs.data });
+		} catch (error) {}
+	};
+}
+
+export function postulation(idJob, idUser) {
+	return async function (dispatch) {
+		try {
+			const allJobs = await clienteAxios.put(`/jobs/postulation/${idJob}`, {
+				juniorId: idUser,
+			});
+			/* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
 		} catch (error) {}
 	};
 }

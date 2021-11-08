@@ -33,7 +33,7 @@ export const Publications = () => {
 
   function postDescription() {
     if (postPublication.description !== "") {
-      dispatch(postPublications(postPublication, "junior", user.idMongo));
+      dispatch(postPublications(postPublication, "junior", user._id));
       window.location.reload(true);
     }
   }

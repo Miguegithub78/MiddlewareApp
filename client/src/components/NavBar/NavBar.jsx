@@ -31,27 +31,32 @@ function NavBar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto ">
-            {user && user.userType === "junior" ? (
+            {false && user.userType === "juniors" ? (
               <li className="nav-item p-2 ">
                 <a className="nav-link" aria-current="page" href="#">
                   Puente de los sueños
                 </a>
               </li>
             ) : null}
-            <li className={`nav-item  ${styles.items}`}>
-              <Link className="nav-link fw-normal " to={"/home/juniors"}>
-                Juniors
-              </Link>
-            </li>
-            <li className={`nav-item  ${styles.items}`}>
-              <Link
-                className="nav-link fw-normal "
-                aria-current="page"
-                to="/createpublications"
-              >
-                Crear Empleo
-              </Link>
-            </li>
+            {user && user.userType === "companies" ? (
+              <li className={`nav-item  ${styles.items}`}>
+                <Link className="nav-link fw-normal " to={"/home/juniors"}>
+                  Juniors
+                </Link>
+              </li>
+            ) : null}
+            {user && user.userType === "companies" ? (
+              <li className={`nav-item  ${styles.items}`}>
+                <Link
+                  className="nav-link fw-normal "
+                  aria-current="page"
+                  to="/createpublications"
+                >
+                  Crear Empleo
+                </Link>
+              </li>
+
+            ) : null}
             <li className={`nav-item  ${styles.items}`}>
               <Link
                 className="nav-link fw-normal "
@@ -61,11 +66,13 @@ function NavBar() {
                 Publicaciones
               </Link>
             </li>
-            <li className={`nav-item  ${styles.items}`}>
-              <Link className="nav-link fw-normal " to={"/home/empleos"}>
-                Empleos
-              </Link>
-            </li>
+            {user && user.userType === "juniors" ? (
+              <li className={`nav-item  ${styles.items}`}>
+                <Link className="nav-link fw-normal " to={"/home/empleos"}>
+                  Empleos
+                </Link>
+              </li>
+            ) : null}
             {/* 	<li className={`nav-item  ${styles.items}`}>
 							<a className='nav-link fw-normal ' href='#'>
 								Mis postulaciones

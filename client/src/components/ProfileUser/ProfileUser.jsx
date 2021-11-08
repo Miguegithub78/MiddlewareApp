@@ -45,32 +45,34 @@ const ProfileUser = () => {
     academicHistory: [],
   });
   useEffect(() => {
-    if (!user || languages.length > 0 || technologies.length > 0) return;
+    if (user) {
+      setInfoUser({
+        idUser: user.idFireBase,
+        name: user.name,
+        gmail: user.gmail,
+        photograph: user.photograph,
+        description: user.description,
+        languages: user.languages,
+        technologies: user.technologies,
+        publications: user.publications,
+        softskills: user.softskills,
+        openToRelocate: user.openToRelocate,
+        openToRemote: user.openToRemote,
+        openToFullTime: user.openToFullTime,
+        postulationsJobs: user.postulationsJobs,
+        jobsExperience: user.jobsExperience,
+        academicHistory: user.academicHistory,
+        phone: user.phone,
+        github: user.github,
+        website: user.website,
+        city: user.city,
+        title: user.title,
+        linkedin: user.linkedin,
+      });
+    }
+    if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
-    setInfoUser({
-      idUser: user.idFireBase,
-      name: user.name,
-      gmail: user.gmail,
-      photograph: user.photograph,
-      description: user.description,
-      languages: user.languages,
-      technologies: user.technologies,
-      publications: user.publications,
-      softskills: user.softskills,
-      openToRelocate: user.openToRelocate,
-      openToRemote: user.openToRemote,
-      openToFullTime: user.openToFullTime,
-      postulationsJobs: user.postulationsJobs,
-      jobsExperience: user.jobsExperience,
-      academicHistory: user.academicHistory,
-      phone: user.phone,
-      github: user.github,
-      website: user.website,
-      city:user.city,
-      title: user.title,
-      linkedin: user.linkedin,
-    });
   }, [user]);
 
   useEffect(() => {

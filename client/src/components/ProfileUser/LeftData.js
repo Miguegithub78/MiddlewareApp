@@ -3,6 +3,8 @@ import CareerData from "./CareerData";
 import ChangePicture from "./ChangePicture";
 import SocialMedia from "./SocialMedia";
 
+import ModalDeletAccount from "./ModalDeletAccount";
+
 const Prueba2left = ({ user, setInfoUser, infoUser }) => {
   const [editValue, setEditValue] = useState(true);
   const handleChange = (e) => {
@@ -55,9 +57,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
             {editValue ? "editar" : "aceptar"}
           </button>
         </div>
-        <button 
-          // onClick={}
-          className="btn btn-outline-danger">Borrar tu Cuenta</button>
+        <ModalDeletAccount infoUser={infoUser} />
       </div>
       <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} />
     </div>

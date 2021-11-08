@@ -11,10 +11,9 @@ export default function JuniorsDetail() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJuniorsDetails(id))
-  }, []);
+  }, [dispatch]);
   
   const juniors = useSelector(state => state.juniorsdetails)
-  
 	return (
 		<div className='container-fluid '>
 		<div>

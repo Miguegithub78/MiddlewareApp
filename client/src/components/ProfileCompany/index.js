@@ -11,8 +11,9 @@ import {
   getLanguages,
   getTechnologies,
   getUserAction,
-  getJuniors
+  getJuniors,
 } from "../../redux/actions";
+import NavBar from '../NavBar/NavBar'
 
 const ProfileCompany = () => {
   const dispatch = useDispatch();
@@ -68,41 +69,49 @@ const ProfileCompany = () => {
     if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
-    dispatch(getJuniors())
+    dispatch(getJuniors());
   }, [user]);
 
   return user ? (
-    <div className="container mt-3">
-      <div className="main-body">
-        <div className="row">
-          {infoUser.infoUserChanged && (
-            <button
-              className="btn btn-block btn-dark btn-outline-light"
-              type="button"
-              //   onClick={handleClick}
-            >
-              Guardar cambios
-            </button>
-          )}
-          <LeftData setInfoUser={setInfoUser} infoUser={infoUser} user={user} />
-          <div className="col-lg-8">
-            <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
-            <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-            {infoUser.jobs.length>0&&infoUser.jobs.map((job) => (
-              <div key={job._id}>
-                <JobsPublications
-                  job={job}
-                  setInfoUser={setInfoUser}
-                  infoUser={infoUser}
-                />
-              </div>
-            ))}
+    <>
+      <NavBar />
+      <div className="container mt-3">
+        <div className="main-body">
+          <div className="row">
+            {infoUser.infoUserChanged && (
+              <button
+                className="btn btn-block btn-dark btn-outline-light"
+                type="button"
+                //   onClick={handleClick}
+              >
+                Guardar cambios
+              </button>
+            )}
+            <LeftData
+              setInfoUser={setInfoUser}
+              infoUser={infoUser}
+              user={user}
+            />
+            <div className="col-lg-8">
+              <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
+              {infoUser.jobs.length > 0 &&
+                infoUser.jobs.map((job, i) => (
+                  <div key={i}>
+                    <JobsPublications
+                      job={job}
+                      setInfoUser={setInfoUser}
+                      infoUser={infoUser}
+                    />
+                  </div>
+                ))}
 
-            {/* <Prueba2Skill /> */}
+              {/* <Prueba2Skill /> */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   ) : (
     "cargando..."
   );

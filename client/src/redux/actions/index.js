@@ -39,7 +39,6 @@ const githubProvider = new GithubAuthProvider();
 const storage = getStorage(firebase);
 
 const loginHelper = async (userFirebase, dispatch, userType) => {
-  console.log('loginhelper');
   const { uid, email, displayName, photoURL } = userFirebase.user;
   const user = {
     name: displayName || "Sin Nombre",
@@ -48,12 +47,24 @@ const loginHelper = async (userFirebase, dispatch, userType) => {
     photograph: photoURL || false,
     userType,
   };
-  const rta = await clienteAxios.post("/login", user);
-  //tengo que checkear si el que se loguea como program tiene una cuenta comom junior y asi
-  dispatch(loginOkey(rta.data.user));
-  localStorage.setItem("token", rta.data.token);
-  localStorage.setItem("userType", userType);
-  tokenAuth(rta.data.token); //firmar el token a header
+  try {
+    const rta = await clienteAxios.post("/login", user);
+    //tengo que checkear si el que se loguea como program tiene una cuenta comom junior y asilo
+    console.log("entra?????");
+    console.log(rta.data.auth);
+    if (!rta.data.auth) {
+      await signOut(auth);
+      console.log("deslogueado");
+      dispatch(errorLoginAction(rta.data.msg))
+    }
+    dispatch(loginOkey(rta.data.user));
+
+    localStorage.setItem("token", rta.data.token);
+    localStorage.setItem("userType", userType);
+    tokenAuth(rta.data.token); //firmar el token a header
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const loginUserAction = (provider, userType) => {
   return async (dispatch) => {
@@ -124,7 +135,7 @@ export const loginUserEmailPassAction = (email, pass, name) => {
           dispatch(errorLoginAction("Usuario o Contraseña incorrecta"));
         } else if (error.code === "auth/too-many-requests") {
           dispatch(errorLoginAction("Usuario bloqueado, Resetea la clave"));
-        }else if ( error.code === "auth/user-not-found"){
+        } else if (error.code === "auth/user-not-found") {
           dispatch(errorLoginAction("Usuario No Registrado"));
         }
       }
@@ -145,9 +156,10 @@ export const getUserAction = (userProvider) => {
     try {
       const userType = localStorage.getItem("userType");
       const token = localStorage.getItem("token");
-      if(!userProvider)console.log(auth.currentUser,'auth');
+      if (!userProvider) console.log(auth.currentUser, "auth");
       if (userType && token) {
-        clienteAxios.get(`/${userType}/${userProvider.uid}`).then((rta) => {
+        clienteAxios.get(`/${userType}/${userProvider.uid}?firebase=true`).then((rta) => {
+          console.log(rta.data, 'dato de cuando obtengo ');
           dispatch(loginOkey(rta.data));
         });
       }
@@ -283,10 +295,13 @@ export function getPublicationsById(id) {
 }
 
 export function postPublications(payload, nameUser, idUser) {
-	return async function () {
-		const response = await clienteAxios.post(`/publications?nameUser=${nameUser}&idUser=${idUser}`, payload);
-		return response;
-	};
+  return async function () {
+    const response = await clienteAxios.post(
+      `/publications?nameUser=${nameUser}&idUser=${idUser}`,
+      payload
+    );
+    return response;
+  };
 }
 
 export function putPublications(id, data) {
@@ -296,11 +311,13 @@ export function putPublications(id, data) {
   };
 }
 
-export function putLike(idPublication, idUser){
-	return async function () {
-		const response = await clienteAxios.put(`/addLike?idPublication=${idPublication}&idUser=${idUser}`);
-		return response;
-	};
+export function putLike(idPublication, idUser) {
+  return async function () {
+    const response = await clienteAxios.put(
+      `/addLike?idPublication=${idPublication}&idUser=${idUser}`
+    );
+    return response;
+  };
 }
 
 /*no existe en el back*/
@@ -313,10 +330,10 @@ export function deletePublications(id) {
 
 /*JOBS*/
 export function postJobs(payload) {
-	return async function() {
-		const response = await clienteAxios.post('/jobs', payload);
-		return response;
-	};
+  return async function () {
+    const response = await clienteAxios.post("/jobs", payload);
+    return response;
+  };
 }
 
 export function sortJobsBy(payload) {
@@ -395,23 +412,23 @@ export const changePictureProfileAction = (picture) => {
   };
 };
 const urlProfilePic = (urlPicture) => ({
-	type: CHANGE_PROFILE_PICTURE,
-	payload:urlPicture
+  type: CHANGE_PROFILE_PICTURE,
+  payload: urlPicture,
 });
 
-export const changePicturePublicationAction = (picture) =>{
-	return async function (dispatch){
-		try {
-			const fileRef = ref(storage, `documents/${picture.name}`)
-			await uploadBytes(fileRef, picture)
-			const urlPicture =  await getDownloadURL(fileRef)
-			dispatch(urlUploadPic(urlPicture))
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}
+export const changePicturePublicationAction = (picture) => {
+  return async function (dispatch) {
+    try {
+      const fileRef = ref(storage, `documents/${picture.name}`);
+      await uploadBytes(fileRef, picture);
+      const urlPicture = await getDownloadURL(fileRef);
+      dispatch(urlUploadPic(urlPicture));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 const urlUploadPic = (urlPicture) => ({
-	type: 'UPLOAD_PICTURE',
-	payload:urlPicture
+  type: "UPLOAD_PICTURE",
+  payload: urlPicture,
 });

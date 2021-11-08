@@ -40,10 +40,10 @@ const Login = () => {
       history.push("/home/companies");
       if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
-      // if (emailVerification) {
-      //   dispatch(emailVerificationAction(false));
-      //   dispatch(errorLoginAction("Cuenta NO Verificada"));
-      // }
+      if (emailVerification) {
+        dispatch(emailVerificationAction(false));
+        dispatch(errorLoginAction("Cuenta NO Verificada"));
+      }
     }
   });
   //resetear errores automatico

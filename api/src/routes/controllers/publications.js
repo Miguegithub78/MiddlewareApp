@@ -22,17 +22,17 @@ const postPublications = async (req, res) => {
 
             if(nameUser == 'company'){
                 var company = idUser
-                var getCompany = await Company.findOne({idMongo: idUser})
+                var getCompany = await Company.findById(idUser)
             }
             
             if(nameUser == 'junior'){
                 var junior = idUser
-                var getJunior = await Juniors.findOne({idMongo: idUser})
+                var getJunior = await Juniors.findById(idUser)
             }
 
             if(nameUser == 'admin'){
                 var admin = idUser
-                var getAdmin = await Admins.findOne({idMongo: idUser})
+                var getAdmin = await Admins.findById(idUser)
             }
 
             if(getCompany || getJunior || getAdmin){
@@ -46,21 +46,21 @@ const postPublications = async (req, res) => {
                 })
     
                 if(company){
-                    await Company.findOneAndUpdate({idMongo: idUser},
+                    await Company.findOneAndUpdate({_id: idUser},
                     {
                         publications: getCompany.publications.concat(postCreated._id)
                     })
                 }
         
                 if(junior){
-                    await Juniors.findOneAndUpdate({idMongo: idUser},
+                    await Juniors.findOneAndUpdate({_id: idUser},
                     {
                         publications: getJunior.publications.concat(postCreated._id)
                     })
                 }
         
                 if(admin){
-                    await Admins.findOneAndUpdate({idMongo: idUser},
+                    await Admins.findOneAndUpdate({_id: idUser},
                     {
                         publications: getAdmin.publications.concat(postCreated._id)
                     })

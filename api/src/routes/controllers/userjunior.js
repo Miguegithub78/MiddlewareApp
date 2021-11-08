@@ -24,7 +24,8 @@ const getAllJuniors = async (req, res) => {
     }
     const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Company.findById(decoded.id);
+    let user = await Company.findOne({idFireBase: decoded.id});
+    if(!user) user = await Juniors.findOne({idFireBase: decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -36,6 +37,7 @@ const getAllJuniors = async (req, res) => {
       { path: "technologies" },
       { path: "softskills" },
       { path: "publications" },
+      { path: "postulationsJobs" },
     ]);
     res.json(allJuniors);
   } catch (error) {
@@ -54,8 +56,8 @@ const getJuniorById = async (req, res) => {
 
     const decoded = await jwt.verify(token, SECRET);
 	 
-    let user = await Juniors.findById(decoded.id);
-	//  if(!user) user = await Company.findById(decoded.id);
+    let user = await Juniors.findOne({idFireBase: decoded.id});
+	  if(!user) user = await Company.findOne({idFireBase: decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -63,12 +65,23 @@ const getJuniorById = async (req, res) => {
     }
 
     const { id } = req.params;
+    const { firebase } = req.query;
+
+    if(firebase === 'true'){
+
+      const getJunior = await Juniors.findOne({idFireBase: id})
+      .populate([{path: "languages"}, {path: "technologies"}, {path: "softskills"}, {path: "publications"}])
+    
+      res.json(getJunior)
+      return
+    }
 
     Juniors.findById(id)
       .populate("languages")
       .populate("technologies")
       .populate("softskills")
       .populate("publications")
+      .populate("postulationsJobs")
       .exec((err, junior) => {
         if (err) {
           res.status(404).json({ message: err.message });
@@ -92,7 +105,7 @@ const updateJuniorsProfile = async (req, res) => {
 
     const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = await Juniors.findOne({idFireBase: decoded.id});
     if (!user) {
       return res
         .status(404)
@@ -130,7 +143,7 @@ const updateJuniorsProfile = async (req, res) => {
 
     const juniorsChange = await Juniors.findOneAndUpdate(
       {
-        _id: id,
+        idFireBase: id,
       },
       {
         name,
@@ -173,7 +186,7 @@ const deleteJuniorsProfile = async (req, res) => {
 
     const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Juniors.findById(decoded.id);
+    const user = await Juniors.findOne({idFireBase: decoded.id});
     if (!user) {
       return res
         .status(404)

@@ -164,6 +164,7 @@ export const Publications = () => {
                         />
                       </div>
                       <div className={s.divButton}>
+                        <span className="me-3">{e.likesNumber}</span>
                         <button
                           className={s.btnBlue}
                           onClick={() => {
@@ -176,9 +177,8 @@ export const Publications = () => {
                             }
                           }}
                         >
-                          Like
+                          <i className="bi bi-hand-thumbs-up" style={{ fontSize: 16 }}></i>
                         </button>
-                        <span> Likes {e.likesNumber}</span>
                       </div>
                     </div>
                   </div>

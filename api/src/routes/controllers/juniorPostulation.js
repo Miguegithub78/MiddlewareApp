@@ -1,29 +1,27 @@
+
 const { Juniors, Company, Jobs } = require ('../../models/index');
 const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
 
 const juniorsPostulations = async (req, res) => {
-  const { id } = req.params; //id del job
-  const { juniorId } = req.body //id del junior
+	const { id } = req.params; //id del job
+	const { juniorId } = req.body; //id del junior
 
-  try{
-
-    const junior = await Juniors.findOne({ _id : juniorId });
+	try {
+		const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
     const gmailCompany = companyData.company.gmail
- 
 
+		if (!junior) {
+			return res.status(404).json({ error: 'required "Junior" is missing' });
+		}
 
-    if(!junior){         
-      return res.status(404).json({ error: 'required "Junior" is missing'})
-    }
+		const job = await Jobs.findOne({ _id: id });
 
-    const job = await Jobs.findOne({ _id : id });
+		job.juniors = job.juniors.concat(juniorId);
+		const savedJob = await job.save();
 
-    job.juniors = job.juniors.concat(juniorId)
-    const savedJob = await job.save()
-
-    junior.postulationsJobs = junior.postulationsJobs.concat(job._id)
-    await junior.save()
+		junior.postulationsJobs = junior.postulationsJobs.concat(job._id);
+		await junior.save();
 
             const transporter = nodemailer.createTransport({  //acá voy a crear los datos del correo del que envía
                 host: 'smtp.gmail.com',
@@ -62,15 +60,6 @@ const juniorsPostulations = async (req, res) => {
 }
 
 module.exports = {
-
-  juniorsPostulations
+	juniorsPostulations,
 };
 
-
-//llamar junior, jobsSchema
-//query id job, junior id
-//update job, {junior}
-//concatenar id juniors en job
-
-//postulationjob y concateno id de la puclicaion
-//junior.postulationjob.push(id)

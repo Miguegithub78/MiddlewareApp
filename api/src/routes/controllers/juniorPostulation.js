@@ -10,7 +10,7 @@ const juniorsPostulations = async (req, res) => {
     const junior = await Juniors.findOne({ _id : juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
     const gmailCompany = companyData.company.gmail
-  console.log(companyData.title)
+ 
 
 
     if(!junior){         
@@ -47,7 +47,7 @@ const juniorsPostulations = async (req, res) => {
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
                 from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
-                subject: "Tienes un nuevo postulante", // Subject line
+                subject: "Te postulaste en Middleware", // Subject line
                 html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}. Felicitaciones!!! </b>`
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`

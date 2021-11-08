@@ -30,6 +30,7 @@ export default function Chat(){
 		list.push(newMessage)
 		setMessage('')
 
+		// Aqui envia los datos a firebase
 		try{
 
 			await setDoc(doc(db, "messages", "eKzS1r3whihVuzfWeIl9"), {
@@ -41,7 +42,7 @@ export default function Chat(){
 		}
 	}
 
-	//
+	// esta funcion va a estar escuchando los cambios en firebase
 	const unsub = onSnapshot(doc(db, "messages", "eKzS1r3whihVuzfWeIl9"), (doc) => {
 		
 		if(state.messages && doc.data() !== undefined){
@@ -52,6 +53,7 @@ export default function Chat(){
 		}
 	});
 
+	//Pide los datos apenas se carga la pagina o el chat
 	useEffect(async()=>{
 		
 		const docRef = doc(db, "messages", "eKzS1r3whihVuzfWeIl9");

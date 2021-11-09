@@ -1,4 +1,5 @@
 const { Juniors, Company } = require("../../models/index");
+const { jwtgenerater } = require("../../helpers/index");
 
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -43,9 +44,7 @@ const signIn = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: idUser }, SECRET, {
-        expiresIn: 60 * 60 * 24,
-      });
+      const token = jwtgenerater(idUser)
 
       return res.json({ auth: true, token: token, user: juniorsCreate });
     }
@@ -71,9 +70,7 @@ const signIn = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: idUser }, SECRET, {
-        expiresIn: 60 * 60 * 24,
-      });
+      const token = jwtgenerater(idUser)
 
       res.json({ auth: true, token: token, user: CompanyCreate });
       return;

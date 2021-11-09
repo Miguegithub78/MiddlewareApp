@@ -28,7 +28,7 @@ export default function CompanyDetail() {
       <div className='row align-items-center justify-content-center '>
         <div className='col-5 text-center p-3 mb-2 bg-white text-dark border border-3'>
           <h1 className="display-4 ">{companies.name}</h1>
-          <img src={companies.photograph} alt='Imagen no encontrada'></img>
+          <img src={companies.photograph} style={{ width: " 150px ", height: " 180px " }} alt='Imagen no encontrada'></img>
           <h6 className="mb-0 me-auto p-3 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"

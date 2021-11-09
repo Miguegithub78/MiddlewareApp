@@ -63,7 +63,6 @@ export default function Chat(){
 		setState({
 			messages: docSnap.data() !== undefined ? docSnap.data().chat : []
 		})
-		console.log(state)
 	}, []);
 
 	

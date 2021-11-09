@@ -136,24 +136,23 @@ const CreatePublications = () => {
       <NavBar />
       <div className='container px-4 py-5 mx-auto'>
         <div className='row d-flex justify-content-center'>
-          <Link
-            className='btn btn-block btn-dark btn-outline-light'
-            to='/home/companies'
-          >
-            Volver al inicio
-          </Link>
           <div className='card'>
             <form onSubmit={handleSubmit} className='needs-validation' novalidate>
-              <div className='row px-3'>
+              <div className='row px-3 m-2'>
                 <img alt='img' className='user' src={user.photograph} />
               </div>
-              <div className='row px-3'>
-                <h4 className='mt-3 mb-5'>{user.name}</h4>
+              <div className="row m-4">
+                <div className="col-sm-3">
+                  <h6 className='mb-3'>{user.name}</h6>
+                </div>
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Titulo:</h6>
+              <div className="row mb-4">
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Titulo</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <input
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   value={input.title}
                   onChange={handleChange}
                   name='title'
@@ -162,10 +161,14 @@ const CreatePublications = () => {
                 ></input>
                 {errors.title && <p className='perror'>{errors.title}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Descripción:</h6>
+              </div>
+              <div className="row mb-4">
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Descripción</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <textarea
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   placeholder='Agrega una descripción a tu publicación'
                   value={input.description}
                   onChange={handleChange}
@@ -176,10 +179,14 @@ const CreatePublications = () => {
                   <p className='perror'>{errors.description}</p>
                 )}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>País:</h6>
+              </div>
+              <div className="row mb-4">
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>País</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <input
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   value={input.country}
                   onChange={handleChange}
                   name='country'
@@ -188,10 +195,14 @@ const CreatePublications = () => {
                 ></input>
                 {errors.country && <p className='perror'>{errors.country}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Ciudad:</h6>
+              </div>
+              <div className='row mb-4'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Ciudad</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <input
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   value={input.city}
                   onChange={handleChange}
                   name='city'
@@ -200,23 +211,19 @@ const CreatePublications = () => {
                 ></input>
                 {errors.city && <p className='perror'>{errors.city}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Imagen:</h6>
-                <input
-                  type='file'
-                  id='loadfile'
-                  className='text-muted bg-light mt-4 mb-3'
-                  onChange={handleChangePicture}
-                ></input>
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Moneda:</h6>
+              
+              <div className='row mb-4'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Moneda</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <select
                   onChange={(e) => handleSelect(e)}
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   required
                 >
-                  <option className='text-muted bg-light mt-4 mb-3'>
+                  <option className='form-control'>
                     Selecciona
                   </option>
                   <option
@@ -234,11 +241,15 @@ const CreatePublications = () => {
                 </select>
                 {errors.currency && <p className='perror'>{errors.currency}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Salario:</h6>
+              </div>
+              <div className='row mb-4'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Salario</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <input
                   type='number'
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   value={input.salary}
                   onChange={handleChange}
                   name='salary'
@@ -246,28 +257,37 @@ const CreatePublications = () => {
                 ></input>
                 {errors.salary && <p className='perror'>{errors.salary}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Tecnologias:</h6>
+              </div>
+              <div className='row mb-4'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Tecnologias</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
                 <select
                   onChange={(e) => handleSelectTwo(e)}
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   required
                 >
                   {technologies?.map((el) => (
                     <option
                       key={el._id}
-                      className='text-muted bg-light mt-4 mb-3'
+                      className='form-control'
                       value={el._id}
                     >
                       {el.name}
                     </option>
                   ))}
                 </select>
+                {errors.technologies && <p className='perror'>{errors.technologies}</p>}
               </div>
-              <div className='row px-3 form-group'>
-                <h6 className='mb-0'>Fecha:</h6>
+              </div>
+              <div className='row mb-3'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Fecha</h6>
+                </div>
+                <div className="col-sm-9 text-secondary">
                 <input
-                  className='text-muted bg-light mt-4 mb-3'
+                  className='form-control'
                   value={input.date}
                   onChange={handleChange}
                   name='date'
@@ -277,9 +297,24 @@ const CreatePublications = () => {
                 ></input>
                 {errors.date && <p className='perror'>{errors.date}</p>}
               </div>
+              </div>
+              <div className='row mb-3'>
+                <div className="col-sm-2">
+                  <h6 className='mt-1'>Imagen</h6>
+                </div>
+              <div className="col-sm-9 text-secondary">
+                <input
+                  className='form-control notext'
+                  accept=".png, .jpg, .jpeg"
+                  type='file'
+                  id='loadfile'
+                  onChange={handleChangePicture}
+                ></input>
+              </div>
+              </div>
               <button
                 type='submit'
-                className='btn btn-block btn-dark btn-outline-light'
+                className="btn btn-outline-dark px-4 mt-4"
               >
                 Publicar
               </button>

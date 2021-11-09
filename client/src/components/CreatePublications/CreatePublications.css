@@ -15,3 +15,6 @@
     line-height: 15px;
     margin-bottom: 30px;
 }
+.notext {
+  color: transparent
+}

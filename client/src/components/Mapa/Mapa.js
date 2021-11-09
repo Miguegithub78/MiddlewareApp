@@ -23,8 +23,8 @@ import mapStyles from "./mapStyles";
 import "./index.css";
 const libraries = ["places"];
 const mapContainerStyle = {
-  height: "60vh",
-  width: "50vw",
+  height: "80vh",
+  width: "90vw",
 };
 const options = {
   styles: mapStyles,

@@ -47,6 +47,7 @@ const CreatePublications = () => {
     if (!input.salary) errors.salary = 'Campo requerido!';
     if (!input.technologies) errors.technologies = 'Campo requerido!';
     if (!input.date) errors.date = 'Campo requerido!';
+    if (!input.photograph) errors.photograph = 'Imagen opcional!';
     return errors;
   }
 
@@ -67,6 +68,8 @@ const CreatePublications = () => {
     status: 'active',
   });
 
+  console.log(input)
+
   function handleChange(e) {
     setInput((input) => ({
       ...input,
@@ -86,12 +89,21 @@ const CreatePublications = () => {
       currency: e.target.value,
     });
   }
-  function handleSelectTwo(e) {
-    setInput({
-      ...input,
-      technologies: [...input.technologies, e.target.value],
+  function handleSelectTwo(tech) {
+    setInput((r) => {
+      if (!r.technologies.length === 0)
+        return { ...r, technologies: [tech] };
+      if (!r.technologies.includes(tech)) {
+        return {
+          ...r,
+          technologies: [...r.technologies, tech],
+        };
+      } else {
+        const filter = r.technologies.filter((c) => c._id !== tech._id);
+        return { ...r,technologies: filter };
+      }
     });
-  }
+  };
 
   const handleChangePicture = (e) => {
     const picture = e.target.files[0];
@@ -263,21 +275,31 @@ const CreatePublications = () => {
                   <h6 className='mt-1'>Tecnologias</h6>
                 </div>
               <div className="col-sm-9 text-secondary">
-                <select
-                  onChange={(e) => handleSelectTwo(e)}
-                  className='form-control'
-                  required
+              {technologies.map((tec, i) => (
+              <span key={i}>
+                <input
+                  style={{ focus: "none" }}
+                  type="checkbox"
+                  className="btn-check btn-checkbox-focus"
+                  value={tec._id}
+                  id={tec._id}
+                  onChange={() => handleSelectTwo(tec)}
+                  checked={
+                    input.technologies.find((e) => e._id === tec._id)
+                      ? true
+                      : false
+                  }
+                />
+                <label
+                  className="btn btn-outline-dark m-1 btn-checkbox-focus"
+                  htmlFor={tec._id}
+                  style={{ padding: "1px 5px" }}
+                  
                 >
-                  {technologies?.map((el) => (
-                    <option
-                      key={el._id}
-                      className='form-control'
-                      value={el._id}
-                    >
-                      {el.name}
-                    </option>
-                  ))}
-                </select>
+                  {tec.name}
+                </label>
+              </span>
+               ))}
                 {errors.technologies && <p className='perror'>{errors.technologies}</p>}
               </div>
               </div>
@@ -310,6 +332,9 @@ const CreatePublications = () => {
                   id='loadfile'
                   onChange={handleChangePicture}
                 ></input>
+                {errors.photograph && (
+                  <p className='gerror'>{errors.photograph}</p>
+                )}
               </div>
               </div>
               <button

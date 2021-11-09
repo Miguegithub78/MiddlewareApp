@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Languages from "./Languages";
-import Technologies from "./Technologies";
-import Softskills from "./SoftSkills";
-import OpenTo from "./OpenTo";
+// import Languages from "./Languages";
+import Technologies from "../ProfileUser/Technologies";
+// import Softskills from "./SoftSkills";
+// import OpenTo from "./OpenTo";
 
 const CareerData = ({ infoUser, setInfoUser }) => {
   const handleChange = (e) => {
@@ -56,17 +56,17 @@ const CareerData = ({ infoUser, setInfoUser }) => {
         </div> */}
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Languages</h6>
+            <h6 className="mb-0">Premium</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Languages setInfoUser={setInfoUser} infoUser={infoUser} />
+            {/* <Languages setInfoUser={setInfoUser} infoUser={infoUser} /> */}
           </div>
         </div>
-        <OpenTo
+        {/* <OpenTo
           editValue={editValue}
           infoUser={infoUser}
           setInfoUser={setInfoUser}
-        />
+        /> */}
         {/* <div className="row mb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">Algo</h6>

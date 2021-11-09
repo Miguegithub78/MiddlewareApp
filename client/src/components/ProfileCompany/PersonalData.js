@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Languages from "./Languages";
-import Technologies from "./Technologies";
-import Softskills from "./SoftSkills";
-import OpenTo from "./OpenTo";
+// import Languages from "./Languages";
+// import Technologies from "./Technologies";
 
-const CareerData = ({ infoUser, setInfoUser }) => {
+const PersonalData = ({ infoUser, setInfoUser }) => {
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -15,73 +14,75 @@ const CareerData = ({ infoUser, setInfoUser }) => {
   };
   const [editValue, setEditValue] = useState(true);
 
+  //en cada edicion de datos tiene que viajar a la db
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(infoUser(infoUser));
+  }
   return (
     <div className="card">
       <div className="card-body">
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Titular</h6>
+            <h6 className="mb-0">Nombre Completo</h6>
           </div>
           <div className="col-sm-9 text-secondary">
             <input
               className={`form-control ${!editValue && "green-shadow"}`}
               type="text"
-              required
-              value={infoUser.title}
+              name="name"
+              value={infoUser.name}
               onChange={handleChange}
-              name="title"
-              placeholder="ej: Front End | Javascript | Back End"
               disabled={editValue}
             />
           </div>
         </div>
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Technologies</h6>
+            <h6 className="mb-0">Email</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Technologies setInfoUser={setInfoUser} infoUser={infoUser} />
-            <br />
+            <input
+              className={`form-control ${!editValue && "green-shadow"}`}
+              type="text"
+              value={infoUser.gmail}
+              onChange={handleChange}
+              name="gmail"
+              disabled={editValue}
+            />
           </div>
         </div>
-        {/* <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Technologies</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <Softskills setInfoUser={setInfoUser} infoUser={infoUser} />
 
-            <br />
-          </div>
-        </div> */}
         <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Languages</h6>
+            <h6 className="mb-0">Celular</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Languages setInfoUser={setInfoUser} infoUser={infoUser} />
+            <input
+              type="number"
+              className={`form-control ${!editValue && "green-shadow"}`}
+              value={infoUser.phone}
+              onChange={handleChange}
+              name="phone"
+              disabled={editValue}
+            />
           </div>
         </div>
-        <OpenTo
-          editValue={editValue}
-          infoUser={infoUser}
-          setInfoUser={setInfoUser}
-        />
-        {/* <div className="row mb-3">
+        <div className="row mb-3">
           <div className="col-sm-3">
-            <h6 className="mb-0">Algo</h6>
+            <h6 className="mb-0">Ciudad</h6>
           </div>
           <div className="col-sm-9 text-secondary">
             <input
               type="text"
-              className={`form-control ${!editValue && "green-shadow"}`}
+              className={`form-control ${!editValue&&'green-shadow'}`}
               value={infoUser.city}
               onChange={handleChange}
               name="city"
               disabled={editValue}
             />
           </div>
-        </div> */}
+        </div>
 
         <div className="row">
           <div className="col-sm-3"></div>
@@ -99,4 +100,4 @@ const CareerData = ({ infoUser, setInfoUser }) => {
   );
 };
 
-export default CareerData;
+export default PersonalData;

@@ -24,11 +24,9 @@ const signIn = async (req, res) => {
   try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {
-
       const user = await Juniors.findOne({ gmail });
 
       if (!user) {
-
         const userCompany = await Company.findOne({ gmail });
 
         if (userCompany)
@@ -36,7 +34,6 @@ const signIn = async (req, res) => {
             auth: false,
             msg: "Usuario tiene una cuenta como Company",
           });
-
         var juniorsCreate = await Juniors.create({
           idFireBase: idUser,
           name,
@@ -53,11 +50,9 @@ const signIn = async (req, res) => {
     }
 
     if (userType === "companies") {
-
       const user = await Company.findOne({ gmail });
 
       if (!user) {
-
         const userJunior = await Juniors.findOne({ gmail });
 
         if (userJunior)
@@ -65,7 +60,6 @@ const signIn = async (req, res) => {
             auth: false,
             msg: "Usuario tiene una cuenta como Junior",
           });
-
         var CompanyCreate = await Company.create({
           idFireBase: idUser,
           name,

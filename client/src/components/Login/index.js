@@ -7,6 +7,7 @@ import {
   loginUserEmailPassAction,
   emailVerificationAction,
   errorLoginAction,
+  getUserAction
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -28,7 +29,7 @@ const Login = () => {
   if (type) {
     localStorage.setItem("userType", type);
   }
-  const { emailVerification, errorLogin } = useSelector((state) => state);
+  const { emailVerification, errorLogin, user } = useSelector((state) => state);
   const [singOrCreate, setSingOrCreate] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("guilletempo1@gmail.com");
@@ -38,9 +39,11 @@ const Login = () => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
       // console.log(userFirebase);
-      if(errorLogin)return
+      if (errorLogin || user) return;
+      console.log(user, "useeer de login");
       history.push("/home/companies");
-      if (!emailVerification) dispatch(emailVerificationAction(true));
+      // dispatch(getUserAction(userFirebase));
+      // if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
       if (emailVerification) {
         dispatch(emailVerificationAction(false));
@@ -48,6 +51,10 @@ const Login = () => {
       }
     }
   });
+  // useEffect(() => {
+  //   if (user) {
+  //   }
+  // }, [user]);
   //resetear errores automatico
   useEffect(() => {
     if (errorLogin) {
@@ -79,7 +86,7 @@ const Login = () => {
   };
   return (
     <div className="container ">
-      <div className="row g-0 mt-5 mb-5 height-100">
+      <div className="row g-0 pt-5">
         <div className="col-md-6">
           {/* <div className="bg-dark p-4 h-100 sidebar"> */}
           <div className="form-img"></div>
@@ -95,14 +102,18 @@ const Login = () => {
                 <li>
                   <button
                     onClick={() => dispatch(loginUserAction("google", type))}
-                    className="btn btn-block btn-outline-light  bi bi-google"
-                  ></button>
+                    className="btn btn-block btn-outline-light"
+                  >
+                    <i className="bi bi-google" style={{ fontSize: 32 }} width="50px" hight="50px"></i>
+                  </button>
                 </li>
                 <li>
                   <button
                     onClick={() => dispatch(loginUserAction("github", type))}
-                    className="btn btn-block btn-outline-light  bi bi-github"
-                  ></button>
+                    className="btn btn-block btn-outline-light"
+                  >
+                    <i className="bi bi-github" style={{ fontSize: 32 }} width="50px" hight="50px"></i>
+                  </button>
                 </li>
               </ul>
               <hr />
@@ -161,7 +172,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

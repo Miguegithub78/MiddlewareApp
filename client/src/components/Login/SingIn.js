@@ -7,7 +7,7 @@ const SingIn2 = ({
   password,
   errorLogin
 }) => {
-  console.log(errorLogin);
+
   return (
     <>
       <div className="form-data">

@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
+import Chat from './components/Chat';
+
 function App() {
   const token = localStorage.getItem("token");
 
@@ -39,6 +41,7 @@ function App() {
 				/>
 
 				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

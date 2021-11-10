@@ -14,7 +14,7 @@ import {
   getJuniors,
 } from "../../redux/actions";
 import NavBar from "../NavBar/NavBar";
-import JobsPublications2 from "./JobsPublications2";
+
 
 const ProfileCompany = () => {
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ const ProfileCompany = () => {
                   {infoUser.jobs.length > 0 &&
                     infoUser.jobs.map((job, i) => (
                       <div key={i}>
-                        <JobsPublications2
+                        <JobsPublications
                           job={job}
                           setInfoUser={setInfoUser}
                           infoUser={infoUser}

@@ -139,6 +139,7 @@ export default function JuniorsDetail() {
           ))}
 		  </div>
 		</div>
+      
 	  </div>
 	);
   }

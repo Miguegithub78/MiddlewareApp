@@ -12,8 +12,7 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
-// import { useHistory } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+import Chat from './components/Chat';
 
 function App() {
 //   const { user } = useSelector((state) => state);
@@ -46,11 +45,12 @@ function App() {
           component={CreatePublications}
         />
 
-        <Route path="/juniors/:id" component={JuniorsDetail} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

@@ -136,6 +136,9 @@ const updateCompaniesProfile = async (req, res) => {
       state,
       languages,
       city,
+      latitude,
+      longitude,
+      address
     } = req.body;
 
     const languagesGet = await Languages.find({ name: languages });
@@ -154,6 +157,9 @@ const updateCompaniesProfile = async (req, res) => {
         city: city,
         description: description,
         languages: languagesGet,
+        latitude: latitude,
+        longitude: longitude,
+        address: address
       },
       { new: true }
     );

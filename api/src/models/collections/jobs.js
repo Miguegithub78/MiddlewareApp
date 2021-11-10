@@ -41,7 +41,8 @@ const jobsSchema = new Schema({
 
   currency: {
     type: String,
-    required: false,
+    enum: ["dollar", "peso", "euro"],
+    default: "active"
   },
 
   date: {
@@ -65,8 +66,9 @@ const jobsSchema = new Schema({
   }],
 
   premium: {
-    type: Boolean,
-    default: false,
+    type: Number,
+    enum: [0, 1, 2],
+    default: 0,
   },
 
   status: {

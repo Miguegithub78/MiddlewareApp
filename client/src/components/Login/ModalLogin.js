@@ -9,16 +9,16 @@ const ModalLogin = ({ email, setEmail }) => {
   };
 
   return (
-    <div>
+    <div className=''>
       <span
-        className=" forgot-text"
+        className=" forgot-text d-inline mt-1 text-secondary "
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
-        Olvidaste la clave?
+        Olvidaste tu contraseña?
       </span>
       <div
-        className="modal fade"
+        className="modal  fade"
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"

@@ -311,12 +311,12 @@ export function getPublicationsById(id) {
 }
 
 export function postPublications(payload, nameUser, idUser) {
-  return async function () {
+  return async function (dispatch) {
     const response = await clienteAxios.post(
       `/publications?nameUser=${nameUser}&idUser=${idUser}`,
       payload
     );
-    return response;
+    return dispatch({ type: "POST_PUBLICATION", payload: response.data });
   };
 }
 
@@ -447,6 +447,23 @@ export const changePicturePublicationAction = (picture) => {
 const urlUploadPic = (urlPicture) => ({
   type: "UPLOAD_PICTURE",
   payload: urlPicture,
+});
+
+export const changePicturePublications = (picture) => {
+  return async function (dispatch) {
+    try {
+      const fileRef = ref(storage, `documents/${picture.name}`);
+      await uploadBytes(fileRef, picture);
+      const urlPicturePublication = await getDownloadURL(fileRef);
+      dispatch(urlUploadPicPublication(urlPicturePublication));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+const urlUploadPicPublication = (urlPicturePublication) => ({
+  type: "UPLOAD_PICTURE_PUBLICATION",
+  payload: urlPicturePublication,
 });
 
 export function getJobDetails(id) {

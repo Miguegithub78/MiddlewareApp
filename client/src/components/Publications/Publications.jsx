@@ -5,7 +5,8 @@ import {
   putLike,
   postPublications,
   getUserAction,
-  putPublications
+  putPublications,
+  changePicturePublications
 } from "../../redux/actions/index";
 
 import s from "./Publications.module.css";
@@ -19,11 +20,15 @@ export const Publications = () => {
   const dispatch = useDispatch();
   const publications = useSelector((state) => state.publications);
   const user = useSelector((state) => state.user);
+  const publiImg = useSelector((state) => state.imgPublication);
 
   var [idPost, setIdPost] = useState(null);
 
+  var [imgPubli, setImgPubli] = useState(null);
+
   var [postPublication, setPostPublication] = useState({
     description: "",
+    photograph: undefined
   });
 
   var [editarPost, setEditarPost] = useState(false);
@@ -36,11 +41,14 @@ export const Publications = () => {
 
   function postDescription() {
     if (postPublication.description !== "" && !editarPost) {
-      dispatch(postPublications(postPublication, "junior", user._id));
-      window.location.reload(true);
+
+      console.log(publiImg)
+
+      dispatch(postPublications({description: postPublication.description, photograph: publiImg}, "junior", user._id));
+      // window.location.reload(true);
     }
     else if(editarPost){
-      dispatch(putPublications(idPost, user._id, postPublication))
+      dispatch(putPublications(idPost, user._id, {description: postPublication.description, photograph: publiImg}));
     }
   }
 
@@ -63,6 +71,15 @@ export const Publications = () => {
       history.push("/");
     }
   });
+
+  function publicationImg(e){
+
+    const picture = e.target.files[0]
+
+    dispatch(changePicturePublications(picture))
+
+    setImgPubli(publiImg)
+  }
 
   return publications ? (
     <div className="container">
@@ -112,7 +129,7 @@ export const Publications = () => {
 
               <div className="mb-3 mt-4">
                 <label className="form-label">Seleciona una imagen</label>
-                <input className="form-control" type="file" id="formFile" />
+                <input className="form-control" type="file" id="formFile" onChange={(e)=>publicationImg(e)} />
               </div>
             </div>
             <div className="modal-footer">

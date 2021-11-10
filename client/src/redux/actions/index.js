@@ -320,9 +320,9 @@ export function postPublications(payload, nameUser, idUser) {
 	};
 }
 
-export function putPublications(id, data) {
+export function putPublications(idPublication, idProgramador, data) {
 	return async function () {
-		const response = await clienteAxios.put(`/publications/${id}`, data);
+		const response = await clienteAxios.put(`/publications?idPublication=${idPublication}&idProgramador=${idProgramador}`, data);
 		return response;
 	};
 }

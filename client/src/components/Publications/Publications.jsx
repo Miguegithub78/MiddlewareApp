@@ -5,6 +5,7 @@ import {
   putLike,
   postPublications,
   getUserAction,
+  putPublications
 } from "../../redux/actions/index";
 
 import s from "./Publications.module.css";
@@ -25,6 +26,8 @@ export const Publications = () => {
     description: "",
   });
 
+  var [editarPost, setEditarPost] = useState(false);
+
   var deccriptionWindow = useRef(null);
 
   useEffect(() => {
@@ -32,9 +35,12 @@ export const Publications = () => {
   }, []);
 
   function postDescription() {
-    if (postPublication.description !== "") {
+    if (postPublication.description !== "" && !editarPost) {
       dispatch(postPublications(postPublication, "junior", user._id));
       window.location.reload(true);
+    }
+    else if(editarPost){
+      dispatch(putPublications(idPost, user._id, postPublication))
     }
   }
 
@@ -67,6 +73,7 @@ export const Publications = () => {
         className="btn btn-block btn-dark btn-outline-light"
         data-bs-toggle="modal"
         data-bs-target="#exampleModalCenter"
+        onClick={()=>setEditarPost(false)}
       >
         Nueva publicación
       </button>
@@ -82,7 +89,7 @@ export const Publications = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">
-                Nueva publicación
+                {editarPost ? "Editar publicación" : "Nueva publicación"}
               </h5>
               <button
                 type="button"
@@ -93,7 +100,7 @@ export const Publications = () => {
             </div>
             <div className="modal-body">
               <div>
-                <label className="form-label">Escribe algo</label>
+                <label className="form-label">{editarPost ? "Descripción" : "Escribe algo"}</label>
                 <textarea
                   className="form-control"
                   id="exampleFormControlTextarea1"
@@ -148,6 +155,7 @@ export const Publications = () => {
                           </span>
                         </span>
                       </div>
+
                       <div className={s.description}>
                         <span>{e.description}</span>
                       </div>
@@ -166,7 +174,13 @@ export const Publications = () => {
                       <div className={s.divButton}>
                         <span className="me-3">{e.likesNumber}</span>
                         <button
-                          className={s.btnBlue}
+                          className={
+                            
+                            e.likes.length === e.likesNumber && !e.likes.includes(user ? user._id : '12345')
+                            ? s.btnBlue
+                            : s.btnBlueLike
+                          }
+
                           onClick={() => {
                             addLikes(e._id);
                             if (
@@ -179,6 +193,21 @@ export const Publications = () => {
                         >
                           <i className="bi bi-hand-thumbs-up" style={{ fontSize: 16 }}></i>
                         </button>
+
+                        {
+                          e.junior._id === (user ? user._id : '12345') ? 
+                          <div>
+                            <button
+                            onClick={()=>{setEditarPost(true); setIdPost(e._id)}}
+                            type="button"
+                            className="btn btn-block btn-dark btn-outline-light rounded"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModalCenter"
+                            >Editar</button>
+                          </div> 
+                          : <div></div>
+                        }
+
                       </div>
                     </div>
                   </div>
@@ -192,6 +221,6 @@ export const Publications = () => {
       </div>
     </div>
   ) : (
-    "cargando..."
+    <h1>Cargando...</h1>
   );
 };

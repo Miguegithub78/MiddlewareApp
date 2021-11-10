@@ -6,6 +6,7 @@ const {
   Publication,
   Admins,
   SoftSkills,
+  Jobs,
 } = require("../../models/index");
 
 const { decoder } = require("../../helpers/index")

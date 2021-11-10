@@ -4,6 +4,7 @@ const {
   Company,
   Publication,
   Juniors,
+  Jobs
 } = require("../../models/index");
 
 require("dotenv").config();
@@ -176,6 +177,10 @@ const deleteCompaniesProfile = async (req, res) => {
 
     getCompany.publications.forEach(async (e) => {
       await Publication.findByIdAndDelete(e._id);
+    });
+
+    getCompany.jobs.forEach(async (e) => {
+      await Jobs.findByIdAndDelete(e._id);
     });
 
     const companyDelete = await Company.findOneAndDelete(id);

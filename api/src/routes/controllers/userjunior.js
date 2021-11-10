@@ -209,6 +209,7 @@ const deleteJuniorsProfile = async (req, res) => {
   if (result.auth === false) {
     return res.status(401).json(result);
   }
+console.log(result)
 
   const getJunior = result;
 

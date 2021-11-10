@@ -8,6 +8,8 @@ const {
   SoftSkills,
 } = require("../../models/index");
 
+const { decoder } = require("../../helpers/index")
+
 require("dotenv").config();
 
 const { SECRET } = process.env;
@@ -15,22 +17,20 @@ const { SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
-  // try {
-  // const token = req.headers["x-auth-token"];
-  // if (!token) {
-  //   return res
-  //     .status(403)
-  //     .json({ auth: false, message: "se requiere token de autorización" });
-  // }
-  // const decoded = await jwt.verify(token, SECRET);
+  try {
+    const token = req.headers["x-auth-token"];
 
-  // let user = await Company.findOne({ idFireBase: decoded.id });
-  // if (!user) user = await Juniors.findOne({ idFireBase: decoded.id });
-  // if (!user) {
-  //   return res
-  //     .status(404)
-  //     .json({ auth: false, message: "usuario no registrado" });
-  // }
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "token is require" });
+    }
+
+    const result = await decoder(token,'Company')
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
+    }
 
   const allJuniors = await Juniors.find().populate([
     { path: "languages" },
@@ -40,9 +40,9 @@ const getAllJuniors = async (req, res) => {
     { path: "postulationsJobs" },
   ]);
   res.json(allJuniors);
-  // } catch (error) {
-  //   res.status(404).json({ error: error.message });
-  // }
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 };
 
 const getJuniorById = async (req, res) => {
@@ -51,21 +51,20 @@ const getJuniorById = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token de autenticacion" });
+        .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
-
-    let user = await Juniors.findOne({ idFireBase: decoded.id });
-    if (!user) user = await Company.findOne({ idFireBase: decoded.id });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
-
+    const result = await decoder(token,'Company')
+    
     const { id } = req.params;
     const { firebase } = req.query;
+
+    if (result.auth === false && !firebase) {
+
+      return res.status(401).json(result);
+    }
+
+
 
     if (firebase === "true") {
       const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
@@ -89,6 +88,7 @@ const getJuniorById = async (req, res) => {
         if (err) {
           res.status(404).json({ message: err.message });
         } else {
+          if(!junior) return res.status(404).json({message: "junior not found"})
           res.status(200).send(junior);
         }
       });

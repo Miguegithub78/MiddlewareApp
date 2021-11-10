@@ -16,7 +16,6 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
@@ -35,6 +34,7 @@ const center = {
   lat: -34.592164,
   lng: -58.4431,
 };
+let cont =0;
 
 export default function Mapa() {
   const { isLoaded, loadError } = useLoadScript({
@@ -42,19 +42,29 @@ export default function Mapa() {
     libraries
   });
 
- 
+
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
+  console.log('markers' + markers.length)
+  console.log('selected' + selected)
 
+  
+  
   const onMapClick = useCallback((e) => {
+    
+    console.log('contador' + cont)
+    if(cont===0){
+      cont=cont+1;
     setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
+       
+        ...current,
+        {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          time: new Date(), 
+        },  
+      ]);
+    }
   }, []);
 
   const mapRef = useRef();
@@ -96,7 +106,8 @@ export default function Mapa() {
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
             onClick={() => {
-              setSelected(marker);
+              cont=0;
+              setMarkers([]);
             }}
             icon={{
               url: `/society.svg`,
@@ -111,17 +122,17 @@ export default function Mapa() {
           <InfoWindow
             position={{ lat: selected.lat, lng: selected.lng }}
             onCloseClick={() => {
-              setSelected(null);
+              setMarkers([]);
             }}
           >
             <div>
-              <h2>
-                <span role="img" aria-label="bear">
+              <h3>
+                <span role="img" aria-label="company">
                   💻
                 </span>{" "}
-                Alert
-              </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
+                Company
+              </h3>
+              
             </div>
           </InfoWindow>
         ) : null}

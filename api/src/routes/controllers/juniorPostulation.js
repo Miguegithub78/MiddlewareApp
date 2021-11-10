@@ -34,7 +34,7 @@ const juniorsPostulations = async (req, res) => {
             });
 
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
                 subject: "Tienes un nuevo postulante", // Subject line
                 html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. Felicitaciones!!! </b>`
@@ -43,7 +43,7 @@ const juniorsPostulations = async (req, res) => {
               });
 
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
                 subject: "Te postulaste en Middleware", // Subject line
                 html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}. Felicitaciones!!! </b>`

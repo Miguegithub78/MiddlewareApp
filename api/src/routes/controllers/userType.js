@@ -44,8 +44,8 @@ const signIn = async (req, res) => {
         });
       }
 
-      const token = jwtgenerater(idUser)
-
+      const token =  await jwtgenerater(idUser)
+      
       return res.json({ auth: true, token: token, user: juniorsCreate });
     }
 

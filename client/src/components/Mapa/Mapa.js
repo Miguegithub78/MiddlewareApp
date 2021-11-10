@@ -22,8 +22,8 @@ import mapStyles from "./mapStyles";
 import "./index.css";
 const libraries = ["places"];
 const mapContainerStyle = {
-  height: "80vh",
-  width: "90vw",
+  height: "70vh",
+  width: "80vw",
 };
 const options = {
   styles: mapStyles,
@@ -45,10 +45,7 @@ export default function Mapa() {
 
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
-  console.log('markers' + markers.length)
-  console.log('selected' + selected)
-
-  
+    
   
   const onMapClick = useCallback((e) => {
     
@@ -94,12 +91,7 @@ export default function Mapa() {
 
   return (
     <div>
-      <h2>
-        Empresas{" "}
-        <span role="img" aria-label="tent">
-        👩‍💻
-        </span>
-      </h2>
+      
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />

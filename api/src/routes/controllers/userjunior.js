@@ -60,6 +60,7 @@ const getJuniorById = async (req, res) => {
     const { firebase } = req.query;
 
     if (result.auth === false && !firebase) {
+
       return res.status(401).json(result);
     }
 

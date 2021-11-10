@@ -209,7 +209,7 @@ const deleteJuniorsProfile = async (req, res) => {
     return res.status(401).json(result);
   }
 
-  const getJunior = user;
+  const getJunior = result;
 
   getJunior.publications.forEach(async (e) => {
     await Publication.findByIdAndDelete(e._id);

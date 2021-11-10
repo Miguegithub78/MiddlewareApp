@@ -28,11 +28,11 @@ const decoder = async (token, userType, id) => {
     if (userType === 'Company'){
       const user =  await Company.findOne({idFireBase : decoded.id});
       if (!user) {
-        return {auth: false, message: "Usuario no encontrado"};
+        return {auth: false, message: "User not found"};
       }else{
         if (id){
           if (id !== decoded.id){
-            return {auth: false, message: "Usuario no habilitado"};
+            return {auth: false, message: "Unauthorized user"};
           }
         }
       }
@@ -41,11 +41,11 @@ const decoder = async (token, userType, id) => {
     if (userType === 'Junior'){
       const user =  await Juniors.findOne({ idFireBase: decoded.id});
       if (!user) {
-        return {auth: false, message: "Usuario no encontrado"};
+        return {auth: false, message: "User not found"};
       }else{
         if (id){
           if (id !== decoded.id){
-            return {auth: false, message: "Usuario no habilitado"};
+            return {auth: false, message: "Unauthorized user"};
           }
         }
       }
@@ -53,7 +53,7 @@ const decoder = async (token, userType, id) => {
     }
     return decoded;
   }catch(err){
-    return {auth: false, message: "Token no válido"}
+    return {auth: false, message: "invalid token"}
   }
 };
 

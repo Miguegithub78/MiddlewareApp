@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./card.css";
-//import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getCompanyDetails } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
 
 
 export const CardsCompanies = ({ arrayCompanies }) => {
-  //const companies = useSelector((state) => state.companies);
+
 
   return (
 
     <div className="container">
 
       <div className="row">
+
         <div className="col-lg-12 text-center">
+        
           <div className="row">
 
             {arrayCompanies.map((p) => (
@@ -29,6 +33,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
                       <div className="card-body  text-dark">
                         <h6 className="card-title">{p.name}</h6>
                       </div>
+                      
                     </Link>
                   </div >
                 </div>

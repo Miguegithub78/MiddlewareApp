@@ -1,0 +1,187 @@
+.container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card {
+	position: relative;
+	text-transform: capitalize;
+	width: 60vw;
+	height: 80vh;
+	background-color: rgba(247, 247, 247, 0.973);
+	border-radius: 20px;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.397);
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	overflow: hidden;
+	color: rgb(48, 46, 46);
+}
+
+.cardHeader {
+	background-color: rgba(80, 79, 79, 0.137);
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	padding: 40px 20px;
+	position: relative;
+}
+
+.containerImg {
+	overflow: hidden;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin-right: 40px;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.containerImg img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.containerInfo {
+	padding: 20px;
+	width: 80%;
+}
+
+p {
+	margin: 0;
+}
+
+.info {
+	padding: 30px 0;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.info_box {
+	display: flex;
+	margin-bottom: 5px;
+	width: 50%;
+	justify-content: center;
+}
+
+.info_title {
+	margin-right: 5px;
+	font-weight: 700;
+}
+
+.containerTechs h4 {
+	margin-bottom: 30px;
+}
+
+.techs {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tech {
+	display: inline;
+	color: #fff;
+	padding: 10px 20px;
+	background-color: rgba(20, 97, 241, 0.774);
+	border-radius: 20px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+}
+
+.btnPostularse {
+	position: absolute;
+	bottom: 20px;
+	padding: 10px 30px;
+	border: none;
+	background-color: rgba(20, 97, 241, 0.774);
+	color: #fff;
+	border-radius: 5px;
+	font-size: 20px;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.226);
+}
+
+.btnDisabled {
+	background-color: rgba(158, 160, 163, 0.774);
+	cursor: not-allowed;
+	position: absolute;
+	bottom: 20px;
+	padding: 10px 30px;
+	border: none;
+
+	color: #fff;
+	border-radius: 5px;
+	font-size: 20px;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.226);
+}
+
+.btnPostularse:hover {
+	background-color: rgba(20, 97, 241, 0.945);
+}
+
+.btnVolver {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: none;
+}
+
+.cartelito {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: rgb(247, 122, 6);
+	color: #fff;
+	padding: 0 10px;
+	border-radius: 20px;
+}
+
+@media screen and (max-width: 700px) {
+	.card {
+		width: 100vw;
+		height: 100vh;
+	}
+
+	.containerImg {
+		overflow: hidden;
+		width: 50px;
+		height: 50px;
+	}
+
+	.containerImg img {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	.containerInfo {
+		padding: 20px;
+		width: 100%;
+	}
+
+	.btnVolver {
+		z-index: 1;
+		border-radius: 0;
+	}
+
+	.cardHeader h1 {
+		font-size: 50px;
+	}
+
+	.info {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.info_box {
+		display: flex;
+		margin-bottom: 5px;
+		width: 50%;
+		justify-content: center;
+	}
+}

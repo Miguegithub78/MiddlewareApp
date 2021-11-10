@@ -28,8 +28,10 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             style={{ focus: "none" }}
             type="checkbox"
             className="btn-check btn-checkbox-focus"
+            value={tec.name}
             id={tec._id}
-            defaultChecked={
+            onChange={() => handleSelectTechnologies(tec)}
+            checked={
               infoUser.technologies.find((e) => e._id === tec._id)
                 ? true
                 : false
@@ -39,7 +41,7 @@ const Technologies = ({ setInfoUser, infoUser }) => {
             className="btn btn-outline-dark m-1 btn-checkbox-focus"
             htmlFor={tec._id}
             style={{ padding: "1px 5px" }}
-            onClick={() => handleSelectTechnologies(tec)}
+            
           >
             {tec.name}
           </label>

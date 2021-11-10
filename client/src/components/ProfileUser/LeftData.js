@@ -3,12 +3,14 @@ import CareerData from "./CareerData";
 import ChangePicture from "./ChangePicture";
 import SocialMedia from "./SocialMedia";
 
+import ModalDeletAccount from "./ModalDeletAccount";
+
 const Prueba2left = ({ user, setInfoUser, infoUser }) => {
   const [editValue, setEditValue] = useState(true);
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
-      infoUserChanged:true,
+      infoUserChanged: true,
       description: e.target.value,
     }));
   };
@@ -23,16 +25,14 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
               className="rounded-circle p-1 bg-primary"
               width="140"
             />
-            <ChangePicture setInfoUser={setInfoUser}  />
+            <ChangePicture setInfoUser={setInfoUser} />
             <div className="mt-3">
               <h4>{infoUser.name}</h4>
               <p className="text-secondary mb-1">
-                {infoUser.title === ""
-                  ? "Full Stack Developer"
-                  : infoUser.title}
+                {infoUser.title === "" ? "Tu Titulo" : infoUser.title}
               </p>
               <p className="text-muted font-size-sm">
-                {infoUser.city !== "" ? "Córdoba, Argentina" : infoUser.city}
+                {infoUser.city === "" ? "Córdoba, Argentina" : infoUser.city}
               </p>
             </div>
           </div>
@@ -57,6 +57,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
             {editValue ? "editar" : "aceptar"}
           </button>
         </div>
+        <ModalDeletAccount infoUser={infoUser} />
       </div>
       <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} />
     </div>

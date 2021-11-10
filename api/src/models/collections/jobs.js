@@ -41,7 +41,8 @@ const jobsSchema = new Schema({
 
   currency: {
     type: String,
-    required: false,
+    enum: ["dollar", "peso", "euro"],
+    default: "active"
   },
 
   date: {
@@ -49,10 +50,10 @@ const jobsSchema = new Schema({
     default: Date.now,
   },
 
-  junior: {
-    type: Schema.Types.ObjectId,
+  juniors: [{
+    type: String,
     ref: "juniors",
-  },
+  }],
 
   admin: {
     type: Schema.Types.ObjectId,
@@ -65,8 +66,9 @@ const jobsSchema = new Schema({
   }],
 
   premium: {
-    type: Boolean,
-    default: false,
+    type: Number,
+    enum: [0, 1, 2],
+    default: 0,
   },
 
   status: {
@@ -79,4 +81,3 @@ const jobsSchema = new Schema({
 
 
 module.exports = model("jobs", jobsSchema);
-

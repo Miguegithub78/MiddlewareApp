@@ -1,7 +1,20 @@
-.cards{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.card {
+	text-decoration: none;
+	margin-top: 2rem;
+	margin-left: 1rem;
+}
+
+.card:hover {
+	box-shadow: 5px 10px 20px 1px rgba(128, 126, 126, 0.273) !important;
+}
+
+.card-body {
+	padding: 2rem 0 !important;
+}
+
+.card-text {
+	padding: 0.3rem 1rem;
+	font-size: 1rem;
 }
 
 .cardJunior{
@@ -52,17 +65,30 @@
 
 .divButton{
     margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .btnBlue{
     background-color: transparent;
     border: black solid 2px;
     width: 6em;
-    border-radius: 0.4em;
+    border-radius: 0.1em;
     transition: all 0.5s;
+    margin: 0em 0.5em 0em 0em;
 }
 .btnBlue:hover{
     background-color: rgba(255, 255, 255, 0.294);
+}
+
+.btnBlueLike{
+    background-color: #3DB2FF;
+    border: black solid 2px;
+    width: 6em;
+    border-radius: 0.1em;
+    transition: all 0.5s;
+    margin: 0em 0.5em 0em 0em;
 }
 
 /* .btnPink{

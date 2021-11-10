@@ -39,8 +39,10 @@ const juniorsPostulations = async (req, res) => {
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
                 from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
-                subject: "Tienes un nuevo postulante", // Subject line
-                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. 
+                subject: `Tienes un nuevo postulante - ${junior.name}`, // Subject line
+                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta.
+                Te comentamos sus capacidades y experiencia.
+                 
                 El te indica lo siguiente:
                 ${coverLetter}
                 Ingresa a la aplicación para verlo.         

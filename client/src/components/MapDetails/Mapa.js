@@ -44,7 +44,7 @@ let company= [
 const libraries = ["places"];
 const mapContainerStyle = {
   height: "60vh",
-  width: "45vw",
+  width: "38vw",
 };
 const options = {
   styles: mapStyles,

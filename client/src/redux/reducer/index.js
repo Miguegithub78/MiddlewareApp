@@ -44,9 +44,9 @@ const inicialState = {
 		filterData: [],
 		activeFilters: {
 			countries: [],
-			cities: [],
-			salaries: [],
-			techs: [],
+			city: [],
+			salary: [],
+			tech: [],
 		},
 	},
 	jobDetails: {},
@@ -198,9 +198,7 @@ const rootReducer = (state = inicialState, action) => {
 			};
 		}
 		case FILTER_JOBS_BY_TECHS: {
-			console.log(action.payload);
-			let arr = state.jobs.data.filter((j) => j.tech.includes(action.payload));
-			console.log(arr);
+			let arr = [];
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },

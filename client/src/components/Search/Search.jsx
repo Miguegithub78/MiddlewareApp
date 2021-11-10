@@ -68,7 +68,7 @@ export const Search = () => {
 						Tipo de Tecnología:
 					</option>
 					{options?.map((p) => (
-						<option value={p.name} key={p.id}>
+						<option value={p._id} key={p._id}>
 							{p.name}
 						</option>
 					))}

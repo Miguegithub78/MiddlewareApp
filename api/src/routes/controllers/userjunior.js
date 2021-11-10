@@ -149,7 +149,7 @@ const updateJuniorsProfile = async (req, res) => {
       openToFullTime,
     } = req.body;
 
-    console.log(languages, technologies, "|||");
+    
     const juniorsChange = await Juniors.findOneAndUpdate(
       {
         idFireBase: id,
@@ -191,21 +191,22 @@ const deleteJuniorsProfile = async (req, res) => {
     return res.status(403).json({ auth: false, message: "se requiere token" });
   }
 
-  const decoded = await jwt.verify(token, SECRET);
+  // const decoded = await jwt.verify(token, SECRET);
 
-  const user = await Juniors.findOne({ idFireBase: decoded.id });
-  if (!user) {
-    return res
-      .status(404)
-      .json({ auth: false, message: "usuario no registrado" });
-  }
+  // const user = await Juniors.findOne({ idFireBase: decoded.id });
+  // if (!user) {
+  //   return res
+  //     .status(404)
+  //     .json({ auth: false, message: "usuario no registrado" });
+  // }
+
 
   const { id } = req.params;
 
-  if (id !== decoded.id) {
-    return res
-      .status(401)
-      .json({ auth: false, message: "usuario no autorizado" });
+  const result = await decoder(token,'Junior', id)
+
+  if (result.auth === false) {
+    return res.status(401).json(result);
   }
 
   const getJunior = user;

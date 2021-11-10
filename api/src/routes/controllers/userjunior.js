@@ -18,19 +18,19 @@ const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
   try {
-    // const token = req.headers["x-auth-token"];
+    const token = req.headers["x-auth-token"];
 
-    // if (!token) {
-    //   return res
-    //     .status(403)
-    //     .json({ auth: false, message: "token is require" });
-    // }
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "token is require" });
+    }
 
-    // const result = await decoder(token,'Company')
+    const result = await decoder(token,'Company')
 
-    // if (result.auth === false) {
-    //   return res.status(401).json(result);
-    // }
+    if (result.auth === false) {
+      return res.status(401).json(result);
+    }
 
   const allJuniors = await Juniors.find().populate([
     { path: "languages" },
@@ -105,14 +105,14 @@ const updateJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "se requiere token" });
     }
 
-    // const decoded = await jwt.verify(token, SECRET);
+    const decoded = await jwt.verify(token, SECRET);
 
-    // const user = await Juniors.findOne({ idFireBase: decoded.id });
-    // if (!user) {
-    //   return res
-    //     .status(404)
-    //     .json({ auth: false, message: "usuario no registrado" });
-    // }
+    const user = await Juniors.findOne({ idFireBase: decoded.id });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ auth: false, message: "usuario no registrado" });
+    }
 
     const { id } = req.params;
 
@@ -122,11 +122,11 @@ const updateJuniorsProfile = async (req, res) => {
       return res.status(401).json(result);
     }
 
-    // if (id !== decoded.id) {
-    //   return res
-    //     .status(401)
-    //     .json({ auth: false, message: "usuario no autorizado" });
-    // }
+    if (id !== decoded.id) {
+      return res
+        .status(401)
+        .json({ auth: false, message: "usuario no autorizado" });
+    }
     const {
       name,
       gmail,
@@ -149,10 +149,7 @@ const updateJuniorsProfile = async (req, res) => {
       openToFullTime,
     } = req.body;
 
-<<<<<<< HEAD
-=======
     
->>>>>>> 7fef4693d6a2344846166df61024f9d2a20bf134
     const juniorsChange = await Juniors.findOneAndUpdate(
       {
         idFireBase: id,
@@ -189,37 +186,19 @@ const updateJuniorsProfile = async (req, res) => {
 
 const deleteJuniorsProfile = async (req, res) => {
   try {
-  // const token = req.headers["x-auth-token"];
-  // if (!token) {
-  //   return res.status(403).json({ auth: false, message: "se requiere token" });
-  // }
+  const token = req.headers["x-auth-token"];
+  if (!token) {
+    return res.status(403).json({ auth: false, message: "se requiere token" });
+  }
 
-  // const decoded = await jwt.verify(token, SECRET);
-<<<<<<< HEAD
+  const decoded = await jwt.verify(token, SECRET);
 
-  // const user = await Juniors.findOne({ idFireBase: decoded.id });
-  // if (!user) {
-  //   return res
-  //     .status(404)
-  //     .json({ auth: false, message: "usuario no registrado" });
-  // }
-
-  const { id } = req.params;
-
-  // if (id !== decoded.id) {
-  //   return res
-  //     .status(401)
-  //     .json({ auth: false, message: "usuario no autorizado" });
-  // }
-
-=======
-
-  // const user = await Juniors.findOne({ idFireBase: decoded.id });
-  // if (!user) {
-  //   return res
-  //     .status(404)
-  //     .json({ auth: false, message: "usuario no registrado" });
-  // }
+  const user = await Juniors.findOne({ idFireBase: decoded.id });
+  if (!user) {
+    return res
+      .status(404)
+      .json({ auth: false, message: "usuario no registrado" });
+  }
 
 
   const { id } = req.params;
@@ -231,11 +210,10 @@ const deleteJuniorsProfile = async (req, res) => {
   }
 
   const getJunior = result;
->>>>>>> 7fef4693d6a2344846166df61024f9d2a20bf134
 
-  // getJunior.publications.forEach(async (e) => {
-  //   await Publication.findByIdAndDelete(e._id);
-  // });
+  getJunior.publications.forEach(async (e) => {
+    await Publication.findByIdAndDelete(e._id);
+  });
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });

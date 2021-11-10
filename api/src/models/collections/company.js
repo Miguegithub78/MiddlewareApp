@@ -51,6 +51,7 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    
     address: {
         type: String,
         required: false

@@ -13,7 +13,8 @@ import {
   getUserAction,
   getJuniors,
 } from "../../redux/actions";
-import NavBar from '../NavBar/NavBar'
+import NavBar from "../NavBar/NavBar";
+
 
 const ProfileCompany = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const ProfileCompany = () => {
     }
   });
   const { user, languages, technologies } = useSelector((state) => state);
-  console.log("aca estoy");
   const [infoUser, setInfoUser] = useState({
     idUser: "",
     name: "",
@@ -60,7 +60,7 @@ const ProfileCompany = () => {
         photograph: user.photograph,
         linkedin: "https://linkedin.com/",
         //   website: "",
-        //   city: "",
+          city: user.city || '',
         publications: user.publications,
         jobs: user.jobs,
         technologies: user.technologies,
@@ -87,26 +87,30 @@ const ProfileCompany = () => {
                 Guardar cambios
               </button>
             )}
-            <LeftData
+            {/* <LeftData
               setInfoUser={setInfoUser}
               infoUser={infoUser}
               user={user}
-            />
-            <div className="col-lg-8">
-              <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
-              <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-              {infoUser.jobs.length > 0 &&
-                infoUser.jobs.map((job, i) => (
-                  <div key={i}>
-                    <JobsPublications
-                      job={job}
-                      setInfoUser={setInfoUser}
-                      infoUser={infoUser}
-                    />
-                  </div>
-                ))}
+            /> */}
 
-              {/* <Prueba2Skill /> */}
+            <PersonalData  user={user}setInfoUser={setInfoUser} infoUser={infoUser} />
+            {/* <CareerData setInfoUser={setInfoUser} infoUser={infoUser} /> */}
+            <div className="card">
+              <h5 className="text-center">Tus publicaciones de trabajo </h5>
+              <div className="card-body">
+                <div className="accordion">
+                  {infoUser.jobs.length > 0 &&
+                    infoUser.jobs.map((job, i) => (
+                      <div key={i}>
+                        <JobsPublications
+                          job={job}
+                          setInfoUser={setInfoUser}
+                          infoUser={infoUser}
+                        />
+                      </div>
+                    ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

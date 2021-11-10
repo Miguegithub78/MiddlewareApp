@@ -7,7 +7,10 @@ const juniorsPostulations = async (req, res) => {
 	const { juniorId, coverLetter } = req.body; //id del junior
 
 	try {
-		const junior = await Juniors.findOne({ _id: juniorId });
+		if (!coverLetter) {
+    coverLetter = 'No hay una carta de presentación disponible aun.';
+    }
+    const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
     const gmailCompany = companyData.company.gmail
 
@@ -40,16 +43,15 @@ const juniorsPostulations = async (req, res) => {
                 html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. 
                 El te indica lo siguiente:
                 ${coverLetter}
-                Saludos desde Middleware!!! </b>`
-                // `<b>Verificar usuario</b>
-                //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
+                Ingresa a la aplicación para verlo.         
+                <a href= "http://localhost:3000/juniors/${junior._id}">El Talento postulado</a> 
+                      Saludos desde Middleware!!! </b>`
               });
-
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
                 from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
                 subject: "Te postulaste en Middleware", // Subject line
-                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}. Felicitaciones!!! </b>`
+                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}!!! </b>`
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
               });

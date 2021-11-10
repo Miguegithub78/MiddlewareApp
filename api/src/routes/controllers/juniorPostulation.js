@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer'); // previamente hay que instalar nodema
 
 const juniorsPostulations = async (req, res) => {
 	const { id } = req.params; //id del job
-	const { juniorId } = req.body; //id del junior
+	const { juniorId, coverLetter } = req.body; //id del junior
 
 	try {
 		const junior = await Juniors.findOne({ _id: juniorId });
@@ -34,16 +34,19 @@ const juniorsPostulations = async (req, res) => {
             });
 
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
                 subject: "Tienes un nuevo postulante", // Subject line
-                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. Felicitaciones!!! </b>`
+                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. 
+                El te indica lo siguiente:
+                ${coverLetter}
+                Saludos desde Middleware!!! </b>`
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
               });
 
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
                 subject: "Te postulaste en Middleware", // Subject line
                 html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}. Felicitaciones!!! </b>`

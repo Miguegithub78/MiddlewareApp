@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
@@ -28,9 +29,9 @@ import { Publications } from "../Publications/Publications";
 import Mapa from "../Mapa/Mapa";
 
 const Home = () => {
+  const history = useHistory();
   const { user, emailVerification } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
@@ -44,60 +45,52 @@ const Home = () => {
     }
   }, [user]);
 
+  // useEffect(() => {
+  //   if (!user) dispatch(getUserAction());
+  // }, []);
+
+  useEffect(() => {
+    if (userType === "null") history.push("/");
+  }, []);
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
-      if (!user && userFirebase.emailVerified)
-        dispatch(getUserAction(userFirebase));
+      if (user && userFirebase.emailVerified) return;
+      dispatch(getUserAction(userFirebase));
     } else {
-      history.push("/login");
+      history.push(`/`);
     }
   });
-  useEffect(() => {
-    if (!user) dispatch(getUserAction());
-  }, []);
-  useEffect(() => {
-    if (userType==='null') history.push("/");
-  }, []);
+  const { tipo } = useParams();
+  const companies = useSelector((state) => state.companies);
+  const juniors = useSelector((state) => state.juniors);
 
-	onAuthStateChanged(auth, (userFirebase) => {
-		if (userFirebase) {
-      console.log(user, 'user de home');
-			if (user) return;
-			dispatch(getUserAction(userFirebase));
-		} else {
-			history.push(`/login/${userType}`);
-		}
-	});
-	const { tipo } = useParams();
-	const companies = useSelector((state) => state.companies);
-	const juniors = useSelector((state) => state.juniors);
-	
-	const jobs = useSelector((state) => state.jobs.filterData);
+  const jobs = useSelector((state) => state.jobs.filterData);
 
-	return (
-		<div className=''>
-			<NavBar />
-			<div className=''>
-				<div className=''>{tipo && tipo === 'empleos' && <Search />}</div>
-				<div className=''>
-					<div className=''>
-						<div className=''>
-							{tipo && tipo === 'companies' && (
-								<CardsCompanies arrayCompanies={companies} />
-							)}
-							{tipo && tipo === 'empleos' && <CardsJobs jobs={jobs} />}
-							{tipo && tipo === 'juniors' && (
-							 <CardsJuniors arrayJuniors={juniors} />
-							 )}
-							 {tipo && tipo === 'publications' && <Publications />}
-               {tipo && tipo === 'mapa' && <Mapa />}
-							{/* 	<CardsJobs jobs={jobs} /> */}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="">
+      <NavBar />
+      <div className="">
+        <div className="">{tipo && tipo === "empleos" && <Search />}</div>
+        <div className="">
+          <div className="">
+            <div className="">
+              {tipo && tipo === "companies" && (
+                <CardsCompanies arrayCompanies={companies} />
+              )}
+              {tipo && tipo === "empleos" && <CardsJobs jobs={jobs} />}
+              {tipo && tipo === "juniors" && (
+                <CardsJuniors arrayJuniors={juniors} />
+              )}
+              {tipo && tipo === "publications" && <Publications />}
+              {tipo && tipo === "mapa" && <Mapa />}
+              {/* 	<CardsJobs jobs={jobs} /> */}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

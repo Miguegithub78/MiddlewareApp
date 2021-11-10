@@ -45,13 +45,17 @@ export default function Mapa() {
 
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
-    
+  console.log('markers' + markers.length)
+  console.log('selected' + selected)
+
+  
   
   const onMapClick = useCallback((e) => {
     
+    console.log('contador' + cont)
     if(cont===0){
       cont=cont+1;
-      setMarkers((current) => [
+    setMarkers((current) => [
        
         ...current,
         {

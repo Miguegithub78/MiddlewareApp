@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import LeftData from "./LeftData";
+import SensitiveData from "./SensitiveData";
 // import Languages from "./Languages";
 // import Technologies from "./Technologies";
 
-const PersonalData = ({ infoUser, setInfoUser }) => {
+const PersonalData = ({ infoUser, setInfoUser, user }) => {
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setInfoUser((info) => ({
@@ -22,77 +24,22 @@ const PersonalData = ({ infoUser, setInfoUser }) => {
   return (
     <div className="card">
       <div className="card-body">
-        <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Nombre Completo</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <input
-              className={`form-control ${!editValue && "green-shadow"}`}
-              type="text"
-              name="name"
-              value={infoUser.name}
-              onChange={handleChange}
-              disabled={editValue}
-            />
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Email</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <input
-              className={`form-control ${!editValue && "green-shadow"}`}
-              type="text"
-              value={infoUser.gmail}
-              onChange={handleChange}
-              name="gmail"
-              disabled={editValue}
-            />
-          </div>
-        </div>
-
-        <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Celular</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <input
-              type="number"
-              className={`form-control ${!editValue && "green-shadow"}`}
-              value={infoUser.phone}
-              onChange={handleChange}
-              name="phone"
-              disabled={editValue}
-            />
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Ciudad</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            <input
-              type="text"
-              className={`form-control ${!editValue&&'green-shadow'}`}
-              value={infoUser.city}
-              onChange={handleChange}
-              name="city"
-              disabled={editValue}
-            />
-          </div>
-        </div>
-
         <div className="row">
-          <div className="col-sm-3"></div>
-          <div className="col-sm-9 text-secondary">
-            <button
-              className="btn btn-outline-dark px-4"
-              onClick={() => setEditValue((d) => !d)}
-            >
-              {editValue ? "editar" : "aceptar"}
-            </button>
+          <div className="col-sm-3">
+            <LeftData
+              user={user}
+              setInfoUser={setInfoUser}
+              infoUser={infoUser}
+              editValue={editValue}
+            />
+          </div>
+          <div className="col-sm-9 text-rigth">
+            <SensitiveData
+              setInfoUser={setInfoUser}
+              infoUser={infoUser}
+              editValue={editValue}
+              setEditValue={setEditValue}
+            />
           </div>
         </div>
       </div>

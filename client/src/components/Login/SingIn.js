@@ -11,24 +11,24 @@ const SingIn2 = ({
   return (
     <>
       <div className="form-data">
-        <label>Email</label>
+        <h6>Correo</h6>
         <input
-          placeholder="Email"
+          placeholder="Escribe tu correo"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          className={`form-control w-100 ${errorLogin&&'btn-danger'}`}
+          className={`form-control w-100 ${errorLogin&&'is-invalid '}`}
           required
         />
       </div>
-      <div className="form-data">
-        <label>Password</label>
+      <div className="form-data mt-2">
+        <h6>Contraseña</h6>
         <input
-          placeholder="Contraseña"
+          placeholder="Escribe tu contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          className={`form-control w-100 ${errorLogin&&'btn-danger'}`}
+          className={`form-control w-100 ${errorLogin&&'is-invalid'}`}
           required
         />
       </div>

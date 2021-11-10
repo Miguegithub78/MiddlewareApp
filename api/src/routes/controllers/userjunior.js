@@ -55,13 +55,16 @@ const getJuniorById = async (req, res) => {
     }
 
     const result = await decoder(token,'Company')
+    
+    const { id } = req.params;
+    const { firebase } = req.query;
 
-    if (result.auth === false) {
+    if (result.auth === false && !firebase) {
+
       return res.status(401).json(result);
     }
 
-    const { id } = req.params;
-    const { firebase } = req.query;
+
 
     if (firebase === "true") {
       const getJunior = await Juniors.findOne({ idFireBase: id }).populate([

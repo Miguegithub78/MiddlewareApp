@@ -62,8 +62,8 @@ const CreatePublications = () => {
     technologies: [],
     salary: 0,
     date: '',
-    companyId: user._id,
-    premium: user.premium,
+    companyId:user&& user._id,
+    premium: user&& user.premium,
     status: 'active',
   });
 

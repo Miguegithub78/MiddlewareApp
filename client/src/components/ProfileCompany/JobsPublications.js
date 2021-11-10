@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+
 const JobsPublications = ({ infoUser, setInfoUser, job }) => {
   const [juniorsAplied, setJuniorsAplied] = useState([]);
   const [postulatiosTechnoliges, setPostulatiosTechnoliges] = useState([]);

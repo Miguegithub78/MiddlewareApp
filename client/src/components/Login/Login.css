@@ -60,10 +60,13 @@
 .forgot-text {
   color: rgb(255, 255, 255);
   cursor: pointer;
+  transition: all ease-in-out .2s;
 }
 .forgot-text:hover {
-  background-color: rgba(239, 12, 12, 0.318);
+  background-color: rgb(0 67 189 / 52%);
   font-size: 1.01rem;
+  color: white !important;
+  border-radius: 5px;
 }
 
 .signin-btn .btn {
@@ -84,8 +87,14 @@
 
 .crea-cuenta {
   cursor: pointer;
+  transition: all ease-in-out .2s;
+
 }
 .crea-cuenta:hover {
-  background-color: rgba(238, 238, 238, 0.291);
+  background-color: rgb(0 67 189 / 52%);
   font-size: 1.01rem;
+  color: #eee !important;
+  border-radius: 5px;
+  padding: 2px;
 }
+

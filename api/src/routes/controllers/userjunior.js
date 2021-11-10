@@ -63,8 +63,6 @@ const getJuniorById = async (req, res) => {
       return res.status(401).json(result);
     }
 
-
-
     if (firebase === "true") {
       const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
         { path: "languages" },
@@ -99,28 +97,35 @@ const getJuniorById = async (req, res) => {
 const updateJuniorsProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
+    console.log(token)
     if (!token) {
       return res
         .status(403)
         .json({ auth: false, message: "se requiere token" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
+    // const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Juniors.findOne({ idFireBase: decoded.id });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
+    // const user = await Juniors.findOne({ idFireBase: decoded.id });
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
     const { id } = req.params;
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+    const result = await decoder(token,'Junior', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
     }
+
+    // if (id !== decoded.id) {
+    //   return res
+    //     .status(401)
+    //     .json({ auth: false, message: "usuario no autorizado" });
+    // }
     const {
       name,
       gmail,

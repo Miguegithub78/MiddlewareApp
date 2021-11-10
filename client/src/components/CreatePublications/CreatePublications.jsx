@@ -116,7 +116,7 @@ const CreatePublications = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postJobs(input));
-    history.push('/home/empleos');
+    history.push('/home/companies');
   }
 
   // funcion que desabilita el poder enviar el form si no tiene campos rellenados

@@ -14,7 +14,7 @@ import {
   getJuniors,
 } from "../../redux/actions";
 import NavBar from '../NavBar/NavBar'
-
+import Mapa from "../Mapa/Mapa";
 const ProfileCompany = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -95,6 +95,9 @@ const ProfileCompany = () => {
             <div className="col-lg-8">
               <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
               <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
+              <div className='col-6 text-center p-3 mb-2 bg-white text-dark border border-3'>
+                <Mapa />
+              </div>
               {infoUser.jobs.length > 0 &&
                 infoUser.jobs.map((job, i) => (
                   <div key={i}>

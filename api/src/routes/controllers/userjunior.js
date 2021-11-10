@@ -18,19 +18,19 @@ const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
   try {
-    const token = req.headers["x-auth-token"];
+    // const token = req.headers["x-auth-token"];
 
-    if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
-    }
+    // if (!token) {
+    //   return res
+    //     .status(403)
+    //     .json({ auth: false, message: "token is require" });
+    // }
 
-    const result = await decoder(token,'Company')
+    // const result = await decoder(token,'Company')
 
-    if (result.auth === false) {
-      return res.status(401).json(result);
-    }
+    // if (result.auth === false) {
+    //   return res.status(401).json(result);
+    // }
 
   const allJuniors = await Juniors.find().populate([
     { path: "languages" },

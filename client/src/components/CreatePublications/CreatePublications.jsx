@@ -68,7 +68,6 @@ const CreatePublications = () => {
     status: 'active',
   });
 
-  console.log(input)
 
   function handleChange(e) {
     setInput((input) => ({

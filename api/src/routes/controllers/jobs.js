@@ -10,11 +10,11 @@ const postJobs = async (req, res) => {
 
     const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
 
-      const company = await Company.findOne({ idMongo : companyId} );
+      const company = await Company.findOne({ _id : companyId} );
 
-        if(!title){
+        if(!title || company === null){
           
-          return res.status(404).json({ error: 'required "Title" is missing'})
+          return res.status(404).json({ error: 'required "Title or Company valid" is missing'})
         }
 
         const newJob = new Jobs({
@@ -50,7 +50,7 @@ const getAllJobs = async (req, res) => {
 
     try{
 
-        const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}])
+        const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}, {path: 'juniors'}])
     
         res.json(jobs)
     }
@@ -66,7 +66,7 @@ const getJobsById = async (req, res) => {
     try{
 
         const getJobs = await Jobs.findById(id)
-        .populate([{path: 'company'}, {path: 'technologies'}])
+        .populate([{path: 'company'}, {path: 'technologies'}, {path: 'juniors'}])
 
         if(!getJobs) return res.status(404).json({message: "The job doesn't exists"})
     

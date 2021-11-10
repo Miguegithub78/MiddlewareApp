@@ -22,17 +22,17 @@ const postPublications = async (req, res) => {
 
             if(nameUser == 'company'){
                 var company = idUser
-                var getCompany = await Company.findOne({idMongo: idUser})
+                var getCompany = await Company.findById(idUser)
             }
             
             if(nameUser == 'junior'){
                 var junior = idUser
-                var getJunior = await Juniors.findOne({idMongo: idUser})
+                var getJunior = await Juniors.findById(idUser)
             }
 
             if(nameUser == 'admin'){
                 var admin = idUser
-                var getAdmin = await Admins.findOne({idMongo: idUser})
+                var getAdmin = await Admins.findById(idUser)
             }
 
             if(getCompany || getJunior || getAdmin){
@@ -46,21 +46,21 @@ const postPublications = async (req, res) => {
                 })
     
                 if(company){
-                    await Company.findOneAndUpdate({idMongo: idUser},
+                    await Company.findOneAndUpdate({_id: idUser},
                     {
                         publications: getCompany.publications.concat(postCreated._id)
                     })
                 }
         
                 if(junior){
-                    await Juniors.findOneAndUpdate({idMongo: idUser},
+                    await Juniors.findOneAndUpdate({_id: idUser},
                     {
                         publications: getJunior.publications.concat(postCreated._id)
                     })
                 }
         
                 if(admin){
-                    await Admins.findOneAndUpdate({idMongo: idUser},
+                    await Admins.findOneAndUpdate({_id: idUser},
                     {
                         publications: getAdmin.publications.concat(postCreated._id)
                     })
@@ -128,7 +128,7 @@ const putPublication = async (req, res) => {
 
 
         if(getPublication.junior){
-            const user = await Juniors.findById(decoded.id);
+            var user = await Juniors.findOne({idFireBase: decoded.id});
 
             if (!user) {
                 return res
@@ -137,7 +137,7 @@ const putPublication = async (req, res) => {
             }
         }
         
-		if ((getPublication.junior)&&(getPublication.junior._id !== decoded.id)) {  
+		if ((getPublication.junior)&&(getPublication.junior.idFireBase !== decoded.id)) {  
             return res
             .status(401)
             .json({ auth: false, message: 'unauthorizad user' });
@@ -153,7 +153,7 @@ const putPublication = async (req, res) => {
             }
         }
 
-        if((getPublication.company)&&(getPublication.company._id !== decoded.id)) {
+        if((getPublication.company)&&(getPublication.company.idFireBase !== decoded.id)) {
             return res
 				.status(401)
 				.json({ auth: false, message: 'unauthorizad user' });
@@ -164,7 +164,7 @@ const putPublication = async (req, res) => {
 
     try{
 
-        if(getPublication.junior._id == idProgramador){
+        if(user._id == idProgramador){
 
             const updatePublicatio = await Publication.findByIdAndUpdate(idPublication, {
                 description: description,

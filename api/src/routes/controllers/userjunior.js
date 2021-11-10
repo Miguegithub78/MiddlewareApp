@@ -1,206 +1,230 @@
 const {
-	Juniors,
-	Languages,
-	Technologies,
-	Company,
-	Publication,
-	Admins,
-	SoftSkills
-} = require('../../models/index');
+  Juniors,
+  Languages,
+  Technologies,
+  Company,
+  Publication,
+  Admins,
+  SoftSkills,
+} = require("../../models/index");
 
-require('dotenv').config();
+const { decoder } = require("../../helpers/index")
+
+require("dotenv").config();
 
 const { SECRET } = process.env;
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		// console.log(req.headers, 'token');
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autorización' });
-		}
+  try {
+    // const token = req.headers["x-auth-token"];
 
-		const decoded = await jwt.verify(token, SECRET);
+    // if (!token) {
+    //   return res
+    //     .status(403)
+    //     .json({ auth: false, message: "token is require" });
+    // }
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+    // const result = await decoder(token,'Company')
 
-		const allJuniors = await Juniors.find()
-		.populate([{ path: 'languages'},{ path: 'technologies'},{ path: 'softskills'}, { path: 'publications'}]);
-		res.json(allJuniors);
-	} catch (error) {
-		res.status(404).json({ error: error.message });
-	}
+    // if (result.auth === false) {
+    //   return res.status(401).json(result);
+    // }
+
+  const allJuniors = await Juniors.find().populate([
+    { path: "languages" },
+    { path: "technologies" },
+    { path: "softskills" },
+    { path: "publications" },
+    { path: "postulationsJobs" },
+  ]);
+  res.json(allJuniors);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 };
 
 const getJuniorById = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token de autenticacion' });
-		}
+  try {
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "token is require" });
+    }
 
-		const decoded = await jwt.verify(token, SECRET);
+    const result = await decoder(token,'Company')
+    
+    const { id } = req.params;
+    const { firebase } = req.query;
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+    if (result.auth === false && !firebase) {
 
-		const { id } = req.params;
-		
-		Juniors.findById(id)
-			.populate('languages')
-			.populate('technologies')
-			.populate('softskills')
-			.populate('publications')
-			.exec((err, junior) => {
-				if (err) {
-					res.status(404).json({ message: err.message });
-				} else {
-					res.status(200).send(junior);
-				}
-			})
-		} catch (err) {
-		res.status(404).json({ message: err.message });
-	}
+      return res.status(401).json(result);
+    }
+
+    if (firebase === "true") {
+      const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
+        { path: "languages" },
+        { path: "technologies" },
+        { path: "softskills" },
+        { path: "publications" },
+      ]);
+
+      res.json(getJunior);
+      return;
+    }
+
+    Juniors.findById(id)
+      .populate("languages")
+      .populate("technologies")
+      .populate("softskills")
+      .populate("publications")
+      .populate("postulationsJobs")
+      .exec((err, junior) => {
+        if (err) {
+          res.status(404).json({ message: err.message });
+        } else {
+          if(!junior) return res.status(404).json({message: "junior not found"})
+          res.status(200).send(junior);
+        }
+      });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
 };
 
 const updateJuniorsProfile = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token' });
-		}
+  try {
+    const token = req.headers["x-auth-token"];
+    console.log(token)
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "se requiere token" });
+    }
 
-		const decoded = await jwt.verify(token, SECRET);
+    // const decoded = await jwt.verify(token, SECRET);
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+    // const user = await Juniors.findOne({ idFireBase: decoded.id });
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
-		 const { id } = req.params;
+    const { id } = req.params;
 
-		if (id !== decoded.id) {
-			return res
-				.status(401)
-				.json({ auth: false, message: 'usuario no autorizado' });
-		}
-		const {
-			name,
-			gmail,
-			github,
-			photograph,
-			phone,
-			title,
-			linkedin,
-			city,
-			description,
-			languages,
-			technologies,
-			publications,
-			softskills,
-			website,
-			jobsExperience,
-			academicHistory,
-			openToRelocate,
-			openToRemote,
-			openToFullTime,
-		} = req.body;
+    const result = await decoder(token,'Junior', id)
 
-		const juniorsChange = await Juniors.findOneAndUpdate(
-			{
-				_id: id,
-			},
-			{
-			name,
-			gmail,
-			github,
-			photograph,
-			website,
-			title,
-			phone,
-			linkedin,
-			city,
-			description,
-			languages,
-			technologies,
-			publications,
-			softskills,
-			jobsExperience,
-			academicHistory,
-			openToRelocate,
-			openToRemote,
-			openToFullTime,
-			},
-			{ new: true }
-		);
+    if (result.auth === false) {
+      return res.status(401).json(result);
+    }
 
-		res.json(juniorsChange);
-	} catch (error) {
-		res.status(404).json({ message: error.message });
-	}
+    // if (id !== decoded.id) {
+    //   return res
+    //     .status(401)
+    //     .json({ auth: false, message: "usuario no autorizado" });
+    // }
+    const {
+      name,
+      gmail,
+      github,
+      photograph,
+      phone,
+      title,
+      linkedin,
+      city,
+      description,
+      languages,
+      technologies,
+      publications,
+      softskills,
+      website,
+      jobsExperience,
+      academicHistory,
+      openToRelocate,
+      openToRemote,
+      openToFullTime,
+    } = req.body;
+
+    
+    const juniorsChange = await Juniors.findOneAndUpdate(
+      {
+        idFireBase: id,
+      },
+      {
+        name,
+        gmail,
+        github,
+        photograph,
+        website,
+        title,
+        phone,
+        linkedin,
+        city,
+        description,
+        languages,
+        technologies,
+        publications,
+        softskills,
+        jobsExperience,
+        academicHistory,
+        openToRelocate,
+        openToRemote,
+        openToFullTime,
+      },
+      { new: true }
+    );
+
+    res.json(juniorsChange);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
 const deleteJuniorsProfile = async (req, res) => {
-	try {
-		const token = req.headers['x-auth-token'];
-		if (!token) {
-			return res
-				.status(403)
-				.json({ auth: false, message: 'se requiere token' });
-		}
+  // try {
+  const token = req.headers["x-auth-token"];
+  if (!token) {
+    return res.status(403).json({ auth: false, message: "se requiere token" });
+  }
 
-		const decoded = await jwt.verify(token, SECRET);
+  // const decoded = await jwt.verify(token, SECRET);
 
-		const user = await Juniors.findById(decoded.id);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ auth: false, message: 'usuario no registrado' });
-		}
+  // const user = await Juniors.findOne({ idFireBase: decoded.id });
+  // if (!user) {
+  //   return res
+  //     .status(404)
+  //     .json({ auth: false, message: "usuario no registrado" });
+  // }
 
-		const { id } = req.params;
 
-		if (id !== decoded.id) {
-			return res
-				.status(401)
-				.json({ auth: false, message: 'usuario no autorizado' });
-		}
+  const { id } = req.params;
 
-		const getJunior = user;
+  const result = await decoder(token,'Junior', id)
 
-		getJunior.publications.forEach(async (e) => {
-			await Publication.findByIdAndDelete(e._id);
-		});
-		const juniorsDelete = await Juniors.findByIdAndDelete(id);
+  if (result.auth === false) {
+    return res.status(401).json(result);
+  }
 
-		res.json(getJunior);
-	} catch (err) {
-		res.status(404).json({ message: err.message });
-	}
+  const getJunior = result;
+
+  getJunior.publications.forEach(async (e) => {
+    await Publication.findByIdAndDelete(e._id);
+  });
+  await Juniors.findOneAndDelete({ idFireBase: id });
+
+  res.json({ message: "Deleted", deleted: true });
+  // } catch (err) {
+  //   res.status(404).json({ message: err.message });
+  // }
 };
 
 module.exports = {
-	getAllJuniors,
-	getJuniorById,
-	updateJuniorsProfile,
-	deleteJuniorsProfile,
+  getAllJuniors,
+  getJuniorById,
+  updateJuniorsProfile,
+  deleteJuniorsProfile,
 };

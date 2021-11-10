@@ -6,14 +6,9 @@ var ObjectId = mongoose.Types.ObjectId;
 
 const companySchema = new Schema({
 
-    _id: {
+    idFireBase: {
         type: String,
         required: true
-    },
-    
-    idMongo: {
-        type: ObjectIdSchema,
-        default: new ObjectId()
     },
 
     name: {
@@ -36,6 +31,11 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    
+    userType: {
+        type: String,
+        required: true
+    },
 
     country: {
         type: String,
@@ -51,17 +51,15 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
-
-    premium: {
-        type: Boolean,
-        default: false
-    },
-
-    description: {
+    address: {
         type: String,
-        required: false,
-        maxLength: 500
+        required: false
     },
+
+    technologies: [{
+        type: Schema.Types.ObjectId,
+        ref: 'technologies'
+    }],
 
     publications: [{
         type: Schema.Types.ObjectId,

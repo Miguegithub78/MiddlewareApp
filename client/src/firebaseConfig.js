@@ -20,14 +20,25 @@ const firebaseConfig = {
   appId: "1:592698830994:web:2ded0dc1941bc60e54764b",
   measurementId: "G-LFVYL2QQYK"
 };
+const userType = localStorage.getItem('userType')
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: `http://localhost:3000/login/${userType}`,
+  // This must be true.
+  handleCodeInApp: true,
+  // dynamicLinkDomain: 'example.page.link'
+};
+
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore();
 const auth = getAuth()
+const db = getFirestore();
 // const storage = firebase.storage()
 // var ui = new firebaseui.auth.AuthUI(app.auth());
 
 
 // const analytics = getAnalytics(app);
-export { firebase, auth, db } 
+export { firebase, auth, actionCodeSettings, db }

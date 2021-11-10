@@ -21,21 +21,39 @@ const jwtgenerater =  (payload) => {
 
 
 
-const decoder = async (token, userType) => {
+const decoder = async (token, userType, id) => {
   
  try{
     const decoded = await jwt.verify(token, SECRET);
     if (userType === 'Company'){
       const user =  await Company.findOne({idFireBase : decoded.id});
       if (!user) {
-        return {auth: false, message: "User not found"};
+        return {auth: false, message: "Usuario no encontrado"};
       }else{
-        return user;
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Usuario no habilitado"};
+          }
+        }
       }
-   }
-  return decoded;
+      return user; 
+    }
+    if (userType === 'Junior'){
+      const user =  await Juniors.findOne({ idFireBase: decoded.id});
+      if (!user) {
+        return {auth: false, message: "Usuario no encontrado"};
+      }else{
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Usuario no habilitado"};
+          }
+        }
+      }
+      return user; 
+    }
+    return decoded;
   }catch(err){
-    return {auth: false, message: "Invalid token"}
+    return {auth: false, message: "Token no válido"}
   }
 };
 

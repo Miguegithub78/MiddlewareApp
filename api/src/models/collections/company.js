@@ -51,12 +51,11 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
-
     address: {
         type: String,
         required: false
     },
-
+                                 
     premium: {
         type: Boolean,
         default: false

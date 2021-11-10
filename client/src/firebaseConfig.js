@@ -11,20 +11,19 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDKCtXQ9QCGmqS18Z7HKNYnCLSQWpi7L74",
-  authDomain: "chat-middleware.firebaseapp.com",
-  databaseURL: "https://chat-middleware-default-rtdb.firebaseio.com",
-  projectId: "chat-middleware",
-  storageBucket: "chat-middleware.appspot.com",
-  messagingSenderId: "592698830994",
-  appId: "1:592698830994:web:2ded0dc1941bc60e54764b",
-  measurementId: "G-LFVYL2QQYK"
+  apiKey: "AIzaSyA5wAhueY9lkWtkhtF9DZ6O9Exis6X9rB0",
+  authDomain: "middleware-abd0a.firebaseapp.com",
+  projectId: "middleware-abd0a",
+  storageBucket: "middleware-abd0a.appspot.com",
+  messagingSenderId: "253903258363",
+  appId: "1:253903258363:web:005517be5c43da0200265e",
+  measurementId: "G-ZSYZTH0V60"
 };
 const userType = localStorage.getItem('userType')
 const actionCodeSettings = {
   // URL you want to redirect back to. The domain (www.example.com) for this
   // URL must be in the authorized domains list in the Firebase Console.
-  url: `http://localhost:3000/login/${userType}`,
+  url: `http://localhost:3000/`,
   // This must be true.
   handleCodeInApp: true,
   // dynamicLinkDomain: 'example.page.link'
@@ -33,7 +32,6 @@ const actionCodeSettings = {
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
-const db = getFirestore();
 const auth = getAuth()
 const db = getFirestore();
 // const storage = firebase.storage()

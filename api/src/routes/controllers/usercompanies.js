@@ -167,7 +167,7 @@ const deleteCompaniesProfile = async (req, res) => {
       await Jobs.findByIdAndDelete(e._id);
     });
 
-    const companyDelete = await Company.findOneAndDelete(id);
+    const companyDelete = await Company.findOneAndDelete(id)
 
     res.json(companyDelete);
   } catch (err) {

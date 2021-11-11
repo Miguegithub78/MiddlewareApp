@@ -41,7 +41,7 @@ const juniorsPostulations = async (req, res) => {
                 El te indica lo siguiente:
                 ${ coverLetter ? coverLetter : 'No hay una carta de presentación disponible aun.'}
                 Te comentamos sus capacidades y experiencia en nuestra app. Ingresa para verlo.         
-                <a href= "http://localhost:3000/juniors/${junior._id}">El Talento postulado</a> 
+                <a href= "http://localhost:3000/juniors/${junior.idFirebase}">El Talento postulado</a> 
                       Saludos desde Middleware!!! </b>`
               });
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos

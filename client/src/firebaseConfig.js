@@ -39,4 +39,4 @@ const db = getFirestore();
 
 
 // const analytics = getAnalytics(app);
-export { firebase, auth ,actionCodeSettings, db}
+export { firebase, auth, actionCodeSettings, db }

@@ -29,19 +29,19 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
     companyId: "",
     premium: "",
     status: "",
-    _id:''
+    _id: "",
   });
   const handleChange = (e) => {
-    console.log('entrando', e.target.name, e.target.value);
+    console.log("entrando", e.target.name, e.target.value);
     setInfoJobs((info) => ({
       ...info,
       [e.target.name]: e.target.value,
     }));
   };
   const handleClick = () => {
-    setEditValue((d) => !d)
-    if(!editValue)console.log('truer');
-  }
+    setEditValue((d) => !d);
+    if (!editValue) console.log("truer");
+  };
 
   useEffect(() => {
     let techUsed = job.technologies.map((tech) => {
@@ -62,6 +62,7 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
       companyId: job.companyId,
       premium: job.premium,
       status: job.status,
+      _id: job._id,
     });
   }, []);
 

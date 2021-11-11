@@ -5,7 +5,7 @@ const router = Router()
 const { signIn } = require('./controllers/userType')
 const { getAllJuniors, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
-const { getAllLaguages, getAllTechnologies } = require('./controllers/abilities')
+const { getAllLaguages, getAllTechnologies, getUbication } = require('./controllers/abilities')
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
@@ -30,7 +30,7 @@ router.delete('/companies/:id', deleteCompaniesProfile);
 
 router.get('/languages', getAllLaguages);
 router.get('/technologies', getAllTechnologies);
-
+router.get('/ubication', getUbication);
 
 router.get('/admin', getAdmins)
 router.post('/admin', adminRegister);   

@@ -10,7 +10,6 @@ const { adminRegister, getAdmins } = require('./controllers/useradmin')
 const { postPublications, getPublications, getPublicationsById, putPublication, deletePublication } = require('./controllers/publications');
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 const { juniorsPostulations } = require ('./controllers/juniorPostulation')
-
 const { postJobs, getAllJobs, getJobsById, deleteJob, putJobs } = require('./controllers/jobs');
 
 const { putLikes } = require('./controllers/addLikes');

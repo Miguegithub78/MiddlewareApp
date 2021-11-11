@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer'); // previamente hay que instalar nodema
 
 const juniorsPostulations = async (req, res) => {
 	const { id } = req.params; //id del job
-	const { juniorId, coverLetter } = req.body; //id del junior
+	const { juniorId, coverLetter, idFireBase } = req.body; //id del junior
 
 	try {
 
@@ -13,7 +13,7 @@ const juniorsPostulations = async (req, res) => {
     const gmailCompany = companyData.company.gmail
 
 		if (!junior) {
-			return res.status(404).json({ error: 'required "Junior" is missing' });
+			return res.status(404).json({ error: 'required "Junior" is missing' })
 		}
 
 		const job = await Jobs.findOne({ _id: id });
@@ -29,27 +29,26 @@ const juniorsPostulations = async (req, res) => {
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: 'avalleapi42@gmail.com',
-                    pass: 'pueybbhuxrqugxxr'
+                    user: 'info.MiddlewareApp@gmail.com',
+                    pass: 'pjvuuknhnxztavyn'
                 } 
             });
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
                 subject: `Tienes un nuevo postulante - ${junior.name}`, // Subject line
-                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta.
-                Te comentamos sus capacidades y experiencia.
+                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta
                 El te indica lo siguiente:
                 ${ coverLetter ? coverLetter : 'No hay una carta de presentación disponible aun.'}
-                Ingresa a la aplicación para verlo.         
-                <a href= "http://localhost:3000/juniors/${junior._id}">El Talento postulado</a> 
+                Te comentamos sus capacidades y experiencia en nuestra app. Ingresa para verlo.         
+                <a href= "http://localhost:3000/juniors/${junior.idFirebase}">El Talento postulado</a> 
                       Saludos desde Middleware!!! </b>`
               });
               await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
                 subject: "Te postulaste en Middleware", // Subject line
-                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}!!! </b>`
+                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulad@ a la publicación de ${companyData.title}. Mucho Exito!!! </b>`
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
               });

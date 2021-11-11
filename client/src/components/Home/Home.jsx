@@ -44,7 +44,7 @@ const Home = () => {
       if (user.userType === "companies") dispatch(getJuniors());
     }
   }, [user]);
-
+  
   // useEffect(() => {
   //   if (!user) dispatch(getUserAction());
   // }, []);

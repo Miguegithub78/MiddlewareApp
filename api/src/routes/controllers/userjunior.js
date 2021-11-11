@@ -128,6 +128,7 @@ const updateJuniorsProfile = async (req, res) => {
         .status(401)
         .json({ auth: false, message: "authorization required" });
     }
+
     const {
       name,
       gmail,
@@ -159,7 +160,7 @@ const updateJuniorsProfile = async (req, res) => {
         name,
         gmail,
         github,
-        photograph,
+        photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
         website,
         title,
         phone,
@@ -198,6 +199,7 @@ const deleteJuniorsProfile = async (req, res) => {
   if (!user) {
     return res
       .status(404)
+
       .json({ auth: false, message: "authorization required" });
   }
 

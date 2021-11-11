@@ -121,7 +121,7 @@ const updateCompaniesProfile = async (req, res) => {
         name: name,
         webpage: webpage,
         gmail: gmail,
-        photograph: photograph,
+        photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
         country: country,
         state: state,
         city: city,

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
-import JobsPublications from "./JobsPublications";
+import JobsPublications from "./JobsPublications/JobsPublications";
 import CareerData from "./CareerData";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";

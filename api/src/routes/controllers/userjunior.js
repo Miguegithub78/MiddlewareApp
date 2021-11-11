@@ -105,15 +105,6 @@ const updateJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
-
-    const user = await Juniors.findOne({ idFireBase: decoded.id });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
-
     const { id } = req.params;
 
     const result = await decoder(token,'Junior', id)
@@ -122,11 +113,6 @@ const updateJuniorsProfile = async (req, res) => {
       return res.status(401).json(result);
     }
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
-    }
     const {
       name,
       gmail,

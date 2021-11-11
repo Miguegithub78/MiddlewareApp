@@ -13,9 +13,8 @@ import {
   getUserAction,
   getJuniors,
 } from "../../redux/actions";
-import NavBar from "../NavBar/NavBar";
-
-
+import NavBar from '../NavBar/NavBar'
+import Mapa from "../Mapa/Mapa";
 const ProfileCompany = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -96,6 +95,14 @@ const ProfileCompany = () => {
             <PersonalData  user={user}setInfoUser={setInfoUser} infoUser={infoUser} />
             {/* <CareerData setInfoUser={setInfoUser} infoUser={infoUser} /> */}
             <div className="card">
+              <h5 className="text-center">Selecciona tu ubicación </h5>
+              <div className="card-body">
+                <div className="accordion">
+                  <Mapa />
+                </div>
+              </div>
+            </div>
+            <div className="card">
               <h5 className="text-center">Tus publicaciones de trabajo </h5>
               <div className="card-body">
                 <div className="accordion">
@@ -112,6 +119,8 @@ const ProfileCompany = () => {
                 </div>
               </div>
             </div>
+
+           
           </div>
         </div>
       </div>

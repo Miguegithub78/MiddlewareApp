@@ -36,14 +36,14 @@ const center = {
 };
 let cont =0;
 
-export default function Mapa() {
+export default function Mapa({setMarkers, markers}) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCCpn70ZJEIvFYTsUyxArbhmtFJXoNgtgo",
     libraries
   });
 
 
-  const [markers, setMarkers] = useState([]);
+  // const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
     
   
@@ -105,7 +105,7 @@ export default function Mapa() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {markers.map((marker) => (
+        {markers&&markers.map((marker) => (
           <Marker
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}

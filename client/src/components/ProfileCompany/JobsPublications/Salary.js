@@ -22,18 +22,11 @@ const Salary = ({ infoJobs, editValue, handleChange }) => {
                 name="currency"
                 className="form-select"
               >
-                <option selected>Moneda</option>
+                <option defaultValue>Moneda</option>
                 <option value="dollar">Dollar</option>
                 <option value="euro">Euro</option>
                 <option value="peso">Peso</option>
               </select>
-              {/* <input
-                className="form-control"
-                type="text"
-                name="salary"
-                onChange={handleChange}
-                value={infoJobs.currency}
-              /> */}
             </div>
           ) : (
             <span>{infoJobs.salary + " " + infoJobs.currency}</span>

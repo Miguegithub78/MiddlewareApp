@@ -477,3 +477,14 @@ export function postulation(idJob, idUser) {
     } catch (error) {}
   };
 }
+
+// export const getCountryStateAction = () => {
+//   return async function (dispatch) {
+//     try {
+//       // const allStates = await clienteAxios.get(`/`, {
+//         juniorId: idUser,
+//       });
+//       /* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
+//     } catch (error) {}
+//   };
+// }

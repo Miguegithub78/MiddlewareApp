@@ -26,6 +26,8 @@ const ProfileCompany = () => {
       history.push("/");
     }
   });
+  const [markers, setMarkers] = useState([]); //mapa
+
   const { user, languages, technologies } = useSelector((state) => state);
   const [infoUser, setInfoUser] = useState({
     idUser: "",
@@ -38,6 +40,8 @@ const ProfileCompany = () => {
     publications: [],
     jobs: [],
     technologies: [],
+    // latitude:'',
+    // longitude:''
     //  details: "",
     //  github: "",
     //  phone: "",
@@ -63,12 +67,13 @@ const ProfileCompany = () => {
         publications: user.publications,
         jobs: user.jobs,
         technologies: user.technologies,
+        // latitude:user.latitude,
+        // longitude:user.longitude,
       });
     }
     if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
-    dispatch(getJuniors());
   }, [user]);
 
   return user ? (
@@ -98,7 +103,7 @@ const ProfileCompany = () => {
               <h5 className="text-center">Selecciona tu ubicación </h5>
               <div className="card-body">
                 <div className="accordion">
-                  <Mapa />
+                  <Mapa markers={markers} setMarkers={setMarkers} />
                 </div>
               </div>
             </div>

@@ -26,7 +26,8 @@ const decoder = async (token, userType, id) => {
  try{
     const decoded = await jwt.verify(token, SECRET);
     if (userType === 'Company'){
-      const user =  await Company.findOne({idFireBase : decoded.id});
+      let user =  await Company.findOne({idFireBase : decoded.id});
+      if(!user) await Juniors.findOne({ idFireBase: decoded.id});
       if (!user) {
         return {auth: false, message: "User not found"};
       }else{
@@ -40,6 +41,7 @@ const decoder = async (token, userType, id) => {
     }
     if (userType === 'Junior'){
       const user =  await Juniors.findOne({ idFireBase: decoded.id});
+      if(!user)  await Company.findOne({idFireBase : decoded.id});
       if (!user) {
         return {auth: false, message: "User not found"};
       }else{

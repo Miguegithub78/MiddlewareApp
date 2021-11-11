@@ -160,7 +160,7 @@ const updateJuniorsProfile = async (req, res) => {
         name,
         gmail,
         github,
-        photograph,
+        photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
         website,
         title,
         phone,

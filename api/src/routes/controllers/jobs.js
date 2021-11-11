@@ -83,6 +83,7 @@ const putJobs = async (req, res) => {
       const { title, description, photograph, country, city, salary, currency, date, technologies, _id, idFireBase, premium, status } = req.body;
   
         const company = await Company.findOne({ _id } );
+
   
           if(!title){
             

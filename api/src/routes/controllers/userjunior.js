@@ -216,6 +216,12 @@ const deleteJuniorsProfile = async (req, res) => {
     await Publication.findByIdAndDelete(e._id);
   });
 
+  // Jobs.deleteOne({juniors: { getJunior._id }}, (err) => {
+  //   if (err) {
+  //     res.status(404).json({ message: err.message });
+  //   }
+  // }})
+
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });

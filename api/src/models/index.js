@@ -6,6 +6,7 @@ const Publication = require('./collections/publication');
 const Admins = require('./collections/admins');
 const SoftSkills = require('./collections/softSkills');
 const Jobs = require('./collections/jobs');
+const States = require('./collections/states');
 
 module.exports = {
     Juniors,
@@ -15,7 +16,8 @@ module.exports = {
     Publication,
     Admins,
     SoftSkills,
-    Jobs
+    Jobs,
+    States
 }
 
 

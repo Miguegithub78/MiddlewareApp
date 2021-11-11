@@ -6,6 +6,7 @@ const {
   Publication,
   Admins,
   SoftSkills,
+  Jobs,
 } = require("../../models/index");
 
 const { decoder } = require("../../helpers/index")
@@ -105,12 +106,27 @@ const updateJuniorsProfile = async (req, res) => {
         .json({ auth: false, message: "token is require" });
     }
 
+    const decoded = await jwt.verify(token, SECRET);
+
+    const user = await Juniors.findOne({ idFireBase: decoded.id });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ auth: false, message: "junior not found" });
+    }
+
     const { id } = req.params;
 
     const result = await decoder(token,'Junior', id)
 
     if (result.auth === false) {
       return res.status(401).json(result);
+    }
+
+    if (id !== decoded.id) {
+      return res
+        .status(401)
+        .json({ auth: false, message: "authorization required" });
     }
 
     const {
@@ -183,7 +199,8 @@ const deleteJuniorsProfile = async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ auth: false, message: "usuario no registrado" });
+
+      .json({ auth: false, message: "authorization required" });
   }
 
 
@@ -196,10 +213,17 @@ const deleteJuniorsProfile = async (req, res) => {
   }
 
   const getJunior = result;
-
+  
   getJunior.publications.forEach(async (e) => {
     await Publication.findByIdAndDelete(e._id);
   });
+
+  // Jobs.deleteOne({juniors: { getJunior._id }}, (err) => {
+  //   if (err) {
+  //     res.status(404).json({ message: err.message });
+  //   }
+  // }})
+
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });

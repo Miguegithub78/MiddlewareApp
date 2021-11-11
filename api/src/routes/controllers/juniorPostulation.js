@@ -7,9 +7,13 @@ const juniorsPostulations = async (req, res) => {
 	const { juniorId, coverLetter } = req.body; //id del junior
 
 	try {
+<<<<<<< HEAD
 		if (!coverLetter) {
     coverLetter = 'No hay una carta de presentación disponible aun.';
     }
+=======
+
+>>>>>>> 0b57a1c9c8a7b2bf9e0b4917b3a4fa175dd09bfb
     const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
     const gmailCompany = companyData.company.gmail
@@ -35,14 +39,14 @@ const juniorsPostulations = async (req, res) => {
                     pass: 'pueybbhuxrqugxxr'
                 } 
             });
-
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
                 from: '"Middleware App " <avalleapi42@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
-                subject: "Tienes un nuevo postulante", // Subject line
-                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. 
+                subject: `Tienes un nuevo postulante - ${junior.name}`, // Subject line
+                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta.
+                Te comentamos sus capacidades y experiencia.
                 El te indica lo siguiente:
-                ${coverLetter}
+                ${ coverLetter ? coverLetter : 'No hay una carta de presentación disponible aun.'}
                 Ingresa a la aplicación para verlo.         
                 <a href= "http://localhost:3000/juniors/${junior._id}">El Talento postulado</a> 
                       Saludos desde Middleware!!! </b>`

@@ -216,10 +216,6 @@ const deleteJuniorsProfile = async (req, res) => {
     await Publication.findByIdAndDelete(e._id);
   });
 
- const deleteJuniorJob = getJunior._id;
- cosole.log(deleteJuniorJob)
-  await Jobs.juniors.deleteMany({ deleteJuniorJob });
-
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });

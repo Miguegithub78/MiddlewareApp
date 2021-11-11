@@ -29,7 +29,7 @@ const postJobs = async (req, res) => {
             technologies,
             company: company,
             premium,
-            status
+            status,
         });
 
         try{

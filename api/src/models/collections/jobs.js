@@ -50,6 +50,15 @@ const jobsSchema = new Schema({
     default: Date.now,
   },
 
+  
+  latitude: {
+    type: String,
+},
+
+longitude: {
+    type: String,
+},
+
   juniors: [{
     type: String,
     ref: "juniors",

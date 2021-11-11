@@ -56,6 +56,25 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    
+        premium: {
+        type: Boolean,
+        default: false
+    },
+
+    description: {
+        type: String,
+        required: false,
+        maxLength: 500
+    },
+
+    latitude: {
+        type: String,
+    },
+
+    longitude: {
+        type: String,
+    },
 
     technologies: [{
         type: Schema.Types.ObjectId,

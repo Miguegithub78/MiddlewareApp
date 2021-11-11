@@ -40,7 +40,7 @@ const CareerData = ({ infoUser, setInfoUser }) => {
             <h6 className="mb-0">Technologies</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-            <Technologies setInfoUser={setInfoUser} infoUser={infoUser} />
+            {/* <Technologies setInfoUser={setInfoUser} infoUser={infoUser} /> */}
             <br />
           </div>
         </div>

@@ -51,12 +51,13 @@ const companySchema = new Schema({
         type: String,
         required: false
     },
+    
     address: {
         type: String,
         required: false
     },
-                                 
-    premium: {
+    
+        premium: {
         type: Boolean,
         default: false
     },
@@ -66,7 +67,7 @@ const companySchema = new Schema({
         required: false,
         maxLength: 500
     },
-    
+
     latitude: {
         type: String,
     },

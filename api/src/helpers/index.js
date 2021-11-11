@@ -21,7 +21,7 @@ const jwtgenerater =  (payload) => {
 
 
 
-const decoder = async (token, userType) => {
+const decoder = async (token, userType, id) => {
   
  try{
     const decoded = await jwt.verify(token, SECRET);
@@ -30,12 +30,30 @@ const decoder = async (token, userType) => {
       if (!user) {
         return {auth: false, message: "User not found"};
       }else{
-        return user;
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Unauthorized user"};
+          }
+        }
       }
-   }
-  return decoded;
+      return user; 
+    }
+    if (userType === 'Junior'){
+      const user =  await Juniors.findOne({ idFireBase: decoded.id});
+      if (!user) {
+        return {auth: false, message: "User not found"};
+      }else{
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Unauthorized user"};
+          }
+        }
+      }
+      return user; 
+    }
+    return decoded;
   }catch(err){
-    return {auth: false, message: "Invalid token"}
+    return {auth: false, message: "invalid token"}
   }
 };
 

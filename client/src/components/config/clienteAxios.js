@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const clienteAxios = axios.create({
-    baseURL: process.env.REACT_APP_API_URL ||'http://localhost:3001'
+    baseURL: process.env.REACT_APP_API_URL
 });
-
+//process.env.REACT_APP_API_URL ||
 export default clienteAxios;

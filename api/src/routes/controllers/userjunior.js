@@ -6,6 +6,7 @@ const {
   Publication,
   Admins,
   SoftSkills,
+  Jobs,
 } = require("../../models/index");
 
 const { decoder } = require("../../helpers/index")
@@ -18,19 +19,19 @@ const jwt = require("jsonwebtoken");
 
 const getAllJuniors = async (req, res) => {
   try {
-    // const token = req.headers["x-auth-token"];
+    const token = req.headers["x-auth-token"];
 
-    // if (!token) {
-    //   return res
-    //     .status(403)
-    //     .json({ auth: false, message: "token is require" });
-    // }
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "token is require" });
+    }
 
-    // const result = await decoder(token,'Company')
+    const result = await decoder(token,'Company')
 
-    // if (result.auth === false) {
-    //   return res.status(401).json(result);
-    // }
+    if (result.auth === false) {
+      return res.status(401).json(result);
+    }
 
   const allJuniors = await Juniors.find().populate([
     { path: "languages" },
@@ -63,8 +64,6 @@ const getJuniorById = async (req, res) => {
 
       return res.status(401).json(result);
     }
-
-
 
     if (firebase === "true") {
       const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
@@ -100,10 +99,11 @@ const getJuniorById = async (req, res) => {
 const updateJuniorsProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
+    console.log(token)
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
+        .json({ auth: false, message: "token is require" });
     }
 
     const decoded = await jwt.verify(token, SECRET);
@@ -112,15 +112,21 @@ const updateJuniorsProfile = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
+        .json({ auth: false, message: "junior not found" });
     }
 
     const { id } = req.params;
 
+    const result = await decoder(token,'Junior', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
+    }
+
     if (id !== decoded.id) {
       return res
         .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+        .json({ auth: false, message: "authorization required" });
     }
     const {
       name,
@@ -144,7 +150,7 @@ const updateJuniorsProfile = async (req, res) => {
       openToFullTime,
     } = req.body;
 
-    console.log(languages, technologies, "|||");
+    
     const juniorsChange = await Juniors.findOneAndUpdate(
       {
         idFireBase: id,
@@ -180,10 +186,10 @@ const updateJuniorsProfile = async (req, res) => {
 };
 
 const deleteJuniorsProfile = async (req, res) => {
-  // try {
+  try {
   const token = req.headers["x-auth-token"];
   if (!token) {
-    return res.status(403).json({ auth: false, message: "se requiere token" });
+    return res.status(403).json({ auth: false, message: "token is require" });
   }
 
   const decoded = await jwt.verify(token, SECRET);
@@ -192,28 +198,36 @@ const deleteJuniorsProfile = async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ auth: false, message: "usuario no registrado" });
+      .json({ auth: false, message: "authorization required" });
   }
+
 
   const { id } = req.params;
 
-  if (id !== decoded.id) {
-    return res
-      .status(401)
-      .json({ auth: false, message: "usuario no autorizado" });
+  const result = await decoder(token,'Junior', id)
+
+  if (result.auth === false) {
+    return res.status(401).json(result);
   }
 
-  const getJunior = user;
-
+  const getJunior = result;
+  
   getJunior.publications.forEach(async (e) => {
     await Publication.findByIdAndDelete(e._id);
   });
+
+  // Jobs.deleteOne({juniors: { getJunior._id }}, (err) => {
+  //   if (err) {
+  //     res.status(404).json({ message: err.message });
+  //   }
+  // }})
+
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });
-  // } catch (err) {
-  //   res.status(404).json({ message: err.message });
-  // }
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
 };
 
 module.exports = {

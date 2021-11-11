@@ -32,7 +32,7 @@ const signIn = async (req, res) => {
         if (userCompany)
           return res.json({
             auth: false,
-            msg: "Usuario tiene una cuenta como Company",
+            msg: "El usuario"+ ' ' + gmail +' '+ "tiene una cuenta Empresa",
           });
         var juniorsCreate = await Juniors.create({
           idFireBase: idUser,
@@ -58,7 +58,7 @@ const signIn = async (req, res) => {
         if (userJunior)
           return res.json({
             auth: false,
-            msg: "Usuario tiene una cuenta como Junior",
+            msg: "El usuario"+ ' '+ gmail+ ' ' + "tiene una cuenta Junior",
           });
         var CompanyCreate = await Company.create({
           idFireBase: idUser,

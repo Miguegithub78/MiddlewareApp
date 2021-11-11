@@ -15,8 +15,8 @@ import ProfileCompany from "./components/ProfileCompany";
 import Chat from './components/Chat';
 
 function App() {
-//   const { user } = useSelector((state) => state);
-//   const history = useHistory();
+  //   const { user } = useSelector((state) => state);
+  //   const history = useHistory();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -24,9 +24,9 @@ function App() {
       tokenAuth(token);
     }
   }, [token]);
-//   useEffect(() => {
-//     if (!user) history.push("/");
-//   }, []);
+  //   useEffect(() => {
+  //     if (!user) history.push("/");
+  //   }, []);
 
   return (
     <Router>
@@ -45,12 +45,12 @@ function App() {
           component={CreatePublications}
         />
 
-				<Route path='/juniors/:id' component={JuniorsDetail} />
-				<Route path='/chat' component={Chat} />
-				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-			</Switch>
-		</Router>
-	);
+        <Route path='/juniors/:id' component={JuniorsDetail} />
+        <Route path='/chat' component={Chat} />
+        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;

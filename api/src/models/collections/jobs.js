@@ -42,13 +42,22 @@ const jobsSchema = new Schema({
   currency: {
     type: String,
     enum: ["dollar", "peso", "euro"],
-    default: "active"
+    default: "dollar"
   },
 
   date: {
     type: Date,
     default: Date.now,
   },
+
+  
+  latitude: {
+    type: String,
+},
+
+longitude: {
+    type: String,
+},
 
   juniors: [{
     type: String,

@@ -28,6 +28,7 @@ import "./Home.css";
 import { Publications } from "../Publications/Publications";
 import Mapa from "../Mapa/Mapa";
 
+
 const Home = () => {
   const history = useHistory();
   const { user, emailVerification } = useSelector((state) => state);
@@ -39,12 +40,12 @@ const Home = () => {
     if (token && user) {
       console.log("dispatch el tokeeenn", token);
       tokenAuth(token);
-      dispatch(getJuniors());
-      dispatch(getCompanies());
       dispatch(getTechnologies());
+      if (user.userType === "juniors") dispatch(getCompanies());
+      if (user.userType === "companies") dispatch(getJuniors());
     }
   }, [user]);
-
+  
   // useEffect(() => {
   //   if (!user) dispatch(getUserAction());
   // }, []);
@@ -85,6 +86,7 @@ const Home = () => {
               {tipo && tipo === "publications" && <Publications />}
               {tipo && tipo === "mapa" && <Mapa />}
               {/* 	<CardsJobs jobs={jobs} /> */}
+
             </div>
           </div>
         </div>

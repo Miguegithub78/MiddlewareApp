@@ -37,11 +37,10 @@ const juniorsPostulations = async (req, res) => {
                 from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
                 subject: `Tienes un nuevo postulante - ${junior.name}`, // Subject line
-                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta.
-                Te comentamos sus capacidades y experiencia.
+                html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta
                 El te indica lo siguiente:
                 ${ coverLetter ? coverLetter : 'No hay una carta de presentación disponible aun.'}
-                Ingresa a la aplicación para verlo.         
+                Te comentamos sus capacidades y experiencia en nuestra app. Ingresa para verlo.         
                 <a href= "http://localhost:3000/juniors/${junior._id}">El Talento postulado</a> 
                       Saludos desde Middleware!!! </b>`
               });
@@ -49,7 +48,7 @@ const juniorsPostulations = async (req, res) => {
                 from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
                 to: `${ junior.gmail }`, // list of receivers
                 subject: "Te postulaste en Middleware", // Subject line
-                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulado a la publicación de ${companyData.title}!!! </b>`
+                html: `<b> Felicitaciones ${junior.name} ya te encuentras postulad@ a la publicación de ${companyData.title}. Mucho Exito!!! </b>`
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
               });

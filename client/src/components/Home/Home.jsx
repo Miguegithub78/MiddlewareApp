@@ -40,12 +40,12 @@ const Home = () => {
     if (token && user) {
       console.log("dispatch el tokeeenn", token);
       tokenAuth(token);
-      dispatch(getJuniors());
-      dispatch(getCompanies());
       dispatch(getTechnologies());
+      if (user.userType === "juniors") dispatch(getCompanies());
+      if (user.userType === "companies") dispatch(getJuniors());
     }
   }, [user]);
-
+  
   // useEffect(() => {
   //   if (!user) dispatch(getUserAction());
   // }, []);

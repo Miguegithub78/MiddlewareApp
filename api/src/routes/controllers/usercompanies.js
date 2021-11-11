@@ -7,6 +7,8 @@ const {
   Jobs
 } = require("../../models/index");
 
+const { decoder } = require("../../helpers/index")
+
 require("dotenv").config();
 
 const { SECRET } = process.env;
@@ -15,21 +17,37 @@ const jwt = require("jsonwebtoken");
 
 const getAllCompanies = async (req, res) => {
   try {
+    // const token = req.headers["x-auth-token"];
+    // if (!token) {
+    //   return res
+    //     .status(403)
+    //     .json({ auth: false, message: "se requiere token" });
+    // }
+
+    // const decoded = await jwt.verify(token, SECRET);
+
+    // let user = await Juniors.findOne({idFireBase: decoded.id});
+    // if (!user) user = await Company.findOne({idFireBase: decoded.id});
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
+
     const token = req.headers["x-auth-token"];
+
     if (!token) {
       return res
         .status(403)
         .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
+    const result = await decoder(token,'Junior')
 
-    let user = await Juniors.findOne({idFireBase: decoded.id});
-    if (!user) user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "company not found" });
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
+
     }
 
     const allCompanies = await Company.find().populate("jobs").populate("technologies");
@@ -47,17 +65,25 @@ const getCompaniesById = async (req, res) => {
         .status(403)
         .json({ auth: false, message: "token is require" });
     }
-    const decoded = await jwt.verify(token, SECRET);
-    let user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) user = await Juniors.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "company not found" });
-    }
+    // const decoded = await jwt.verify(token, SECRET);
+    // let user = await Company.findOne({idFireBase: decoded.id});
+    // if (!user) user = await Juniors.findOne({idFireBase: decoded.id});
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
+
+    const result = await decoder(token,'Junior')
+    
 
     const { id } = req.params;
     const { firebase } = req.query;
+
+    if (result.auth === false && !firebase) {
+
+      return res.status(401).json(result);
+    }
 
     if(firebase === 'true'){
 

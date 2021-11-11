@@ -322,7 +322,10 @@ export function postPublications(payload, nameUser, idUser) {
 
 export function putPublications(idPublication, idProgramador, data) {
 	return async function () {
-		const response = await clienteAxios.put(`/publications?idPublication=${idPublication}&idProgramador=${idProgramador}`, data);
+		const response = await clienteAxios.put(
+			`/publications?idPublication=${idPublication}&idProgramador=${idProgramador}`,
+			data
+		);
 		return response;
 	};
 }
@@ -470,9 +473,13 @@ export function getJobs() {
 export function postulation(idJob, idUser) {
 	return async function (dispatch) {
 		try {
-			const allJobs = await clienteAxios.put(`/jobs/postulation/${idJob}`, {
-				juniorId: idUser,
-			});
+			const allJobs = await clienteAxios.put(
+				`/jobs/postulation/${(juniorId, coverLetter)}`,
+				{
+					juniorId,
+					coverLetter,
+				}
+			);
 			/* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
 		} catch (error) {}
 	};

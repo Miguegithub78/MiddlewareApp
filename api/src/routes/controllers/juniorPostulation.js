@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer'); // previamente hay que instalar nodema
 
 const juniorsPostulations = async (req, res) => {
 	const { id } = req.params; //id del job
-	const { juniorId, coverLetter } = req.body; //id del junior
+	const { juniorId, coverLetter, idFireBase } = req.body; //id del junior
 
 	try {
 

@@ -78,11 +78,11 @@ const getJobsById = async (req, res) => {
 
 const putJobs = async (req, res) => {
     
-    const { id } = req.params;
+    const { companyId } = req.params;
   
-      const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
+      const { title, description, photograph, country, city, salary, currency, date, technologies, _id, premium, status } = req.body;
   
-        const company = await Company.findOne({ idMongo : companyId} );
+        const company = await Company.findOne({ idFireBase : companyId} );
   
           if(!title){
             

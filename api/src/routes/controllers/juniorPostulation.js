@@ -7,13 +7,7 @@ const juniorsPostulations = async (req, res) => {
 	const { juniorId, coverLetter } = req.body; //id del junior
 
 	try {
-<<<<<<< HEAD
-		if (!coverLetter) {
-    coverLetter = 'No hay una carta de presentación disponible aun.';
-    }
-=======
 
->>>>>>> 0b57a1c9c8a7b2bf9e0b4917b3a4fa175dd09bfb
     const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
     const gmailCompany = companyData.company.gmail

@@ -28,13 +28,13 @@ const juniorsPostulations = async (req, res) => {
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: 'avalleapi42@gmail.com',
-                    pass: 'pueybbhuxrqugxxr'
+                    user: 'info.MiddlewareApp@gmail.com',
+                    pass: 'pjvuuknhnxztavyn'
                 } 
             });
 
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
-                from: '"Middleware App 👻" <avalleapi42@gmail.com>', // sender address
+                from: '"Middleware App 👻" <info.MiddlewareApp@gmail.com>', // sender address
                 to: `${ gmailCompany }`, // list of receivers
                 subject: "Tienes un nuevo postulante", // Subject line
                 html: `<b> El usuario ${junior.name} se ha postulado en tu propuesta. Felicitaciones!!! </b>`
@@ -50,7 +50,7 @@ const juniorsPostulations = async (req, res) => {
                 // `<b>Verificar usuario</b>
                 //         <a href= "http://localhost:3001/admit/${user.gmail}">Middleware App</a>`
               });
-    
+              
     res.json(savedJob)
 
   }

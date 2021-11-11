@@ -7,7 +7,7 @@ import {
   loginUserEmailPassAction,
   emailVerificationAction,
   errorLoginAction,
-  getUserAction
+  getUserAction,
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -38,12 +38,8 @@ const Login = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
-      // console.log(userFirebase);
-      if (errorLogin || user) return;
-      console.log(user, "useeer de login");
+      if (errorLogin) return;
       history.push("/home/companies");
-      // dispatch(getUserAction(userFirebase));
-      // if (!emailVerification) dispatch(emailVerificationAction(true));
     } else {
       if (emailVerification) {
         dispatch(emailVerificationAction(false));
@@ -51,11 +47,6 @@ const Login = () => {
       }
     }
   });
-  // useEffect(() => {
-  //   if (user) {
-  //   }
-  // }, [user]);
-  //resetear errores automatico
   useEffect(() => {
     if (errorLogin) {
       setTimeout(() => {
@@ -96,7 +87,7 @@ const Login = () => {
           <div className="bg-dark  p-4 h-100">
             <div className="p-3 d-flex justify-content-center flex-column align-items-center">
               {" "}
-              <span className=" main-heading">Ingresa a Middleware</span>
+              <span className=" main-heading">Inicia Sesión a Middleware</span>
               <hr />
               <ul className="social-list ">
                 <li>
@@ -104,7 +95,12 @@ const Login = () => {
                     onClick={() => dispatch(loginUserAction("google", type))}
                     className="btn btn-block btn-outline-light"
                   >
-                    <i className="bi bi-google" style={{ fontSize: 32 }} width="50px" hight="50px"></i>
+                    <i
+                      className="bi bi-google"
+                      style={{ fontSize: 32 }}
+                      width="50px"
+                      hight="50px"
+                    ></i>
                   </button>
                 </li>
                 <li>
@@ -112,7 +108,12 @@ const Login = () => {
                     onClick={() => dispatch(loginUserAction("github", type))}
                     className="btn btn-block btn-outline-light"
                   >
-                    <i className="bi bi-github" style={{ fontSize: 32 }} width="50px" hight="50px"></i>
+                    <i
+                      className="bi bi-github"
+                      style={{ fontSize: 32 }}
+                      width="50px"
+                      hight="50px"
+                    ></i>
                   </button>
                 </li>
               </ul>
@@ -138,12 +139,12 @@ const Login = () => {
                   handleClickCreate={handleClickCreate}
                 />
               )}
-              <div className="d-flex mt-2 justify-content-between w-100 align-items-center">
+              <div className=" mt-2 d-inline  w-100 align-items-left">
                 <span
                   onClick={() => setSingOrCreate((e) => !e)}
-                  className="crea-cuenta"
+                  className="crea-cuenta text-secondary  "
                 >
-                  {!singOrCreate ? "Inicia Sesión" : "Crea una Cuenta"}
+                  {!singOrCreate ? " Ya tienes cuenta? Inicia Sesión" : "Si no tienes cuenta, regístrate aquí"}
                 </span>
                 {singOrCreate && (
                   <ModalLogin email={email} setEmail={setEmail} />
@@ -172,7 +173,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

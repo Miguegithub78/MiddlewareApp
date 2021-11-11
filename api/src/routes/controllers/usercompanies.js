@@ -4,7 +4,10 @@ const {
   Company,
   Publication,
   Juniors,
+  Jobs
 } = require("../../models/index");
+
+const { decoder } = require("../../helpers/index")
 
 require("dotenv").config();
 
@@ -14,21 +17,20 @@ const jwt = require("jsonwebtoken");
 
 const getAllCompanies = async (req, res) => {
   try {
+ 
     const token = req.headers["x-auth-token"];
+
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
+        .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
+    const result = await decoder(token,'Junior')
 
-    let user = await Juniors.findOne({idFireBase: decoded.id});
-    if (!user) user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
+    if (result.auth === false) {
+      return res.status(401).json(result);
+
     }
 
     const allCompanies = await Company.find().populate("jobs").populate("technologies");
@@ -44,19 +46,18 @@ const getCompaniesById = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
-    }
-    const decoded = await jwt.verify(token, SECRET);
-    let user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) user = await Juniors.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
+        .json({ auth: false, message: "token is require" });
     }
 
+    const result = await decoder(token,'Junior')
+    
     const { id } = req.params;
     const { firebase } = req.query;
+
+    if (result.auth === false && !firebase) {
+
+      return res.status(401).json(result);
+    }
 
     if(firebase === 'true'){
 
@@ -83,24 +84,16 @@ const updateCompaniesProfile = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
+        .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
-
-    const user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
 
     const { id } = req.params;
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+    const result = await decoder(token,'Company', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
     }
 
     const {
@@ -113,6 +106,9 @@ const updateCompaniesProfile = async (req, res) => {
       state,
       languages,
       city,
+      latitude,
+      longitude,
+      address
     } = req.body;
 
     const languagesGet = await Languages.find({ name: languages });
@@ -131,6 +127,9 @@ const updateCompaniesProfile = async (req, res) => {
         city: city,
         description: description,
         languages: languagesGet,
+        latitude: latitude,
+        longitude: longitude,
+        address: address
       },
       { new: true }
     );
@@ -147,32 +146,28 @@ const deleteCompaniesProfile = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
-    }
-
-    const decoded = await jwt.verify(token, SECRET);
-    const user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
+        .json({ auth: false, message: "token is require" });
     }
 
     const { id } = req.params;
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+    const result = await decoder(token,'Company', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
     }
 
-    const getCompany = await Company.findOne({idFireBase: decoded.id});
+    const getCompany = await Company.findOne({idFireBase: result.idFireBase});
 
     getCompany.publications.forEach(async (e) => {
       await Publication.findByIdAndDelete(e._id);
     });
 
-    const companyDelete = await Company.findOneAndDelete(id);
+    getCompany.jobs.forEach(async (e) => {
+      await Jobs.findByIdAndDelete(e._id);
+    });
+
+    const companyDelete = await Company.findOneAndDelete(id)
 
     res.json(companyDelete);
   } catch (err) {

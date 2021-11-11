@@ -12,15 +12,15 @@ const postJobs = async (req, res) => {
 
       const company = await Company.findOne({ _id : companyId} );
 
-        if(!title){
+        if(!title || company === null){
           
-          return res.status(404).json({ error: 'required "Title" is missing'})
+          return res.status(404).json({ error: 'required "Title or Company valid" is missing'})
         }
 
         const newJob = new Jobs({
             title,
             description,
-            photograph,
+            photograph: photograph ? photograph : company.photograph,
             country,
             city,
             salary,
@@ -30,7 +30,6 @@ const postJobs = async (req, res) => {
             company: company,
             premium,
             status
-
         });
 
         try{

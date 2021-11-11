@@ -28,13 +28,13 @@ let company= [
     lng: -58.36698,
   },
   {
-    id: "6189531298135e35f89ec97f",
+    id: "618c0cc3a8707bd5e8e32f8f",
     name:"Ailin Rutchle",
     lat: -33.17607,
     lng: -68.47444,
   },
   {
-    id: "61896fc6ca603d7ee05f2b42",
+    id: "618be3904d97025623b68abd",
     name:"Pamela Pereyra",
     lat: -31.43292,
     lng: -64.13212,
@@ -44,7 +44,7 @@ let company= [
 const libraries = ["places"];
 const mapContainerStyle = {
   height: "60vh",
-  width: "45vw",
+  width: "38vw",
 };
 const options = {
   styles: mapStyles,

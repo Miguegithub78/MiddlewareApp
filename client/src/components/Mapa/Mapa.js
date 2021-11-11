@@ -16,15 +16,14 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 import "./index.css";
 const libraries = ["places"];
 const mapContainerStyle = {
-  height: "80vh",
-  width: "90vw",
+  height: "70vh",
+  width: "80vw",
 };
 const options = {
   styles: mapStyles,
@@ -35,6 +34,7 @@ const center = {
   lat: -34.592164,
   lng: -58.4431,
 };
+let cont =0;
 
 export default function Mapa() {
   const { isLoaded, loadError } = useLoadScript({
@@ -42,19 +42,26 @@ export default function Mapa() {
     libraries
   });
 
- 
+
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
-
+    
+  
   const onMapClick = useCallback((e) => {
+    
+    console.log('contador' + cont)
+    if(cont===0){
+      cont=cont+1;
     setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
+       
+        ...current,
+        {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          
+        },  
+      ]);
+    }
   }, []);
 
   const mapRef = useRef();
@@ -65,6 +72,18 @@ export default function Mapa() {
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
+    if(cont===0){
+      cont=cont+1;
+      setMarkers((current) => [
+       
+        ...current,
+        {
+          lat: lat,
+          lng: lng,
+          
+        },  
+      ]);
+    }
   }, []);
 
   if (loadError) return "Error";
@@ -72,12 +91,7 @@ export default function Mapa() {
 
   return (
     <div>
-      <h2>
-        Empresas{" "}
-        <span role="img" aria-label="tent">
-        👩‍💻
-        </span>
-      </h2>
+      
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
@@ -96,10 +110,11 @@ export default function Mapa() {
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
             onClick={() => {
-              setSelected(marker);
+              cont=0;
+              setMarkers([]);
             }}
             icon={{
-              url: `/society.svg`,
+              url: `/company.svg`,
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
@@ -111,17 +126,17 @@ export default function Mapa() {
           <InfoWindow
             position={{ lat: selected.lat, lng: selected.lng }}
             onCloseClick={() => {
-              setSelected(null);
+              setMarkers([]);
             }}
           >
             <div>
-              <h2>
-                <span role="img" aria-label="bear">
+              <h3>
+                <span role="img" aria-label="company">
                   💻
                 </span>{" "}
-                Alert
-              </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
+                Company
+              </h3>
+              
             </div>
           </InfoWindow>
         ) : null}
@@ -140,7 +155,9 @@ function Locate({ panTo }) {
             panTo({
               lat: position.coords.latitude,
               lng: position.coords.longitude,
+              
             });
+            console.log('mi ubicacion' + position.coords.latitude, position.coords.longitude)
           },
           () => null
         );

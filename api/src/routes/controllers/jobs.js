@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const postJobs = async (req, res) => {
 
-    const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
+    const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, idFireBase, premium, status } = req.body;
 
       const company = await Company.findOne({ _id : companyId} );
 
@@ -29,7 +29,7 @@ const postJobs = async (req, res) => {
             technologies,
             company: company,
             premium,
-            status
+            status,
         });
 
         try{
@@ -48,7 +48,7 @@ const postJobs = async (req, res) => {
 const getAllJobs = async (req, res) => {
 
     try{
-
+        
         const jobs = await Jobs.find().populate([{path: 'company'}, {path: 'technologies'}, {path: 'juniors'}])
     
         res.json(jobs)
@@ -78,11 +78,12 @@ const getJobsById = async (req, res) => {
 
 const putJobs = async (req, res) => {
     
-    const { companyId } = req.params;
+    const { id } = req.params; //id de job
   
-      const { title, description, photograph, country, city, salary, currency, date, technologies, _id, premium, status } = req.body;
+      const { title, description, photograph, country, city, salary, currency, date, technologies, _id, idFireBase, premium, status } = req.body;
   
-        const company = await Company.findOne({ idFireBase : companyId} );
+        const company = await Company.findOne({ _id } );
+
   
           if(!title){
             
@@ -117,7 +118,8 @@ const putJobs = async (req, res) => {
 
 const deleteJob = async (req, res) => {
 
-  const { id } = req.params;
+  const { id } = req.params; //id del job
+  const { idFireBase, _id } = req.body 
 
   try{
 

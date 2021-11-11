@@ -103,7 +103,7 @@ const updateJuniorsProfile = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
+        .json({ auth: false, message: "token is require" });
     }
 
     const decoded = await jwt.verify(token, SECRET);
@@ -112,7 +112,7 @@ const updateJuniorsProfile = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
+        .json({ auth: false, message: "junior not found" });
     }
 
     const { id } = req.params;
@@ -126,7 +126,7 @@ const updateJuniorsProfile = async (req, res) => {
     if (id !== decoded.id) {
       return res
         .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+        .json({ auth: false, message: "authorization required" });
     }
     const {
       name,
@@ -189,7 +189,7 @@ const deleteJuniorsProfile = async (req, res) => {
   try {
   const token = req.headers["x-auth-token"];
   if (!token) {
-    return res.status(403).json({ auth: false, message: "se requiere token" });
+    return res.status(403).json({ auth: false, message: "token is require" });
   }
 
   const decoded = await jwt.verify(token, SECRET);
@@ -198,7 +198,7 @@ const deleteJuniorsProfile = async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ auth: false, message: "usuario no registrado" });
+      .json({ auth: false, message: "authorization required" });
   }
 
 

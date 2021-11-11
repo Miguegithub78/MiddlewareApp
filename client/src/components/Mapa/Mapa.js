@@ -129,15 +129,7 @@ export default function Mapa() {
               setMarkers([]);
             }}
           >
-            <div>
-              <h3>
-                <span role="img" aria-label="company">
-                  💻
-                </span>{" "}
-                Company
-              </h3>
-              
-            </div>
+            
           </InfoWindow>
         ) : null}
       </GoogleMap>

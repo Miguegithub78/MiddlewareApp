@@ -20,7 +20,7 @@ export default function CompanyDetail() {
   //CHAT
 
   const [message, setMessage] = useState({})
-  var [state, setState] = useState({ messages: [] })
+  var [state, setState] = useState({ messages: [], owners: null, ownersNames: null })
   var [idChat, setIdChat] = useState('')
   var [currentIdChat, setCurrentIdChat] = useState('')
   var [oneCompany, setOneCompany] = useState('')
@@ -28,7 +28,7 @@ export default function CompanyDetail() {
   const user = useSelector((state) => state.user);
   const companies = useSelector((state) => state.companies);
 
-  async function searchCompanyDetails(id) {
+  async function searchCompanyDetails(id){
 
     // dispatch(getCompanyDetails(id))
 
@@ -38,7 +38,7 @@ export default function CompanyDetail() {
     let idtemporal = user._id < campany._id ? user._id + campany._id : campany._id + user._id
     setCurrentIdChat(user._id < campany._id ? user._id + campany._id : campany._id + user._id)
 
-    if (idChat == '') {
+    if(idChat == ''){
 
       setIdChat(idtemporal)
     }
@@ -47,15 +47,17 @@ export default function CompanyDetail() {
     const docSnap = await getDoc(docRef);
 
     setState({
-      messages: docSnap.data() !== undefined ? docSnap.data().chat : []
+      messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+      owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+      ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
     })
   }
 
-  async function sendMessage() {
+  async function sendMessage(){
 
-    try {
+    try{
 
-      if (idChat === currentIdChat) {
+      if(idChat === currentIdChat){
 
         var list = !state.messages ? [] : state.messages
         list.push({
@@ -66,16 +68,19 @@ export default function CompanyDetail() {
         })
       }
 
-      if (idChat !== currentIdChat) {
+      if(idChat !== currentIdChat){
 
         const docRef = doc(db, "messages", currentIdChat);
         const docSnap = await getDoc(docRef);
 
         setState({
-          messages: docSnap.data() !== undefined ? docSnap.data().chat : []
+          messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+          owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+          ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
         })
 
         var list = !state.messages ? [] : state.messages
+
         list.push({
           id: !state.messages ? 0 : state.messages.length,
           text: message,
@@ -86,18 +91,19 @@ export default function CompanyDetail() {
         setIdChat(currentIdChat)
       }
 
-
-
+      //Mando los datos a la base de datos
       await setDoc(doc(db, "messages", currentIdChat), {
-        chat: list
+        owners: state.owners == null ? {user1: user._id, user2: oneCompany._id} : state.owners,
+        chat: list,
+        ownersNames: state.ownersNames == null ? {user1: user.name, user2: oneCompany.name} : state.ownersNames
       });
     }
-    catch (err) {
+    catch(err){
       console.log(err.message)
     }
   }
 
-  function handleOnChangeMessage(e) {
+  function handleOnChangeMessage(e){
 
     setMessage(e.target.value)
   }

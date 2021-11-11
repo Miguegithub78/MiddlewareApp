@@ -15,26 +15,26 @@ const { postJobs, getAllJobs, getJobsById, deleteJob, putJobs } = require('./con
 
 const { putLikes } = require('./controllers/addLikes');
 
-router.post('/login', signIn);//path del landing(en revision)
+router.post('/login', signIn);
 
-router.get('/juniors', getAllJuniors);//se obtienen los usuarios programadores
-router.get('/juniors/:id', getJuniorById); //se obtiene un usuario programador por id
+router.get('/juniors', getAllJuniors);
+router.get('/juniors/:id', getJuniorById);
 
-//se crea un usuario programador
-router.put('/juniors/:id', updateJuniorsProfile);//se actualiza un usuario programador
-router.delete('/juniors/:id', deleteJuniorsProfile);//se elimina un usuario programador
 
-router.get('/companies', getAllCompanies);//se obtienen las empresas
-router.get('/companies/:id', getCompaniesById); //se obtiene las empresas programador por id
-router.put('/companies/:id', updateCompaniesProfile);//se actualiza una empresa
-router.delete('/companies/:id', deleteCompaniesProfile);//se elimina un usuario empresa
+router.put('/juniors/:id', updateJuniorsProfile);
+router.delete('/juniors/:id', deleteJuniorsProfile);
 
-router.get('/languages', getAllLaguages);//se obtienen los lenguajes
-router.get('/technologies', getAllTechnologies);//se obtienen las tecnologias
+router.get('/companies', getAllCompanies);
+router.get('/companies/:id', getCompaniesById); 
+router.put('/companies/:id', updateCompaniesProfile);
+router.delete('/companies/:id', deleteCompaniesProfile);
+
+router.get('/languages', getAllLaguages);
+router.get('/technologies', getAllTechnologies);
+
 
 router.get('/admin', getAdmins)
-router.post('/admin', adminRegister);   //se registran los administradores
-
+router.post('/admin', adminRegister);   
 router.get('/publications', getPublications)
 router.get('/publications/:id', getPublicationsById)
 router.post('/publications', postPublications)
@@ -50,7 +50,6 @@ router.get('/jobs/:id', getJobsById)
 router.post('/jobs', postJobs)
 router.put('/jobs/:id', putJobs)
 router.delete('/jobs/:id', deleteJob)
-
 router.put('/jobs/postulation/:id', juniorsPostulations )
 
 router.put('/addLike', putLikes)

@@ -19,25 +19,46 @@ const jwtgenerater =  (payload) => {
   return token;
 };
 
-const finder = async (payload) => {
-  const user = await payload.collections.findOne(payload.gmail);
-  return user;
-};
 
-const finderId = async (payload) => {
-  const user = await payload.collections.findById(payload.id);
-  return user;
-};
 
-const decoder = async (payload) => {
-  const decoded = await jwt.verify(payload, SECRET);
-  return decoded;
+const decoder = async (token, userType, id) => {
+  
+ try{
+    const decoded = await jwt.verify(token, SECRET);
+    if (userType === 'Company'){
+      const user =  await Company.findOne({idFireBase : decoded.id});
+      if (!user) {
+        return {auth: false, message: "User not found"};
+      }else{
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Unauthorized user"};
+          }
+        }
+      }
+      return user; 
+    }
+    if (userType === 'Junior'){
+      const user =  await Juniors.findOne({ idFireBase: decoded.id});
+      if (!user) {
+        return {auth: false, message: "User not found"};
+      }else{
+        if (id){
+          if (id !== decoded.id){
+            return {auth: false, message: "Unauthorized user"};
+          }
+        }
+      }
+      return user; 
+    }
+    return decoded;
+  }catch(err){
+    return {auth: false, message: "invalid token"}
+  }
 };
 
 module.exports = {
   jwtgenerater,
-  finder,
-  finderId,
   decoder,
 };
 

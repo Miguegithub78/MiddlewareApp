@@ -12,15 +12,15 @@ const postJobs = async (req, res) => {
 
       const company = await Company.findOne({ _id : companyId} );
 
-        if(!title){
+        if(!title || company === null){
           
-          return res.status(404).json({ error: 'required "Title" is missing'})
+          return res.status(404).json({ error: 'required "Title or Company valid" is missing'})
         }
 
         const newJob = new Jobs({
             title,
             description,
-            photograph,
+            photograph: photograph ? photograph : company.photograph,
             country,
             city,
             salary,
@@ -30,7 +30,6 @@ const postJobs = async (req, res) => {
             company: company,
             premium,
             status
-
         });
 
         try{
@@ -79,11 +78,11 @@ const getJobsById = async (req, res) => {
 
 const putJobs = async (req, res) => {
     
-    const { id } = req.params;
+    const { companyId } = req.params;
   
-      const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, premium, status } = req.body;
+      const { title, description, photograph, country, city, salary, currency, date, technologies, _id, premium, status } = req.body;
   
-        const company = await Company.findOne({ idMongo : companyId} );
+        const company = await Company.findOne({ idFireBase : companyId} );
   
           if(!title){
             

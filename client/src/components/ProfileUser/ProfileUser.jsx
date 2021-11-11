@@ -15,6 +15,7 @@ import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
 // import Prueba2Skill from './Prueba2Skill';
 import CareerData from "./CareerData";
+import NavBar from '../NavBar/NavBar';
 // import Softskills from './SoftSkills';
 
 const ProfileUser = () => {
@@ -99,6 +100,7 @@ const ProfileUser = () => {
 
   return user ? (
     <div>
+      <NavBar />
       <Link
         className="btn btn-block btn-dark btn-outline-light"
         to="/home/companies"

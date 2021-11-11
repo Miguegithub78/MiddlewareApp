@@ -37,7 +37,7 @@ const inicialState = {
 	juniors: [],
 	companies: [],
 	publications: [],
-	publication: {},
+	publication: [],
 	emailVerification: true,
 	jobs: {
 		data: [],

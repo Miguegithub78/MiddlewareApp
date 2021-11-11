@@ -67,6 +67,7 @@ const CreatePublications = () => {
     premium: user.premium,
     status: 'active',
   });
+  console.log(input)
 
 
   function handleChange(e) {

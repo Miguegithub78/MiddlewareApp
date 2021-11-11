@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logOutUserAction } from "../../redux/actions";
 import styles from "./NavBar.module.css";
+import Notifications from "../Notifications/Notifications";
 function NavBar() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
@@ -73,6 +74,11 @@ function NavBar() {
                 </Link>
               </li>
             ) : null}
+             <li className={`nav-item  ${styles.items}`}>
+                <Link className="nav-link fw-normal " to={"/notifications"}>
+                  Notificaciones
+                </Link>
+              </li>
             {/* 	<li className={`nav-item  ${styles.items}`}>
 							<a className='nav-link fw-normal ' href='#'>
 								Mis postulaciones

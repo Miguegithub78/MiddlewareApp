@@ -109,21 +109,27 @@ const updateCompaniesProfile = async (req, res) => {
         .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
+    // const decoded = await jwt.verify(token, SECRET);
 
-    const user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
+    // const user = await Company.findOne({idFireBase: decoded.id});
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
     const { id } = req.params;
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+    // if (id !== decoded.id) {
+    //   return res
+    //     .status(401)
+    //     .json({ auth: false, message: "usuario no autorizado" });
+    // }
+
+    const result = await decoder(token,'Company', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
     }
 
     const {
@@ -176,23 +182,29 @@ const deleteCompaniesProfile = async (req, res) => {
     if (!token) {
       return res
         .status(403)
-        .json({ auth: false, message: "se requiere token" });
+        .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await jwt.verify(token, SECRET);
-    const user = await Company.findOne({idFireBase: decoded.id});
-    if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "usuario no registrado" });
-    }
+    // const decoded = await jwt.verify(token, SECRET);
+    // const user = await Company.findOne({idFireBase: decoded.id});
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ auth: false, message: "usuario no registrado" });
+    // }
 
     const { id } = req.params;
 
-    if (id !== decoded.id) {
-      return res
-        .status(401)
-        .json({ auth: false, message: "usuario no autorizado" });
+    // if (id !== decoded.id) {
+    //   return res
+    //     .status(401)
+    //     .json({ auth: false, message: "usuario no autorizado" });
+    // }
+
+    const result = await decoder(token,'Company', id)
+
+    if (result.auth === false) {
+      return res.status(401).json(result);
     }
 
     const getCompany = await Company.findOne({idFireBase: decoded.id});

@@ -15,7 +15,6 @@ import {
 import tokenAuth from "../config/token";
 import { useHistory } from "react-router-dom";
 
-
 //
 import {
   getJuniors,
@@ -28,7 +27,6 @@ import NavBar from "../NavBar/NavBar";
 //
 
 const Chat2 = () => {
-
 
 
   const user = useSelector(state => state.user)

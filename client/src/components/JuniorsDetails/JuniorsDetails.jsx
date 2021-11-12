@@ -20,7 +20,6 @@ export default function JuniorsDetail() {
 
 
 
-
   const [message, setMessage] = useState({})
   var [state, setState] = useState({ messages: [], owners: null, ownersNames: null })
   var [idChat, setIdChat] = useState('')

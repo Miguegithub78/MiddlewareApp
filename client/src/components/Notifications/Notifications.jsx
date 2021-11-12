@@ -8,9 +8,13 @@ import './Notifications.css';
 
 const Notifications = () => {
     const {user} = useSelector(state => state)
-    const {publications} = useSelector(state => state)
     const dispatch = useDispatch();
     const history = useHistory();
+    const [notifications, setNotifications] = useState([
+        {
+            notifications: [...user.publications, ...user.postulationsJobs]
+        }
+    ])
     
 
     
@@ -30,6 +34,7 @@ const Notifications = () => {
 
     console.log(user.publications)
     console.log(user.postulationsJobs)
+    console.log(notifications)
     
 
     return user && user.userType === 'juniors' ? (
@@ -38,9 +43,12 @@ const Notifications = () => {
             <div className="notifications" id="box">
                 <h2>Notificaciones</h2>
                 <div className="notifications-item">
-                    {user.publications?.map(el => {
+                    {notifications[0].publicaciones?.map(el => {
                         return (
-                        <div>Tu publicación '{el.description}', lleva {el.likesNumber} reacciones!</div> 
+                        <div>
+                            <li>Tu publicación '{el.description}' recibió un megusta, lleva {el.likesNumber} reacciones! <button>x</button> </li>
+                        </div> 
+                        
                         )
                     })}
                 </div>

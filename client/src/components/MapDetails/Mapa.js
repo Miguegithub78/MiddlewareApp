@@ -16,30 +16,56 @@ import mapStyles from "./mapStyles";
 
 let company= [
   {
-    id: "618905611ad62578fd8367f1",
+    _id: "618d3fd84f336360bbe17ef4",
     name:"Clinica Soler",
     lat: -34.68784,
     lng: -58.50175,
   },
   {
-    id: "618905611ad62578fd8367f2",
-    name:"Google",
-    lat: -34.660254,
-    lng: -58.36698,
-  },
-  {
-    id: "618c0cc3a8707bd5e8e32f8f",
+    _id: "618d5563e7803ae26b3dc381",
     name:"Ailin Rutchle",
     lat: -33.17607,
     lng: -68.47444,
   },
   {
-    id: "618be3904d97025623b68abd",
+    _id: "618c0cc3a8707bd5e8e32f8f",
+    name:"Ailin",
+    lat: -33.10607,
+    lng: -68.49444,
+  },
+  {
+    _id: "618c1d35b44f427e9f2a739b",
     name:"Pamela Pereyra",
     lat: -31.43292,
     lng: -64.13212,
   },
+  {
+    _id: "618bdfe96cfb2d7b1d953cb7",
+    name:"Maxi Gadea",
+    lat: -31.635292,
+    lng: -64.36212,
+  },
+  {
+    _id: "618be0dd4b71ca6e252daacb",
+    name:"Guille Tempo",
+    lat: -32.435292,
+    lng: -64.16212,
+  },
+  {
+    _id: "618c1580357f915ca70270b0",
+    name:"María Angélica Rojas Fernández",
+    lat: -34.62254,
+    lng: -58.36550,
+  },
+  {
+    _id: "618c1d69b13c6eafa0a0abf6",
+    name:"Jesuan Patermina",
+    lat: -34.62254,
+    lng: -58.35550,
+  },
+  
 ];
+
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -71,8 +97,10 @@ export default function Mapa() {
   //createLocationMarkers();
  console.log('nombre ' + companies.name)
   const center = {
-        lat: -34.28421,
-        lng: -64.16724,
+        lat: -34.13091,
+        lng: -63.38324,
+        //lat: companies.lat,
+        //lng: companies.lng,
   };
   
   const mapRef = useRef();
@@ -102,12 +130,10 @@ export default function Mapa() {
         
         onLoad={onMapLoad}
       >
-        {console.log('lat dentro ' + company)}
-        {console.log('arreglo' + companies)}
-        
+               
 
         {company?.map((marker) => (
-          id && id===marker.id ? (
+          id && id===marker._id ? (
           <Marker
               key={`${marker.lat}-${marker.lng}`}
               position={{ lat: marker.lat, lng: marker.lng }}
@@ -123,7 +149,7 @@ export default function Mapa() {
          
         
         ))}
-           infoWindow = new google.map.InfoWindow()
+           
       </GoogleMap>
     </div>
   );

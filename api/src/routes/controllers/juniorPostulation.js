@@ -5,8 +5,9 @@ const nodemailer = require('nodemailer'); // previamente hay que instalar nodema
 const { decoder } = require("../../helpers/index")
 
 require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
-const { SECRET } = process.env;
+const { SECRET, MIDDLEWARE_EMAIL, EMAIL_PASSWORD  } = process.env;
 
 const juniorsPostulations = async (req, res) => {
 	const { id } = req.params; //id del job
@@ -49,8 +50,8 @@ const juniorsPostulations = async (req, res) => {
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: 'info.MiddlewareApp@gmail.com',
-                    pass: 'pjvuuknhnxztavyn'
+                    user: MIDDLEWARE_EMAIL,
+                    pass: EMAIL_PASSWORD
                 } 
             });
             await transporter.sendMail({ // acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos

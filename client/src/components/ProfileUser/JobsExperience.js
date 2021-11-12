@@ -15,6 +15,7 @@ const JobsExperience = ({ infoUser, setInfoUser }) => {
   const [editValue, setEditValue] = useState(true);
 
   //en cada edicion de datos tiene que viajar a la db
+  
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(infoUser(infoUser));

@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { changePictureProfileAction } from "../../redux/actions";
 
 const ChangePicture = ({ setInfoUser }) => {
   const dispatch = useDispatch();
   const [picture, setPicture] = useState(null);
+  // const { user } = useSelector((state) => state);
 
   const handleChangePicture = (e) => {
     const picture = e.target.files[0];
@@ -19,6 +20,7 @@ const ChangePicture = ({ setInfoUser }) => {
       dispatch(changePictureProfileAction(picture));
     }
   };
+
   return (
     <>
       <div className="height-10 d-flex mt-2 justify-content-center align-items-center">
@@ -53,9 +55,7 @@ const ChangePicture = ({ setInfoUser }) => {
             </div>
             <div className="modal-body">
               <p className="body-desc">
-                It will be easier for your friends to recognize you if you
-                upload your real photo. You can upload the image in JPG, GIF or
-                PNG format.
+                Porfavor utiliza los siguientes formatos JPG, GIF o PNG.
               </p>
               <div className="photo-input">
                 <input
@@ -75,8 +75,8 @@ const ChangePicture = ({ setInfoUser }) => {
             </div>
             <div className="modal-footer">
               <p className="footer-title">
-                If you're having problems uploading, try choosing a smaller
-                photo.
+                Si estas teniendo un problema, porfavor intenta con otra foto
+                mas chica
               </p>
             </div>
           </div>

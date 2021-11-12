@@ -103,15 +103,14 @@ const updateCompaniesProfile = async (req, res) => {
       description,
       photograph,
       country,
-      state,
-      languages,
       city,
+      linkedin,
       latitude,
       longitude,
-      address
+      idFireBase
     } = req.body;
 
-    const languagesGet = await Languages.find({ name: languages });
+    // const languagesGet = await Languages.find({ name: languages });
 
     const CompaniesChange = await Company.findOneAndUpdate(
       {
@@ -123,13 +122,11 @@ const updateCompaniesProfile = async (req, res) => {
         gmail: gmail,
         photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
         country: country,
-        state: state,
         city: city,
+        linkedin,
         description: description,
-        languages: languagesGet,
         latitude: latitude,
         longitude: longitude,
-        address: address
       },
       { new: true }
     );

@@ -28,10 +28,9 @@ import "./Home.css";
 import { Publications } from "../Publications/Publications";
 import Mapa from "../Mapa/Mapa";
 
-
 const Home = () => {
   const history = useHistory();
-  const { user, emailVerification } = useSelector((state) => state);
+  const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
@@ -46,9 +45,6 @@ const Home = () => {
     }
   }, [user]);
   
-  // useEffect(() => {
-  //   if (!user) dispatch(getUserAction());
-  // }, []);
 
   useEffect(() => {
     if (userType === "null") history.push("/");
@@ -86,7 +82,6 @@ const Home = () => {
               {tipo && tipo === "publications" && <Publications />}
               {tipo && tipo === "mapa" && <Mapa />}
               {/* 	<CardsJobs jobs={jobs} /> */}
-
             </div>
           </div>
         </div>

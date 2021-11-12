@@ -36,25 +36,21 @@ const center = {
 };
 let cont = 0;
 
-export default function Mapa() {
+export default function Mapa({ setMarkers, markers, setInfoUser }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCCpn70ZJEIvFYTsUyxArbhmtFJXoNgtgo",
-    libraries
+    libraries,
   });
 
-
-  const [markers, setMarkers] = useState([]);
+  // const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
 
 
   const onMapClick = useCallback((e) => {
-
-    console.log('contador' + cont)
+    console.log("contador" + cont);
     if (cont === 0) {
       cont = cont + 1;
       setMarkers((current) => [
-
-        ...current,
         {
           lat: e.latLng.lat(),
           lng: e.latLng.lng(),
@@ -62,6 +58,11 @@ export default function Mapa() {
         },
       ]);
     }
+    //esto lo puse aqui para cuando haga un cambio de su ubicacion aparezca el boton guardar
+    setInfoUser(info=>({
+      ...info,
+      infoUserChanged: true,
+    }))
   }, []);
 
   const mapRef = useRef();
@@ -75,12 +76,9 @@ export default function Mapa() {
     if (cont === 0) {
       cont = cont + 1;
       setMarkers((current) => [
-
-        ...current,
         {
           lat: lat,
           lng: lng,
-
         },
       ]);
     }
@@ -91,7 +89,6 @@ export default function Mapa() {
 
   return (
     <div>
-
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
@@ -105,22 +102,24 @@ export default function Mapa() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              cont = 0;
-              setMarkers([]);
-            }}
-            icon={{
-              url: `/company.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
+
+        {markers.length > 0 &&
+          markers.map((marker) => (
+            <Marker
+              key={`${marker.lat}-${marker.lng}`}
+              position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
+              onClick={() => {
+                cont = 0;
+                setMarkers([]);
+              }}
+              icon={{
+                url: `/company.svg`,
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+                scaledSize: new window.google.maps.Size(30, 30),
+              }}
+            />
+          ))}
 
         {selected ? (
           <InfoWindow
@@ -133,7 +132,9 @@ export default function Mapa() {
               <h2>
                 <i className="bi bi-laptop"></i>{" "}
                 Company
+
               </h2>
+
 
             </div>
           </InfoWindow>
@@ -155,7 +156,10 @@ function Locate({ panTo }) {
               lng: position.coords.longitude,
 
             });
-            console.log('mi ubicacion' + position.coords.latitude, position.coords.longitude)
+            console.log(
+              "mi ubicacion" + position.coords.latitude,
+              position.coords.longitude
+            );
           },
           () => null
         );

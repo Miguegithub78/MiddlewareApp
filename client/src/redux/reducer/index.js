@@ -22,6 +22,8 @@ import {
 	UPLOAD_PICTURE,
 	GET_JOB_DETAILS,
 	GET_JOBS,
+	GET_UBICATION,
+	ADD_NEW_JOB
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -39,6 +41,7 @@ const inicialState = {
 	publications: [],
 	publication: {},
 	emailVerification: true,
+	countryState:null,
 	jobs: {
 		data: [],
 		filterData: [],
@@ -258,6 +261,16 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				jobsDetails: action.payload,
+			};
+		case GET_UBICATION:
+			return {
+				...state,
+				countryState: action.payload,
+			};
+		case ADD_NEW_JOB:
+			return {
+				...state,
+				user: {...state.user, jobs:[...state.user.jobs, action.payload]}
 			};
 
 		default:

@@ -1,6 +1,7 @@
 import React from "react";
+import State from "../../CreatePublications/State";
 
-const City = ({ infoJobs, editValue, handleChange }) => {
+const City = ({ infoJobs, editValue, handleChange, state }) => {
   return (
     <div className="row mb-3">
       <div className="col-sm-4">
@@ -8,12 +9,10 @@ const City = ({ infoJobs, editValue, handleChange }) => {
       </div>
       <div className="col-sm-8 ">
         {!editValue ? (
-          <input
-            className="form-control"
-            type="text"
-            name="city"
-            onChange={handleChange}
-            value={infoJobs.city}
+          <State
+            state={state}
+            handleChange={handleChange}
+            infoJobs={infoJobs}
           />
         ) : (
           <span>{infoJobs.city}</span>

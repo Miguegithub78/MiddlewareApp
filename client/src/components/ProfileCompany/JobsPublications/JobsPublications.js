@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import Country from "./Country";
 import Description from "./Description";
 import Title from "./Title";
@@ -9,12 +8,15 @@ import Salary from "./Salary";
 import Postulates from "./Postulates";
 import Technologies from "./Technologies";
 import Status from "./Status";
+import { editJobPostulationsAction } from "../../../redux/actions";
 
 const JobsPublications = ({ infoUser, setInfoUser, job }) => {
   const [editValue, setEditValue] = useState(true);
   const { juniors, technologies } = useSelector((state) => state);
   const [postulatiosTechnoliges, setPostulatiosTechnoliges] = useState([]);
   const [juniorsAplied, setJuniorsAplied] = useState([]);
+  const [state, setState] = useState(null);
+  const dispatch = useDispatch();
 
   const [infoJobs, setInfoJobs] = useState({
     title: "",
@@ -26,21 +28,23 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
     technologies: [],
     salary: 0,
     date: "",
-    companyId: "",
     premium: "",
     status: "",
     _id: "",
+    idCompany: "",
+    idFireBase:''
   });
   const handleChange = (e) => {
-    console.log("entrando", e.target.name, e.target.value);
+    // console.log("entrando", e.target.name, e.target.value);
     setInfoJobs((info) => ({
       ...info,
       [e.target.name]: e.target.value,
     }));
   };
-  const handleClick = () => {
+  const handleClick = (idJob) => {
     setEditValue((d) => !d);
-    if (!editValue) console.log("truer");
+    if (!editValue) dispatch(editJobPostulationsAction(idJob, infoJobs));
+    //hacer el dipatch y que todo funcione
   };
 
   useEffect(() => {
@@ -59,10 +63,11 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
       technologies: [...techUsed],
       salary: job.salary,
       date: job.date,
-      companyId: job.companyId,
       premium: job.premium,
       status: job.status,
       _id: job._id,
+      idCompany: infoUser._id,
+      idFireBase: infoUser.idUser,
     });
   }, []);
 
@@ -102,11 +107,13 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
               infoJobs={infoJobs}
               editValue={editValue}
               handleChange={handleChange}
+              setState={setState}
             />
             <City
               infoJobs={infoJobs}
               editValue={editValue}
               handleChange={handleChange}
+              state={state}
             />
             <Salary
               infoJobs={infoJobs}
@@ -138,7 +145,7 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
               <div className="col-sm-8 ">
                 <button
                   className="btn btn-outline-dark px-4"
-                  onClick={handleClick}
+                  onClick={() => handleClick(infoJobs._id)}
                 >
                   {editValue ? "Editar" : "Guardar"}
                 </button>

@@ -10,8 +10,7 @@ const Status = ({ infoJobs, editValue, handleChange }) => {
       </div>
       <div className="col-sm-8 ">
         {!editValue ? (
-          <select onChange={handleChange} name='status' className="form-select">
-            <option defaultValue>Estado de la publicación</option>
+          <select onChange={handleChange} value={infoJobs.status} name='status' className="form-select">
             <option  value="active">Activo</option>
             <option  value="paused">Pausado</option>
             <option  value="closed">Cerrado</option>

@@ -12,6 +12,8 @@ import {
 } from "../../redux/actions";
 import "./CreatePublications.css";
 import NavBar from "../NavBar/NavBar";
+import CountryState from "./CountryState";
+import State from "./State";
 
 const CreatePublications = () => {
   const { user } = useSelector((state) => state);
@@ -53,6 +55,7 @@ const CreatePublications = () => {
 
   const [picture, setPicture] = useState(null);
   const [errors, setErrors] = useState({});
+  const [state, setState] = useState(null);
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -113,16 +116,13 @@ const CreatePublications = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postJobs(input));
-    history.push("/home/companies");
+    history.push("/home/juniors");
   }
-
   // funcion que desabilita el poder enviar el form si no tiene campos rellenados
   (function () {
     "use strict";
-
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll(".needs-validation");
-
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener(
@@ -149,7 +149,7 @@ const CreatePublications = () => {
             <form
               onSubmit={handleSubmit}
               className="needs-validation"
-              novalidate
+              noValidate
             >
               <div className="row px-3 m-2">
                 <img alt="img" className="user" src={user.photograph} />
@@ -198,14 +198,10 @@ const CreatePublications = () => {
                   <h6 className="mt-1">País</h6>
                 </div>
                 <div className="col-sm-9 text-secondary">
-                  <input
-                    className="form-control"
-                    value={input.country}
-                    onChange={handleChange}
-                    name="country"
-                    placeholder="Ej: Argentina/Uruguay"
-                    required
-                  ></input>
+                  <CountryState
+                    setState={setState}
+                    handleChange={handleChange}
+                  />
                   {errors.country && <p className="perror">{errors.country}</p>}
                 </div>
               </div>
@@ -214,14 +210,7 @@ const CreatePublications = () => {
                   <h6 className="mt-1">Ciudad</h6>
                 </div>
                 <div className="col-sm-9 text-secondary">
-                  <input
-                    className="form-control"
-                    value={input.city}
-                    onChange={handleChange}
-                    name="city"
-                    placeholder="Ej: Buenos Aires/Montevideo"
-                    required
-                  ></input>
+                  <State state={state} handleChange={handleChange} />
                   {errors.city && <p className="perror">{errors.city}</p>}
                 </div>
               </div>

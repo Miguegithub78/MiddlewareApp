@@ -21,7 +21,7 @@ const signIn = async (req, res) => {
       return res.json({ noUser: true, gmail });
     }
   }
-  try {
+  // try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {
       const user = await Juniors.findOne({ gmail });
@@ -75,9 +75,9 @@ const signIn = async (req, res) => {
       res.json({ auth: true, token: token, user: CompanyCreate });
       return;
     }
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+  // } catch (err) {
+  //   res.status(404).json({ message: err.message });
+  // }
 };
 
 module.exports = { signIn };

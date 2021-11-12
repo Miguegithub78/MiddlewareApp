@@ -39,7 +39,12 @@ const Login = () => {
     if (!userFirebase) return;
     if (userFirebase.emailVerified) {
       if (errorLogin) return;
-      history.push("/home/companies");
+      console.log('lo pusheo',type );
+      if(type==='juniors'){
+        history.push("/home/companies");
+      }else{
+        history.push("/home/juniors");
+      }
     } else {
       if (emailVerification) {
         dispatch(emailVerificationAction(false));

@@ -26,6 +26,10 @@ const companySchema = new Schema({
         required: true,
         unique: true
     },
+    linkedin: {
+        type: String,
+
+    },
 
     photograph: {
         type: String,
@@ -38,11 +42,6 @@ const companySchema = new Schema({
     },
 
     country: {
-        type: String,
-        required: false
-    },
-
-    state: {
         type: String,
         required: false
     },

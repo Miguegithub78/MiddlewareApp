@@ -253,3 +253,8 @@ input[type="file"] {
   padding: 6px 12px;
   cursor: pointer;
 }
+
+.imgMessage {
+  width: 150px;
+}
+

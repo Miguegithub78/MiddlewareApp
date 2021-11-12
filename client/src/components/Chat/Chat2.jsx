@@ -254,13 +254,13 @@ const Chat2 = () => {
 
                       e.from == user._id
 
-                        ? <li className="clearfix" key={i}>
-                          <div className="message other-message float-right">{e.text}</div>
-                        </li>
+                        ? (e.img ? <li><img className="imgMessage float-right" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
+                              <div className="message other-message float-right">{e.text}</div>
+                            </li>)
 
-                        : <li className="clearfix" key={i}>
-                          <div className="message my-message">{e.text}</div>
-                        </li>
+                        : (e.img ? <li><img className="imgMessage" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
+                              <div className="message my-message">{e.text}</div>
+                            </li>)
                     )
 
                     ) : <h5>Cargando...</h5>

@@ -196,10 +196,12 @@ const Chat2 = () => {
           <div className="card chat-app">
             <div id="plist" className="people-list h-100">
               <div className="input-group">
-                <div className="input-group-prepend">
-                  <i className="input-group-text fa fa-search"></i>
+                {/*< <div className="input-group-prepend">
+                 i className="input-group-text fa fa-search"></i>
                 </div>
-                <input type="text" className="form-control" placeholder="Search..." />
+
+               <input type="text" className="form-control" placeholder="Search..." />*/}
+
               </div>
               <ul className="list-unstyled chat-list mt-2 mb-3">
 
@@ -254,13 +256,13 @@ const Chat2 = () => {
 
                       e.from == user._id
 
-                        ? (e.img ? <li className="clearfix" key={i}><img className="imgMessage my-message float-right" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
-                              <div className="message other-message float-right">{e.text}</div>
-                            </li>)
+                        ? (e.img ? <li className="clearfix" key={i}><img className="imgMessage my-message float-right" src={e.img} alt="imagen" /></li> : <li className="clearfix" key={i}>
+                          <div className="message other-message float-right">{e.text}</div>
+                        </li>)
 
-                        : (e.img ? <li><img className="imgMessage" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
-                              <div className="message my-message">{e.text}</div>
-                            </li>)
+                        : (e.img ? <li><img className="imgMessage" src={e.img} alt="imagen" /></li> : <li className="clearfix" key={i}>
+                          <div className="message my-message">{e.text}</div>
+                        </li>)
                     )
 
                     ) : <h5>Cargando...</h5>

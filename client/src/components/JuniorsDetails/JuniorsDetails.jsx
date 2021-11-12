@@ -90,9 +90,9 @@ export default function JuniorsDetail() {
 
 
       await setDoc(doc(db, "messages", currentIdChat), {
-        owners: state.owners == null ? {user1: juniors._id, user2: user._id} : state.owners,
+        owners: state.owners == null ? { user1: juniors._id, user2: user._id } : state.owners,
         chat: list,
-        ownersNames: state.ownersNames == null ? {user1: juniors.name, user2: user.name} : state.ownersNames
+        ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames
       });
     }
     catch (err) {
@@ -106,7 +106,7 @@ export default function JuniorsDetail() {
   }
 
 
-  return ( <div>
+  return (<div>
 
     {/*  Modal  */}
     <div
@@ -135,7 +135,7 @@ export default function JuniorsDetail() {
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
-                onChange={(e)=>handleOnChangeMessage(e)}
+                onChange={(e) => handleOnChangeMessage(e)}
               ></textarea>
             </div>
 
@@ -165,7 +165,7 @@ export default function JuniorsDetail() {
       </div>
       <div className='row align-items-center justify-content-center'>
         <div className='col-5 text-center'>
-          <h1>{juniors.name}</h1>
+          <h4>{juniors.name}</h4>
           <img src={juniors.photograph} alt='Imagen no encontrada' width='200px' heigth='200px'></img>
           <h6 className="mb-0">
             <svg
@@ -279,12 +279,12 @@ export default function JuniorsDetail() {
           ))}
         </div>
 
-        { user && user.userType == 'companies'?
-          <button type="button" onClick={()=>generateChat()}
-          type="button"
-          className="btn btn-block btn-dark btn-outline-light"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModalCenter" >Enviar mensaje</button>
+        {user && user.userType == 'companies' ?
+          <button type="button" onClick={() => generateChat()}
+            type="button"
+            className="btn btn-block btn-dark btn-outline-light"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenter" >Enviar mensaje</button>
           : <div></div>
         }
 
@@ -292,6 +292,6 @@ export default function JuniorsDetail() {
 
     </div>
 
-    </div>
+  </div >
   );
 }

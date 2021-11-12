@@ -21,6 +21,7 @@ import {
   getCompanies,
   getTechnologies,
   emailVerificationAction,
+  resetPicturePublications
 } from "../../redux/actions";
 
 import NavBar from "../NavBar/NavBar";
@@ -62,7 +63,7 @@ const Chat2 = () => {
       to: idUser2,
       id: !state.messages ? 0 : state.messages.length,
       text: message,
-      img: message == '' ? publiImg : undefined,
+      img: publiImg
     }
     list.push(newMessage)
     setMessage('')
@@ -77,6 +78,9 @@ const Chat2 = () => {
       });
 
       setCambio(true)
+
+      dispatch(resetPicturePublications())
+
     }
     catch (err) {
       console.log(err.message)

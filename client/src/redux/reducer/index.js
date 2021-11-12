@@ -172,6 +172,11 @@ const rootReducer = (state = inicialState, action) => {
 			publications: [...state.publications, action.payload],
 		}
 
+		case "PUT_PUBLICATION": return {
+			...state,
+			publication: action.payload
+		}
+
 		case GET_PUBLICATIONS_BY_ID:
 			return {
 				...state,

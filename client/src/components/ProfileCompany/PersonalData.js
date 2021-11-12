@@ -6,21 +6,7 @@ import SensitiveData from "./SensitiveData";
 // import Technologies from "./Technologies";
 
 const PersonalData = ({ infoUser, setInfoUser, user }) => {
-  const dispatch = useDispatch();
-  const handleChange = (e) => {
-    setInfoUser((info) => ({
-      ...info,
-      infoUserChanged: true,
-      [e.target.name]: e.target.value,
-    }));
-  };
   const [editValue, setEditValue] = useState(true);
-
-  //en cada edicion de datos tiene que viajar a la db
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(infoUser(infoUser));
-  }
   return (
     <div className="card">
       <div className="card-body">

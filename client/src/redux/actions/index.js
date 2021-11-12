@@ -22,6 +22,8 @@ import {
   GET_JOB_DETAILS,
   GET_JOBS,
   POSTULATION,
+  ADD_NEW_JOB,
+  GET_UBICATION,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
 import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
@@ -97,7 +99,7 @@ export const loginUserEmailPassAction = (email, pass, name) => {
 
     if (name) {
       try {
-      //   console.log("entro aca!");
+        //   console.log("entro aca!");
         const userFirebase = await createUserWithEmailAndPassword(
           auth,
           gmail,
@@ -126,7 +128,7 @@ export const loginUserEmailPassAction = (email, pass, name) => {
     } else {
       // si hay user
       try {
-      //   console.log(" aca!");
+        //   console.log(" aca!");
         const userFirebase = await signInWithEmailAndPassword(
           auth,
           email,
@@ -187,7 +189,6 @@ export const logOutUserAction = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("userType");
       dispatch(logOutOkey());
-
     } catch (e) {
       console.log(e);
     }
@@ -346,9 +347,12 @@ export function deletePublications(id) {
 
 /*JOBS*/
 export function postJobs(payload) {
-  return async function () {
+  return async function (dispatch) {
     const response = await clienteAxios.post("/jobs", payload);
-    return response;
+    return dispatch({
+      type: ADD_NEW_JOB,
+      payload:response.data
+    });
   };
 }
 
@@ -492,5 +496,37 @@ export function postulation(idJob, idUser) {
       });
       /* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
     } catch (error) {}
+  };
+}
+
+export const getCountryStateAction = () => {
+  return async function (dispatch) {
+    try {
+      const allUbication = await clienteAxios.get(`/ubication`);
+      console.log(allUbication.data, "fromaction");
+      return dispatch({ type: GET_UBICATION, payload: allUbication.data });
+    } catch (error) {}
+  };
+};
+
+export function editJobPostulationsAction(idJob, job) {
+  return async function (dispatch) {
+    try {
+       await clienteAxios.put(`/jobs/${idJob}`, job);
+       console.log('se mando el job editado');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export const editCompanyDataAction =(infoUser) => {
+  return async function (dispatch) {
+    try {
+      const editCompany = await clienteAxios.put(`/companies/${infoUser.idFireBase}`, infoUser);
+      // return dispatch({ type: GET_JOBS, payload: editCompany.data });
+      console.log(editCompany.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 }

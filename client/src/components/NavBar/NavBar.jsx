@@ -14,7 +14,7 @@ function NavBar() {
       <div className="container-fluid">
         <Link
           className={`navbar-brand text-primary ${styles.logo}`}
-          to="/home/companies"
+          to={user&&user.userType==='juniors'?'/home/companies':'/home/juniors'}
         >
           Middleware
         </Link>

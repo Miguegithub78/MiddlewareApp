@@ -65,7 +65,8 @@ export default function CompanyDetail() {
           id: !state.messages ? 0 : state.messages.length,
           text: message,
           from: user._id,
-          to: oneCompany._id
+          to: oneCompany._id,
+          img: "",
         })
       }
 

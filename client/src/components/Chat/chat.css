@@ -181,25 +181,9 @@ body{
   padding: 20px
 }
 
-.online,
-.offline,
-.me {
-  margin-right: 2px;
-  font-size: 8px;
-  vertical-align: middle
-}
 
-.online {
-  color: #86c541
-}
 
-.offline {
-  color: #e47297
-}
 
-.me {
-  color: #1d8ecd
-}
 
 .float-right {
   float: right
@@ -258,4 +242,14 @@ body{
       height: calc(100vh - 350px);
       overflow-x: auto
   }
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }

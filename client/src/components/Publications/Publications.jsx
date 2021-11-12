@@ -23,7 +23,7 @@ export const Publications = () => {
   const publiImg = useSelector((state) => state.imgPublication);
 
   var [idPost, setIdPost] = useState(null);
-
+  var [loadingImg, setLoadingImg] = useState(false);
   var [loadingImg, setLoadingImg] = useState(false);
 
   var [imgPubli, setImgPubli] = useState(null);
@@ -46,10 +46,10 @@ export const Publications = () => {
 
       console.log("post", publiImg)
 
-      dispatch(postPublications({description: postPublication.description, photograph: publiImg}, user.userType, user._id));
+      dispatch(postPublications({ description: postPublication.description, photograph: publiImg }, user.userType, user._id));
     }
-    else if(editarPost){
-      dispatch(putPublications(idPost, user._id, {description: postPublication.description, photograph: publiImg}));
+    else if (editarPost) {
+      dispatch(putPublications(idPost, user._id, { description: postPublication.description, photograph: publiImg }));
     }
   }
 
@@ -74,7 +74,7 @@ export const Publications = () => {
     }
   });
 
-  async function publicationImg(e){
+  async function publicationImg(e) {
 
     setLoadingImg(true)
 
@@ -96,7 +96,7 @@ export const Publications = () => {
         className="btn btn-block btn-dark btn-outline-light"
         data-bs-toggle="modal"
         data-bs-target="#exampleModalCenter"
-        onClick={()=>setEditarPost(false)}
+        onClick={() => setEditarPost(false)}
       >
         Nueva publicación
       </button>
@@ -135,31 +135,31 @@ export const Publications = () => {
 
               <div className="mb-3 mt-4">
                 <label className="form-label">Seleciona una imagen</label>
-                <input className="form-control" type="file" id="formFile" onChange={(e)=>publicationImg(e)} />
+                <input className="form-control" type="file" id="formFile" onChange={(e) => publicationImg(e)} />
               </div>
             </div>
             <div className="modal-footer">
               {
                 loadingImg
 
-                ? <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  onClick={postDescription}
-                  disabled
-                >
-                  Cargando imagen
-                </button>
+                  ? <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    onClick={postDescription}
+                    disabled
+                  >
+                    Cargando imagen
+                  </button>
 
-                : <button
+                  : <button
                     type="button"
                     className="btn btn-primary"
                     data-bs-dismiss="modal"
                     onClick={postDescription}
                   >
                     Agregar
-                </button>
+                  </button>
               }
             </div>
           </div>
@@ -177,13 +177,13 @@ export const Publications = () => {
                       className={`card text-center  bg-ligth bg-opacity-100${styles.card}`}
                     >
                       <div className={s.name}>
-                        
-                          <img
-                            src={e.junior && e.junior.photograph}
-                            className="rounded-circle p-1 bg-primary"
-                            style={{ width: " 50px ", height: " 50px " }}
-                            alt="Card cap"
-                          />
+
+                        <img
+                          src={e.junior && e.junior.photograph}
+                          className="rounded-circle p-1 bg-primary"
+                          style={{ width: " 50px ", height: " 50px " }}
+                          alt="Card cap"
+                        />
 
                         <span>
                           {" "}
@@ -216,10 +216,10 @@ export const Publications = () => {
                         <span className="me-3">{e.likesNumber}</span>
                         <button
                           className={
-                            
+
                             e.likes.length === e.likesNumber && !e.likes.includes(user ? user._id : '12345')
-                            ? s.btnBlue
-                            : s.btnBlueLike
+                              ? s.btnBlue
+                              : s.btnBlueLike
                           }
 
                           onClick={() => {
@@ -236,17 +236,17 @@ export const Publications = () => {
                         </button>
 
                         {
-                          (e.junior ? e.junior._id : e.company._id) === (user ? user._id : '12345') ? 
-                          <div>
-                            <button
-                            onClick={()=>{setEditarPost(true); setIdPost(e._id)}}
-                            type="button"
-                            className="btn btn-block btn-dark btn-outline-light rounded"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModalCenter"
-                            >Editar</button>
-                          </div> 
-                          : <div></div>
+                          (e.junior ? e.junior._id : e.company._id) === (user ? user._id : '12345') ?
+                            <div>
+                              <button
+                                onClick={() => { setEditarPost(true); setIdPost(e._id) }}
+                                type="button"
+                                className="btn btn-block btn-dark btn-outline-light rounded"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter"
+                              >Editar</button>
+                            </div>
+                            : <div></div>
                         }
 
                       </div>

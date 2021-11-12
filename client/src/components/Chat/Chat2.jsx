@@ -62,7 +62,7 @@ const Chat2 = () => {
       to: idUser2,
       id: !state.messages ? 0 : state.messages.length,
       text: message,
-      img: publiImg,
+      img: message == '' ? publiImg : undefined,
     }
     list.push(newMessage)
     setMessage('')
@@ -254,7 +254,7 @@ const Chat2 = () => {
 
                       e.from == user._id
 
-                        ? (e.img ? <li><img className="imgMessage float-right" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
+                        ? (e.img ? <li className="clearfix" key={i}><img className="imgMessage my-message float-right" src={e.img} alt="imagen"/></li> : <li className="clearfix" key={i}>
                               <div className="message other-message float-right">{e.text}</div>
                             </li>)
 

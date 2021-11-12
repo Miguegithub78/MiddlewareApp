@@ -21,7 +21,7 @@ export default function JuniorsDetail() {
 
 
   const [message, setMessage] = useState({})
-  var [state, setState] = useState({ messages: [], owners: null, ownersNames: null })
+  var [state, setState] = useState({ messages: [], owners: null, ownersNames: null, img: null })
   var [idChat, setIdChat] = useState('')
   var [currentIdChat, setCurrentIdChat] = useState('')
   var [onejunior, setOnejunior] = useState('')
@@ -44,7 +44,8 @@ export default function JuniorsDetail() {
     setState({
       messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
       owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
-      ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
+      ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null,
+      img: docSnap.data() !== undefined ? docSnap.data().img : null
     })
   }
 
@@ -71,7 +72,8 @@ export default function JuniorsDetail() {
         setState({
           messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
           owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
-          ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
+          ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null,
+          img: docSnap.data() !== undefined ? docSnap.data().img : null
         })
 
         var list = !state.messages ? [] : state.messages
@@ -91,7 +93,8 @@ export default function JuniorsDetail() {
       await setDoc(doc(db, "messages", currentIdChat), {
         owners: state.owners == null ? { user1: juniors._id, user2: user._id } : state.owners,
         chat: list,
-        ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames
+        ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames,
+        img: state.img == null ? { user1: juniors.photograph, user2: user.photograph } : state.img
       });
     }
     catch (err) {

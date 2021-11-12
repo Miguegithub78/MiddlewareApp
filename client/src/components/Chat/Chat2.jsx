@@ -15,17 +15,13 @@ import {
 import tokenAuth from "../config/token";
 import { useHistory } from "react-router-dom";
 
-//
+
 import {
-  getJuniors,
-  getCompanies,
-  getTechnologies,
-  emailVerificationAction,
   resetPicturePublications
 } from "../../redux/actions";
 
 import NavBar from "../NavBar/NavBar";
-//
+
 
 const Chat2 = () => {
 
@@ -39,7 +35,8 @@ const Chat2 = () => {
 
     messages: [],
     owners: null,
-    ownersNames: null
+    ownersNames: null,
+    img: null
   })
   var [chat, setChat] = useState(null);
   var [idUser2, setIdUser2] = useState(null);
@@ -47,6 +44,7 @@ const Chat2 = () => {
   var [idChat, setIdChat] = useState(false);
   var [cambio, setCambio] = useState(false);
   var [loadingImg, setLoadingImg] = useState(false);
+  var [imgUser2, setImgUser2] = useState("");
 
   const publiImg = useSelector((state) => state.imgPublication);
 
@@ -74,7 +72,8 @@ const Chat2 = () => {
       await setDoc(doc(db, "messages", idChat), {
         chat: list,
         owners: state.owners,
-        ownersNames: state.ownersNames
+        ownersNames: state.ownersNames,
+        img: state.img
       });
 
       setCambio(true)
@@ -94,7 +93,8 @@ const Chat2 = () => {
       setState({
         messages: (!doc.data() ? [] : doc.data().chat),
         owners: (!doc.data() ? null : doc.data().owners),
-        ownersNames: (!doc.data() ? null : doc.data().ownersNames)
+        ownersNames: (!doc.data() ? null : doc.data().ownersNames),
+        img: (!doc.data() ? null : doc.data().img)
       })
     });
 
@@ -110,12 +110,13 @@ const Chat2 = () => {
     setState({
       messages: (!docSnap.data() ? [] : docSnap.data().chat),
       owners: (!docSnap.data() ? null : docSnap.data().owners),
-      ownersNames: (!docSnap.data() ? null : docSnap.data().ownersNames)
+      ownersNames: (!docSnap.data() ? null : docSnap.data().ownersNames),
+      img: (!docSnap.data() ? null : docSnap.data().img),
     })
 
     if (docSnap.data() !== undefined) {
-
-      setNameUser2(docSnap.data().ownersNames.user1 !== user.name ? docSnap.data().ownersNames.user1 : docSnap.data().ownersNames.user2)
+      setImgUser2(docSnap.data().img.user1 === user._id ? docSnap.data().img.user1 : docSnap.data().img.user2)
+      setNameUser2(docSnap.data().ownersNames.user1 === user.name ? docSnap.data().ownersNames.user1 : docSnap.data().ownersNames.user2)
     }
 
     setLoading(false)
@@ -140,8 +141,10 @@ const Chat2 = () => {
           id: doc.id,
           chat: chat,
           owners: doc.data().owners,
-          ownersNames: doc.data().ownersNames
+          ownersNames: doc.data().ownersNames,
+          img: doc.data().img,
         })
+        setImgUser2(doc.data().img.user1 === user._id ? doc.data().img.user1 : doc.data().img.user2)
       }
     });
     setChat(arrChats)
@@ -222,7 +225,7 @@ const Chat2 = () => {
                   chat ? chat.map((e, i) =>
 
                     <li className="clearfix" key={i} onClick={() => { setIdUser2(e.owners.user1 !== user._id ? e.owners.user1 : e.owners.user2); getChat(e.id); setIdChat(e.id) }}>
-                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />
+                      <img src={e.owners.user1 !== user._id ? e.img.user1 : e.img.user2} />
                       <div className="about">
 
                         <div className="name">{e.ownersNames.user1 !== user.name ? e.ownersNames.user1 : e.ownersNames.user2}</div>
@@ -241,9 +244,7 @@ const Chat2 = () => {
               <div className="chat-header clearfix">
                 <div className="row">
                   <div className="col-lg-6">
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
-                    </a>
+                    <img src={imgUser2} alt="avatar" />
                     <div className="chat-about">
                       <h6 className="m-b-0">{nameUser2}</h6>
                     </div>

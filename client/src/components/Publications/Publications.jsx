@@ -5,7 +5,8 @@ import {
   putLike,
   postPublications,
   getUserAction,
-  putPublications
+  putPublications,
+  changePicturePublications
 } from "../../redux/actions/index";
 
 import s from "./Publications.module.css";
@@ -19,11 +20,17 @@ export const Publications = () => {
   const dispatch = useDispatch();
   const publications = useSelector((state) => state.publications);
   const user = useSelector((state) => state.user);
+  const publiImg = useSelector((state) => state.imgPublication);
 
   var [idPost, setIdPost] = useState(null);
 
+  var [loadingImg, setLoadingImg] = useState(false);
+
+  var [imgPubli, setImgPubli] = useState(null);
+
   var [postPublication, setPostPublication] = useState({
     description: "",
+    photograph: undefined
   });
 
   var [editarPost, setEditarPost] = useState(false);
@@ -36,11 +43,13 @@ export const Publications = () => {
 
   function postDescription() {
     if (postPublication.description !== "" && !editarPost) {
-      dispatch(postPublications(postPublication, "junior", user._id));
-      window.location.reload(true);
+
+      console.log("post", publiImg)
+
+      dispatch(postPublications({description: postPublication.description, photograph: publiImg}, user.userType, user._id));
     }
     else if(editarPost){
-      dispatch(putPublications(idPost, user._id, postPublication))
+      dispatch(putPublications(idPost, user._id, {description: postPublication.description, photograph: publiImg}));
     }
   }
 
@@ -53,6 +62,7 @@ export const Publications = () => {
     setPostPublication({
       description: deccriptionWindow.current.value,
     });
+    console.log("getImg2", publiImg)
   }
 
   onAuthStateChanged(auth, (userFirebase) => {
@@ -63,6 +73,19 @@ export const Publications = () => {
       history.push("/");
     }
   });
+
+  async function publicationImg(e){
+
+    setLoadingImg(true)
+
+    const picture = e.target.files[0]
+
+    await dispatch(changePicturePublications(picture))
+
+    setImgPubli(publiImg)
+
+    setLoadingImg(false)
+  }
 
   return publications ? (
     <div className="container">
@@ -112,18 +135,32 @@ export const Publications = () => {
 
               <div className="mb-3 mt-4">
                 <label className="form-label">Seleciona una imagen</label>
-                <input className="form-control" type="file" id="formFile" />
+                <input className="form-control" type="file" id="formFile" onChange={(e)=>publicationImg(e)} />
               </div>
             </div>
             <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-bs-dismiss="modal"
-                onClick={postDescription}
-              >
-                Agregar
-              </button>
+              {
+                loadingImg
+
+                ? <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={postDescription}
+                  disabled
+                >
+                  Cargando imagen
+                </button>
+
+                : <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    onClick={postDescription}
+                  >
+                    Agregar
+                </button>
+              }
             </div>
           </div>
         </div>
@@ -134,24 +171,25 @@ export const Publications = () => {
           <div className="col">
             {publications ? (
               publications.map((e, i) => (
-                <div className="col-lg-15 col-md 12 mb-4">
+                <div className="mb-1">
                   <div className="card-section">
                     <div
                       className={`card text-center  bg-ligth bg-opacity-100${styles.card}`}
-                      style={{ width: " 80% " }}
                     >
                       <div className={s.name}>
-                        <img
-                          src={e.junior && e.junior.photograph}
-                          className="rounded-circle p-1 bg-primary"
-                          style={{ width: " 50px ", height: " 50px " }}
-                          alt="Card cap"
-                        />
+                        
+                          <img
+                            src={e.junior && e.junior.photograph}
+                            className="rounded-circle p-1 bg-primary"
+                            style={{ width: " 50px ", height: " 50px " }}
+                            alt="Card cap"
+                          />
+
                         <span>
                           {" "}
                           {e.junior ? e.junior.name : e.company.name}{" "}
                           <span className={s.spanPequeño}>
-                            {e.junior ? "Junior" : "Empresa"}
+                            {e.junior ? "Programador" : "Empresa"}
                           </span>
                         </span>
                       </div>
@@ -159,17 +197,20 @@ export const Publications = () => {
                       <div className={s.description}>
                         <span>{e.description}</span>
                       </div>
-                      <div>
-                        <img
-                          className={s.img}
-                          src={
-                            e.photograph
-                              ? e.photograph
-                              : "https://i.pinimg.com/736x/44/ca/1d/44ca1db525ebc3a45bbe815633d7b9b1.jpg"
-                          }
-                          style={{ width: " 150px ", height: " 180px " }}
-                          alt="Imagen del post"
-                        />
+                      <div className={s.divDivImg}>
+
+                        <div className={s.divImg}>
+                          <img
+                            className={s.img}
+                            src={
+                              e.photograph
+                                ? e.photograph
+                                : "https://i.pinimg.com/736x/44/ca/1d/44ca1db525ebc3a45bbe815633d7b9b1.jpg"
+                            }
+                            alt="Imagen del post"
+                          />
+                        </div>
+
                       </div>
                       <div className={s.divButton}>
                         <span className="me-3">{e.likesNumber}</span>
@@ -195,7 +236,7 @@ export const Publications = () => {
                         </button>
 
                         {
-                          e.junior._id === (user ? user._id : '12345') ? 
+                          (e.junior ? e.junior._id : e.company._id) === (user ? user._id : '12345') ? 
                           <div>
                             <button
                             onClick={()=>{setEditarPost(true); setIdPost(e._id)}}
@@ -214,13 +255,13 @@ export const Publications = () => {
                 </div>
               ))
             ) : (
-              <h1>Cargando...</h1>
+              <div className={s.loader}></div>
             )}
           </div>
         </div>
       </div>
     </div>
   ) : (
-    <h1>Cargando...</h1>
+    <div className={s.loader}></div>
   );
 };

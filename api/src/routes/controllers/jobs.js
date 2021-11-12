@@ -79,12 +79,10 @@ const getJobsById = async (req, res) => {
 const putJobs = async (req, res) => {
     
     const { id } = req.params; //id de job
+   
+      const { title, description, photograph, country, city, salary, currency, date, technologies, idCompany, idFireBase, premium, status } = req.body;
   
-      const { title, description, photograph, country, city, salary, currency, date, technologies, _id, idFireBase, premium, status } = req.body;
-  
-        const company = await Company.findOne({ _id } );
-
-  
+        const company = await Company.findOne({ idCompany } );
           if(!title){
             
             return res.status(404).json({ error: 'required "Title" is missing'})

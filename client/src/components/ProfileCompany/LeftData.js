@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import CareerData from "./CareerData";
-// import ChangePicture from "./ChangePicture";
+import ChangePicture from "./../ProfileUser/ChangePicture";
 // import SocialMedia from "./SocialMedia";
 
 // import ModalDeletAccount from "./ModalDeletAccount";
@@ -23,7 +23,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser, editValue }) => {
           className="rounded-circle p-1 bg-primary"
           width="140"
         />
-        {/* <ChangePicture setInfoUser={setInfoUser} /> */}
+        <ChangePicture setInfoUser={setInfoUser} />
         <div className="mt-3">
           <h4>{infoUser.name}</h4>
           <p className="text-secondary mb-1">

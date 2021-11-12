@@ -13,7 +13,7 @@ const juniorsPostulations = async (req, res) => {
     const gmailCompany = companyData.company.gmail
 
 		if (!junior) {
-			return res.status(404).json({ error: 'required "Junior" is missing' })
+			return res.status(404).json({ error: 'required "Junior" is missing' });
 		}
 
 		const job = await Jobs.findOne({ _id: id });

@@ -24,17 +24,16 @@ const getAllTechnologies = async (req, res) => {
 
 const getUbication = async (req, res) => {
     
-    const allLanguages = await States.find();
-    res.json(allLanguages);
-    // try{
-    //     const {country, States } = req.body;
-    //     console.log(country);
-    // const ubication = await States.findAll({name_country: country});
-    // res.json(ubication);
+    try{
+    const allStates = await States.find();
+    const country = allStates.map(state => state.name_country);
+    
+    const countryNoRepeat = [...new Set(country)];
+    res.json({countryNoRepeat, allStates});
 
-    // } catch (error) {
-    //     res.status(404).json({ error: error.message });
-    // }
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
 }
 
 module.exports = { getAllLaguages, getAllTechnologies, getUbication }

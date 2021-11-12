@@ -2,11 +2,27 @@
 const { Juniors, Company, Jobs } = require ('../../models/index');
 const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
 
+const { decoder } = require("../../helpers/index")
+
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { SECRET } = process.env;
+
 const juniorsPostulations = async (req, res) => {
 	const { id } = req.params; //id del job
 	const { juniorId, coverLetter, idFireBase } = req.body; //id del junior
 
 	try {
+
+    const token = req.headers["x-auth-token"];
+
+    if (!token) {
+      return res
+        .status(403)
+        .json({ auth: false, message: "token is require" });
+    }
+
+    const decoded = await decoder(token, SECRET);
 
     const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})
@@ -15,6 +31,10 @@ const juniorsPostulations = async (req, res) => {
 		if (!junior) {
 			return res.status(404).json({ error: 'required "Junior" is missing' });
 		}
+
+    if (decoded.id !== junior.idFireBase) {
+      return res.status(403).json({ error: 'access denied' });
+    }
 
 		const job = await Jobs.findOne({ _id: id });
 

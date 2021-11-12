@@ -20,12 +20,12 @@ const postPublications = async (req, res) => {
 
         if(nameUser && idUser){
 
-            if(nameUser == 'company'){
+            if(nameUser == 'companies'){
                 var company = idUser
                 var getCompany = await Company.findById(idUser)
             }
             
-            if(nameUser == 'junior'){
+            if(nameUser == 'juniors'){
                 var junior = idUser
                 var getJunior = await Juniors.findById(idUser)
             }
@@ -121,12 +121,13 @@ const putPublication = async (req, res) => {
 		const decoded = await jwt.verify(token, SECRET);
 
 
-        const { idPublication, idProgramador } = req.query;
+        const { idPublication, idUser } = req.query;
 
         const getPublication = await Publication.findById(idPublication)
         .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}])
 
 
+        //-------------------------------BUSCA AL JUNIOR----------------------------------
         if(getPublication.junior){
             var user = await Juniors.findOne({idFireBase: decoded.id});
 
@@ -143,8 +144,10 @@ const putPublication = async (req, res) => {
             .json({ auth: false, message: 'unauthorizad user' });
 		}
 
+
+        //-------------------------------BUSCA A LA COMPAÑIA------------------------------
         if(getPublication.company){
-            const user = await JuniorsCompany.findById(decoded.id);
+            var user = await Company.findOne({idFireBase: decoded.id});
 
             if (!user) {
                 return res
@@ -163,8 +166,8 @@ const putPublication = async (req, res) => {
     const { description, photograph } = req.body;
 
     try{
-
-        if(user._id == idProgramador){
+        
+        if(user._id == idUser){
 
             const updatePublicatio = await Publication.findByIdAndUpdate(idPublication, {
                 description: description,

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getJuniorsDetails } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { db } from '../../firebaseConfig'
+import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 
 export default function JuniorsDetail() {
@@ -11,10 +13,146 @@ export default function JuniorsDetail() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJuniorsDetails(id))
+    console.log(juniors)
   }, [dispatch]);
 
   const juniors = useSelector(state => state.juniorsdetails)
-  return (
+
+
+
+
+  const [message, setMessage] = useState({})
+  var [state, setState] = useState({ messages: [], owners: null, ownersNames: null })
+  var [idChat, setIdChat] = useState('')
+  var [currentIdChat, setCurrentIdChat] = useState('')
+  var [onejunior, setOnejunior] = useState('')
+
+  const user = useSelector((state) => state.user);
+
+  async function generateChat() {
+
+    let idtemporal = juniors._id < user._id ? juniors._id + user._id : user._id + juniors._id
+    setCurrentIdChat(juniors._id < user._id ? juniors._id + user._id : user._id + juniors._id)
+
+    if (idChat == '') {
+
+      setIdChat(idtemporal)
+    }
+
+    const docRef = doc(db, "messages", idtemporal);
+    const docSnap = await getDoc(docRef);
+
+    setState({
+      messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+      owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+      ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
+    })
+  }
+
+  async function sendMessage() {
+
+    try {
+
+      if (idChat === currentIdChat) {
+
+        var list = !state.messages ? [] : state.messages
+        list.push({
+          id: !state.messages ? 0 : state.messages.length,
+          text: message,
+          from: user._id,
+          to: juniors._id
+        })
+      }
+
+      if (idChat !== currentIdChat) {
+
+        const docRef = doc(db, "messages", currentIdChat);
+        const docSnap = await getDoc(docRef);
+
+        setState({
+          messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+          owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+          ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
+        })
+
+        var list = !state.messages ? [] : state.messages
+
+        list.push({
+          id: !state.messages ? 0 : state.messages.length,
+          text: message,
+          from: user._id,
+          to: juniors._id
+        })
+
+        setIdChat(currentIdChat)
+      }
+
+
+
+      await setDoc(doc(db, "messages", currentIdChat), {
+        owners: state.owners == null ? { user1: juniors._id, user2: user._id } : state.owners,
+        chat: list,
+        ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames
+      });
+    }
+    catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  function handleOnChangeMessage(e) {
+
+    setMessage(e.target.value)
+  }
+
+
+  return (<div>
+
+    {/*  Modal  */}
+    <div
+      className="modal fade"
+      id="exampleModalCenter"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
+              Nuevo mensaje
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="modal-body">
+            <div>
+              <label className="form-label">Escribe un mensaje</label>
+              <textarea
+                className="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                onChange={(e) => handleOnChangeMessage(e)}
+              ></textarea>
+            </div>
+
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-dismiss="modal"
+              onClick={sendMessage}
+            >
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <div className='container-fluid '>
@@ -27,7 +165,7 @@ export default function JuniorsDetail() {
       </div>
       <div className='row align-items-center justify-content-center'>
         <div className='col-5 text-center'>
-          <h1>{juniors.name}</h1>
+          <h4>{juniors.name}</h4>
           <img src={juniors.photograph} alt='Imagen no encontrada' width='200px' heigth='200px'></img>
           <h6 className="mb-0">
             <svg
@@ -140,8 +278,20 @@ export default function JuniorsDetail() {
             </label>
           ))}
         </div>
+
+        {user && user.userType == 'companies' ?
+          <button type="button" onClick={() => generateChat()}
+            type="button"
+            className="btn btn-block btn-dark btn-outline-light"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenter" >Enviar mensaje</button>
+          : <div></div>
+        }
+
       </div>
 
     </div>
+
+  </div >
   );
 }

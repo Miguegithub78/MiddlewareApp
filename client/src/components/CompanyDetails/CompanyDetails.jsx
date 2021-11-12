@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Mapa from "../MapDetails/Mapa";
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import NavBar from '../NavBar/NavBar';
 
 export default function CompanyDetail() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export default function CompanyDetail() {
   //CHAT
 
   const [message, setMessage] = useState({})
-  var [state, setState] = useState({ messages: [] })
+  var [state, setState] = useState({ messages: [], owners: null, ownersNames: null })
   var [idChat, setIdChat] = useState('')
   var [currentIdChat, setCurrentIdChat] = useState('')
   var [oneCompany, setOneCompany] = useState('')
@@ -47,7 +48,9 @@ export default function CompanyDetail() {
     const docSnap = await getDoc(docRef);
 
     setState({
-      messages: docSnap.data() !== undefined ? docSnap.data().chat : []
+      messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+      owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+      ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
     })
   }
 
@@ -72,10 +75,13 @@ export default function CompanyDetail() {
         const docSnap = await getDoc(docRef);
 
         setState({
-          messages: docSnap.data() !== undefined ? docSnap.data().chat : []
+          messages: docSnap.data() !== undefined ? docSnap.data().chat : [],
+          owners: docSnap.data() !== undefined ? docSnap.data().owners : null,
+          ownersNames: docSnap.data() !== undefined ? docSnap.data().ownersNames : null
         })
 
         var list = !state.messages ? [] : state.messages
+
         list.push({
           id: !state.messages ? 0 : state.messages.length,
           text: message,
@@ -86,10 +92,11 @@ export default function CompanyDetail() {
         setIdChat(currentIdChat)
       }
 
-
-
+      //Mando los datos a la base de datos
       await setDoc(doc(db, "messages", currentIdChat), {
-        chat: list
+        owners: state.owners == null ? { user1: user._id, user2: oneCompany._id } : state.owners,
+        chat: list,
+        ownersNames: state.ownersNames == null ? { user1: user.name, user2: oneCompany.name } : state.ownersNames
       });
     }
     catch (err) {
@@ -104,7 +111,7 @@ export default function CompanyDetail() {
 
   return (
 
-    <div className="container">
+    <div className="">
       {/*  Modal  */}
       <div
         className="modal fade"
@@ -152,17 +159,13 @@ export default function CompanyDetail() {
       </div>
 
 
-      <div className='container-fluid  '>
-        <div className=''>
-          <Link to='/home/companies'>
-            <button className='btn btn-block btn-dark btn-outline-light'>
-              Volver
-            </button>
-          </Link>
-        </div>
+      <div className='container-fluid '>
+
+        <NavBar />
+
         <div className='row align-items-center justify-content-center '>
-          <div className='col-5 text-center p-3 mb-2 bg-white text-dark border border-3'>
-            <h1 className="display-4 ">{company.name}</h1>
+          <div className='col-5 text-center p-3  bg-white text-dark border border-3'>
+            <h4 className="display-4 ">{company.name}</h4>
             <img src={company.photograph} style={{ width: " 150px ", height: " 180px " }} alt='Imagen no encontrada'></img>
             <h6 className="mb-0 me-auto p-3 ">
               <svg

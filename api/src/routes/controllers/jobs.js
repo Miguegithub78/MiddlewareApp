@@ -20,7 +20,7 @@ const postJobs = async (req, res) => {
         const newJob = new Jobs({
             title,
             description,
-            photograph,
+            photograph: photograph ? photograph : company.photograph,
             country,
             city,
             salary,
@@ -30,7 +30,6 @@ const postJobs = async (req, res) => {
             company: company,
             premium,
             status
-
         });
 
         try{

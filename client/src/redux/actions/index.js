@@ -470,6 +470,15 @@ const urlUploadPicPublication = (urlPicturePublication) => ({
   payload: urlPicturePublication,
 });
 
+export const resetPicturePublications = (picture) => {
+  return async function (dispatch) {
+      return dispatch({
+        type: "UPLOAD_PICTURE_PUBLICATION",
+        payload: null,
+      })
+  };
+};
+
 export function getJobDetails(id) {
   return async function (dispatch) {
     try {
@@ -498,6 +507,7 @@ export function postulation(idJob, idUser) {
     } catch (error) {}
   };
 }
+
 
 export const getCountryStateAction = () => {
   return async function (dispatch) {
@@ -530,3 +540,4 @@ export const editCompanyDataAction =(infoUser) => {
     }
   };
 }
+

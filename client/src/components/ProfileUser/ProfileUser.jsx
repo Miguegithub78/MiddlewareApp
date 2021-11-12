@@ -13,10 +13,8 @@ import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
 import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
-// import Prueba2Skill from './Prueba2Skill';
 import CareerData from "./CareerData";
 import NavBar from '../NavBar/NavBar';
-// import Softskills from './SoftSkills';
 
 const ProfileUser = () => {
   const { user, languages, technologies } = useSelector((state) => state);
@@ -40,9 +38,9 @@ const ProfileUser = () => {
     softskills: [],
     idUser: "",
     infoUserChanged: false,
-    openToRelocate: null,
-    openToRemote: null,
-    openToFullTime: null,
+    openToRelocate: false,
+    openToRemote: false,
+    openToFullTime: false,
     academicHistory: [],
   });
   useEffect(() => {
@@ -67,7 +65,7 @@ const ProfileUser = () => {
         github: user.github,
         website: user.website,
         city: user.city,
-        title: user.title,
+        title: user.title||'',
         linkedin: user.linkedin,
       });
     }

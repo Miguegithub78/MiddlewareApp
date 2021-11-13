@@ -45,6 +45,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
   // const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
 
+
   const onMapClick = useCallback((e) => {
     console.log("contador" + cont);
     if (cont === 0) {
@@ -53,6 +54,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
         {
           lat: e.latLng.lat(),
           lng: e.latLng.lng(),
+
         },
       ]);
     }
@@ -87,6 +89,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
 
   return (
     <div>
+
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
 
@@ -99,6 +102,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
+
         {markers.length > 0 &&
           markers.map((marker) => (
             <Marker
@@ -125,12 +129,13 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
             }}
           >
             <div>
-              <h3>
-                <span role="img" aria-label="company">
-                  💻
-                </span>{" "}
+              <h2>
+                <i className="bi bi-laptop"></i>{" "}
                 Company
-              </h3>
+
+              </h2>
+
+
             </div>
           </InfoWindow>
         ) : null}
@@ -149,6 +154,7 @@ function Locate({ panTo }) {
             panTo({
               lat: position.coords.latitude,
               lng: position.coords.longitude,
+
             });
             console.log(
               "mi ubicacion" + position.coords.latitude,
@@ -198,13 +204,13 @@ function Search({ panTo }) {
   };
 
   return (
-    <div className="search">
+    <div className="search mb-3 justify-content text-center">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Search your location"
+          placeholder="Busca aquí"
         />
         <ComboboxPopover>
           <ComboboxList>

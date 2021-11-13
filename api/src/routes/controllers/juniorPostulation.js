@@ -23,7 +23,7 @@ const juniorsPostulations = async (req, res) => {
         .json({ auth: false, message: "token is require" });
     }
 
-    const decoded = await decoder(token, SECRET);
+    const decoded = await jwt.verify(token, SECRET);
 
     const junior = await Juniors.findOne({ _id: juniorId });
     const companyData = await Jobs.findOne({_id: id}).populate({path: 'company'})

@@ -1,7 +1,10 @@
-import React from "react";
+import { useState } from "react";
+import CountryState from "../CreatePublications/CountryState";
+import State from "../CreatePublications/State";
 
-const SensitiveData = ({ infoUser, setEditValue, editValue, setInfoUser  }) => {
-  
+const SensitiveData = ({ infoUser, setEditValue, editValue, setInfoUser }) => {
+  const [state, setState] = useState(null);
+
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -9,7 +12,7 @@ const SensitiveData = ({ infoUser, setEditValue, editValue, setInfoUser  }) => {
       [e.target.name]: e.target.value,
     }));
   };
-  
+
   return (
     <>
       <div className="row mb-3 ">
@@ -43,33 +46,59 @@ const SensitiveData = ({ infoUser, setEditValue, editValue, setInfoUser  }) => {
         </div>
       </div>
 
-      {/* <div className="row mb-3">
-        <div className="col-sm-3">
-          <h6 className="mb-0">Celular</h6>
-        </div>
-        <div className="col-sm-9 text-secondary">
-          <input
-            type="number"
-            className={`form-control ${!editValue && "green-shadow"}`}
-            value={infoUser.phone}
-            onChange={handleChange}
-            name="phone"
-            disabled={editValue}
-          />
-        </div>
-      </div> */}
       <div className="row mb-3">
         <div className="col-sm-3">
-          <h6 className="mb-0">Ciudad</h6>
+          <h6 className="mb-0">linkedIn</h6>
         </div>
         <div className="col-sm-9 text-secondary">
           <input
             type="text"
             className={`form-control ${!editValue && "green-shadow"}`}
-            value={infoUser.city}
+            value={infoUser.linkedin}
             onChange={handleChange}
-            name="city"
+            name="linkedin"
             disabled={editValue}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-sm-3">
+          <h6 className="mb-0">Página Web</h6>
+        </div>
+        <div className="col-sm-9 text-secondary">
+          <input
+            type="text"
+            className={`form-control ${!editValue && "green-shadow"}`}
+            value={infoUser.webpage}
+            onChange={handleChange}
+            name="webpage"
+            disabled={editValue}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-sm-3">
+          <h6 className="mb-0">País</h6>
+        </div>
+        <div className="col-sm-9 text-secondary">
+          <CountryState
+            infoJobs={infoUser}
+            setState={setState}
+            handleChange={handleChange}
+            editValue={editValue}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-sm-3">
+          <h6 className="mb-0">Ciudad</h6>
+        </div>
+        <div className="col-sm-9 text-secondary">
+          <State
+            state={state}
+            infoJobs={infoUser}
+            handleChange={handleChange}
+            editValue={editValue}
           />
         </div>
       </div>

@@ -7,14 +7,14 @@ import {
   GoogleMap,
   useLoadScript,
   Marker,
-  
+
 } from "@react-google-maps/api";
 
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 
-let company= [
+let company = [
   {
     _id: "618d3fd84f336360bbe17ef4",
     name:"Clinica Soler",
@@ -93,33 +93,31 @@ export default function Mapa() {
     googleMapsApiKey: "AIzaSyCCpn70ZJEIvFYTsUyxArbhmtFJXoNgtgo",
     libraries
   });
- 
+
   //createLocationMarkers();
- console.log('nombre ' + companies.name)
+  console.log('nombre ' + companies.name)
   const center = {
         lat: -34.13091,
         lng: -63.38324,
         //lat: companies.lat,
         //lng: companies.lng,
   };
-  
+
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
 
- 
+
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
   return (
     <div>
-      <h2>
+      <h4>
         Empresas{" "}
-        <span role="img" aria-label="tent">
-        👩‍💻
-        </span>
-      </h2>
+        <i className="bi bi-people-fill"></i>
+      </h4>
 
       <GoogleMap
         id="map"
@@ -127,7 +125,7 @@ export default function Mapa() {
         zoom={6}
         center={center}
         options={options}
-        
+
         onLoad={onMapLoad}
       >
                
@@ -137,17 +135,17 @@ export default function Mapa() {
           <Marker
               key={`${marker.lat}-${marker.lng}`}
               position={{ lat: marker.lat, lng: marker.lng }}
-            
+
               icon={{
                 url: `/company.svg`,
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(15, 15),
                 scaledSize: new window.google.maps.Size(30, 30),
               }}
-          />
+            />
           ) : null
-         
-        
+
+
         ))}
            
       </GoogleMap>

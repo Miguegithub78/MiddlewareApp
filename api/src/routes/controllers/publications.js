@@ -189,13 +189,39 @@ const putPublication = async (req, res) => {
 
 const deletePublication = async (req, res) => {
 
-    const { id } = req.params;
+    const { idPublication, idUser, userType } = req.query;
 
     try{
 
-        const postDeleted = await Publication.findByIdAndDelete(id)
+        if(userType == "juniors"){
 
-        res.json({message: "Publicación eliminada"})
+            let junior =  Juniors.findById(idUser)
+            const publication = Publication.findById(idPublication)
+
+            let [getJunior, getPublication] = await Promise.all([junior, publication])
+
+            getJunior.publications = getJunior.publications.filter(e => !e.equals(getPublication._id))
+            let newJunior = await getJunior.save()
+
+            await Publication.findByIdAndDelete(idPublication)
+
+            res.json(getPublication)
+        }
+        else
+        if(userType == "companies"){
+
+            let company =  Company.findById(idUser)
+            const publication = Publication.findById(idPublication)
+
+            let [getCompany, getPublication] = await Promise.all([company, publication])
+
+            getCompany.publications = getCompany.publications.filter(e => !e.equals(getPublication._id))
+            let newCompanyr = await getCompany.save()
+
+            await Publication.findByIdAndDelete(idPublication)
+
+            res.json(getPublication)
+        }
 
     }
     catch(err){

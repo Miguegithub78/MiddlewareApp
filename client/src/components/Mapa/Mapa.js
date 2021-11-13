@@ -49,7 +49,7 @@ export default function Mapa() {
   
   const onMapClick = useCallback((e) => {
     
-    console.log('contador' + cont)
+   
     if(cont===0){
       cont=cont+1;
     setMarkers((current) => [

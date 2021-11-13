@@ -337,11 +337,10 @@ export function putLike(idPublication, idUser) {
   };
 }
 
-/*no existe en el back*/
-export function deletePublications(id) {
-  return async function () {
-    const response = await clienteAxios.delete(`/publications/${id}`);
-    return response;
+export function deletePublications(idPublication, idUser, userType) {
+  return async function (dispatch) {
+    const response = await clienteAxios.delete(`/publications?idPublication=${idPublication}&idUser=${idUser}&userType=${userType}`);
+    return dispatch({ type: "DELETE_PUBLICATION", payload: response.data });
   };
 }
 
@@ -470,10 +469,10 @@ const urlUploadPicPublication = (urlPicturePublication) => ({
   payload: urlPicturePublication,
 });
 
-export const resetPicturePublications = (picture) => {
+export const resetPicturePublications = () => {
   return async function (dispatch) {
       return dispatch({
-        type: "UPLOAD_PICTURE_PUBLICATION",
+        type: "RESET_PICTURE_PUBLICATION",
         payload: null,
       })
   };

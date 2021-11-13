@@ -65,7 +65,8 @@ export default function CompanyDetail() {
           id: !state.messages ? 0 : state.messages.length,
           text: message,
           from: user._id,
-          to: oneCompany._id
+          to: oneCompany._id,
+          img: "",
         })
       }
 
@@ -86,7 +87,7 @@ export default function CompanyDetail() {
           id: !state.messages ? 0 : state.messages.length,
           text: message,
           from: user._id,
-          to: oneCompany._id
+          to: oneCompany._id,
         })
 
         setIdChat(currentIdChat)
@@ -96,7 +97,8 @@ export default function CompanyDetail() {
       await setDoc(doc(db, "messages", currentIdChat), {
         owners: state.owners == null ? { user1: user._id, user2: oneCompany._id } : state.owners,
         chat: list,
-        ownersNames: state.ownersNames == null ? { user1: user.name, user2: oneCompany.name } : state.ownersNames
+        ownersNames: state.ownersNames == null ? { user1: user.name, user2: oneCompany.name } : state.ownersNames,
+        img: { user1: user.photograph, user2: oneCompany.photograph },
       });
     }
     catch (err) {

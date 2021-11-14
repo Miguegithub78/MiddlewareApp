@@ -22,6 +22,8 @@ import {
 	GET_JOB_DETAILS,
 	GET_JOBS,
 	POSTULATION,
+	ADD_NEW_JOB,
+	GET_UBICATION,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
 import { auth, firebase, actionCodeSettings } from '../../firebaseConfig';
@@ -310,22 +312,22 @@ export function getPublicationsById(id) {
 }
 
 export function postPublications(payload, nameUser, idUser) {
-	return async function () {
+	return async function (dispatch) {
 		const response = await clienteAxios.post(
 			`/publications?nameUser=${nameUser}&idUser=${idUser}`,
 			payload
 		);
-		return response;
+		return dispatch({ type: 'POST_PUBLICATION', payload: response.data });
 	};
 }
 
-export function putPublications(idPublication, idProgramador, data) {
-	return async function () {
+export function putPublications(idPublication, idUser, data) {
+	return async function (dispatch) {
 		const response = await clienteAxios.put(
-			`/publications?idPublication=${idPublication}&idProgramador=${idProgramador}`,
+			`/publications?idPublication=${idPublication}&idUser=${idUser}`,
 			data
 		);
-		return response;
+		return dispatch({ type: 'PUT_PUBLICATION', payload: response.data });
 	};
 }
 
@@ -338,19 +340,23 @@ export function putLike(idPublication, idUser) {
 	};
 }
 
-/*no existe en el back*/
-export function deletePublications(id) {
-	return async function () {
-		const response = await clienteAxios.delete(`/publications/${id}`);
-		return response;
+export function deletePublications(idPublication, idUser, userType) {
+	return async function (dispatch) {
+		const response = await clienteAxios.delete(
+			`/publications?idPublication=${idPublication}&idUser=${idUser}&userType=${userType}`
+		);
+		return dispatch({ type: 'DELETE_PUBLICATION', payload: response.data });
 	};
 }
 
 /*JOBS*/
 export function postJobs(payload) {
-	return async function () {
+	return async function (dispatch) {
 		const response = await clienteAxios.post('/jobs', payload);
-		return response;
+		return dispatch({
+			type: ADD_NEW_JOB,
+			payload: response.data,
+		});
 	};
 }
 
@@ -451,6 +457,32 @@ const urlUploadPic = (urlPicture) => ({
 	payload: urlPicture,
 });
 
+export const changePicturePublications = (picture) => {
+	return async function (dispatch) {
+		try {
+			const fileRef = ref(storage, `documents/${picture.name}`);
+			await uploadBytes(fileRef, picture);
+			const urlPicturePublication = await getDownloadURL(fileRef);
+			dispatch(urlUploadPicPublication(urlPicturePublication));
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
+const urlUploadPicPublication = (urlPicturePublication) => ({
+	type: 'UPLOAD_PICTURE_PUBLICATION',
+	payload: urlPicturePublication,
+});
+
+export const resetPicturePublications = () => {
+	return async function (dispatch) {
+		return dispatch({
+			type: 'RESET_PICTURE_PUBLICATION',
+			payload: null,
+		});
+	};
+};
+
 export function getJobDetails(id) {
 	return async function (dispatch) {
 		try {
@@ -483,3 +515,38 @@ export function postulation(idJob, idUser, coverLetter) {
 		} catch (error) {}
 	};
 }
+
+export const getCountryStateAction = () => {
+	return async function (dispatch) {
+		try {
+			const allUbication = await clienteAxios.get(`/ubication`);
+			console.log(allUbication.data, 'fromaction');
+			return dispatch({ type: GET_UBICATION, payload: allUbication.data });
+		} catch (error) {}
+	};
+};
+
+export function editJobPostulationsAction(idJob, job) {
+	return async function (dispatch) {
+		try {
+			await clienteAxios.put(`/jobs/${idJob}`, job);
+			console.log('se mando el job editado');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+export const editCompanyDataAction = (infoUser) => {
+	return async function (dispatch) {
+		try {
+			const editCompany = await clienteAxios.put(
+				`/companies/${infoUser.idFireBase}`,
+				infoUser
+			);
+			// return dispatch({ type: GET_JOBS, payload: editCompany.data });
+			console.log(editCompany.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};

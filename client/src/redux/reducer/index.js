@@ -22,6 +22,8 @@ import {
 	UPLOAD_PICTURE,
 	GET_JOB_DETAILS,
 	GET_JOBS,
+	GET_UBICATION,
+	ADD_NEW_JOB
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -39,6 +41,7 @@ const inicialState = {
 	publications: [],
 	publication: {},
 	emailVerification: true,
+	countryState:null,
 	jobs: {
 		data: [],
 		filterData: [],
@@ -50,6 +53,7 @@ const inicialState = {
 		},
 	},
 	jobDetails: {},
+	imgPublication: null
 };
 
 function calculateSalary(value, state) {
@@ -166,6 +170,28 @@ const rootReducer = (state = inicialState, action) => {
 				publications: action.payload,
 			};
 
+		case "POST_PUBLICATION": return {
+			...state,
+			publications: [...state.publications, action.payload],
+		};
+
+		case "DELETE_PUBLICATION": return {
+			...state,
+			publications: state.publications.filter(e => e._id !== action.payload._id)
+		};
+
+		case "PUT_PUBLICATION": return {
+			...state,
+			publications: state.publications.filter(e => {
+				if(e._id == action.payload._id){
+					e.description = action.payload.description
+					e.photograph = action.payload.photograph
+					return e
+
+				} else return e
+			})
+		};
+
 		case GET_PUBLICATIONS_BY_ID:
 			return {
 				...state,
@@ -259,6 +285,26 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				jobsDetails: action.payload,
 			};
+		case GET_UBICATION:
+			return {
+				...state,
+				countryState: action.payload,
+			};
+		case ADD_NEW_JOB:
+			return {
+				...state,
+				user: {...state.user, jobs:[...state.user.jobs, action.payload]}
+			};
+
+		case "UPLOAD_PICTURE_PUBLICATION": return{
+			...state,
+			imgPublication: action.payload
+		};
+
+		case "RESET_PICTURE_PUBLICATION": return{
+			...state,
+			imgPublication: action.payload
+		};
 
 		default:
 			return state;

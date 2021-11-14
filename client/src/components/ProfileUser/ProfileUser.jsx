@@ -15,6 +15,7 @@ import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
 import CareerData from "./CareerData";
 import NavBar from '../NavBar/NavBar';
+import JobsExperience from "./JobsExperience/JobsExperience";
 
 const ProfileUser = () => {
   const { user, languages, technologies } = useSelector((state) => state);
@@ -41,7 +42,12 @@ const ProfileUser = () => {
     openToRelocate: false,
     openToRemote: false,
     openToFullTime: false,
-    academicHistory: [],
+    academicHistory: [{
+      institute: '',
+      title: '',
+      date: '',   //ver que onda con el tema de la fecha
+      description: '',
+    }],
   });
   useEffect(() => {
     if (user) {
@@ -125,7 +131,7 @@ const ProfileUser = () => {
             <div className="col-lg-8">
               <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
               <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-              {/* <Prueba2Skill /> */}
+              <JobsExperience setInfoUser={setInfoUser} infoUser={infoUser} />
             </div>
           </div>
         </div>

@@ -4,6 +4,8 @@ import ChangePicture from "./ChangePicture";
 import SocialMedia from "./SocialMedia";
 
 import ModalDeletAccount from "./ModalDeletAccount";
+import ShowWorkExperience from "./ShowWorkExperience/ShowWorkExperience";
+import CardShowExperience from "./ShowWorkExperience/CardShowExperience";
 
 const Prueba2left = ({ user, setInfoUser, infoUser }) => {
   const [editValue, setEditValue] = useState(true);
@@ -60,6 +62,7 @@ const Prueba2left = ({ user, setInfoUser, infoUser }) => {
         <ModalDeletAccount infoUser={infoUser} />
       </div>
       <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} />
+      <CardShowExperience infoUser={infoUser} />
     </div>
   ) : (
     "Cargando...."

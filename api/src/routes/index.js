@@ -11,6 +11,7 @@ const { postPublications, getPublications, getPublicationsById, putPublication, 
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 const { juniorsPostulations } = require ('./controllers/juniorPostulation')
 const { postJobs, getAllJobs, getJobsById, deleteJob, putJobs } = require('./controllers/jobs');
+const { getNotification } = require('./controllers/notifications.js')
 
 const { putLikes } = require('./controllers/addLikes');
 
@@ -52,6 +53,8 @@ router.delete('/jobs/:id', deleteJob)
 router.put('/jobs/postulation/:id', juniorsPostulations)
 
 router.put('/addLike', putLikes)
+
+router.get('/notifications/:id', getNotification)
 
 
 module.exports = router;

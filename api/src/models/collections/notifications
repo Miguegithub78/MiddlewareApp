@@ -1,0 +1,68 @@
+const { Schema, model } = require('mongoose');
+
+const notificationsSchema = new Schema({
+
+    description: {
+        type: String,
+        required: true
+    },
+
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: 'company'
+    },
+
+    junior: {
+        type: Schema.Types.ObjectId,
+        ref: 'juniors'
+    },
+
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: 'admins'
+    },
+
+    publication: {
+        type: Schema.Types.ObjectId,
+        ref: 'publication',
+    },
+
+    jobs: {
+      type: Schema.Types.ObjectId,
+      ref: 'jobs',
+  },
+
+  userPublicationId: {
+    type: Schema.Types.ObjectId,
+    ref: 'userPublication',
+},
+userJobId: {
+  type: Schema.Types.ObjectId,
+  ref: 'userJob',
+},
+
+userNotificationId: {
+  type: Schema.Types.ObjectId,
+  ref: 'userNotification',
+},
+userNotification: {
+  type: String,
+},
+
+  createdAt: {
+        type: Date,
+        default: Date.now
+    },
+
+  type: {
+    type: Number,
+    enum: [1, 2],
+    required: true
+  }
+
+})
+
+module.exports = model('notification', notificationsSchema );
+
+
+

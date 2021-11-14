@@ -7,6 +7,7 @@ const Admins = require('./collections/admins');
 const SoftSkills = require('./collections/softSkills');
 const Jobs = require('./collections/jobs');
 const States = require('./collections/states');
+const Notifications = require('./collections/notifications');
 
 module.exports = {
     Juniors,
@@ -17,7 +18,9 @@ module.exports = {
     Admins,
     SoftSkills,
     Jobs,
-    States
+    States,
+    Notifications
 }
+
 
 

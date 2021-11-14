@@ -24,7 +24,7 @@ const putLikes = async (req, res) => {
 
     } else
 
-    res.json({message: "Ya le diste like boludo", Likes: getPublication.likes.length})
+    res.json({message: "Ya le diste like", Likes: getPublication.likes.length})
 
 }
 

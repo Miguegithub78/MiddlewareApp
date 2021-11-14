@@ -51,9 +51,9 @@ const getNotification = async (req, res) => {
 
     const notificationData = {
       description: job.title,
-      userJobId: job.company,
-      userNotificationId: userJunior ? userJunior : userCompany,
-      userNotification: userJunior.name ? userJunior.name || 'no data' : userCompany.name || 'no data',
+      userJobId: job.company,// id de la company que publico el job
+      userNotificationId: userJunior ? userJunior : userCompany, // _id del usuario que esta clickeando en el job
+      userNotification: userJunior.name ? userJunior.name || 'no data' : userCompany.name || 'no data', // nombre del usuario que clickea la notificacion esto da error por ahi estoy viendo q es
       type: 2,
       createdAt: new Date(),
     };

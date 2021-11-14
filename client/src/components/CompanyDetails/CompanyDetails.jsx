@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Mapa from "../MapDetails/Mapa";
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import NavBar from '../NavBar/NavBar';
 
 export default function CompanyDetail() {
   const { id } = useParams();
@@ -28,7 +29,7 @@ export default function CompanyDetail() {
   const user = useSelector((state) => state.user);
   const companies = useSelector((state) => state.companies);
 
-  async function searchCompanyDetails(id){
+  async function searchCompanyDetails(id) {
 
     // dispatch(getCompanyDetails(id))
 
@@ -38,7 +39,7 @@ export default function CompanyDetail() {
     let idtemporal = user._id < campany._id ? user._id + campany._id : campany._id + user._id
     setCurrentIdChat(user._id < campany._id ? user._id + campany._id : campany._id + user._id)
 
-    if(idChat == ''){
+    if (idChat == '') {
 
       setIdChat(idtemporal)
     }
@@ -53,22 +54,23 @@ export default function CompanyDetail() {
     })
   }
 
-  async function sendMessage(){
+  async function sendMessage() {
 
-    try{
+    try {
 
-      if(idChat === currentIdChat){
+      if (idChat === currentIdChat) {
 
         var list = !state.messages ? [] : state.messages
         list.push({
           id: !state.messages ? 0 : state.messages.length,
           text: message,
           from: user._id,
-          to: oneCompany._id
+          to: oneCompany._id,
+          img: "",
         })
       }
 
-      if(idChat !== currentIdChat){
+      if (idChat !== currentIdChat) {
 
         const docRef = doc(db, "messages", currentIdChat);
         const docSnap = await getDoc(docRef);
@@ -85,7 +87,7 @@ export default function CompanyDetail() {
           id: !state.messages ? 0 : state.messages.length,
           text: message,
           from: user._id,
-          to: oneCompany._id
+          to: oneCompany._id,
         })
 
         setIdChat(currentIdChat)
@@ -93,24 +95,25 @@ export default function CompanyDetail() {
 
       //Mando los datos a la base de datos
       await setDoc(doc(db, "messages", currentIdChat), {
-        owners: state.owners == null ? {user1: user._id, user2: oneCompany._id} : state.owners,
+        owners: state.owners == null ? { user1: user._id, user2: oneCompany._id } : state.owners,
         chat: list,
-        ownersNames: state.ownersNames == null ? {user1: user.name, user2: oneCompany.name} : state.ownersNames
+        ownersNames: state.ownersNames == null ? { user1: user.name, user2: oneCompany.name } : state.ownersNames,
+        img: { user1: user.photograph, user2: oneCompany.photograph },
       });
     }
-    catch(err){
+    catch (err) {
       console.log(err.message)
     }
   }
 
-  function handleOnChangeMessage(e){
+  function handleOnChangeMessage(e) {
 
     setMessage(e.target.value)
   }
 
   return (
 
-    <div className="container">
+    <div className="">
       {/*  Modal  */}
       <div
         className="modal fade"
@@ -158,17 +161,13 @@ export default function CompanyDetail() {
       </div>
 
 
-      <div className='container-fluid  '>
-        <div className=''>
-          <Link to='/home/companies'>
-            <button className='btn btn-block btn-dark btn-outline-light'>
-              Volver
-            </button>
-          </Link>
-        </div>
+      <div className='container-fluid '>
+
+        <NavBar />
+
         <div className='row align-items-center justify-content-center '>
-          <div className='col-5 text-center p-3 mb-2 bg-white text-dark border border-3'>
-            <h1 className="display-4 ">{company.name}</h1>
+          <div className='col-5 text-center p-3  bg-white text-dark border border-3'>
+            <h4 className="display-4 ">{company.name}</h4>
             <img src={company.photograph} style={{ width: " 150px ", height: " 180px " }} alt='Imagen no encontrada'></img>
             <h6 className="mb-0 me-auto p-3 ">
               <svg

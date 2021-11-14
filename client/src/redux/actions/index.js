@@ -293,12 +293,14 @@ export const getCompanyDetails = (id) => {
 };
 
 /*PUBLICATIONS*/
-export function getPublications() {
+export function getPublications(numberPage) {
   return async function (dispatch) {
     try {
-      const json = await clienteAxios.get("/publications");
+      const json = await clienteAxios.get(`/publications?numberPage=${numberPage}`);
       return dispatch({ type: GET_PUBLICATIONS, payload: json.data });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 }
 

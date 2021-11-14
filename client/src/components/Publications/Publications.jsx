@@ -17,17 +17,19 @@ import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
 import styles from "./Publications.module.css";
 export const Publications = () => {
+
   const history = useHistory();
 
   const dispatch = useDispatch();
   const publications = useSelector((state) => state.publications);
   const user = useSelector((state) => state.user);
   const publiImg = useSelector((state) => state.imgPublication);
+  const pages = useSelector((state) => state.pages);
+  const finishPage = useSelector((state) => state.finishPage);
 
   var [idPost, setIdPost] = useState(null);
   var [loadingImg, setLoadingImg] = useState(false);
   var [loadingImg, setLoadingImg] = useState(false);
-
   var [imgPubli, setImgPubli] = useState(null);
 
   var [postPublication, setPostPublication] = useState({
@@ -37,11 +39,52 @@ export const Publications = () => {
 
   var [editarPost, setEditarPost] = useState(false);
 
+  var [currentPublications, setCurrentPublications] = useState(1);
+  var [loadingPubli, setLoadingPubli] = useState(true);
+
   var deccriptionWindow = useRef(null);
 
-  useEffect(() => {
-    dispatch(getPublications());
-  }, []);
+  useEffect(async() => {
+
+      if(loadingPubli && !finishPage){
+
+        await dispatch(getPublications(currentPublications));
+        setCurrentPublications(currentPublications + 1);
+
+        await setTimeout(()=>{
+          setLoadingPubli(false)
+        }, 1000)
+      }else {
+
+        setLoadingPubli(false)
+      }
+
+  }, [loadingPubli]);
+
+  
+  window.addEventListener('scroll', ()=>{
+
+    if(!finishPage){
+
+      let scrollTop = document.documentElement.scrollTop;
+      let clientHeight = document.documentElement.clientHeight;
+      let scrollHeight = document.documentElement.scrollHeight;
+
+      if (scrollHeight - scrollTop === clientHeight) {
+
+          setLoadingPubli(true)
+      }
+    }
+  })
+
+  const handleScroll = (event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+
+    if (scrollHeight - scrollTop === clientHeight) {
+      setCurrentPublications(currentPublications + 1);
+    }
+      console.log("Hola")
+  };
 
   function postDescription() {
     if (postPublication.description !== "" && !editarPost) {
@@ -100,7 +143,7 @@ export const Publications = () => {
   }
 
   return publications ? (
-    <div className="container">
+    <div className="container" onScroll={handleScroll}>
       <br></br>
       {/*  Button trigger modal  */}
       <button
@@ -201,7 +244,7 @@ export const Publications = () => {
             <div className="modal-body">
               <h4>¿Estas seguro que quieres eliminar esta publicación?</h4>
 
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button data-bs-dismiss="modal" className="btn btn-secondary" >No</button>
                 <button className="btn btn-primary" onClick={() => deletePublication()} data-bs-dismiss="modal" >Si</button>
               </div>
@@ -211,12 +254,12 @@ export const Publications = () => {
         </div>
       </div>
 
-      <div className="col">
-        <div className="col-lg-12 text-center">
+      <div className="d-flex flex-column align-items-center">
+        <div className="col w-75 p-3">
           <div className="col">
             {publications ? (
-              publications.sort().map((e, i) => (
-                <div className="mb-1">
+              publications.map((e, i) => (
+                <div className="mb-1" key={i}>
                   <div className="card-section">
                     <div
                       className={`card text-center  bg-ligth bg-opacity-100${styles.card}`}
@@ -224,7 +267,7 @@ export const Publications = () => {
                       <div className={s.name}>
 
                         <img
-                          src={e.junior && e.junior.photograph}
+                          src={e.junior ? e.junior.photograph : e.company.photograph }
                           className="rounded-circle p-1 bg-primary"
                           style={{ width: " 50px ", height: " 50px " }}
                           alt="Card cap"
@@ -327,6 +370,9 @@ export const Publications = () => {
               <div className={s.loader}></div>
             )}
           </div>
+
+          {!loadingPubli ? <div></div> : <div className={s.loader}></div>}
+
         </div>
       </div>
     </div>

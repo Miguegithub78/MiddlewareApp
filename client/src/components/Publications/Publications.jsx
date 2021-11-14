@@ -6,6 +6,9 @@ import {
 	postPublications,
 	getUserAction,
 	putPublications,
+	changePicturePublications,
+	deletePublications,
+	resetPicturePublications,
 } from '../../redux/actions/index';
 
 import s from './Publications.module.css';
@@ -19,11 +22,17 @@ export const Publications = () => {
 	const dispatch = useDispatch();
 	const publications = useSelector((state) => state.publications);
 	const user = useSelector((state) => state.user);
+	const publiImg = useSelector((state) => state.imgPublication);
 
 	var [idPost, setIdPost] = useState(null);
+	var [loadingImg, setLoadingImg] = useState(false);
+	var [loadingImg, setLoadingImg] = useState(false);
+
+	var [imgPubli, setImgPubli] = useState(null);
 
 	var [postPublication, setPostPublication] = useState({
 		description: '',
+		photograph: undefined,
 	});
 
 	var [editarPost, setEditarPost] = useState(false);
@@ -36,9 +45,33 @@ export const Publications = () => {
 
 	function postDescription() {
 		if (postPublication.description !== '' && !editarPost) {
-			dispatch(postPublications(postPublication, 'junior', user._id));
+			console.log('post', publiImg);
+
+			dispatch(
+				postPublications(
+					{
+						description: postPublication.description,
+						photograph: publiImg !== null ? publiImg : undefined,
+					},
+					user.userType,
+					user._id
+				)
+			);
+			postPublication.description = '';
+			dispatch(resetPicturePublications());
 		} else if (editarPost) {
-			dispatch(putPublications(idPost, user._id, postPublication));
+			dispatch(
+				putPublications(idPost, user._id, {
+					description:
+						postPublication.description !== ''
+							? postPublication.description
+							: undefined,
+					photograph: publiImg !== null ? publiImg : undefined,
+				})
+			);
+			postPublication.description = '';
+			postPublication.photograph = '';
+			dispatch(resetPicturePublications());
 		}
 	}
 
@@ -51,6 +84,7 @@ export const Publications = () => {
 		setPostPublication({
 			description: deccriptionWindow.current.value,
 		});
+		console.log('getImg2', publiImg);
 	}
 
 	onAuthStateChanged(auth, (userFirebase) => {
@@ -61,6 +95,22 @@ export const Publications = () => {
 			history.push('/');
 		}
 	});
+
+	async function publicationImg(e) {
+		setLoadingImg(true);
+
+		const picture = e.target.files[0];
+
+		await dispatch(changePicturePublications(picture));
+
+		setImgPubli(publiImg);
+
+		setLoadingImg(false);
+	}
+
+	function deletePublication() {
+		dispatch(deletePublications(idPost, user._id, user.userType));
+	}
 
 	return publications ? (
 		<div className='container'>
@@ -107,23 +157,79 @@ export const Publications = () => {
 									rows='3'
 									ref={deccriptionWindow}
 									onChange={handleChange}
+									value={postPublication.description}
 								></textarea>
 							</div>
 
 							<div className='mb-3 mt-4'>
 								<label className='form-label'>Seleciona una imagen</label>
-								<input className='form-control' type='file' id='formFile' />
+								<input
+									className='form-control'
+									value={postPublication.photograph}
+									type='file'
+									id='formFile'
+									onChange={(e) => publicationImg(e)}
+								/>
 							</div>
 						</div>
 						<div className='modal-footer'>
+							{loadingImg ? (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={postDescription}
+									disabled
+								>
+									Cargando imagen
+								</button>
+							) : (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={postDescription}
+								>
+									Agregar
+								</button>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/*  Modal Delete  */}
+			<div
+				className='modal fade'
+				id='deletePublication'
+				aria-labelledby='exampleModalCenterTitle'
+				aria-hidden='true'
+			>
+				<div className='modal-dialog modal-dialog-centered'>
+					<div className='modal-content'>
+						<div className='modal-header'>
 							<button
 								type='button'
-								className='btn btn-primary'
+								className='btn-close'
 								data-bs-dismiss='modal'
-								onClick={postDescription}
-							>
-								Agregar
-							</button>
+								aria-label='Close'
+							></button>
+						</div>
+						<div className='modal-body'>
+							<h4>¿Estas seguro que quieres eliminar esta publicación?</h4>
+
+							<div class='modal-footer'>
+								<button data-bs-dismiss='modal' className='btn btn-secondary'>
+									No
+								</button>
+								<button
+									className='btn btn-primary'
+									onClick={() => deletePublication()}
+									data-bs-dismiss='modal'
+								>
+									Si
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -133,12 +239,11 @@ export const Publications = () => {
 				<div className='col-lg-12 text-center'>
 					<div className='col'>
 						{publications ? (
-							publications.map((e, i) => (
-								<div className='col-lg-15 col-md 12 mb-4'>
+							publications.sort().map((e, i) => (
+								<div className='mb-1'>
 									<div className='card-section'>
 										<div
 											className={`card text-center  bg-ligth bg-opacity-100${styles.card}`}
-											style={{ width: ' 80% ' }}
 										>
 											<div className={s.name}>
 												<img
@@ -147,30 +252,40 @@ export const Publications = () => {
 													style={{ width: ' 50px ', height: ' 50px ' }}
 													alt='Card cap'
 												/>
+
 												<span>
 													{' '}
 													{e.junior ? e.junior.name : e.company.name}{' '}
 													<span className={s.spanPequeño}>
-														{e.junior ? 'Junior' : 'Empresa'}
+														{e.junior ? 'Programador' : 'Empresa'}
 													</span>
+												</span>
+
+												<span>
+													{' '}
+													{e.date.slice(8, 10)}
+													{e.date.slice(4, 7)}-{e.date.slice(0, 4)}
 												</span>
 											</div>
 
 											<div className={s.description}>
 												<span>{e.description}</span>
 											</div>
-											<div>
-												<img
-													className={s.img}
-													src={
-														e.photograph
-															? e.photograph
-															: 'https://i.pinimg.com/736x/44/ca/1d/44ca1db525ebc3a45bbe815633d7b9b1.jpg'
-													}
-													style={{ width: ' 150px ', height: ' 180px ' }}
-													alt='Imagen del post'
-												/>
-											</div>
+
+											{e.photograph ? (
+												<div className={s.divDivImg}>
+													<div className={s.divImg}>
+														<img
+															className={s.img}
+															src={e.photograph}
+															alt='Imagen del post'
+														/>
+													</div>
+												</div>
+											) : (
+												<div></div>
+											)}
+
 											<div className={s.divButton}>
 												<span className='me-3'>{e.likesNumber}</span>
 												<button
@@ -196,20 +311,35 @@ export const Publications = () => {
 													></i>
 												</button>
 
-												{e.junior._id === (user ? user._id : '12345') ? (
-													<div>
-														<button
-															onClick={() => {
-																setEditarPost(true);
-																setIdPost(e._id);
-															}}
-															type='button'
-															className='btn btn-block btn-dark btn-outline-light rounded'
-															data-bs-toggle='modal'
-															data-bs-target='#exampleModalCenter'
-														>
-															Editar
-														</button>
+												{(e.junior ? e.junior._id : e.company._id) ===
+												(user ? user._id : '12345') ? (
+													<div className='d-flex flex-row'>
+														<div>
+															<button
+																onClick={() => {
+																	setEditarPost(true);
+																	setIdPost(e._id);
+																}}
+																type='button'
+																className='btn btn-block btn-dark btn-outline-light rounded'
+																data-bs-toggle='modal'
+																data-bs-target='#exampleModalCenter'
+															>
+																Editar
+															</button>
+														</div>
+
+														<div>
+															<button
+																type='button'
+																className='btn btn-block btn-danger btn-outline-light rounded'
+																data-bs-toggle='modal'
+																data-bs-target='#deletePublication'
+																onClick={() => setIdPost(e._id)}
+															>
+																Eliminar
+															</button>
+														</div>
 													</div>
 												) : (
 													<div></div>
@@ -220,13 +350,13 @@ export const Publications = () => {
 								</div>
 							))
 						) : (
-							<h1>Cargando...</h1>
+							<div className={s.loader}></div>
 						)}
 					</div>
 				</div>
 			</div>
 		</div>
 	) : (
-		<h1>Cargando...</h1>
+		<div className={s.loader}></div>
 	);
 };

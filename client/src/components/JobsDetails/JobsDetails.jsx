@@ -103,11 +103,6 @@ export default function JobsDetails() {
 					) : (
 						''
 					)}
-
-					<div className={s.containerImg}>
-						<img src={jobsDetails.company.photograph} alt={jobsDetails.title} />
-					</div>
-
 					<h1>{jobsDetails.title}</h1>
 				</div>
 				<div className={s.containerInfo}>

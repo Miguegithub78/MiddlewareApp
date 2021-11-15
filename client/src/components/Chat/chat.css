@@ -244,7 +244,7 @@ body{
   }
 }
 
-input[type="file"] {
+.inputt[type="file"] {
   display: none;
 }
 .custom-file-upload {
@@ -255,14 +255,13 @@ input[type="file"] {
 }
 
 .imgMessage {
-  width: 150px;
+  width: 300px;
 }
 
 
 .container::-webkit-scrollbar {
-    width: 8px;     /* Tamaño del scroll en vertical */
+    width: 10px;     /* Tamaño del scroll en vertical */
     height: 8px;    /* Tamaño del scroll en horizontal */
-    display: none;  /* Ocultar scroll */
 }
 .container::-webkit-scrollbar-thumb {
     background: #ccc;

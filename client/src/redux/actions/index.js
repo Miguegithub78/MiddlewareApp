@@ -293,12 +293,14 @@ export const getCompanyDetails = (id) => {
 };
 
 /*PUBLICATIONS*/
-export function getPublications() {
+export function getPublications(numberPage) {
   return async function (dispatch) {
     try {
-      const json = await clienteAxios.get("/publications");
+      const json = await clienteAxios.get(`/publications?numberPage=${numberPage}`);
       return dispatch({ type: GET_PUBLICATIONS, payload: json.data });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 }
 
@@ -337,11 +339,10 @@ export function putLike(idPublication, idUser) {
   };
 }
 
-/*no existe en el back*/
-export function deletePublications(id) {
-  return async function () {
-    const response = await clienteAxios.delete(`/publications/${id}`);
-    return response;
+export function deletePublications(idPublication, idUser, userType) {
+  return async function (dispatch) {
+    const response = await clienteAxios.delete(`/publications?idPublication=${idPublication}&idUser=${idUser}&userType=${userType}`);
+    return dispatch({ type: "DELETE_PUBLICATION", payload: response.data });
   };
 }
 
@@ -470,10 +471,10 @@ const urlUploadPicPublication = (urlPicturePublication) => ({
   payload: urlPicturePublication,
 });
 
-export const resetPicturePublications = (picture) => {
+export const resetPicturePublications = () => {
   return async function (dispatch) {
       return dispatch({
-        type: "UPLOAD_PICTURE_PUBLICATION",
+        type: "RESET_PICTURE_PUBLICATION",
         payload: null,
       })
   };

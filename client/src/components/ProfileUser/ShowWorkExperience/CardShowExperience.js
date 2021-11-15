@@ -1,39 +1,16 @@
 import React from "react";
 import ShowWorkExperience from "./ShowWorkExperience";
 
-const CardShowExperience = ({infoUser}) => {
+const CardShowExperience = ({infoUser, setWorkExperience, setInfoUser}) => {
   return (
     <div className="card">
+       <h5 className='text-center'>Tus experiencias laborales</h5>
       <div className="card-body">
          {infoUser.jobsExperience.map(job=>(
-            <ShowWorkExperience job={job}  />
+            <div key={job._id?job._id:job.id}>
+               <ShowWorkExperience setInfoUser={setInfoUser} infoUser={infoUser} setWorkExperience={setWorkExperience} job={job}  />
+            </div>
          ))}
-        {/* <Name workExperience={workExperience} handleChange={handleChange} />
-          <Industry
-            workExperience={workExperience}
-            handleChange={handleChange}
-          />
-
-          <WorkPosition
-            workExperience={workExperience}
-            handleChange={handleChange}
-          />
-          <WorkingTime
-            workExperience={workExperience}
-            handleChange={handleChange}
-          /> */}
-        {/* <div className="row">
-          <div className="col-sm-3"></div>
-          <div className="col-sm-9 text-secondary">
-            <button
-              type="submit"
-              className="btn btn-outline-dark px-4"
-
-            >
-               Experiencia
-            </button>
-          </div>
-        </div> */}
       </div>
     </div>
   );

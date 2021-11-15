@@ -14,13 +14,21 @@ import { useHistory } from "react-router-dom";
 import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
 import CareerData from "./CareerData";
-import NavBar from '../NavBar/NavBar';
+import NavBar from "../NavBar/NavBar";
 import JobsExperience from "./JobsExperience/JobsExperience";
 
 const ProfileUser = () => {
   const { user, languages, technologies } = useSelector((state) => state);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [workExperience, setWorkExperience] = useState({
+    companyName: "",
+    industry: "",
+    workPosition: "",
+    workingTime: "",
+    id: "",
+    edit:false
+  });
   const [infoUser, setInfoUser] = useState({
     name: "",
     gmail: "",
@@ -42,12 +50,14 @@ const ProfileUser = () => {
     openToRelocate: false,
     openToRemote: false,
     openToFullTime: false,
-    academicHistory: [{
-      institute: '',
-      title: '',
-      date: '',   //ver que onda con el tema de la fecha
-      description: '',
-    }],
+    academicHistory: [
+      {
+        institute: "",
+        title: "",
+        date: "", //ver que onda con el tema de la fecha
+        description: "",
+      },
+    ],
   });
   useEffect(() => {
     if (user) {
@@ -71,10 +81,11 @@ const ProfileUser = () => {
         github: user.github,
         website: user.website,
         city: user.city,
-        title: user.title||'',
+        title: user.title || "",
         linkedin: user.linkedin,
       });
     }
+
     if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
@@ -124,6 +135,7 @@ const ProfileUser = () => {
               </button>
             )}
             <LeftData
+            setWorkExperience={setWorkExperience}
               setInfoUser={setInfoUser}
               infoUser={infoUser}
               user={user}
@@ -131,7 +143,12 @@ const ProfileUser = () => {
             <div className="col-lg-8">
               <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
               <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-              <JobsExperience setInfoUser={setInfoUser} infoUser={infoUser} />
+              <JobsExperience
+                workExperience={workExperience}
+                setWorkExperience={setWorkExperience}
+                setInfoUser={setInfoUser}
+                infoUser={infoUser}
+              />
             </div>
           </div>
         </div>

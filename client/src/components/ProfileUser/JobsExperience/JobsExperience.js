@@ -1,37 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Industry from "./Industry";
 import Name from "./Name";
 import WorkingTime from "./WorkingTime";
 import WorkPosition from "./WorkPosition";
+import { v4 } from "uuid";
+import { putJuniors } from "../../../redux/actions";
+let a = true;
 
-const JobsExperience = ({ infoUser, setInfoUser }) => {
+const JobsExperience = ({
+  infoUser,
+  setInfoUser,
+  setWorkExperience,
+  workExperience,
+}) => {
   const dispatch = useDispatch();
-  // const handleChange = (e) => {
-  //   setInfoUser((info) => ({
-  //     ...info,
-  //     infoUserChanged: true,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
-  const [workExperience, setWorkExperience] = useState({
-    companyName: "",
-    industry: "",
-    workPosition: "",
-    workingTime: "",
-    id:''
-  });
   const handleChange = (e) => {
     setWorkExperience((info) => ({
       ...info,
       [e.target.name]: e.target.value,
     }));
   };
-
-  // const [editValue, setEditValue] = useState(true);
-
   const handleClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       workExperience.companyName === "" ||
       workExperience.industry === "" ||
@@ -39,14 +30,44 @@ const JobsExperience = ({ infoUser, setInfoUser }) => {
       workExperience.workingTime === ""
     )
       return;
-      workExperience.id=1
-    setInfoUser((info) => ({
-      ...info,
-      jobsExperience: [...info.jobsExperience, workExperience],
-    }));
+    workExperience.id = v4();
+    if (!workExperience.edit)  {
+      console.log('entra aca');
+      setInfoUser((info) => ({
+        ...info,
+        jobsExperience: [...info.jobsExperience, workExperience],
+      }));
+    } else {
+      setInfoUser((info) => ({
+        ...info,
+        jobsExperience: info.jobsExperience.map((j) =>
+          j._id === workExperience._id ? workExperience : j
+        ),
+      }));
+
+      // editar el job de de dentro de info user
+    }
+    setWorkExperience({
+      companyName: "",
+      industry: "",
+      workPosition: "",
+      workingTime: "",
+      id: "",
+      edit: false,
+    });
+    a = false;
   };
+  useEffect(() => {
+    if (!a) {
+      dispatch(putJuniors(infoUser, infoUser.idUser));
+      a = true;
+    }
+  }, [a]);
   return (
     <div className="card">
+      <h4 className="text-center text-secondary">
+        Agregar experiencia de trabajo
+      </h4>
       <div className="card-body">
         <form>
           <Name workExperience={workExperience} handleChange={handleChange} />
@@ -72,7 +93,7 @@ const JobsExperience = ({ infoUser, setInfoUser }) => {
                 className="btn btn-outline-dark px-4"
                 onClick={handleClick}
               >
-                Agregar Experiencia
+                {workExperience.edit ? "Editar Experiencia" : "Agregar Experiencia"}
               </button>
             </div>
           </div>

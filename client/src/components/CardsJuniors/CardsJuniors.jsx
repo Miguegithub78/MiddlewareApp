@@ -6,12 +6,12 @@ import styles from "./card.css";
 export const CardsJuniors = ({ arrayJuniors }) => {
   //const companies = useSelector((state) => state.companies);
 
-
   return (
 
     <div className="container">
       <div className="row">
         <div className="col-lg-12 text-center">
+          <h2>Nuestros Programadores</h2>
           <div className="row">
             {arrayJuniors?.map((p) => (
               <div className="col-lg-3 col-md 12 mb-4">

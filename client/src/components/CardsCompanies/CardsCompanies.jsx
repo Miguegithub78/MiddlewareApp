@@ -12,19 +12,13 @@ export const CardsCompanies = ({ arrayCompanies }) => {
   return (
 
     <div className="container">
-
       <div className="row">
-
         <div className="col-lg-12 text-center">
-        
+        <h2>Nuestras Empresas</h2>  
           <div className="row">
-
             {arrayCompanies.map((p) => (
-
               <div className="col-lg-3 col-md 12 mb-4">
-
                 <div className="card-section">
-
                   <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}>
                     <Link to={`/companies/${p._id}`} key={p.name}>
 

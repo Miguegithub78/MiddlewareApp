@@ -6,7 +6,6 @@ import styles from "./card.css";
 export const CardsJuniors = ({ arrayJuniors }) => {
   //const companies = useSelector((state) => state.companies);
 
-
   return (
 
     <div className="container">

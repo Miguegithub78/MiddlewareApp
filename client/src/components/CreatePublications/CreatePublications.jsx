@@ -152,12 +152,13 @@ const CreatePublications = () => {
               className="needs-validation"
               noValidate
             >
-              <div className="row px-3 m-2">
-                <img alt="img" className="user" src={user.photograph} />
+              <div className="d-flex flex-column align-items-start text-center">
+                <img alt="img" className="user" src={user.photograph} className="rounded-circle p-1 bg-primary"
+              width="140" />
               </div>
-              <div className="row m-4">
+              <div className="row m-4 justify-content-start">
                 <div className="col-sm-3">
-                  <h6 className="mb-3">{user.name}</h6>
+                  <h6 className="mb-3 ">{user.name}</h6>
                 </div>
               </div>
               <div className="row mb-4">
@@ -241,9 +242,9 @@ const CreatePublications = () => {
                     </option>
                     <option
                       className="text-muted bg-light mt-4 mb-3"
-                      value="otro"
+                      value="pesos"
                     >
-                      Otro
+                      Pesos
                     </option>
                   </select>
                   {errors.currency && (

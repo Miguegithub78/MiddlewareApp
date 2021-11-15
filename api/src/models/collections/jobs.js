@@ -84,7 +84,24 @@ longitude: {
     type: String,
     enum: ["active", "paused", "closed"],
     default: "active" 
-  }
+  },
+  openToRelocate: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  openToRemote: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  openToFullTime: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 
 });
 

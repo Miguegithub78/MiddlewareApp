@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 
 const postJobs = async (req, res) => {
 
-    const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, idFireBase, premium, status } = req.body;
+    const { title, description, photograph, country, city, salary, currency, date, technologies, companyId, idFireBase, premium, status, openToFullTime, openToRelocate, openToRemote } = req.body;
 
     const token = req.headers["x-auth-token"];
 
@@ -46,6 +46,9 @@ const postJobs = async (req, res) => {
             company: company,
             premium,
             status,
+            openToFullTime,
+            openToRelocate,
+            openToRemote,
         });
 
         try{
@@ -126,7 +129,7 @@ const putJobs = async (req, res) => {
     
     const { id } = req.params; //id de job
    
-      const { title, description, photograph, country, city, salary, currency, date, technologies, idCompany, idFireBase, premium, status } = req.body;
+      const { title, description, photograph, country, city, salary, currency, date, technologies, idCompany, idFireBase, premium, status, openToFullTime, openToRelocate, openToRemote } = req.body;
   
       const token = req.headers["x-auth-token"];
         
@@ -161,7 +164,10 @@ const putJobs = async (req, res) => {
               technologies,
               company: company,
               premium,
-              status
+              status,
+              openToFullTime,
+            openToRelocate,
+            openToRemote,
           };
   
           try{

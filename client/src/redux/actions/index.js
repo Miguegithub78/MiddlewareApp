@@ -247,6 +247,7 @@ export const getJuniorsDetails = (id) => {
 export function putJuniors(data, id) {
   return async function () {
     try {
+      console.log(data, id, 'action');
       const response = await clienteAxios.put(`/juniors/${id}`, data);
       // llamar al dispatch
       console.log(response.data, "editar usuario ok");
@@ -293,12 +294,14 @@ export const getCompanyDetails = (id) => {
 };
 
 /*PUBLICATIONS*/
-export function getPublications() {
+export function getPublications(numberPage) {
   return async function (dispatch) {
     try {
-      const json = await clienteAxios.get("/publications");
+      const json = await clienteAxios.get(`/publications?numberPage=${numberPage}`);
       return dispatch({ type: GET_PUBLICATIONS, payload: json.data });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 }
 

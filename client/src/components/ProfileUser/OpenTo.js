@@ -21,6 +21,7 @@ const OpenTo = ({ editValue, infoUser, setInfoUser }) => {
               }))
             }
             checked={infoUser.openToRelocate}
+            value={infoUser.openToRelocate}
           />
           <label className="form-check-label" htmlFor="Relocate">
             Relocate
@@ -33,6 +34,7 @@ const OpenTo = ({ editValue, infoUser, setInfoUser }) => {
             id="Remote"
             disabled={editValue}
             checked={infoUser.openToRemote}
+            value={infoUser.openToRemote}
             onChange={() =>
               setInfoUser((info) => ({
                 ...info,
@@ -51,6 +53,7 @@ const OpenTo = ({ editValue, infoUser, setInfoUser }) => {
             type="checkbox"
             id="FullTime"
             checked={infoUser.openToFullTime}
+            value={infoUser.openToFullTime}
             disabled={editValue}
             onChange={() =>
               setInfoUser((info) => ({

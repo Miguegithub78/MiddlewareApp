@@ -26,7 +26,7 @@ import { CardsJuniors } from "../CardsJuniors/CardsJuniors";
 import CardsJobs from "../CardsJobs/CardsJobs";
 import "./Home.css";
 import { Publications } from "../Publications/Publications";
-import Mapa from "../Mapa/Mapa";
+import Mapa from "../MapaGeneral/Mapa";
 
 const Home = () => {
   const history = useHistory();
@@ -80,7 +80,16 @@ const Home = () => {
                 <CardsJuniors arrayJuniors={juniors} />
               )}
               {tipo && tipo === "publications" && <Publications />}
-              {tipo && tipo === "mapa" && <Mapa />}
+              {/*{tipo && tipo === "mapa" && <Mapa />}*/}
+              {tipo && tipo === "mapa" &&
+                <div className="card">
+                  <div className="card-body">
+                    <div className="accordion">
+                      <Mapa />
+                    </div>
+                  </div>
+                </div>
+              }
               {/* 	<CardsJobs jobs={jobs} /> */}
             </div>
           </div>

@@ -10,15 +10,11 @@ import {
   logOutUserAction,
   getUserAction,
   sortJobsBy,
-  changePicturePublications
+  changePicturePublications,
+  resetPicturePublications
 } from "../../redux/actions";
 import tokenAuth from "../config/token";
 import { useHistory } from "react-router-dom";
-
-
-import {
-  resetPicturePublications
-} from "../../redux/actions";
 
 import NavBar from "../NavBar/NavBar";
 
@@ -115,8 +111,8 @@ const Chat2 = () => {
     })
 
     if (docSnap.data() !== undefined) {
-      setImgUser2(docSnap.data().img.user1 === user._id ? docSnap.data().img.user1 : docSnap.data().img.user2)
-      setNameUser2(docSnap.data().ownersNames.user1 === user.name ? docSnap.data().ownersNames.user1 : docSnap.data().ownersNames.user2)
+      setImgUser2(docSnap.data().owners.user1 !== user._id ? docSnap.data().img.user1 : docSnap.data().img.user2)
+      setNameUser2(docSnap.data().ownersNames.user1 !== user.name ? docSnap.data().ownersNames.user1 : docSnap.data().ownersNames.user2)
     }
 
     setLoading(false)
@@ -144,7 +140,7 @@ const Chat2 = () => {
           ownersNames: doc.data().ownersNames,
           img: doc.data().img,
         })
-        setImgUser2(doc.data().img.user1 === user._id ? doc.data().img.user1 : doc.data().img.user2)
+        setImgUser2(doc.data().img.user1 !== user._id ? doc.data().img.user1 : doc.data().img.user2)
       }
     });
     setChat(arrChats)
@@ -201,25 +197,8 @@ const Chat2 = () => {
         <div className="col-lg-12 ls-12">
 
           <div className="card chat-app">
-            <div id="plist" className="people-list h-100">
-              <div className="input-group">
-                {/*< <div className="input-group-prepend">
-                 i className="input-group-text fa fa-search"></i>
-                </div>
-
-               <input type="text" className="form-control" placeholder="Search..." />*/}
-
-              </div>
+            <div id="plist" className="people-list h-100 container">
               <ul className="list-unstyled chat-list mt-2 mb-3">
-
-                {/*Hacer un map aquí*/}
-                {/*<li className="clearfix">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />
-                  <div className="about">
-                    <div className="name">Vincent Porter</div>
-                    <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-                  </div>
-                </li>*/}
 
                 {
                   chat ? chat.map((e, i) =>
@@ -253,7 +232,7 @@ const Chat2 = () => {
               </div>
 
 
-              <div className="chat-history">
+              <div className="chat-history container">
                 <ul className="mb-3">
 
                   {
@@ -296,18 +275,23 @@ const Chat2 = () => {
 
                     <label className="custom-file-upload">
 
-                      <input type="file" onChange={publicationImg} />
+                      <input type="file" className="inputt" onChange={publicationImg} />
                       <i class="fa fa-cloud-upload"></i>
                     </label>
 
+                    {
+                      !loadingImg
+                      ? <input type="text" className="form-control" value={message} placeholder="Escribe algo..."  onChange={(e) => onChangeState(e)} />
+                      : <input type="text" className="form-control" value={message} placeholder="Escribe algo..." disabled onChange={(e) => onChangeState(e)} />
+                    }
 
-                    <input type="text" className="form-control" value={message} placeholder="Escribe algo..." onChange={(e) => onChangeState(e)} />
 
 
-
-                    {!loadingImg ?
-                      <button type="submit" className="input-group-text"><i className="fa fa-send"></i></button>
-                      : <button type="submit" disabled className="input-group-text">Cargando imagen</button>}
+                    {
+                      !loadingImg
+                      ? <button type="submit" className="input-group-text"><i className="fa fa-send"></i></button>
+                      : <button type="submit" disabled className="input-group-text">Cargando imagen</button>
+                    }
 
 
                   </div>

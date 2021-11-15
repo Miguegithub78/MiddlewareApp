@@ -53,7 +53,9 @@ const inicialState = {
 		},
 	},
 	jobDetails: {},
-	imgPublication: null
+	imgPublication: null,
+	pages: 0,
+	finishPage: false
 };
 
 function calculateSalary(value, state) {
@@ -167,18 +169,32 @@ const rootReducer = (state = inicialState, action) => {
 		case GET_PUBLICATIONS:
 			return {
 				...state,
-				publications: action.payload,
+				publications: [...state.publications].concat(action.payload.publications),
+				pages: action.payload.pages,
+				finishPage: action.payload.finishPage
 			};
 
 		case "POST_PUBLICATION": return {
 			...state,
-			publications: [...state.publications, action.payload],
-		}
+			publications: [action.payload].concat([...state.publications]),
+		};
+
+		case "DELETE_PUBLICATION": return {
+			...state,
+			publications: state.publications.filter(e => e._id !== action.payload._id)
+		};
 
 		case "PUT_PUBLICATION": return {
 			...state,
-			publication: action.payload
-		}
+			publications: state.publications.filter(e => {
+				if(e._id == action.payload._id){
+					e.description = action.payload.description
+					e.photograph = action.payload.photograph
+					return e
+
+				} else return e
+			})
+		};
 
 		case GET_PUBLICATIONS_BY_ID:
 			return {
@@ -285,6 +301,11 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case "UPLOAD_PICTURE_PUBLICATION": return{
+			...state,
+			imgPublication: action.payload
+		};
+
+		case "RESET_PICTURE_PUBLICATION": return{
 			...state,
 			imgPublication: action.payload
 		};

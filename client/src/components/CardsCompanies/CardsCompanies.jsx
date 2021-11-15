@@ -16,6 +16,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
       <div className="row">
 
         <div className="col-lg-12 text-center">
+        <h2>Nuestras Empresas</h2>
         
           <div className="row">
 

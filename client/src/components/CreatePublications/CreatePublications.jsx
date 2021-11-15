@@ -69,8 +69,10 @@ const CreatePublications = () => {
     companyId: user && user._id,
     premium: user && user.premium,
     status: "active",
+    openToRelocate: false,
+    openToRemote: false,
+    openToFullTime: false,
   });
-  console.log(input)
 
   function handleChange(e) {
     setInput((input) => ({
@@ -242,7 +244,7 @@ const CreatePublications = () => {
                     </option>
                     <option
                       className="text-muted bg-light mt-4 mb-3"
-                      value="pesos"
+                      value="peso"
                     >
                       Pesos
                     </option>
@@ -336,6 +338,67 @@ const CreatePublications = () => {
                   )}
                 </div>
               </div>
+              <div className="row mb-3">
+                  <div className="col-sm-2">
+                    <h6 className="mb-0">Disponibilidad </h6>
+                  </div>
+                  <div className="col-sm-9 text-secondary">
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="Relocate"
+                        onChange={() =>
+                          setInput((info) => ({
+                            ...info,
+                            openToRelocate: !info.openToRelocate,
+                          }))
+                        }
+                        required
+                        checked={input.openToRelocate}
+                      />
+                      <label className="form-check-label" htmlFor="Relocate">
+                        Relocación
+                      </label>
+                    </div>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="Remote"
+                        checked={input.openToRemote}
+                        onChange={() =>
+                          setInput((info) => ({
+                            ...info,
+                            openToRemote: !info.openToRemote,
+                          }))
+                        }
+                        required
+                      />
+                      <label className="form-check-label" htmlFor="Remote">
+                        Remoto
+                      </label>
+                    </div>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="FullTime"
+                        checked={input.openToFullTime}
+                        onChange={() =>
+                          setInput((info) => ({
+                            ...info,
+                            openToFullTime: !info.openToFullTime,
+                          }))
+                        }
+                        required
+                      />
+                      <label className="form-check-label" htmlFor="FullTime">
+                        Tiempo Completo
+                      </label>
+                    </div>
+                  </div>
+                </div>
               <button type="submit" className="btn btn-outline-dark px-4 mt-4">
                 Publicar
               </button>

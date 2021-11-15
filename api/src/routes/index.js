@@ -38,7 +38,7 @@ router.get('/publications', getPublications)
 router.get('/publications/:id', getPublicationsById)
 router.post('/publications', postPublications)
 router.put('/publications', putPublication)
-router.delete('/publications/:id', deletePublication)
+router.delete('/publications', deletePublication)
 
 router.get('/premiumCompany', getAllCompanyPremium)
 router.put('/premiumCompany/:id', updatePremiumCompany)

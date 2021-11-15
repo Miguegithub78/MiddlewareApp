@@ -116,12 +116,7 @@ const ProfileUser = () => {
   return user ? (
     <div>
       <NavBar />
-      <Link
-        className="btn btn-block btn-dark btn-outline-light"
-        to="/home/companies"
-      >
-        Volver al inicio
-      </Link>
+
       <div className="container mt-3">
         <div className="main-body">
           <div className="row">

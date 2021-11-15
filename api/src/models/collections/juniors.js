@@ -56,6 +56,7 @@ const juniorSchema = new Schema({
     type: String,
     required: false,
   },
+  
   userType: {
     type: String,
     required: true,

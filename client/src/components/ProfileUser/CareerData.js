@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import Languages from "./Languages";
 import Technologies from "./Technologies";
-import Softskills from "./SoftSkills";
+// import Softskills from "./SoftSkills";
 import OpenTo from "./OpenTo";
 
 const CareerData = ({ infoUser, setInfoUser }) => {

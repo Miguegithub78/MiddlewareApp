@@ -14,58 +14,6 @@ import {
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 
-let company = [
-  {
-    _id: "618d3fd84f336360bbe17ef4",
-    name:"Clinica Soler",
-    lat: -34.68784,
-    lng: -58.50175,
-  },
-  {
-    _id: "618d5563e7803ae26b3dc381",
-    name:"Ailin Rutchle",
-    lat: -33.17607,
-    lng: -68.47444,
-  },
-  {
-    _id: "618c0cc3a8707bd5e8e32f8f",
-    name:"Ailin",
-    lat: -33.10607,
-    lng: -68.49444,
-  },
-  {
-    _id: "618c1d35b44f427e9f2a739b",
-    name:"Pamela Pereyra",
-    lat: -31.43292,
-    lng: -64.13212,
-  },
-  {
-    _id: "618bdfe96cfb2d7b1d953cb7",
-    name:"Maxi Gadea",
-    lat: -31.635292,
-    lng: -64.36212,
-  },
-  {
-    _id: "618be0dd4b71ca6e252daacb",
-    name:"Guille Tempo",
-    lat: -32.435292,
-    lng: -64.16212,
-  },
-  {
-    _id: "618c1580357f915ca70270b0",
-    name:"María Angélica Rojas Fernández",
-    lat: -34.62254,
-    lng: -58.36550,
-  },
-  {
-    _id: "618c1d69b13c6eafa0a0abf6",
-    name:"Jesuan Patermina",
-    lat: -34.62254,
-    lng: -58.35550,
-  },
-  
-];
-
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -96,11 +44,21 @@ export default function Mapa() {
 
   //createLocationMarkers();
   console.log('nombre ' + companies.name)
+  console.log('lat ' + companies.latitude)
+  console.log('lng ' + companies.longitude)
+  let la
+  let lo
+  if(companies.latitude){
+    la=Number(companies.latitude)
+    lo=Number(companies.longitude)
+  }else{
+    la=-34.13091
+    lo=-63.38324
+  }
+  
   const center = {
-        lat: -34.13091,
-        lng: -63.38324,
-        //lat: companies.lat,
-        //lng: companies.lng,
+    lat: la, 
+    lng: lo,
   };
 
   const mapRef = useRef();
@@ -128,13 +86,11 @@ export default function Mapa() {
 
         onLoad={onMapLoad}
       >
-               
-
-        {company?.map((marker) => (
-          id && id===marker._id ? (
+                
+        {  id && id===companies._id ? (
           <Marker
-              key={`${marker.lat}-${marker.lng}`}
-              position={{ lat: marker.lat, lng: marker.lng }}
+              key={`${companies.latitude}-${companies.longitude}`}
+              position={{ lat: Number(companies.latitude), lng: Number(companies.longitude) }}
 
               icon={{
                 url: `/company.svg`,
@@ -146,7 +102,7 @@ export default function Mapa() {
           ) : null
 
 
-        ))}
+        }
            
       </GoogleMap>
     </div>

@@ -71,15 +71,17 @@ function NavBar() {
               </li>
 
             ) : null}
-            <li className={`nav-item  ${styles.items}`}>
-              <Link
-                className="nav-link fw-normal "
-                aria-current="page"
-                to="/home/mapa"
-              >
-                Mapa
-              </Link>
-            </li>
+            {user && user.userType === "juniors" ? (
+              <li className={`nav-item  ${styles.items}`}>
+                <Link
+                  className="nav-link fw-normal "
+                  aria-current="page"
+                  to="/home/mapa"
+                >
+                  Mapa
+                </Link>
+              </li>
+             ) : null}
             <li className={`nav-item  ${styles.items}`}>
               <Link
                 className="nav-link fw-normal "

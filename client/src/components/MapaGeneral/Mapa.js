@@ -16,62 +16,13 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
-import { Link } from "react-router-dom";
+
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 
-let company= [
-  {
-    _id: "618d3fd84f336360bbe17ef4",
-    name:"Clinica Soler",
-    lat: -34.68784,
-    lng: -58.50175,
-  },
-  {
-    _id: "618d5563e7803ae26b3dc381",
-    name:"Ailin Rutchle",
-    lat: -33.17607,
-    lng: -68.47444,
-  },
-  {
-    _id: "618c0cc3a8707bd5e8e32f8f",
-    name:"Ailin",
-    lat: -33.00607,
-    lng: -68.59444,
-  },
-  {
-    _id: "618c1d35b44f427e9f2a739b",
-    name:"Pamela Pereyra",
-    lat: -31.43292,
-    lng: -64.13212,
-  },
-  {
-    _id: "618bdfe96cfb2d7b1d953cb7",
-    name:"Maxi Gadea",
-    lat: -31.635292,
-    lng: -64.36212,
-  },
-  {
-    _id: "618be0dd4b71ca6e252daacb",
-    name:"Guille Tempo",
-    lat: -32.435292,
-    lng: -64.16212,
-  },
-  {
-    _id: "618c1580357f915ca70270b0",
-    name:"María Angélica Rojas Fernández",
-    lat: -34.62254,
-    lng: -58.36550,
-  },
-  {
-    _id: "618c1d69b13c6eafa0a0abf6",
-    name:"Jesuan Patermina",
-    lat: -34.62254,
-    lng: -58.35550,
-  },
-  
-];
+import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -84,30 +35,21 @@ const options = {
   zoomControl: true,
 };
 const center = {
-  lat: -34.28421,
-  lng: -64.16724,
+  lat: -34.60364,
+  lng: -58.38159,
 };
 
-export default function App() {
+export default function Mapa() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCCpn70ZJEIvFYTsUyxArbhmtFJXoNgtgo",
     libraries,
   });
-  const [markers, setMarkers] = React.useState([]);
+  
   const [selected, setSelected] = React.useState(null);
-  console.log('onclick lat + lng ' + markers)
 
-  const onMapClick = React.useCallback((e) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        
-      },
-      
-    ]);
-  }, []);
+  const companies = useSelector(state => state.companies)
+
+  
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -117,7 +59,7 @@ export default function App() {
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
-    console.log('search lat' + lat + 'lng' + lng)
+   
   }, []);
 
   if (loadError) return "Error";
@@ -125,30 +67,27 @@ export default function App() {
 
   return (
     <div>
-      <h2>
-        Companies{" "}
-        <span role="img" aria-label="tent">
-        👩‍💻
-        </span>
-      </h2>
-
-      <Locate panTo={panTo} />
-      <Search panTo={panTo} />
-
+      <div>
+        <h5>Empresas{" "}
+          <i className="bi bi-people-fill"></i>
+        </h5>
+      
+        <Locate panTo={panTo} />
+        <Search panTo={panTo} />
+      </div>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={6}
         center={center}
         options={options}
-        onClick={onMapClick}
+        
         onLoad={onMapLoad}
       >
-        {company?.map((marker) => (
-          
+        {companies?.map((marker) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            key={`${Number(marker.latitude)}-${Number(marker.longitude)}`}
+            position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
            
             onClick={() => {
               setSelected(marker);
@@ -167,7 +106,7 @@ export default function App() {
        
         {selected ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }}
             onCloseClick={() => {
               setSelected(null);
             }}
@@ -178,7 +117,6 @@ export default function App() {
                   💻
                 </span>{" "}
                 <Link to={`/companies/${selected._id}`} key={selected.name}>{selected.name}</Link>
-                
               </h2>
               
              
@@ -201,7 +139,7 @@ function Locate({ panTo }) {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             });
-            console.log('Mi ubicacion lat ' + position.coords.latitude + 'lng ' + position.coords.longitude)
+            
           },
           () => null
         );
@@ -246,7 +184,7 @@ function Search({ panTo }) {
   };
 
   return (
-    <div className="search">
+    <div className="search mb-3 justify-content text-center">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}

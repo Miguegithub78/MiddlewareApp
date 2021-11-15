@@ -80,7 +80,16 @@ const Home = () => {
                 <CardsJuniors arrayJuniors={juniors} />
               )}
               {tipo && tipo === "publications" && <Publications />}
-              {tipo && tipo === "mapa" && <Mapa />}
+              {/*{tipo && tipo === "mapa" && <Mapa />}*/}
+              {tipo && tipo === "mapa" &&
+                <div className="card">
+                  <div className="card-body">
+                    <div className="accordion">
+                      <Mapa />
+                    </div>
+                  </div>
+                </div>
+              }
               {/* 	<CardsJobs jobs={jobs} /> */}
             </div>
           </div>

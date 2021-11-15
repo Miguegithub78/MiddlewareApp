@@ -24,15 +24,14 @@ const JobsExperience = ({
   const handleClick = (e) => {
     e.preventDefault();
     if (
-      workExperience.companyName === "" ||
-      workExperience.industry === "" ||
-      workExperience.workPosition === "" ||
-      workExperience.workingTime === ""
+      workExperience.companyName.trim() === "" ||
+      workExperience.industry.trim() === "" ||
+      workExperience.workPosition.trim() === "" ||
+      workExperience.workingTime.trim() === ""
     )
       return;
-    workExperience.id = v4();
-    if (!workExperience.edit)  {
-      console.log('entra aca');
+    if (!workExperience.edit) {
+      workExperience._id = v4();
       setInfoUser((info) => ({
         ...info,
         jobsExperience: [...info.jobsExperience, workExperience],
@@ -52,7 +51,7 @@ const JobsExperience = ({
       industry: "",
       workPosition: "",
       workingTime: "",
-      id: "",
+      _id: "",
       edit: false,
     });
     a = false;
@@ -69,7 +68,7 @@ const JobsExperience = ({
         Agregar experiencia de trabajo
       </h4>
       <div className="card-body">
-        <form>
+        <form onSubmit={handleClick}>
           <Name workExperience={workExperience} handleChange={handleChange} />
           <Industry
             workExperience={workExperience}
@@ -88,13 +87,14 @@ const JobsExperience = ({
           <div className="row">
             <div className="col-sm-3"></div>
             <div className="col-sm-9 text-secondary">
-              <button
+              <input
                 type="submit"
                 className="btn btn-outline-dark px-4"
-                onClick={handleClick}
-              >
-                {workExperience.edit ? "Editar Experiencia" : "Agregar Experiencia"}
-              </button>
+                value={workExperience.edit
+                  ? "Editar Experiencia"
+                  : "Agregar Experiencia"}
+
+                />
             </div>
           </div>
         </form>

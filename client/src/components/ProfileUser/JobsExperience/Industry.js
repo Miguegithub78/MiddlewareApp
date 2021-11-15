@@ -13,7 +13,7 @@ const Industry = ({workExperience, handleChange, editValue}) => {
           value={workExperience.industry}
           onChange={handleChange}
           name="industry"
-
+          required
         />
       </div>
     </div>

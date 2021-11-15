@@ -13,7 +13,7 @@ const WorkPosition = ({workExperience, handleChange, editValue}) => {
               value={workExperience.workPosition}
               onChange={handleChange}
               name="workPosition"
-
+              required
             />
           </div>
         </div>

@@ -16,6 +16,7 @@ import PersonalData from "./PersonalData";
 import CareerData from "./CareerData";
 import NavBar from "../NavBar/NavBar";
 import JobsExperience from "./JobsExperience/JobsExperience";
+import AcademicHistory from "./AcademicHistory/AcademicHistory";
 
 const ProfileUser = () => {
   const { user, languages, technologies } = useSelector((state) => state);
@@ -26,8 +27,16 @@ const ProfileUser = () => {
     industry: "",
     workPosition: "",
     workingTime: "",
-    id: "",
-    edit:false
+    _id: "",
+    edit: false,
+  });
+  const [academicHistory, setAcademicHistory] = useState({
+    institute: "",
+    title: "",
+    date: "", //ver que onda con el tema de la fecha
+    description: "",
+    _id: "",
+    edit: false,
   });
   const [infoUser, setInfoUser] = useState({
     name: "",
@@ -50,14 +59,7 @@ const ProfileUser = () => {
     openToRelocate: false,
     openToRemote: false,
     openToFullTime: false,
-    academicHistory: [
-      {
-        institute: "",
-        title: "",
-        date: "", //ver que onda con el tema de la fecha
-        description: "",
-      },
-    ],
+    academicHistory: [],
   });
   useEffect(() => {
     if (user) {
@@ -130,7 +132,8 @@ const ProfileUser = () => {
               </button>
             )}
             <LeftData
-            setWorkExperience={setWorkExperience}
+              setWorkExperience={setWorkExperience}
+              setAcademicHistory={setAcademicHistory}
               setInfoUser={setInfoUser}
               infoUser={infoUser}
               user={user}
@@ -141,6 +144,12 @@ const ProfileUser = () => {
               <JobsExperience
                 workExperience={workExperience}
                 setWorkExperience={setWorkExperience}
+                setInfoUser={setInfoUser}
+                infoUser={infoUser}
+              />
+              <AcademicHistory
+                academicHistory={academicHistory}
+                setAcademicHistory={setAcademicHistory}
                 setInfoUser={setInfoUser}
                 infoUser={infoUser}
               />

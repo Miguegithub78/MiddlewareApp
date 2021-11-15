@@ -1,15 +1,12 @@
-
-
-const ShowWorkExperience = ({
-  job,
-  setWorkExperience,
+const ShowAcademicExperience = ({
+  acad,
+  setAcademicHistory,
   handleDelete,
 }) => {
   const handleEdit = () => {
-    job.edit = true;
-    setWorkExperience(job);
+    acad.edit = true;
+    setAcademicHistory(acad);
   };
-
   return (
     <div className="accordion accordion-flush">
       <div className="accordion-item">
@@ -18,54 +15,54 @@ const ShowWorkExperience = ({
             className="accordion-button "
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target={`#panelsStayOpen-collapseOne--${job._id}`}
+            data-bs-target={`#panelsStayOpen-collapseOne--${acad._id}`}
             aria-expanded="false"
-            aria-controls={`panelsStayOpen-collapseOne--${job._id}`}
+            aria-controls={`panelsStayOpen-collapseOne--${acad._id}`}
           >
-            <div className="col-sm-6">{job.companyName}</div>
+            <div className="col-sm-6">{acad.title}</div>
           </button>
         </h2>
         <div
-          id={`panelsStayOpen-collapseOne--${job._id}`}
+          id={`panelsStayOpen-collapseOne--${acad._id}`}
           className="accordion-collapse collapse "
           aria-labelledby="panelsStayOpen-headingOne"
         >
           <div className="accordion-body">
             <div className="row">
               <div className="col-sm-4">
+                <h6 className="mb-0 text-secondary">Instituto</h6>
+              </div>
+              <div className="col-sm-8 ">
+                <span>{acad.institute}</span>
+              </div>
+              <hr />
+              <div className="col-sm-4">
                 <h6 className="mb-0 text-secondary">Titulo</h6>
               </div>
               <div className="col-sm-8 ">
-                <span>{job.companyName}</span>
-              </div>
-              <hr />
-              <div className="col-sm-4">
-                <h6 className="mb-0 text-secondary">industry</h6>
-              </div>
-              <div className="col-sm-8 ">
-                <p>{job.industry}</p>
+                <p>{acad.title}</p>
               </div>
               <hr />
 
               <div className="col-sm-4">
-                <h6 className="mb-0 text-secondary">Tareas</h6>
+                <h6 className="mb-0 text-secondary">Fecha</h6>
               </div>
               <div className="col-sm-8 ">
-                <p>{job.workPosition}</p>
+                <p>{acad.date}</p>
               </div>
               <hr />
 
               <div className="col-sm-4">
-                <h6 className="mb-0 text-secondary">Tiempo</h6>
+                <h6 className="mb-0 text-secondary">Descripción</h6>
               </div>
               <div className="col-sm-8 ">
-                <p>{job.workingTime}</p>
+                <p>{acad.description}</p>
               </div>
             </div>
             <div className="mt-3 text-center ">
               <button
                 className="btn btn-outline-dark"
-                onClick={() => handleDelete(job._id)}
+                onClick={() => handleDelete(acad._id)}
                 type="button"
               >
                 Eliminar
@@ -85,4 +82,4 @@ const ShowWorkExperience = ({
   );
 };
 
-export default ShowWorkExperience;
+export default ShowAcademicExperience;

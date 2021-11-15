@@ -105,6 +105,7 @@ const juniorSchema = new Schema({
       industry: String,
       workPosition: String,
       workingTime: String,
+      _id:String
     },
   ],
 
@@ -112,8 +113,9 @@ const juniorSchema = new Schema({
     {
       institute: String,
       title: String,
-      date: Date,
+      date: String,
       description: String,
+      _id:String
     },
   ],
 

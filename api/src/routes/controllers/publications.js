@@ -36,13 +36,10 @@ const postPublications = async (req, res) => {
             }
 
             if(getCompany || getJunior || getAdmin){
-
-                var getPublications = await Publication.find()
                 
                 var postCreated = await Publication.create({
                     description: description,
                     photograph: photograph,
-                    position: getPublications.length,
                     company: getCompany,
                     junior: getJunior,
                     admin: getAdmin
@@ -92,10 +89,10 @@ const getPublications = async (req, res) => {
         let pages = Math.ceil(publications.length / 8);
 
         let publicationsSort = publications.sort(function(a, b) {
-                                    if (a.position > b.position) {
+                                    if (a._id > b._id) {
                                       return -1;
                                     }
-                                    if (a.position < b.position) {
+                                    if (a._id < b._id) {
                                       return 1;
                                     }
                                     return 0;

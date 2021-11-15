@@ -542,7 +542,3 @@ export const editCompanyDataAction =(infoUser) => {
   };
 }
 
-export const sendNotification = () => {
-  
-};
-

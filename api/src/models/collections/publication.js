@@ -27,11 +27,6 @@ const publicationSchema = new Schema({
         default: Date.now
     },
 
-    position: {
-        type: Number,
-        required: true
-    },
-
     company: {
         type: Schema.Types.ObjectId,
         ref: 'company'

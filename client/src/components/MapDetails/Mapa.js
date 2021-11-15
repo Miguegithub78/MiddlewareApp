@@ -14,32 +14,6 @@ import {
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 
-let company = [
-  {
-    id: "618905611ad62578fd8367f1",
-    name: "Clinica Soler",
-    lat: -34.68784,
-    lng: -58.50175,
-  },
-  {
-    id: "618905611ad62578fd8367f2",
-    name: "Google",
-    lat: -34.660254,
-    lng: -58.36698,
-  },
-  {
-    id: "618c0cc3a8707bd5e8e32f8f",
-    name: "Ailin Rutchle",
-    lat: -33.17607,
-    lng: -68.47444,
-  },
-  {
-    id: "618be3904d97025623b68abd",
-    name: "Pamela Pereyra",
-    lat: -31.43292,
-    lng: -64.13212,
-  },
-];
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -70,9 +44,21 @@ export default function Mapa() {
 
   //createLocationMarkers();
   console.log('nombre ' + companies.name)
+  console.log('lat ' + companies.latitude)
+  console.log('lng ' + companies.longitude)
+  let la
+  let lo
+  if(companies.latitude){
+    la=Number(companies.latitude)
+    lo=Number(companies.longitude)
+  }else{
+    la=-34.13091
+    lo=-63.38324
+  }
+  
   const center = {
-    lat: -34.28421,
-    lng: -64.16724,
+    lat: la, 
+    lng: lo,
   };
 
   const mapRef = useRef();
@@ -100,15 +86,11 @@ export default function Mapa() {
 
         onLoad={onMapLoad}
       >
-        {console.log('lat dentro ' + company)}
-        {console.log('arreglo' + companies)}
-
-
-        {company?.map((marker) => (
-          id && id === marker.id ? (
-            <Marker
-              key={`${marker.lat}-${marker.lng}`}
-              position={{ lat: marker.lat, lng: marker.lng }}
+                
+        {  id && id===companies._id ? (
+          <Marker
+              key={`${companies.latitude}-${companies.longitude}`}
+              position={{ lat: Number(companies.latitude), lng: Number(companies.longitude) }}
 
               icon={{
                 url: `/company.svg`,
@@ -120,8 +102,8 @@ export default function Mapa() {
           ) : null
 
 
-        ))}
-        infoWindow = new google.map.InfoWindow()
+        }
+           
       </GoogleMap>
     </div>
   );

@@ -12,10 +12,36 @@ const Notifications = () => {
     const history = useHistory();
     const [notifications, setNotifications] = useState([
         {
-            notifications: [...user.publications, ...user.postulationsJobs]
+            notifications: null
         }
     ])
     
+    const notificationsPrueba = [
+            {idPublication: 1234,
+            type: 2,
+            publiDescription: "les dejo un link para mostrarles como armar el cv",
+            userclickbuttonid: 3456,
+            userclickbname: 'jesuanP'
+        },
+        {idPublication: 1234,
+            type:1,
+            publiDescription: "ando buscando laburo",
+            userclickbuttonid: 3456,
+            userclickbname: 'jesuanP'
+        },
+        {idPublication: 1234,
+            type: 1,
+            publiDescription: "en mi laburo buscan un front end, les dejo el link",
+            userclickbuttonid: 3456,
+            userclickbname: 'jesuanP'
+        },
+        {idPublication: 1234,
+            type: 2,
+            publiDescription: "buen dia red",
+            userclickbuttonid: 3456,
+            userclickbname: 'jesuanP'
+        },
+    ]
 
     
     onAuthStateChanged(auth, (userFirebase) => {
@@ -31,33 +57,20 @@ const Notifications = () => {
     useEffect(() => {
         getPublications()
     }, [])
-
-    console.log(user.publications)
-    console.log(user.postulationsJobs)
-    console.log(notifications)
     
 
     return user && user.userType === 'juniors' ? (
         
-        <div>
+        <div >
             <div className="notifications" id="box">
                 <h2>Notificaciones</h2>
                 <div className="notifications-item">
-                    {notifications[0].publicaciones?.map(el => {
-                        return (
-                        <div>
-                            <li>Tu publicación '{el.description}' recibió un megusta, lleva {el.likesNumber} reacciones! <button>x</button> </li>
-                        </div> 
-                        
-                        )
-                    })}
-                </div>
-                <div className="notifications-item">
-                    {user.postulationsJobs?.map(el => {
-                        return (
-                        <div>Te postulaste con exito al siguiente empleo: '{el}'</div> 
-                        )
-                    })}
+                    {
+                    notificationsPrueba.type === 2 ? 
+                    <h1>Typo 2</h1>
+                    :
+                    <h1>Typo 1</h1>
+                    }
                 </div>
             </div>
         </div>

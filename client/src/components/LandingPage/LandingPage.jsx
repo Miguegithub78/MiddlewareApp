@@ -125,14 +125,14 @@ export default function LandingPage() {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 
               <div className="card text-center">
-                <i className="fa fa-instagram fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-chat-dots-fill fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
                   <div className="card-title">
-                    <h5>Instagram</h5>
+                    <h5>Chat online</h5>
                   </div>
 
                   <div className="card-text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>Tendrás acceso a un chat en linea, aumentando la satisfacción de lograr conectar Progrador Jr/Empresa en tiempos más breves, agilizando el proceso de selección, y teniendo información adicional al instante.</span>
                   </div>
                 </div>
 
@@ -144,15 +144,15 @@ export default function LandingPage() {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 
               <div className="card text-center">
-                <i className="fa fa-twitter fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-geo-alt-fill fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
 
                   <div className="card-title">
-                    <h5>Twitter</h5>
+                    <h5>Mapa de geolocalización</h5>
                   </div>
 
                   <div className="card-text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>Podrás visualizar un mapa, en la que podrás encontrar el perfil que estás buscando, así como también marcar tu ubicación para que sea más accesible geolocalizarte.</span>
                   </div>
                 </div>
               </div>
@@ -162,15 +162,15 @@ export default function LandingPage() {
 
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
               <div className="card text-center">
-                <i className="fa fa-facebook fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-file-earmark-person-fill fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
 
                   <div className="card-title">
-                    <h5>Facebook</h5>
+                    <h5>Perfil</h5>
                   </div>
 
                   <div className="card-text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>Podrás editar tu perfil personal para hacer más completa tu presentación, podrás cargar tu imagen para brindar una identidad que permitirá potenciar la interacción entre usuarios.</span>
                   </div>
 
                 </div>
@@ -182,14 +182,14 @@ export default function LandingPage() {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
               <div className="card text-center">
 
-                <i className="fa fa-pinterest-p fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-gem fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
                   <div className="title">
-                    <h5>Pinterest</h5>
+                    <h5>Perfil premium</h5>
                   </div>
 
                   <div className="text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>Lo más atractivo de obtener una cuenta prémium de Middleware es que te habilitará posicionarte en las primeras búsquedas para que tu perfil sea mucho mas fácil y accesible de encontrar.</span>
                   </div>
                 </div>
 
@@ -200,14 +200,14 @@ export default function LandingPage() {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
               <div className="card text-center">
 
-                <i className="fa fa-google-plus fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-check-circle-fill fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
                   <div className="card-title">
-                    <h5>Google</h5>
+                    <h5>Notificaciones</h5>
                   </div>
 
                   <div className="card-text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>En cada postulación de empleo que realices, te llegará a ti un correo de confirmación de dicha postulación, y le llegará una notificación a la empresa del empleo al cual te postulaste.</span>
                   </div>
                 </div>
               </div>
@@ -220,11 +220,11 @@ export default function LandingPage() {
             <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
               <div className="card text-center">
 
-                <i className="fa fa-github fa-3x" aria-hidden="true"></i>
+                <i className="bi bi-lightbulb-fill fa-3x" aria-hidden="true"></i>
                 <div className="card-body">
 
                   <div className="card-title">
-                    <h5>Github</h5>
+                    <h5>No pierdas más tiempo</h5>
                   </div>
 
                   <div className="card-text">
@@ -251,7 +251,10 @@ export default function LandingPage() {
 
               <div className="card-body" >
                 <div className="card-text">
-                  <p>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad</p>
+                  <h4>Bienvenidos a MIDDLEWARE </h4>
+                  <p>Somos un equipo que nació en Latinoamérica, algunos en Venezuela otros en Argentina. Nos encontramos en diferentes partes del pais y a pesar de las distancias y gracias a las distancias comenzamos esta función puente...Sabemos que la
+                    mayor parte del talento del mundo se desperdicia porque nunca se expone a las oportunidades correctas . Sin ir más lejos, solo el 3% de los datos en LinkedIn obtienen el trabajo de sus sueños en esa aplicación. Es demasiado extensa. Sabemos que el reclutamiento y la contratación es demasiado serio al punto que puede llevar meses contratar al mejor talento y aún así, jamás sabes si lo contratas. En Middleware somos ese puente, esa conexión necesaria para que nuestros talentos y las empresas de todo el mundo que saben que ya no están limitados a q sus empleados estén en su zona que pueden contribuir remoto. Pueden encontrarse muy fácilmente. Nos enfocamos en juniors y en trainees que sabemos que son los mejores en su área.
+                    . De la misma manera que puedes hacer una búsqueda en Google para encontrar la información que estás buscando, en un futuro no muy lejano habrá redes que emparejen el talento con las oportunidades y hacia alli va Middleware</p>
                 </div>
               </div>
             </div>
@@ -275,7 +278,10 @@ export default function LandingPage() {
                   <div className="col-md-8" >
                     <div className="card-body" >
 
-                      <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui adLorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad</span>
+                      <h4>Bienvenidos a MIDDLEWARE </h4>
+                      <p>Somos un equipo que nació en Latinoamérica, algunos en Venezuela otros en Argentina. Nos encontramos en diferentes partes del pais y a pesar de las distancias y gracias a las distancias comenzamos esta función puente...Sabemos que la
+                        mayor parte del talento del mundo se desperdicia porque nunca se expone a las oportunidades correctas . Sin ir más lejos, solo el 3% de los datos en LinkedIn obtienen el trabajo de sus sueños en esa aplicación. Es demasiado extensa. Sabemos que el reclutamiento y la contratación es demasiado serio al punto que puede llevar meses contratar al mejor talento y aún así, jamás sabes si lo contratas. En Middleware somos ese puente, esa conexión necesaria para que nuestros talentos y las empresas de todo el mundo que saben que ya no están limitados a q sus empleados estén en su zona que pueden contribuir remoto. Pueden encontrarse muy fácilmente. Nos enfocamos en juniors y en trainees que sabemos que son los mejores en su área.
+                        . De la misma manera que puedes hacer una búsqueda en Google para encontrar la información que estás buscando, en un futuro no muy lejano habrá redes que emparejen el talento con las oportunidades y hacia alli va Middleware</p>
                     </div>
                   </div>
                 </div>
@@ -287,7 +293,7 @@ export default function LandingPage() {
       <div className="" id="row-contacto">
         <footer id="sticky-footer" className="flex-shrink-0 py-4 bg-dark text-white-50 mt-5">
           <div className="container text-center">
-            <small>Contacto con los administradores</small>
+            <small>Contacto con los administradores de MIDDLEWARE a traves de este correo: info.MiddlewareApp@gmail.com</small>
           </div>
 
         </footer>

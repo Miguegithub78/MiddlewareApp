@@ -79,12 +79,30 @@ const postPublications = async (req, res) => {
 
 const getPublications = async (req, res) => {
 
+    const { numberPage } = req.query;
+
     try{
 
         const publications = await Publication.find()
             .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}])
+
+        let pages = Math.ceil(publications.length / 8);
+
+        let publicationsSort = publications.sort(function(a, b) {
+                                    if (a._id > b._id) {
+                                      return -1;
+                                    }
+                                    if (a._id < b._id) {
+                                      return 1;
+                                    }
+                                    return 0;
+                                  })
+
+        let publicationsLimit = publicationsSort.slice(8 * numberPage - 8, 8 * numberPage)
+
+        let finishPage = numberPage == pages ? true : false
     
-        res.json(publications)
+        res.json({publications: publicationsLimit, pages: pages, finishPage: finishPage})
     }
     catch(err){
         res.status(404).json({message: err.message})

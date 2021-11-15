@@ -97,7 +97,7 @@ const getJuniorById = async (req, res) => {
 };
 
 const updateJuniorsProfile = async (req, res) => {
-  // try {
+  try {
     const token = req.headers["x-auth-token"];
     console.log(token)
     if (!token) {
@@ -181,9 +181,9 @@ const updateJuniorsProfile = async (req, res) => {
     );
 
     res.json(juniorsChange);
-  // } catch (error) {
-  //   res.status(404).json({ message: error.message });
-  // }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
 const deleteJuniorsProfile = async (req, res) => {

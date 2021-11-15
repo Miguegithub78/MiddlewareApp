@@ -196,7 +196,7 @@ const Chat2 = () => {
       <div className="row clearfix ">
         <div className="col-lg-12 ls-12">
 
-          <div className="card chat-app">
+          <div className="card chat-card chat-app">
             <div id="plist" className="people-list h-100 container">
               <ul className="list-unstyled chat-list mt-2 mb-3">
 

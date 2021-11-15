@@ -47,20 +47,10 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
 
 
   const onMapClick = useCallback((e) => {
-<<<<<<< HEAD
-
-    console.log('contador' + cont)
-    if (cont === 0) {
-      cont = cont + 1;
-      setMarkers((current) => [
-
-        ...current,
-=======
     console.log("contador" + cont);
     if (cont === 0) {
       cont = cont + 1;
       setMarkers((current) => [
->>>>>>> main
         {
           lat: e.latLng.lat(),
           lng: e.latLng.lng(),
@@ -69,7 +59,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
       ]);
     }
     //esto lo puse aqui para cuando haga un cambio de su ubicacion aparezca el boton guardar
-    setInfoUser(info=>({
+    setInfoUser(info => ({
       ...info,
       infoUserChanged: true,
     }))
@@ -86,18 +76,9 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
     if (cont === 0) {
       cont = cont + 1;
       setMarkers((current) => [
-<<<<<<< HEAD
-
-        ...current,
         {
           lat: lat,
           lng: lng,
-
-=======
-        {
-          lat: lat,
-          lng: lng,
->>>>>>> main
         },
       ]);
     }
@@ -108,10 +89,6 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
 
   return (
     <div>
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
@@ -125,24 +102,6 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-<<<<<<< HEAD
-        {markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              cont = 0;
-              setMarkers([]);
-            }}
-            icon={{
-              url: `/company.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
-=======
 
         {markers.length > 0 &&
           markers.map((marker) => (
@@ -161,7 +120,6 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
               }}
             />
           ))}
->>>>>>> main
 
         {selected ? (
           <InfoWindow
@@ -174,15 +132,10 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
               <h2>
                 <i className="bi bi-laptop"></i>{" "}
                 Company
-<<<<<<< HEAD
-              </h2>
-
-=======
 
               </h2>
 
 
->>>>>>> main
             </div>
           </InfoWindow>
         ) : null}

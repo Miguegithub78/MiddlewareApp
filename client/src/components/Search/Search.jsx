@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	searchJobsByTitle,
@@ -39,6 +39,8 @@ export const Search = () => {
 		dispatch(sortJobsBy(e.target.value));
 	};
 
+	const [state, setState] = useState(null);
+
 	return (
 		<div className='cont'>
 			<form>
@@ -68,7 +70,7 @@ export const Search = () => {
 						Tipo de Tecnología:
 					</option>
 					{options?.map((p) => (
-						<option value={p._id} key={p._id}>
+						<option value={p.name} key={p._id}>
 							{p.name}
 						</option>
 					))}

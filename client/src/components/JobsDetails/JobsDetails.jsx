@@ -8,6 +8,7 @@ import s from './JobsDetails.module.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import { postulation } from '../../redux/actions';
+import NavBar from '../NavBar/NavBar';
 
 export default function JobsDetails() {
 	const { id } = useParams();
@@ -89,13 +90,7 @@ export default function JobsDetails() {
 					</div>
 				</div>
 			</div>
-			<Link to='/home/empleos'>
-				<button
-					className={`btn btn-block btn-dark btn-outline-light ${s.btnVolver}`}
-				>
-					Volver
-				</button>
-			</Link>
+			<NavBar />
 			<div className={s.card}>
 				<div className={s.cardHeader}>
 					{user.postulationsJobs.includes(id) || post ? (

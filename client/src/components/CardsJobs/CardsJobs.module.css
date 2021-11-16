@@ -73,6 +73,10 @@
 	align-items: center;
 }
 
+.card_container_info_extra_company {
+	margin-bottom: 10px;
+}
+
 .card_container_info_extra_city,
 .card_container_info_extra_salary {
 	display: flex;
@@ -200,5 +204,8 @@
 		right: 0px;
 		border-radius: 5px;
 		background-color: rgb(224, 49, 131);
+	}
+	.card_container_info_extra_company {
+		margin-bottom: 5px;
 	}
 }

@@ -326,7 +326,7 @@ const CreatePublications = () => {
 										accept='.png, .jpg, .jpeg'
 										type='file'
 										id='loadfile'
-										onChange={handleChangePicture}
+										/* onChange={handleChangePicture} */
 									></input>
 									{errors.photograph && (
 										<p className='gerror'>{errors.photograph}</p>

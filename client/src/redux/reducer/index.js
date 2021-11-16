@@ -23,7 +23,7 @@ import {
 	GET_JOB_DETAILS,
 	GET_JOBS,
 	GET_UBICATION,
-	ADD_NEW_JOB
+	ADD_NEW_JOB,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -41,20 +41,54 @@ const inicialState = {
 	publications: [],
 	publication: {},
 	emailVerification: true,
-	countryState:null,
+	countryState: null,
 	jobs: {
 		data: [],
 		filterData: [],
 		activeFilters: {
-			countries: [],
-			city: [],
-			salary: [],
-			tech: [],
+			country: '',
+			city: '',
+			salary: '',
+			tech: '',
+			search: '',
 		},
 	},
 	jobDetails: {},
-	imgPublication: null
+	imgPublication: null,
 };
+
+function filterJobs(state, filterKeyName, payload) {
+	let jobs = state;
+	jobs.activeFilters[filterKeyName] = payload;
+
+	const filterJobs = state.data.filter((job) => {
+		const filterByCountry = jobs.activeFilters.country
+			? job.country.toLowerCase() === jobs.activeFilters.country
+			: true;
+
+		const filterByCity = jobs.activeFilters.city
+			? job.city.toLowerCase() === jobs.activeFilters.city
+			: true;
+
+		const filterByTech = jobs.activeFilters.tech
+			? job.technologies.filter(
+					(t) => jobs.activeFilters.tech.toLowerCase() === t.name.toLowerCase()
+			  )
+			: true;
+
+		const filterBySearch = jobs.activeFilters.search
+			? job.title.toLowerCase().includes(jobs.activeFilters.search)
+			: true;
+
+		/* const filterBySalary =  */
+
+		return (
+			filterByCountry && filterByCity && filterBySearch && filterByTech.length
+		);
+	});
+
+	return filterJobs;
+}
 
 function calculateSalary(value, state) {
 	let min;
@@ -126,8 +160,6 @@ function sortJobs(string, state) {
 	return arr;
 }
 
-function filterJobs(state, filterKeyName, payload) {}
-
 const rootReducer = (state = inicialState, action) => {
 	switch (action.type) {
 		case LOGIN_OKEY:
@@ -170,27 +202,31 @@ const rootReducer = (state = inicialState, action) => {
 				publications: action.payload,
 			};
 
-		case "POST_PUBLICATION": return {
-			...state,
-			publications: [...state.publications, action.payload],
-		};
+		case 'POST_PUBLICATION':
+			return {
+				...state,
+				publications: [...state.publications, action.payload],
+			};
 
-		case "DELETE_PUBLICATION": return {
-			...state,
-			publications: state.publications.filter(e => e._id !== action.payload._id)
-		};
+		case 'DELETE_PUBLICATION':
+			return {
+				...state,
+				publications: state.publications.filter(
+					(e) => e._id !== action.payload._id
+				),
+			};
 
-		case "PUT_PUBLICATION": return {
-			...state,
-			publications: state.publications.filter(e => {
-				if(e._id == action.payload._id){
-					e.description = action.payload.description
-					e.photograph = action.payload.photograph
-					return e
-
-				} else return e
-			})
-		};
+		case 'PUT_PUBLICATION':
+			return {
+				...state,
+				publications: state.publications.filter((e) => {
+					if (e._id == action.payload._id) {
+						e.description = action.payload.description;
+						e.photograph = action.payload.photograph;
+						return e;
+					} else return e;
+				}),
+			};
 
 		case GET_PUBLICATIONS_BY_ID:
 			return {
@@ -203,49 +239,48 @@ const rootReducer = (state = inicialState, action) => {
 			return { ...state, jobs: { ...state.jobs, filterData: arr } };
 		}
 		case FILTER_JOBS_BY_COUNTRIES: {
-			let arr = state.jobs.data.filter((j) => j.country === action.payload);
+			const arr = filterJobs(state.jobs, 'country', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case FILTER_JOBS_BY_CITIES: {
-			let arr = state.jobs.data.filter((j) => j.city === action.payload);
+			const arr = filterJobs(state.jobs, 'city', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case FILTER_JOBS_BY_SALARIES: {
-			let arr = calculateSalary(action.payload, state);
+			const arr = filterJobs(state.jobs, 'salary', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case FILTER_JOBS_BY_TECHS: {
-			let arr = [];
+			const arr = filterJobs(state.jobs, 'tech', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
-		case SEARCH_JOBS_BY_TITLE: {
-			let arr1 = state.jobs.data.filter((j) =>
-				j.title.toLowerCase().includes(action.payload)
-			);
 
+		case SEARCH_JOBS_BY_TITLE: {
+			const arr = filterJobs(state.jobs, 'search', action.payload);
 			return {
 				...state,
-				jobs: { ...state.jobs, filterData: arr1 },
+				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case RESET_JOBS_FILTER: {
-			let arr = state.jobs.data.filter((j) => j.salary > 0);
-			console.log(arr);
 			return {
 				...state,
-				jobs: { ...state.jobs, filterData: arr },
+				jobs: {
+					...state.jobs,
+					filterData: state.jobs.data,
+				},
 			};
 		}
 		case CHANGE_PROFILE_PICTURE:
@@ -291,18 +326,20 @@ const rootReducer = (state = inicialState, action) => {
 		case ADD_NEW_JOB:
 			return {
 				...state,
-				user: {...state.user, jobs:[...state.user.jobs, action.payload]}
+				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
 			};
 
-		case "UPLOAD_PICTURE_PUBLICATION": return{
-			...state,
-			imgPublication: action.payload
-		};
+		case 'UPLOAD_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
+			};
 
-		case "RESET_PICTURE_PUBLICATION": return{
-			...state,
-			imgPublication: action.payload
-		};
+		case 'RESET_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
+			};
 
 		default:
 			return state;

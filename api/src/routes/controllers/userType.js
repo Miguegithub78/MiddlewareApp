@@ -21,7 +21,7 @@ const signIn = async (req, res) => {
       return res.json({ noUser: true, gmail });
     }
   }
-   try {
+  try {
     const { name, idUser, gmail, photograph, userType } = req.body;
     if (userType === "juniors") {
       const user = await Juniors.findOne({ gmail });

@@ -59,7 +59,7 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
       ]);
     }
     //esto lo puse aqui para cuando haga un cambio de su ubicacion aparezca el boton guardar
-    setInfoUser(info=>({
+    setInfoUser(info => ({
       ...info,
       infoUserChanged: true,
     }))

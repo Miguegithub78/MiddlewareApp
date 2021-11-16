@@ -13,6 +13,7 @@ import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
 import Chat from './components/Chat';
+import MercadoPago from './components/Mercadopago/mercadopago.jsx';
 
 function App() {
   //   const { user } = useSelector((state) => state);
@@ -39,6 +40,7 @@ function App() {
         <Route exact path="/jobs/:id" component={JobsDetails} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/empleos/:id" component={JobsDetails} />
+        <Route path='/mercadopago' component={MercadoPago} />
         <Route
           exact
           path="/createpublications"

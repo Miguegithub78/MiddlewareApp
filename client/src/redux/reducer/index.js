@@ -23,7 +23,8 @@ import {
 	GET_JOB_DETAILS,
 	GET_JOBS,
 	GET_UBICATION,
-	ADD_NEW_JOB
+	ADD_NEW_JOB,
+	MERCADO_PAGO,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -55,7 +56,8 @@ const inicialState = {
 	jobDetails: {},
 	imgPublication: null,
 	pages: 0,
-	finishPage: false
+	finishPage: false,
+	mercadoPago: "",
 };
 
 function calculateSalary(value, state) {
@@ -309,6 +311,13 @@ const rootReducer = (state = inicialState, action) => {
 			...state,
 			imgPublication: action.payload
 		};
+
+		case MERCADO_PAGO:
+		console.log(action.payload);	
+		return {
+				...state,
+				mercadoPago: action.payload,
+			};
 
 		default:
 			return state;

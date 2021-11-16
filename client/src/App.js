@@ -45,12 +45,12 @@ function App() {
           component={CreatePublications}
         />
 
-        <Route path='/juniors/:id' component={JuniorsDetail} />
-        <Route path='/chat' component={Chat} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

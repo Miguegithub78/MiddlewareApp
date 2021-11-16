@@ -116,7 +116,7 @@ const getPublicationsById = async (req, res) => {
     try{
 
         const getPublication = await Publication.findById(id)
-            .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}])
+            .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}, {path: 'likes'}])
 
         if(!getPublication) return res.status(404).json({message: "La publicación no existe"})
     

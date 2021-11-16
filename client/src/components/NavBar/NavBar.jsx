@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logOutUserAction } from "../../redux/actions";
 import styles from "./NavBar.module.css";
-import Notifications from "../Notifications/Notifications";
 function NavBar() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);

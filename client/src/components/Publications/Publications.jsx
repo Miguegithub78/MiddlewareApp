@@ -16,6 +16,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
 import styles from "./Publications.module.css";
+import Socket from "../socket.js"
+
 export const Publications = () => {
 
   const history = useHistory();
@@ -106,6 +108,7 @@ export const Publications = () => {
   function addLikes(idPublications) {
     setIdPost(idPublications);
     dispatch(putLike(idPublications, user._id));
+    Socket.emit('like', `El usuario ${user.name} le dio like a una publicación`)
   }
 
   function handleChange() {

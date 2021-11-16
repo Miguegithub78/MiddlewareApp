@@ -1,10 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const http = require('http');
 const routers = require("./src/routes/index");
 
 const app = express();
+
+const server = http.createServer(app);
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -22,4 +24,22 @@ app.use(cors());
 //Importo las rutas
 app.use("/", routers);
 
-module.exports = app;
+const io = require("socket.io")(server, {
+  cors: {
+      origin: '*',
+    }
+});
+
+// const io = socketIO(server);
+
+io.on('connection',(socket) =>{
+    console.log('[Server] We have new connection !!!');
+    socket.on('conectado',(data)=>{
+        console.log('Usuario conectado', data)
+    });
+    socket.on('like',(data)=>{
+        console.log(data)
+    });
+});
+
+module.exports = server;

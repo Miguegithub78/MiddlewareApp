@@ -13,8 +13,12 @@ import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
 import Chat from './components/Chat';
+import Socket from './components/socket.js';
 
 function App() {
+
+  Socket.emit('conectado', "new connection")
+
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();
   const token = localStorage.getItem("token");

@@ -1,4 +1,4 @@
-const app = require('./app');
+const server = require('./app');
 const mongoose = require('mongoose');
 const { userDatabase, password} = require('./config.env/index');
 
@@ -10,10 +10,20 @@ mongoose.connect(`mongodb+srv://${userDatabase}:${password}@cluster0.khboe.mongo
 
 mongoose.connection.once('open', _ => {
     console.log('Database is connected');
-    app.listen(process.env.PORT, () => { console.log(`Listening in http://localhost:${process.env.PORT}/` )});
 })
 
 mongoose.connection.on('error', err => {
     console.log(err)
 })
+
+server.listen("3001", () => {
+    console.log(`Listening in http://localhost:3001/` );
+});
+
+// const io = socketIO(server)
+
+// io.on('connection', () => {
+
+//     console.log('new connection')
+// })
 

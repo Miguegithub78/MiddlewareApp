@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from 'react-redux'
@@ -188,6 +188,12 @@ const Chat2 = () => {
     setLoadingImg(false)
   }
 
+  let refChat = useRef(null)
+
+  useEffect(()=>{
+    refChat.current.scrollIntoView({behavior: 'smooth'})
+  })
+
   return (<>
 
     <NavBar />
@@ -251,7 +257,7 @@ const Chat2 = () => {
 
                     ) : <h5>Cargando...</h5>
                   }
-
+                  <div ref={refChat}></div>
                   {/*<li className="clearfix">
                     <div className="message-data">
                     <span className="message-data-time">10:12 AM, Today</span>

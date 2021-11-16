@@ -12,9 +12,10 @@ const publicationSchema = new Schema({
         required: false
     },
 
-    likes: {
-        type: Array
-    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'juniors'
+    }],
 
     likesNumber: {
         type: Number,

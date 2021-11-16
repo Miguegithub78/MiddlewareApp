@@ -13,15 +13,31 @@ import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
 import LeftData from "./LeftData";
 import PersonalData from "./PersonalData";
-// import Prueba2Skill from './Prueba2Skill';
 import CareerData from "./CareerData";
-import NavBar from '../NavBar/NavBar';
-// import Softskills from './SoftSkills';
+import NavBar from "../NavBar/NavBar";
+import JobsExperience from "./JobsExperience/JobsExperience";
+import AcademicHistory from "./AcademicHistory/AcademicHistory";
 
 const ProfileUser = () => {
   const { user, languages, technologies } = useSelector((state) => state);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [workExperience, setWorkExperience] = useState({
+    companyName: "",
+    industry: "",
+    workPosition: "",
+    workingTime: "",
+    _id: "",
+    edit: false,
+  });
+  const [academicHistory, setAcademicHistory] = useState({
+    institute: "",
+    title: "",
+    date: "", //ver que onda con el tema de la fecha
+    description: "",
+    _id: "",
+    edit: false,
+  });
   const [infoUser, setInfoUser] = useState({
     name: "",
     gmail: "",
@@ -40,9 +56,9 @@ const ProfileUser = () => {
     softskills: [],
     idUser: "",
     infoUserChanged: false,
-    openToRelocate: null,
-    openToRemote: null,
-    openToFullTime: null,
+    openToRelocate: false,
+    openToRemote: false,
+    openToFullTime: false,
     academicHistory: [],
   });
   useEffect(() => {
@@ -67,10 +83,11 @@ const ProfileUser = () => {
         github: user.github,
         website: user.website,
         city: user.city,
-        title: user.title,
+        title: user.title || "",
         linkedin: user.linkedin,
       });
     }
+
     if (languages.length > 0 && technologies.length > 0) return;
     dispatch(getLanguages());
     dispatch(getTechnologies());
@@ -115,6 +132,8 @@ const ProfileUser = () => {
               </button>
             )}
             <LeftData
+              setWorkExperience={setWorkExperience}
+              setAcademicHistory={setAcademicHistory}
               setInfoUser={setInfoUser}
               infoUser={infoUser}
               user={user}
@@ -122,7 +141,18 @@ const ProfileUser = () => {
             <div className="col-lg-8">
               <PersonalData setInfoUser={setInfoUser} infoUser={infoUser} />
               <CareerData setInfoUser={setInfoUser} infoUser={infoUser} />
-              {/* <Prueba2Skill /> */}
+              <JobsExperience
+                workExperience={workExperience}
+                setWorkExperience={setWorkExperience}
+                setInfoUser={setInfoUser}
+                infoUser={infoUser}
+              />
+              <AcademicHistory
+                academicHistory={academicHistory}
+                setAcademicHistory={setAcademicHistory}
+                setInfoUser={setInfoUser}
+                infoUser={infoUser}
+              />
             </div>
           </div>
         </div>

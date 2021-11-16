@@ -19,13 +19,10 @@ const Languages = ({ setInfoUser, infoUser }) => {
       }
     });
   };
-  console.log(infoUser.languages, "infoUser");
+
   return (
     <>
       {languages.map((lang, i) => {
-        // console.log(infoUser.languages, lang , '//');
-        // console.log(infoUser.languages.find(e=>e._id===lang._id)&&'hola');
-        // console.log(infoUser.languages.name===lang.name);
         return (
           <span key={i}>
             <input

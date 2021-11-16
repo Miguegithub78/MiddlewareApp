@@ -40,7 +40,7 @@ const inicialState = {
 	juniors: [],
 	companies: [],
 	publications: [],
-	publication: {},
+	publication: [],
 	emailVerification: true,
 	countryState:null,
 	jobs: {

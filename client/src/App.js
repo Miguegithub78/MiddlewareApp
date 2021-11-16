@@ -12,8 +12,7 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
-import Chat from './components/Chat';
-import MercadoPago from './components/Mercadopago/mercadopago.jsx';
+import Chat from './components/Chat/Chat2.jsx';
 
 function App() {
   //   const { user } = useSelector((state) => state);
@@ -40,18 +39,18 @@ function App() {
         <Route exact path="/jobs/:id" component={JobsDetails} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/empleos/:id" component={JobsDetails} />
-        <Route path='/mercadopago/:idJob' component={MercadoPago} />
-        <Route exact
+        <Route
+          exact
           path="/createpublications"
           component={CreatePublications}
         />
 
-        <Route path='/juniors/:id' component={JuniorsDetail} />
-        <Route path='/chat' component={Chat} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

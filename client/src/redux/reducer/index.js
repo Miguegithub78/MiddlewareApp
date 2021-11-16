@@ -39,7 +39,7 @@ const inicialState = {
 	juniors: [],
 	companies: [],
 	publications: [],
-	publication: {},
+	publication: [],
 	emailVerification: true,
 	countryState: null,
 	jobs: {
@@ -55,6 +55,8 @@ const inicialState = {
 	},
 	jobDetails: {},
 	imgPublication: null,
+	pages: 0,
+	finishPage: false,
 };
 
 function filterJobs(state, filterKeyName, payload) {
@@ -199,13 +201,25 @@ const rootReducer = (state = inicialState, action) => {
 		case GET_PUBLICATIONS:
 			return {
 				...state,
-				publications: action.payload,
+				publications: [...state.publications].concat(
+					action.payload.publications
+				),
+				pages: action.payload.pages,
+				finishPage: action.payload.finishPage,
 			};
 
 		case 'POST_PUBLICATION':
 			return {
 				...state,
-				publications: [...state.publications, action.payload],
+				publications: [action.payload].concat([...state.publications]),
+			};
+
+		case 'DELETE_PUBLICATION':
+			return {
+				...state,
+				publications: state.publications.filter(
+					(e) => e._id !== action.payload._id
+				),
 			};
 
 		case 'DELETE_PUBLICATION':

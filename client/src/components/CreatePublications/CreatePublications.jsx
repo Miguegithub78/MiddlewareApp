@@ -69,7 +69,13 @@ const CreatePublications = () => {
 		companyId: user && user._id,
 		premium: user && user.premium,
 		status: 'active',
+<<<<<<< HEAD
 		idFireBase: user.idFireBase,
+=======
+		openToRelocate: false,
+		openToRemote: false,
+		openToFullTime: false,
+>>>>>>> main
 	});
 
 	function handleChange(e) {
@@ -150,12 +156,18 @@ const CreatePublications = () => {
 							className='needs-validation'
 							noValidate
 						>
-							<div className='row px-3 m-2'>
-								<img alt='img' className='user' src={user.photograph} />
+							<div className='d-flex flex-column align-items-start text-center'>
+								<img
+									alt='img'
+									className='user'
+									src={user.photograph}
+									className='rounded-circle p-1 bg-primary'
+									width='140'
+								/>
 							</div>
-							<div className='row m-4'>
+							<div className='row m-4 justify-content-start'>
 								<div className='col-sm-3'>
-									<h6 className='mb-3'>{user.name}</h6>
+									<h6 className='mb-3 '>{user.name}</h6>
 								</div>
 							</div>
 							<div className='row mb-4'>
@@ -239,9 +251,9 @@ const CreatePublications = () => {
 										</option>
 										<option
 											className='text-muted bg-light mt-4 mb-3'
-											value='otro'
+											value='peso'
 										>
-											Otro
+											Pesos
 										</option>
 									</select>
 									{errors.currency && (
@@ -331,6 +343,67 @@ const CreatePublications = () => {
 									{errors.photograph && (
 										<p className='gerror'>{errors.photograph}</p>
 									)}
+								</div>
+							</div>
+							<div className='row mb-3'>
+								<div className='col-sm-2'>
+									<h6 className='mb-0'>Disponibilidad </h6>
+								</div>
+								<div className='col-sm-9 text-secondary'>
+									<div className='form-check form-switch'>
+										<input
+											className='form-check-input'
+											type='checkbox'
+											id='Relocate'
+											onChange={() =>
+												setInput((info) => ({
+													...info,
+													openToRelocate: !info.openToRelocate,
+												}))
+											}
+											required
+											checked={input.openToRelocate}
+										/>
+										<label className='form-check-label' htmlFor='Relocate'>
+											Relocación
+										</label>
+									</div>
+									<div className='form-check form-switch'>
+										<input
+											className='form-check-input'
+											type='checkbox'
+											id='Remote'
+											checked={input.openToRemote}
+											onChange={() =>
+												setInput((info) => ({
+													...info,
+													openToRemote: !info.openToRemote,
+												}))
+											}
+											required
+										/>
+										<label className='form-check-label' htmlFor='Remote'>
+											Remoto
+										</label>
+									</div>
+									<div className='form-check form-switch'>
+										<input
+											className='form-check-input'
+											type='checkbox'
+											id='FullTime'
+											checked={input.openToFullTime}
+											onChange={() =>
+												setInput((info) => ({
+													...info,
+													openToFullTime: !info.openToFullTime,
+												}))
+											}
+											required
+										/>
+										<label className='form-check-label' htmlFor='FullTime'>
+											Tiempo Completo
+										</label>
+									</div>
 								</div>
 							</div>
 							<button type='submit' className='btn btn-outline-dark px-4 mt-4'>

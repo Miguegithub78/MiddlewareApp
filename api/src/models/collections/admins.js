@@ -7,6 +7,12 @@ const adminSchema = new Schema({
         required: true
     },
 
+    userType: {
+        type: String,
+        required: true,
+        enum: ['Admin']
+    },
+
     lastname: {
         type: String,
         required: true

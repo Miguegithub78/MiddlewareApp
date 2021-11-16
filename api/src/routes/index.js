@@ -55,7 +55,7 @@ router.put('/jobs/postulation/:id', juniorsPostulations)
 router.put('/addLike', putLikes)
 
 router.get('/feedback', orderFeedback);
-router.get('/create_preference', create_preference);
+router.get('/create_preference/:idJob', create_preference);
 
 module.exports = router;
 

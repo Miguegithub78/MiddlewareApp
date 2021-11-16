@@ -12,7 +12,8 @@ mercadopago.configure({
 
 const create_preference = async (req, res) => {
   // try{
-    const { companyId } = req.query;
+    const { idJob } = req.params;
+
 
     const carrito = [
       {
@@ -44,8 +45,8 @@ const create_preference = async (req, res) => {
   quantity: Number(req.body.quantity),
 }*/
 	let preference = {
-		items: productos,
-    external_reference: `${companyId}`,
+		items: productos, 
+    external_reference: idJob,
     notification_url: "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
     payment_methods: {
       excluded_payment_types: [{
@@ -69,6 +70,7 @@ const create_preference = async (req, res) => {
 	mercadopago.preferences.create(preference)
 		.then(function (response) {
       console.info('Se crea preferencia');
+      console.log(response, 'respuesta');
       // console.log(response.body);
 			res.send(response.body.id);
 		}).catch(function (error) {
@@ -81,11 +83,13 @@ const create_preference = async (req, res) => {
   // }
 }
 
+
 const orderFeedback = async (req, res) => {
   try{
     
     const { payment_id, payment_status, merchant_order_id } = req.query;
-    console.log(req.query);
+    console.log(req.query , 'feedback');
+    //status pen
     
     res.json({
       payment_id: req.query.payment_id,
@@ -95,7 +99,7 @@ const orderFeedback = async (req, res) => {
       date_created: req.query.date_created,
     });
 
-    const companyPremium = Company.findOne({ _id : req.query.external_reference })
+    // const companyPremium = Company.findOne({ _id : req.query.external_reference })
 
     // .catch(function (error) {
     //   console.log(error);

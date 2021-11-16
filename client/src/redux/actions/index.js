@@ -544,11 +544,11 @@ export const editCompanyDataAction =(infoUser) => {
   };
 }
 
-export const mercadoPagoAction = (idCompany) => { 
-  console.log(idCompany);
+export const mercadoPagoAction = ( idJob ) => { 
+  
   return async function (dispatch) {
     try {
-      const mercadoPago = await clienteAxios.get(`/create_preference?${idCompany}`)
+      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}`)
       .then((data) => {
         dispatch({ 
           type: MERCADO_PAGO, 

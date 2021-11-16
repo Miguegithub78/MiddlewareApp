@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from 'react';
 import Checkout from './Checkout';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { mercadoPagoAction, getUserAction } from '../../redux/actions';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -15,11 +15,14 @@ export default function MercadoPago(){
 	const idMercadoPago = useSelector((state) => state.mercadoPago);
 	const user = useSelector((state) => state.user);
 	const history = useHistory();
+	const { idJob } = useParams();
 	useEffect(() => {
-		dispatch(mercadoPagoAction(user));
+		dispatch(mercadoPagoAction(idJob));
 		// setDates(idMercadoPago);
 
 	}, []);	
+
+	
 
 	onAuthStateChanged(auth, (userFirebase) => {
 		if (userFirebase) {

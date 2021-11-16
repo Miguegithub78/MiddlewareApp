@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function Checkout({carrito, dates}) {
+export default function Checkout({ carrito, dates}) {
   console.log(dates, "dates")
   useEffect(() => {
     const script = document.createElement('script');

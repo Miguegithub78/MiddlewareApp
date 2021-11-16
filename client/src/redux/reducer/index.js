@@ -58,6 +58,7 @@ const inicialState = {
 	pages: 0,
 	finishPage: false,
 	mercadoPago: "",
+	idLastJob:"",
 };
 
 function calculateSalary(value, state) {
@@ -299,7 +300,8 @@ const rootReducer = (state = inicialState, action) => {
 		case ADD_NEW_JOB:
 			return {
 				...state,
-				user: {...state.user, jobs:[...state.user.jobs, action.payload]}
+				user: {...state.user, jobs:[...state.user.jobs, action.payload]},
+				idLastJob: action.payload._id
 			};
 
 		case "UPLOAD_PICTURE_PUBLICATION": return{

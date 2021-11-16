@@ -16,12 +16,12 @@ import CountryState from "./CountryState";
 import State from "./State";
 
 const CreatePublications = () => {
-  const { user } = useSelector((state) => state);
+  const { user, idLastJob } = useSelector((state) => state);
   const { technologies } = useSelector((state) => state);
   const { publication } = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
-
+  console.log( idLastJob, 'hola')
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && user) {
@@ -29,6 +29,13 @@ const CreatePublications = () => {
       dispatch(getTechnologies());
     }
   }, [user]);
+
+  
+  useEffect(()=>{
+    if(idLastJob === "")return;
+    history.push(`/mercadopago/${idLastJob}`)
+  },[idLastJob])
+
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
@@ -116,8 +123,11 @@ const CreatePublications = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postJobs(input));
-    history.push("/home/juniors");
+    //history.push("/");// crear un modal 
+    console.log('creado')
   }
+  
+
   // funcion que desabilita el poder enviar el form si no tiene campos rellenados
   (function () {
     "use strict";

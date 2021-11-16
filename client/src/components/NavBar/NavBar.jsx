@@ -99,11 +99,6 @@ function NavBar() {
                 </Link>
               </li>
             ) : null}
-             <li className={`nav-item  ${styles.items}`}>
-                <Link className="nav-link fw-normal " to={"/notifications"}>
-                  Notificaciones
-                </Link>
-              </li>
             {/* 	<li className={`nav-item  ${styles.items}`}>
 							<a className='nav-link fw-normal ' href='#'>
 								Mis postulaciones

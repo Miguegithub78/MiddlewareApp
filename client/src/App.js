@@ -19,7 +19,10 @@ import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
 
-  Socket.emit('conectado', "new new connection")
+  useEffect(()=>{
+
+    Socket.emit('conectado', "new new connection")
+  }, [])
 
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();

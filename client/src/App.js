@@ -13,6 +13,7 @@ import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
 import Chat from './components/Chat/Chat2.jsx';
+import Notifications from "./components/Notifications/Notifications";
 
 function App() {
   //   const { user } = useSelector((state) => state);
@@ -47,6 +48,7 @@ function App() {
 
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				<Route path='/chat' component={Chat} />
+        <Route path='/notifications' component={Notifications} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

@@ -15,6 +15,7 @@ import ProfileCompany from "./components/ProfileCompany";
 import Socket from './components/socket.js';
 import Chat from './components/Chat/Chat2.jsx';
 import Notifications from "./components/Notifications/Notifications";
+import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				<Route path='/chat' component={Chat} />
         <Route path='/notifications' component={Notifications} />
+        <Route path='/mercadopago/:idJob' component={MercadoPago} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

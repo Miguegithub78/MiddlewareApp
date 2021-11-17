@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logOutUserAction } from "../../redux/actions";
+import Notifications from "../Notifications/Notifications";
 import styles from "./NavBar.module.css";
 function NavBar() {
   const dispatch = useDispatch();
@@ -108,6 +109,7 @@ function NavBar() {
 								Tips
 							</a>
 						</li> */}
+            <Notifications />
             <li className={`nav-item dropdown  ${styles.items}`}>
               <a
                 className="nav-link dropdown-toggle "

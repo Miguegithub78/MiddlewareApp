@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import {useHistory} from 'react-router-dom'
 import { auth } from "../../firebaseConfig";
-import { getUserAction } from '../../redux/actions';
+import { getUserAction, deleteNotifications } from '../../redux/actions';
 import Socket from "../socket.js";
 import './Notifications.css'
 
@@ -29,14 +29,18 @@ const Notifications = () => {
 
     useEffect(()=>{
 
-    Socket.on('liked',(data)=>{
+    Socket.on('sendNotification',(data)=>{
         if(data.userPublicationId === idUser){
         setNotifications((prev) => [...prev, data])
       }
      })
   }, [Socket, idUser])
 
-onAuthStateChanged(auth, (userFirebase) => {
+  useEffect(()=>{
+    setNotifications(user?.notifications)
+  }, [user])
+
+  onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
       dispatch(getUserAction(userFirebase));
@@ -47,23 +51,35 @@ onAuthStateChanged(auth, (userFirebase) => {
 
   const handleRead = () => {
     setNotifications([]);
+    dispatch(deleteNotifications(user._id))
     setOpen(false);
   };
 
+  console.log(notifications)
 
     return notifications? (
         <div className='icons'>
           <div className='icon' onClick={() => setOpen(!open)}>
-          <i className="bi bi-bell-fill"></i>
+            <i className="bi bi-bell-fill"></i>
             { notifications.length > 0 &&
               <div className='counter'>{notifications.length}</div>
             }
           </div>
+
           { open && (
+
           <div className='notifications'>
-           {notifications?.map(el => {
-             return (<li>{ `${el.user} le dió me gusta a tu publicacion` }</li>)})}
-             <button className='nButton' onClick={handleRead}>Marcar leído</button>
+
+           {notifications?.map(el => 
+              (
+                el.typeNotification === 2
+                ? <li>{ `${el.userName} Le dió me gusta a tu publicacion` }</li>
+                : <li>{ `${el.userName} Se postulo a tu empleo` }</li>
+              )
+
+             )}
+
+             <button className='nButton' onClick={handleRead}>Marcar como leído</button>
            </div>
           )}
         </div>

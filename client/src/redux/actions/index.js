@@ -573,3 +573,14 @@ export const setPlanMercado = (plan) => {
   };
 }
 
+export const putNotification = (idUserPublication, idUserLike, type, userName) => {
+  return function (dispatch){
+    return clienteAxios.put('/notifications', {idUserPublication, idUserLike, type, userName})
+  }
+}
+
+export const deleteNotifications = (idUser) => {
+  return function (dispatch){
+    return clienteAxios.delete(`/notifications?idUser=${idUser}`)
+  }
+}

@@ -186,6 +186,54 @@ const updateJuniorsProfile = async (req, res) => {
   }
 };
 
+const updateUserNotifications = async ( req, res) => {
+
+  const token = req.headers["x-auth-token"];
+
+  if (!token) {
+    return res.status(403).json({ auth: false, message: "token is require" });
+  }
+
+  const {idUserPublication, idUserLike, type, userName} = req.body;
+
+  console.log("Entro en el back", idUserPublication, idUserLike, type, userName)
+
+  var user = await Juniors.findById(idUserPublication)
+  if(!user){
+    user = await Company.findById(idUserPublication)
+  }
+
+
+  user.notifications = user.notifications.concat([{
+    _id: idUserLike,
+    userName: userName,
+    typeNotification: type
+  }])
+
+
+  var newUserNotifications = await user.save()
+
+
+  res.json(newUserNotifications)
+}
+
+const deleteNotifications = async (req, res) => {
+
+  const {idUser} = req.query;
+
+  var user = await Juniors.findById(idUser)
+  if(!user){
+    user = await Company.findById(idUser)
+  }
+
+  user.notifications = []
+
+  var resetNotifications = await user.save()
+
+  res.json(resetNotifications)
+}
+
+
 const deleteJuniorsProfile = async (req, res) => {
   try {
   const token = req.headers["x-auth-token"];
@@ -237,4 +285,6 @@ module.exports = {
   getJuniorById,
   updateJuniorsProfile,
   deleteJuniorsProfile,
+  updateUserNotifications,
+  deleteNotifications
 };

@@ -5,7 +5,8 @@ import { getJobDetails } from '../../redux/actions';
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import s from './JobsDetails.module.css';
-import { postulation } from '../../redux/actions';
+import { postulation, putNotification } from '../../redux/actions';
+import Socket from '../socket.js'
 
 export default function JuniorsDetail() {
   const { id } = useParams();
@@ -20,6 +21,13 @@ export default function JuniorsDetail() {
 
   function handlePostulation() {
     dispatch(postulation(id, user._id));
+    dispatch(putNotification(jobsDetails.company._id, user._id, 1, user.name))
+    Socket.emit('notification', {
+      typeNotification: 1,
+      userName: user.name,
+      _id: user._id,
+      userPublicationId: jobsDetails.company._id,
+    })
     setPost(true);
   }
 

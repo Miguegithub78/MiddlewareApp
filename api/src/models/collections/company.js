@@ -90,6 +90,16 @@ const companySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'jobs',
         autopopulate: true
+    }],
+
+    notifications: [{
+        _id: Schema.Types.ObjectId,
+        userName: String,
+        typeNotification: Number,
+        date: {
+          type: Date,
+          default: Date.now
+        },
     }]
 })
 

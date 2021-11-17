@@ -37,17 +37,8 @@ io.on('connection',(socket) =>{
         console.log(data)
     });
 
-    socket.on('like',(data)=>{
-        console.log(data)
-        io.emit('liked', {
-            
-            type: 2,
-            user: data.user,
-            userID: data.userID,
-            publication: data.publication,
-            userPublicationId: data.userPublicationId
-            
-        })
+    socket.on('notification',(data)=>{
+        io.emit('sendNotification', data)
     });
 
     socket.on('disconnect',()=>{

@@ -143,7 +143,17 @@ const juniorSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "jobs",
     }, 
-  ]   
+  ],
+
+  notifications: [{
+    _id: Schema.Types.ObjectId,
+    userName: String,
+    typeNotification: Number,
+    date: {
+      type: Date,
+      default: Date.now
+    },
+  }]
   
 })
 

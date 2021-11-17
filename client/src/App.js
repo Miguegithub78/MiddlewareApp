@@ -12,8 +12,8 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
-import Chat from './components/Chat';
 import Socket from './components/socket.js';
+import Chat from './components/Chat/Chat2.jsx';
 
 function App() {
 
@@ -49,12 +49,12 @@ function App() {
           component={CreatePublications}
         />
 
-        <Route path='/juniors/:id' component={JuniorsDetail} />
-        <Route path='/chat' component={Chat} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

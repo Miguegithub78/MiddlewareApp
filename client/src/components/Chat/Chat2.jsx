@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from 'react-redux'
@@ -188,6 +188,12 @@ const Chat2 = () => {
     setLoadingImg(false)
   }
 
+  let refChat = useRef(null)
+
+  useEffect(()=>{
+    refChat.current.scrollIntoView({behavior: 'smooth'})
+  })
+
   return (<>
 
     <NavBar />
@@ -196,7 +202,7 @@ const Chat2 = () => {
       <div className="row clearfix ">
         <div className="col-lg-12 ls-12">
 
-          <div className="card chat-app">
+          <div className="card chat-card chat-app">
             <div id="plist" className="people-list h-100 container">
               <ul className="list-unstyled chat-list mt-2 mb-3">
 
@@ -251,7 +257,7 @@ const Chat2 = () => {
 
                     ) : <h5>Cargando...</h5>
                   }
-
+                  <div ref={refChat}></div>
                   {/*<li className="clearfix">
                     <div className="message-data">
                     <span className="message-data-time">10:12 AM, Today</span>
@@ -281,16 +287,16 @@ const Chat2 = () => {
 
                     {
                       !loadingImg
-                      ? <input type="text" className="form-control" value={message} placeholder="Escribe algo..."  onChange={(e) => onChangeState(e)} />
-                      : <input type="text" className="form-control" value={message} placeholder="Escribe algo..." disabled onChange={(e) => onChangeState(e)} />
+                        ? <input type="text" className="form-control" value={message} placeholder="Escribe algo..." onChange={(e) => onChangeState(e)} />
+                        : <input type="text" className="form-control" value={message} placeholder="Escribe algo..." disabled onChange={(e) => onChangeState(e)} />
                     }
 
 
 
                     {
                       !loadingImg
-                      ? <button type="submit" className="input-group-text"><i className="fa fa-send"></i></button>
-                      : <button type="submit" disabled className="input-group-text">Cargando imagen</button>
+                        ? <button type="submit" className="input-group-text"><i className="fa fa-send"></i></button>
+                        : <button type="submit" disabled className="input-group-text">Cargando imagen</button>
                     }
 
 

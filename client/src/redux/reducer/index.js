@@ -23,7 +23,9 @@ import {
 	GET_JOB_DETAILS,
 	GET_JOBS,
 	GET_UBICATION,
-	ADD_NEW_JOB
+	ADD_NEW_JOB,
+	MERCADO_PAGO,
+	SET_PLAN,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -55,7 +57,10 @@ const inicialState = {
 	jobDetails: {},
 	imgPublication: null,
 	pages: 0,
-	finishPage: false
+	finishPage: false,
+	mercadoPago: "",
+	idLastJob:"",
+	plan: "",
 };
 
 function calculateSalary(value, state) {
@@ -297,7 +302,8 @@ const rootReducer = (state = inicialState, action) => {
 		case ADD_NEW_JOB:
 			return {
 				...state,
-				user: {...state.user, jobs:[...state.user.jobs, action.payload]}
+				user: {...state.user, jobs:[...state.user.jobs, action.payload]},
+				idLastJob: action.payload._id
 			};
 
 		case "UPLOAD_PICTURE_PUBLICATION": return{
@@ -309,6 +315,19 @@ const rootReducer = (state = inicialState, action) => {
 			...state,
 			imgPublication: action.payload
 		};
+
+		case MERCADO_PAGO:
+		console.log(action.payload);	
+		return {
+				...state,
+				mercadoPago: action.payload,
+			};
+
+			case SET_PLAN:
+			return {
+				...state,
+				plan: action.payload,
+			};
 
 		default:
 			return state;

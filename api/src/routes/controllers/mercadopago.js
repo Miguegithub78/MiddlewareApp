@@ -1,96 +1,106 @@
-const {
-  Order
-} = require ('../../models/index')
+const { Order, Jobs } = require("../../models/index");
 
 const mercadopago = require("mercadopago");
 
 const { ACCESS_TOKEN } = process.env;
 
 mercadopago.configure({
-	access_token: ACCESS_TOKEN,
+  access_token: ACCESS_TOKEN,
 });
 
 const create_preference = async (req, res) => {
   // try{
-    const { idJob } = req.params;
+  const { idJob } = req.params;
+  const { plan } = req.query;
+  let product;
 
-
-    const carrito = [
+  if (plan === "premium") {
+    // const order = await Order.findOne({ _id: idJob });
+    // const { price, user } = order;
+    product = [
       {
-        id: 1,
-        title: "Standar",
-        quantity: 1,
-        unit_price: 600,
-        picture_url: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
-      },
-      {
-        id: 2,
         title: "Premium",
         quantity: 1,
         unit_price: 900,
-        picture_url: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
-        
-      }
-    ]
+      },
+    ];
+  } else {
+    product = [
+      {
+        title: "Standard",
+        quantity: 1,
+        unit_price: 600,
+      },
+    ];
+  }
 
-    const productos = carrito.map(p => ({
-
-      title: p.title,
-      quantity: p.quantity,
-      unit_price: p.unit_price
-    }))
-/*{
-  title: req.body.description,
-  unit_price: Number(req.body.price),
-  quantity: Number(req.body.quantity),
-}*/
-	let preference = {
-		items: productos, 
-    external_reference: idJob,
+  let preference = {
+    items: product,
+    external_reference: `${idJob}/${product[0].title}`,
     notification_url: "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
     payment_methods: {
-      excluded_payment_types: [{
-        id: "ticket"
-      }],
-      excluded_payment_methods: [{
-        id: "atm"
-      }],
+      excluded_payment_types: [
+        {
+          id: "ticket",
+        },
+      ],
+      excluded_payment_methods: [
+        {
+          id: "atm",
+        },
+      ],
       installments: 12, //cant de cuotas
       default_payment_method_id: "visa",
-      default_installments: 12
+      default_installments: 12,
     },
-		back_urls: {
-			"success": "http://localhost:3001/feedback",
-			"failure": "http://localhost:3001/feedback",
-			"pending": "http://localhost:3001/feedback"
-		},
-		auto_return: "approved",
-	};
+    back_urls: {
+      success: "http://localhost:3001/feedback",
+      failure: "http://localhost:3001/feedback",
+      pending: "http://localhost:3001/feedback",
+    },
+    auto_return: "approved",
+  };
 
-	mercadopago.preferences.create(preference)
-		.then(function (response) {
-      console.info('Se crea preferencia');
-      console.log(response, 'respuesta');
+  mercadopago.preferences
+    .create(preference)
+    .then(function (response) {
+      console.info("Se crea preferencia");
+      console.log(response, "respuesta");
       // console.log(response.body);
-			res.send(response.body.id);
-		}).catch(function (error) {
-			console.log(error);
-		});
+      res.send({ id: response.body.id, product: product[0].title });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
-    
   // } catch (error) {
   //     res.status(404).json({ error: error.message });
   // }
-}
-
+};
 
 const orderFeedback = async (req, res) => {
-  try{
-    
-    const { payment_id, payment_status, merchant_order_id } = req.query;
-    console.log(req.query , 'feedback');
-    //status pen
-    
+  try {
+    const {
+      payment_id,
+      payment_status,
+      merchant_order_id,
+      external_reference,
+      status,
+    } = req.query;
+    console.log(req.query, "feedback");
+    const reference = external_reference.split("/");
+    const idJob = reference[0];
+    const plan = reference[1];
+    const level = plan === "Premium" ? 2 : 1;
+
+    const job = await Jobs.findOneAndUpdate(
+      { _id: idJob },
+      {
+        premium: level,
+      },
+      { new: true }
+    );
+
     res.json({
       payment_id: req.query.payment_id,
       payment_status: req.query.payment_status,
@@ -106,11 +116,11 @@ const orderFeedback = async (req, res) => {
     //   //return res.redirect(`http://localhost:3001/feedback/?error=${error}`); //se puede modificar para el front con la ruta del error que quiera
     // })
   } catch (error) {
-      res.status(404).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
-}
+};
 
 module.exports = {
   create_preference,
-  orderFeedback
-}
+  orderFeedback,
+};

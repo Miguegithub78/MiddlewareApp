@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,21 +63,48 @@ const Home = () => {
   const juniors = useSelector((state) => state.juniors);
 
   const jobs = useSelector((state) => state.jobs.filterData);
+  
+  let [page, setPage] = useState(0);
+  
+   const pagination = () => {
+    if (juniors.length) return juniors.slice(page, page + 8);
+    if (juniors.info) return juniors;
+    if (companies.length) return companies.slice(page, page + 8);
+    if (companies.info) return companies;
+    return [];
+    
+     
+   };
+   const array = pagination();
+   const nextPage = () => {
+     if (companies.length > page + 8) {
+       setPage(page + 8);
+     }
+     if (juniors.length > page + 8) {
+      setPage(page + 8);
+    }
+   };
+   const previusPage = () => {
+     if (page > 0) {
+       setPage(page - 8);
+     }
+   };
 
   return (
     <div className="">
       <NavBar />
+     
       <div className="">
         <div className="">{tipo && tipo === "empleos" && <Search />}</div>
         <div className="">
           <div className="">
             <div className="">
               {tipo && tipo === "companies" && (
-                <CardsCompanies arrayCompanies={companies} />
+                <CardsCompanies arrayCompanies={array} />
               )}
               {tipo && tipo === "empleos" && <CardsJobs jobs={jobs} />}
               {tipo && tipo === "juniors" && (
-                <CardsJuniors arrayJuniors={juniors} />
+                <CardsJuniors arrayJuniors={array} />
               )}
               {tipo && tipo === "publications" && <Publications />}
               {/*{tipo && tipo === "mapa" && <Mapa />}*/}
@@ -90,13 +117,34 @@ const Home = () => {
                   </div>
                 </div>
               }
-              {/* 	<CardsJobs jobs={jobs} /> */}
+              {/*   <CardsJobs jobs={jobs} /> */}
+              
+              {tipo && (tipo === "companies" || tipo === "juniors") && 
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-block btn-dark btn-outline-light"
+                  onClick={previusPage}
+                >
+                  &laquo; Previus
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-block btn-dark btn-outline-light"
+                  onClick={nextPage}
+                >
+                  Next &raquo;
+                </button>
+              </div>
+              }
             </div>
           </div>
         </div>
+       
       </div>
     </div>
   );
 };
 
 export default Home;
+

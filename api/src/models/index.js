@@ -7,7 +7,7 @@ const Admins = require('./collections/admins');
 const SoftSkills = require('./collections/softSkills');
 const Jobs = require('./collections/jobs');
 const States = require('./collections/states');
-const Order = require('./collections/Order');
+// const Order = require('./collections/Order');
 
 module.exports = {
     Juniors,
@@ -18,8 +18,8 @@ module.exports = {
     Admins,
     SoftSkills,
     Jobs,
-    States,
-    Order
+    States
+    // Order
 }
 
 

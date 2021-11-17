@@ -30,16 +30,30 @@ const io = require("socket.io")(server, {
     }
 });
 
-// const io = socketIO(server);
-
 io.on('connection',(socket) =>{
     console.log('[Server] We have new connection !!!');
     socket.on('conectado',(data)=>{
-        console.log('Usuario conectado', data)
+        console.log(data)
     });
+
     socket.on('like',(data)=>{
         console.log(data)
+        io.emit('liked', {
+            
+            type: 2,
+            user: data.user,
+            userID: data.userID,
+            publication: data.publication,
+            userPublicationId: data.userPublicationId
+            
+        })
+    });
+
+    socket.on('disconnect',()=>{
+        console.log("El usuario se a desconectado")
     });
 });
 
-module.exports = server;
+module.exports = {
+    server
+};

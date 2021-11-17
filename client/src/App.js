@@ -17,7 +17,7 @@ import Socket from './components/socket.js';
 
 function App() {
 
-  Socket.emit('conectado', "new connection")
+  Socket.emit('conectado', "new new connection")
 
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();

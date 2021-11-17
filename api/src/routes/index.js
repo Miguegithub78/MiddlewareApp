@@ -11,6 +11,7 @@ const { postPublications, getPublications, getPublicationsById, putPublication, 
 const { updatePremiumCompany, getAllCompanyPremium } = require('./controllers/premiumCompany');
 const { juniorsPostulations } = require ('./controllers/juniorPostulation')
 const { postJobs, getAllJobs, getJobsById, deleteJob, putJobs } = require('./controllers/jobs');
+const { orderFeedback, create_preference } = require('./controllers/mercadopago')
 
 const { putLikes } = require('./controllers/addLikes');
 
@@ -53,6 +54,8 @@ router.put('/jobs/postulation/:id', juniorsPostulations)
 
 router.put('/addLike', putLikes)
 
+router.get('/feedback', orderFeedback);
+router.get('/create_preference/:idJob', create_preference);
 
 module.exports = router;
 

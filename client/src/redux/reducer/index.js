@@ -13,6 +13,9 @@ import {
 	FILTER_JOBS_BY_CITIES,
 	FILTER_JOBS_BY_SALARIES,
 	FILTER_JOBS_BY_TECHS,
+	FILTER_JOBS_BY_RELOCATE,
+	FILTER_JOBS_BY_FULLTIME,
+	FILTER_JOBS_BY_REMOTE,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
@@ -53,6 +56,9 @@ const inicialState = {
 			salary: '',
 			tech: '',
 			search: '',
+			relocate: false,
+			fulltime: false,
+			remote: false,
 		},
 	},
 	jobDetails: {},
@@ -70,11 +76,11 @@ function filterJobs(state, filterKeyName, payload, reset) {
 
 	const filterJobs = state.data.filter((job) => {
 		const filterByCountry = jobs.activeFilters.country
-			? job.country.toLowerCase() === jobs.activeFilters.country
+			? job.country.toLowerCase() === jobs.activeFilters.country.toLowerCase()
 			: true;
 
 		const filterByCity = jobs.activeFilters.city
-			? job.city.toLowerCase() === jobs.activeFilters.city
+			? job.city.toLowerCase() === jobs.activeFilters.city.toLowerCase()
 			: true;
 
 		const filterByTech = jobs.activeFilters.tech
@@ -92,21 +98,48 @@ function filterJobs(state, filterKeyName, payload, reset) {
 			: filterByTech.length > 0
 			? true
 			: false;
-		console.log(job.title);
-		console.log(filterByCountry);
-		console.log(filterByCity);
-		console.log(tech);
-		console.log(filterBySearch);
-		console.log('------------------------------');
-		return filterByCountry && filterByCity && filterBySearch && tech;
+
+		const filterBySalary = jobs.activeFilters.salary
+			? calculateSalary(payload, job)
+			: true;
+
+		const filterByFulltime = !jobs.activeFilters.fulltime
+			? true
+			: job.openToFullTime === jobs.activeFilters.fulltime
+			? true
+			: false;
+
+		const filterByRemote = !jobs.activeFilters.remote
+			? true
+			: job.openToRemote === jobs.activeFilters.remote
+			? true
+			: false;
+
+		const filterByRelocate = !jobs.activeFilters.relocate
+			? true
+			: job.openToRelocate === jobs.activeFilters.relocate
+			? true
+			: false;
+
+		return (
+			filterByRelocate &&
+			filterByRemote &&
+			filterByFulltime &&
+			filterBySalary &&
+			filterByCountry &&
+			filterByCity &&
+			filterBySearch &&
+			tech
+		);
 	});
 
 	return filterJobs;
 }
 
-function calculateSalary(value, state) {
+function calculateSalary(value, job) {
 	let min;
 	let max;
+	let money;
 	switch (value) {
 		case '0': {
 			min = 0;
@@ -133,18 +166,24 @@ function calculateSalary(value, state) {
 			max = 999999999999;
 		}
 	}
-
-	return state.jobs.data.filter((j) => {
-		if (j.dollar) {
-			if (j.salary * 200 >= min && j.salary * 200 < max) {
-				return j;
-			}
+	switch (job.currency) {
+		case 'dollar': {
+			money = job.salary * 100;
+			break;
 		}
-
-		if (j.salary > min && j.salary < max && j.dollar === false) {
-			return j;
+		case 'euro': {
+			money = job.salary * 113;
+			break;
 		}
-	});
+		default: {
+			money = job.salary;
+		}
+	}
+
+	if (money >= min && money <= max) {
+		return true;
+	}
+	return false;
 }
 
 function sortJobs(string, state) {
@@ -271,6 +310,39 @@ const rootReducer = (state = inicialState, action) => {
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
+
+		case FILTER_JOBS_BY_RELOCATE: {
+			const arr = filterJobs(state.jobs, 'relocate', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_FULLTIME: {
+			const arr = filterJobs(state.jobs, 'fulltime', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_REMOTE: {
+			const arr = filterJobs(state.jobs, 'remote', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_COUNTRIES: {
+			const arr = filterJobs(state.jobs, 'country', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
 		case FILTER_JOBS_BY_CITIES: {
 			const arr = filterJobs(state.jobs, 'city', action.payload);
 			return {
@@ -312,6 +384,9 @@ const rootReducer = (state = inicialState, action) => {
 						salary: '',
 						tech: '',
 						search: '',
+						relocate: '',
+						fulltime: '',
+						remote: '',
 					},
 				},
 			};
@@ -376,7 +451,6 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case MERCADO_PAGO:
-			console.log(action.payload);
 			return {
 				...state,
 				mercadoPago: action.payload,

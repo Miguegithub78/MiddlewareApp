@@ -59,7 +59,7 @@ const CreatePublications = () => {
 		return errors;
 	}
 
-	const [plan, setPlan] = useState('free');
+	const [plan, setPlan] = useState('free1');
 	const [picture, setPicture] = useState(null);
 	const [errors, setErrors] = useState({});
 	const [state, setState] = useState(null);
@@ -116,11 +116,11 @@ const CreatePublications = () => {
 		});
 	}
 
-	function handleSubmit(e) {
+	/*function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(postJobs(input));
 		history.push('/home/companies');
-	}
+	}*/
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -179,12 +179,6 @@ const CreatePublications = () => {
 								El empleo, fue creado. Elige tu plan para mejorar el
 								posicionamiento:
 							</h5>
-							<button
-								type='button'
-								className='btn-close'
-								data-bs-dismiss='modal'
-								aria-label='Close'
-							></button>
 						</div>
 						<div className='modal-body'>
 							<div class='form-check'>
@@ -193,7 +187,6 @@ const CreatePublications = () => {
 									type='radio'
 									name='flexRadioDefault'
 									id='flexRadioDefault1'
-									checked
 									value='free'
 									onClick={handlePlan}
 								/>
@@ -229,14 +222,26 @@ const CreatePublications = () => {
 							</div>
 						</div>
 						<div className='modal-footer'>
-							<button
-								type='button'
-								className='btn btn-primary'
-								data-bs-dismiss='modal'
-								onClick={handlePayment}
-							>
-								quiero pagar
-							</button>
+							{plan === 'free1' ? (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={handlePayment}
+									disabled
+								>
+									Continuar
+								</button>
+							) : (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={handlePayment}
+								>
+									Continuar
+								</button>
+							)}
 						</div>
 					</div>
 				</div>

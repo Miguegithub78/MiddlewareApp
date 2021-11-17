@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	searchJobsByTitle,
+	filterJobsByCountries,
 	filterJobsByCities,
 	filterJobsBySalaries,
 	filterJobsByTechs,
 	resetFilterJobs,
+	filterJobsRemote,
+	filterJobsFullTime,
+	filterJobsRelocate,
 	sortJobsBy,
 } from '../../redux/actions';
 import './Search.css';
+import CountryState from './CountryState';
+import State from './State';
 
 export const Search = () => {
 	const button = 'button';
@@ -27,8 +33,11 @@ export const Search = () => {
 		let tech = e.target.value.toLowerCase();
 		dispatch(filterJobsByTechs(tech));
 	};
-	const byUbication = (e) => {
+	const byCity = (e) => {
 		dispatch(filterJobsByCities(e.target.value));
+	};
+	const byCountry = (e) => {
+		dispatch(filterJobsByCountries(e.target.value));
 	};
 
 	const handleReset = (e) => {
@@ -37,6 +46,31 @@ export const Search = () => {
 
 	const sortBy = (e) => {
 		dispatch(sortJobsBy(e.target.value));
+	};
+
+	const [relocate, setRelocate] = useState(false);
+	const [remote, setRemote] = useState(false);
+	const [fullTime, setFullTime] = useState(false);
+
+	const handleRelocate = () => {
+		setRelocate((relocate) => {
+			dispatch(filterJobsRelocate(!relocate));
+			return !relocate;
+		});
+	};
+
+	const handleFullTime = () => {
+		setFullTime((fullTime) => {
+			dispatch(filterJobsFullTime(!fullTime));
+			return !fullTime;
+		});
+	};
+
+	const handleRemote = () => {
+		setRemote((remote) => {
+			dispatch(filterJobsRemote(!remote));
+			return !remote;
+		});
 	};
 
 	const [state, setState] = useState(null);
@@ -75,23 +109,52 @@ export const Search = () => {
 						</option>
 					))}
 				</select>
-				<select name='ubicacion' className={button} onChange={byUbication}>
-					<option disabled selected>
-						Ubicación:
-					</option>
-					<option value=''>Remoto</option>
-					<option value='cordoba'>Cordoba</option>
-					<option value='buenos aires'>Buenos Aires</option>
-					<option value='mendoza'>Mendoza</option>
-					<option value='junin'>Junin</option>
-				</select>
+				<CountryState setState={setState} handleChange={byCountry} />
+				<State state={state} handleChange={byCity} />
 				<select className={button} name='sort' onChange={sortBy}>
-					<option disabled selected>
-						Ordenar por:
+					<option value='premium' selected>
+						Más Relevantes
 					</option>
-					<option value='premium'>Premium</option>
-					<option value='date'>Fecha</option>
+					<option value='date'>Más Reciente</option>
 				</select>
+			</div>
+			<div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='Relocate'
+						value={relocate}
+						onChange={handleRelocate}
+					/>
+					<label className='form-check-label' htmlFor='Relocate'>
+						Relocación
+					</label>
+				</div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='Remote'
+						value={remote}
+						onChange={handleRemote}
+					/>
+					<label className='form-check-label' htmlFor='Remote'>
+						Remoto
+					</label>
+				</div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='FullTime'
+						value={fullTime}
+						onChange={handleFullTime}
+					/>
+					<label className='form-check-label' htmlFor='FullTime'>
+						Tiempo Completo
+					</label>
+				</div>
 			</div>
 			<p className='clear' onClick={handleReset}>
 				Limpiar Filtros

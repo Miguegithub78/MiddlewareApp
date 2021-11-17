@@ -1,5 +1,4 @@
 import {
-<<<<<<< HEAD
 	LOGIN_OKEY,
 	LOGOUT_OKEY,
 	GET_JUNIORS,
@@ -15,6 +14,9 @@ import {
 	FILTER_JOBS_BY_CITIES,
 	FILTER_JOBS_BY_SALARIES,
 	FILTER_JOBS_BY_TECHS,
+	FILTER_JOBS_BY_RELOCATE,
+	FILTER_JOBS_BY_FULLTIME,
+	FILTER_JOBS_BY_REMOTE,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
@@ -25,41 +27,11 @@ import {
 	POSTULATION,
 	ADD_NEW_JOB,
 	GET_UBICATION,
+	MERCADO_PAGO,
+	SET_PLAN,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
 import { auth, firebase, actionCodeSettings } from '../../firebaseConfig';
-=======
-  LOGIN_OKEY,
-  LOGOUT_OKEY,
-  GET_JUNIORS,
-  GET_JUNIORS_DETAILS,
-  GET_COMPANIES,
-  GET_LANGUAGES,
-  GET_TECHNOLOGIES,
-  GET_COMPANY_DETAILS,
-  GET_PUBLICATIONS,
-  GET_PUBLICATIONS_BY_ID,
-  SORT_JOBS_BY,
-  FILTER_JOBS_BY_COUNTRIES,
-  FILTER_JOBS_BY_CITIES,
-  FILTER_JOBS_BY_SALARIES,
-  FILTER_JOBS_BY_TECHS,
-  SEARCH_JOBS_BY_TITLE,
-  RESET_JOBS_FILTER,
-  CHANGE_PROFILE_PICTURE,
-  EMAIL_VERIFICATION,
-  ERROR_LOGIN,
-  GET_JOB_DETAILS,
-  GET_JOBS,
-  POSTULATION,
-  ADD_NEW_JOB,
-  GET_UBICATION,
-  MERCADO_PAGO,
-  SET_PLAN,
-} from "../types";
-import clienteAxios from "../../components/config/clienteAxios";
-import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
->>>>>>> cb227d52378eb14042a5fbe7daa73a023f3cd902
 import {
 	signInWithPopup,
 	linkWithPopup,
@@ -452,6 +424,33 @@ export function searchJobsByTitle(payload) {
 	};
 }
 
+export function filterJobsRemote(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_REMOTE,
+			payload,
+		});
+	};
+}
+
+export function filterJobsFullTime(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_FULLTIME,
+			payload,
+		});
+	};
+}
+
+export function filterJobsRelocate(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_RELOCATE,
+			payload,
+		});
+	};
+}
+
 export function resetFilterJobs(payload) {
 	return async function (dispatch) {
 		dispatch({
@@ -572,7 +571,6 @@ export function editJobPostulationsAction(idJob, job) {
 		}
 	};
 }
-<<<<<<< HEAD
 export const editCompanyDataAction = (infoUser) => {
 	return async function (dispatch) {
 		try {
@@ -587,34 +585,33 @@ export const editCompanyDataAction = (infoUser) => {
 		}
 	};
 };
-=======
 
-export const mercadoPagoAction = ( idJob, plan ) => { 
-  
-  return async function (dispatch) {
-    try {
-      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}?plan=${plan}`)
-      .then((data) => {
-        dispatch({ 
-          type: MERCADO_PAGO, 
-          payload: data.data });
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+export const mercadoPagoAction = (idJob, plan) => {
+	return async function (dispatch) {
+		try {
+			const mercadoPago = await clienteAxios
+				.get(`/create_preference/${idJob}?plan=${plan}`)
+				.then((data) => {
+					dispatch({
+						type: MERCADO_PAGO,
+						payload: data.data,
+					});
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
 
 export const setPlanMercado = (plan) => {
-  return async function (dispatch) {
-    try {
-      dispatch({ 
-        type: SET_PLAN, 
-        payload: plan });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
->>>>>>> cb227d52378eb14042a5fbe7daa73a023f3cd902
+	return async function (dispatch) {
+		try {
+			dispatch({
+				type: SET_PLAN,
+				payload: plan,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};

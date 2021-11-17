@@ -59,7 +59,7 @@ const inicialState = {
 	finishPage: false,
 };
 
-function filterJobs(state, filterKeyName, payload) {
+function filterJobs(state, filterKeyName, payload, reset) {
 	let jobs = state;
 	jobs.activeFilters[filterKeyName] = payload;
 
@@ -82,11 +82,18 @@ function filterJobs(state, filterKeyName, payload) {
 			? job.title.toLowerCase().includes(jobs.activeFilters.search)
 			: true;
 
-		/* const filterBySalary =  */
-
-		return (
-			filterByCountry && filterByCity && filterBySearch && filterByTech.length
-		);
+		let tech = !jobs.activeFilters.tech
+			? true
+			: filterByTech.length > 0
+			? true
+			: false;
+		console.log(job.title);
+		console.log(filterByCountry);
+		console.log(filterByCity);
+		console.log(tech);
+		console.log(filterBySearch);
+		console.log('------------------------------');
+		return filterByCountry && filterByCity && filterBySearch && tech;
 	});
 
 	return filterJobs;
@@ -294,6 +301,13 @@ const rootReducer = (state = inicialState, action) => {
 				jobs: {
 					...state.jobs,
 					filterData: state.jobs.data,
+					activeFilters: {
+						country: '',
+						city: '',
+						salary: '',
+						tech: '',
+						search: '',
+					},
 				},
 			};
 		}

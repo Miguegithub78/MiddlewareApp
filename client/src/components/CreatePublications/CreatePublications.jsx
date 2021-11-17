@@ -69,13 +69,10 @@ const CreatePublications = () => {
 		companyId: user && user._id,
 		premium: user && user.premium,
 		status: 'active',
-<<<<<<< HEAD
 		idFireBase: user.idFireBase,
-=======
 		openToRelocate: false,
 		openToRemote: false,
 		openToFullTime: false,
->>>>>>> main
 	});
 
 	function handleChange(e) {

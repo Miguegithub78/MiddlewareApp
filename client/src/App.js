@@ -12,10 +12,14 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
+import Socket from './components/socket.js';
 import Chat from './components/Chat/Chat2.jsx';
 import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
+
+  Socket.emit('conectado', "new new connection")
+
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();
   const token = localStorage.getItem("token");

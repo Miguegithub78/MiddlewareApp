@@ -29,3 +29,6 @@ export const ADD_NEW_JOB = 'ADD_NEW_JOB';
 export const DELETE_JOB = 'DELETE_JOB';
 export const DELETE_JUNIOR = 'DELETE_JUNIOR';
 export const DELETE_COMPANY = 'DELETE_COMPANY';
+export const MERCADO_PAGO = 'MERCADO_PAGO';
+export const SET_PLAN = 'SET_PLAN';
+

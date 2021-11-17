@@ -53,10 +53,8 @@ const postJobs = async (req, res) => {
 
         try{
           const savedJob = await newJob.save();
-
           company.jobs = company.jobs.concat(savedJob._id);
           await company.save();
-
           res.json(savedJob);
         }
         catch(err){

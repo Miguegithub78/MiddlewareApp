@@ -25,6 +25,8 @@ import {
   GET_UBICATION,
   ADD_NEW_JOB,
   DELETE_JOB,
+  MERCADO_PAGO,
+  SET_PLAN,
   DELETE_JUNIOR,
   DELETE_COMPANY,
 } from "../types";
@@ -42,7 +44,7 @@ const inicialState = {
   juniors: [],
   companies: [],
   publications: [],
-  publication: {},
+  publication: [],
   emailVerification: true,
   countryState: null,
   jobs: {
@@ -59,6 +61,9 @@ const inicialState = {
   imgPublication: null,
   pages: 0,
   finishPage: false,
+  mercadoPago: "",
+  idLastJob: "",
+  plan: "",
 };
 
 function calculateSalary(value, state) {
@@ -131,7 +136,6 @@ function sortJobs(string, state) {
   return arr;
 }
 
-
 const rootReducer = (state = inicialState, action) => {
   switch (action.type) {
     case LOGIN_OKEY:
@@ -171,10 +175,9 @@ const rootReducer = (state = inicialState, action) => {
     case GET_PUBLICATIONS:
       return {
         ...state,
-        publications:
-          action.payload.page
-            ? [...state.publications].concat(action.payload.publications)
-            : action.payload.publications,
+        publications: action.payload.page
+          ? [...state.publications].concat(action.payload.publications)
+          : action.payload.publications,
         pages: action.payload.pages,
         finishPage: action.payload.finishPage,
       };
@@ -333,16 +336,54 @@ const rootReducer = (state = inicialState, action) => {
         ],
       };
 
-    case "UPLOAD_PICTURE_PUBLICATION":
+    case UPLOAD_PICTURE:
       return {
         ...state,
-        imgPublication: action.payload,
+        publication: { ...state.publication, photograph: action.payload },
+      };
+    case GET_JOBS:
+      return {
+        ...state,
+        jobs: {
+          ...state.jobs,
+          data: action.payload,
+          filterData: action.payload,
+        },
+      };
+    case GET_JOB_DETAILS:
+      return {
+        ...state,
+        jobsDetails: action.payload,
+      };
+    case GET_UBICATION:
+      return {
+        ...state,
+        countryState: action.payload,
+      };
+    case ADD_NEW_JOB:
+      return {
+        ...state,
+        user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+        idLastJob: action.payload._id,
       };
 
     case "RESET_PICTURE_PUBLICATION":
       return {
         ...state,
         imgPublication: action.payload,
+      };
+
+    case MERCADO_PAGO:
+      console.log(action.payload);
+      return {
+        ...state,
+        mercadoPago: action.payload,
+      };
+
+    case SET_PLAN:
+      return {
+        ...state,
+        plan: action.payload,
       };
 
     default:

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -9,6 +9,7 @@ import {
 	postJobs,
 	changePicturePublicationAction,
 	getUserAction,
+	setPlanMercado,
 } from '../../redux/actions';
 import './CreatePublications.css';
 import NavBar from '../NavBar/NavBar';
@@ -16,7 +17,7 @@ import CountryState from './CountryState';
 import State from './State';
 
 const CreatePublications = () => {
-	const { user } = useSelector((state) => state);
+	const { user, idLastJob } = useSelector((state) => state);
 	const { technologies } = useSelector((state) => state);
 	const { publication } = useSelector((state) => state);
 	const dispatch = useDispatch();
@@ -29,6 +30,11 @@ const CreatePublications = () => {
 			dispatch(getTechnologies());
 		}
 	}, [user]);
+
+	//useEffect(()=>{
+	// if(idLastJob === "")return;
+	//  history.push(`/mercadopago/${idLastJob}`)
+	//},[idLastJob])
 
 	onAuthStateChanged(auth, (userFirebase) => {
 		if (userFirebase) {
@@ -53,6 +59,7 @@ const CreatePublications = () => {
 		return errors;
 	}
 
+	const [plan, setPlan] = useState('free');
 	const [picture, setPicture] = useState(null);
 	const [errors, setErrors] = useState({});
 	const [state, setState] = useState(null);
@@ -117,8 +124,8 @@ const CreatePublications = () => {
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(postJobs(input));
-		history.push('/home/juniors');
 	}
+
 	// funcion que desabilita el poder enviar el form si no tiene campos rellenados
 	(function () {
 		'use strict';
@@ -141,8 +148,98 @@ const CreatePublications = () => {
 		});
 	})();
 
+	function handlePayment() {
+		if (plan !== 'free') {
+			dispatch(setPlanMercado(plan));
+			history.push(`/mercadopago/${idLastJob}`);
+		} else {
+			history.push('/home/juniors');
+		}
+	}
+
+	function handlePlan(e) {
+		setPlan(e.target.value);
+	}
+
+	var modalWin = useRef(null);
+
 	return user ? (
 		<div>
+			<div
+				className='modal fade'
+				id='exampleModalCenter'
+				aria-labelledby='exampleModalCenterTitle'
+				aria-hidden='true'
+			>
+				<div className='modal-dialog modal-dialog-centered'>
+					<div className='modal-content'>
+						<div className='modal-header'>
+							<h5 className='modal-title' id='exampleModalLongTitle'>
+								El empleo, fue creado. Elige tu plan para mejorar el
+								posicionamiento:
+							</h5>
+							<button
+								type='button'
+								className='btn-close'
+								data-bs-dismiss='modal'
+								aria-label='Close'
+							></button>
+						</div>
+						<div className='modal-body'>
+							<div class='form-check'>
+								<input
+									class='form-check-input'
+									type='radio'
+									name='flexRadioDefault'
+									id='flexRadioDefault1'
+									checked
+									value='free'
+									onClick={handlePlan}
+								/>
+								<label class='form-check-label' for='flexRadioDefault1'>
+									FREE $0
+								</label>
+							</div>
+							<div class='form-check'>
+								<input
+									class='form-check-input'
+									type='radio'
+									name='flexRadioDefault'
+									id='flexRadioDefault2'
+									value='standard'
+									onClick={handlePlan}
+								/>
+								<label class='form-check-label' for='flexRadioDefault2'>
+									STANDARD $600
+								</label>
+							</div>
+							<div class='form-check'>
+								<input
+									class='form-check-input'
+									type='radio'
+									name='flexRadioDefault'
+									id='flexRadioDefault3'
+									value='premium'
+									onClick={handlePlan}
+								/>
+								<label class='form-check-label' for='flexRadioDefault3'>
+									PREMIUM $900
+								</label>
+							</div>
+						</div>
+						<div className='modal-footer'>
+							<button
+								type='button'
+								className='btn btn-primary'
+								data-bs-dismiss='modal'
+								onClick={handlePayment}
+							>
+								quiero pagar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<NavBar />
 			<div className='container px-4 py-5 mx-auto'>
 				<div className='row d-flex justify-content-center'>
@@ -402,8 +499,17 @@ const CreatePublications = () => {
 									</div>
 								</div>
 							</div>
-							<button type='submit' className='btn btn-outline-dark px-4 mt-4'>
-								Publicar
+							{/* <button type="submit" className="btn btn-outline-dark px-4 mt-4">
+                Publicar
+              </button> */}
+							<button
+								type='button'
+								className={'btn btn-block btn-dark btn-outline-light'}
+								data-bs-toggle='modal'
+								data-bs-target='#exampleModalCenter'
+								onClick={handleSubmit}
+							>
+								Postulate
 							</button>
 						</form>
 					</div>

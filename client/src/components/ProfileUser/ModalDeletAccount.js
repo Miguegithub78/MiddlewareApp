@@ -57,6 +57,7 @@ const ModalDeletAccount = ({ infoUser }) => {
                   }}
                 type="button"
                 className="btn btn-block btn-outline-danger"
+                data-bs-dismiss="modal"
               >
                 Si Eliminar
               </button>

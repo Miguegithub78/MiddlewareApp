@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom'
 import { auth } from "../../firebaseConfig";
 import { getUserAction } from '../../redux/actions';
 import Socket from "../socket.js";
-import s from '../Notifications/campana.svg';
 import './Notifications.css'
 
 
@@ -46,20 +45,25 @@ onAuthStateChanged(auth, (userFirebase) => {
     }
   });
 
+  const handleRead = () => {
+    setNotifications([]);
+    setOpen(false);
+  };
+
 
     return notifications? (
         <div className='icons'>
           <div className='icon' onClick={() => setOpen(!open)}>
-            <img src={s} className='iconImg' alt=''/>
-            <div className='counter'>{notifications.length}</div>
+          <i className="bi bi-bell-fill"></i>
+            { notifications.length > 0 &&
+              <div className='counter'>{notifications.length}</div>
+            }
           </div>
           { open && (
           <div className='notifications'>
            {notifications?.map(el => {
-             return (
-               <li>{ `${el.user} le dió me gusta a tu publicacion` }</li>
-             )
-           })}
+             return (<li>{ `${el.user} le dió me gusta a tu publicacion` }</li>)})}
+             <button className='nButton' onClick={handleRead}>Marcar leído</button>
            </div>
           )}
         </div>

@@ -24,6 +24,8 @@ import {
 	GET_JOBS,
 	GET_UBICATION,
 	ADD_NEW_JOB,
+	MERCADO_PAGO,
+	SET_PLAN,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -57,6 +59,9 @@ const inicialState = {
 	imgPublication: null,
 	pages: 0,
 	finishPage: false,
+	mercadoPago: '',
+	idLastJob: '',
+	plan: '',
 };
 
 function filterJobs(state, filterKeyName, payload, reset) {
@@ -355,6 +360,7 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
 
 		case 'UPLOAD_PICTURE_PUBLICATION':
@@ -367,6 +373,19 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				imgPublication: action.payload,
+			};
+
+		case MERCADO_PAGO:
+			console.log(action.payload);
+			return {
+				...state,
+				mercadoPago: action.payload,
+			};
+
+		case SET_PLAN:
+			return {
+				...state,
+				plan: action.payload,
 			};
 
 		default:

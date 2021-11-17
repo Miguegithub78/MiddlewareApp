@@ -13,6 +13,7 @@ import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
 import Chat from './components/Chat/Chat2.jsx';
+import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
   //   const { user } = useSelector((state) => state);
@@ -47,6 +48,7 @@ function App() {
 
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				<Route path='/chat' component={Chat} />
+        <Route path='/mercadopago/:idJob' component={MercadoPago} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

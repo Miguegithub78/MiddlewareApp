@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function Checkout({ carrito, dates}) {
+export default function Checkout({ product, dates}) {
   console.log(dates, "dates")
   useEffect(() => {
     const script = document.createElement('script');
@@ -24,15 +24,7 @@ export default function Checkout({ carrito, dates}) {
       <form id="form1">
         <h4>Checkout</h4>
         <div className="form-group">
-          {carrito.map((carrito, index) => {
-            return(
-              <div key={index} className="formcarrito">
-                <ul>
-                  <li>{carrito.title}</li>
-                  <li>{'$' + carrito.unit_price}</li>
-                </ul>
-                </div>
-            )})}
+          {product === 'Standard' ? <label>Nombre del producto: {product} $600 </label> : <label>Nombre del producto: {product} $900</label>}
         </div>
         </form>
         </div>

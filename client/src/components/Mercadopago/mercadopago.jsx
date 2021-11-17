@@ -12,17 +12,16 @@ export default function MercadoPago(){
 
   // const [dates, setDates] = useState("");
 	const dispatch = useDispatch();
-	const idMercadoPago = useSelector((state) => state.mercadoPago);
+	const plan = useSelector((state) => state.plan);
+	const { id, product } = useSelector((state) => state.mercadoPago);
 	const user = useSelector((state) => state.user);
 	const history = useHistory();
 	const { idJob } = useParams();
 	useEffect(() => {
-		dispatch(mercadoPagoAction(idJob));
+		dispatch(mercadoPagoAction(idJob, plan));
 		// setDates(idMercadoPago);
 
 	}, []);	
-
-	
 
 	onAuthStateChanged(auth, (userFirebase) => {
 		if (userFirebase) {
@@ -33,26 +32,9 @@ export default function MercadoPago(){
 		}
 	});
 
- const carrito = [
-		{
-			id: 1,
-			title: "Standar",
-			quantity: 1,
-			unit_price: 600,
-			picture_url: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
-		},
-		{
-			id: 2,
-			title: "Premium",
-			quantity: 1,
-			unit_price: 900,
-			picture_url: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
-			
-		}
-	]
   return (
     <div className="MercadoPago">
-      { !idMercadoPago ? <p>Cargando...</p> : <Checkout carrito={carrito} dates={idMercadoPago} /> }
+      { !id ? <p>Cargando...</p> : <Checkout product={product} dates={id} /> }
     </div>
       
   )

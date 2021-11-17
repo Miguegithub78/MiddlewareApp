@@ -24,7 +24,8 @@ import {
   POSTULATION,
   ADD_NEW_JOB,
   GET_UBICATION,
-  MERCADO_PAGO
+  MERCADO_PAGO,
+  SET_PLAN,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
 import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
@@ -544,16 +545,28 @@ export const editCompanyDataAction =(infoUser) => {
   };
 }
 
-export const mercadoPagoAction = ( idJob ) => { 
+export const mercadoPagoAction = ( idJob, plan ) => { 
   
   return async function (dispatch) {
     try {
-      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}`)
+      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}?plan=${plan}`)
       .then((data) => {
         dispatch({ 
           type: MERCADO_PAGO, 
           payload: data.data });
       })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const setPlanMercado = (plan) => {
+  return async function (dispatch) {
+    try {
+      dispatch({ 
+        type: SET_PLAN, 
+        payload: plan });
     } catch (error) {
       console.log(error);
     }

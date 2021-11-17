@@ -25,6 +25,7 @@ import {
 	GET_UBICATION,
 	ADD_NEW_JOB,
 	MERCADO_PAGO,
+	SET_PLAN,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -59,6 +60,7 @@ const inicialState = {
 	finishPage: false,
 	mercadoPago: "",
 	idLastJob:"",
+	plan: "",
 };
 
 function calculateSalary(value, state) {
@@ -319,6 +321,12 @@ const rootReducer = (state = inicialState, action) => {
 		return {
 				...state,
 				mercadoPago: action.payload,
+			};
+
+			case SET_PLAN:
+			return {
+				...state,
+				plan: action.payload,
 			};
 
 		default:

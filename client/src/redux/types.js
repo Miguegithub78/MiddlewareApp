@@ -27,4 +27,5 @@ export const POSTULATION = 'POSTULATION';
 export const GET_UBICATION = 'GET_UBICATION';
 export const ADD_NEW_JOB = 'ADD_NEW_JOB';
 export const MERCADO_PAGO = 'MERCADO_PAGO';
+export const SET_PLAN = 'SET_PLAN';
 

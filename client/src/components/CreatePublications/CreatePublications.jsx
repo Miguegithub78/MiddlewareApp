@@ -115,7 +115,7 @@ const CreatePublications = () => {
     });
   }
 
-  console.log(input)
+  
 
   const handleChangePicture = (e) => {
     const picture = e.target.files[0];
@@ -129,9 +129,9 @@ const CreatePublications = () => {
     e.preventDefault();
     dispatch(postJobs(input));
     
-    console.log(idLastJob, "hola");
+    
     //history.push("/");// crear un modal
-    console.log("creado");
+   
   }
 
   // funcion que desabilita el poder enviar el form si no tiene campos rellenados

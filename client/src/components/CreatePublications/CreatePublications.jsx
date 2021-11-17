@@ -115,6 +115,8 @@ const CreatePublications = () => {
     });
   }
 
+  
+
   const handleChangePicture = (e) => {
     const picture = e.target.files[0];
     setPicture(picture);
@@ -127,9 +129,9 @@ const CreatePublications = () => {
     e.preventDefault();
     dispatch(postJobs(input));
     
-    console.log(idLastJob, "hola");
+    
     //history.push("/");// crear un modal
-    console.log("creado");
+   
   }
 
   // funcion que desabilita el poder enviar el form si no tiene campos rellenados
@@ -461,7 +463,7 @@ const CreatePublications = () => {
                           openToRelocate: !info.openToRelocate,
                         }))
                       }
-                      required
+                      
                       checked={input.openToRelocate}
                     />
                     <label className="form-check-label" htmlFor="Relocate">
@@ -480,7 +482,7 @@ const CreatePublications = () => {
                           openToRemote: !info.openToRemote,
                         }))
                       }
-                      required
+                      
                     />
                     <label className="form-check-label" htmlFor="Remote">
                       Remoto
@@ -498,7 +500,7 @@ const CreatePublications = () => {
                           openToFullTime: !info.openToFullTime,
                         }))
                       }
-                      required
+              
                     />
                     <label className="form-check-label" htmlFor="FullTime">
                       Tiempo Completo

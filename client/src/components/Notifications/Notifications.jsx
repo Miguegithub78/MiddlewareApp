@@ -4,8 +4,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import {useHistory} from 'react-router-dom'
 import { auth } from "../../firebaseConfig";
 import { getUserAction } from '../../redux/actions';
-import Socket from "../socket.js"
-import { map } from '@firebase/util';
+import Socket from "../socket.js";
+import s from '../Notifications/campana.svg';
+import './Notifications.css'
+
 
 
 const Notifications = () => {
@@ -15,6 +17,7 @@ const Notifications = () => {
     const dispatch = useDispatch();
 
     const [notifications, setNotifications] = useState([]);
+    const [open, setOpen] = useState(false);
 
     useEffect(()=>{
 
@@ -29,7 +32,7 @@ const Notifications = () => {
 
     Socket.on('liked',(data)=>{
         if(data.userPublicationId === idUser){
-        setNotifications([...notifications, data])
+        setNotifications((prev) => [...prev, data])
       }
      })
   }, [Socket, idUser])
@@ -45,14 +48,22 @@ onAuthStateChanged(auth, (userFirebase) => {
 
 
     return notifications? (
-        <div>
+        <div className='icons'>
+          <div className='icon' onClick={() => setOpen(!open)}>
+            <img src={s} className='iconImg' alt=''/>
+            <div className='counter'>{notifications.length}</div>
+          </div>
+          { open && (
+          <div className='notifications'>
            {notifications?.map(el => {
              return (
-               <h1>{el.user + 'le dió me gusta a tu publicacion' }</h1>
+               <li>{ `${el.user} le dió me gusta a tu publicacion` }</li>
              )
            })}
+           </div>
+          )}
         </div>
-    ) : (<h1>No hay nada que mostrar</h1>)
+    ) : ('...No hay notificaciones que mostrar')
 }
 
 export default Notifications;

@@ -126,14 +126,14 @@ const Home = () => {
                   className="btn btn-block btn-dark btn-outline-light"
                   onClick={previusPage}
                 >
-                  &laquo; Previus
+                  &laquo; Anterior
                 </button>
                 <button
                   type="button"
                   className="btn btn-block btn-dark btn-outline-light"
                   onClick={nextPage}
                 >
-                  Next &raquo;
+                  Próximo &raquo;
                 </button>
               </div>
               }

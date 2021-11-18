@@ -128,6 +128,7 @@ const CreatePublications = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postJobs(input));
+    // history.push("/home/juniors");
     
     
     //history.push("/");// crear un modal

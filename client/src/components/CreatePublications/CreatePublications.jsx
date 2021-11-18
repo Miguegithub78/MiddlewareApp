@@ -116,11 +116,19 @@ const CreatePublications = () => {
 		});
 	}
 
-	/*function handleSubmit(e) {
-		e.preventDefault();
-		dispatch(postJobs(input));
-		history.push('/home/companies');
-	}*/
+	const handleChangePicture = (e) => {
+		const picture = e.target.files[0];
+		setPicture(picture);
+		if (picture) {
+			dispatch(changePicturePublicationAction(picture));
+		}
+	};
+
+	/*  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(postJobs(input));
+    history.push('/home/companies');
+  } */
 
 	function handleSubmit(e) {
 		e.preventDefault();

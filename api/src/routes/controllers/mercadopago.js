@@ -1,4 +1,4 @@
-const { Order, Jobs } = require("../../models/index");
+const { Jobs } = require("../../models/index");
 
 const mercadopago = require("mercadopago");
 

@@ -4,10 +4,10 @@ const {
   Company,
   Publication,
   Juniors,
-  Jobs
+  Jobs,
 } = require("../../models/index");
 
-const { decoder } = require("../../helpers/index")
+const { decoder } = require("../../helpers/index");
 
 require("dotenv").config();
 
@@ -17,23 +17,21 @@ const jwt = require("jsonwebtoken");
 
 const getAllCompanies = async (req, res) => {
   try {
- 
     const token = req.headers["x-auth-token"];
 
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token,'Junior')
+    const result = await decoder(token, "Junior");
 
     if (result.auth === false) {
       return res.status(401).json(result);
-
     }
 
-    const allCompanies = await Company.find().populate("jobs").populate("technologies");
+    const allCompanies = await Company.find()
+      .populate("jobs")
+      .populate("technologies");
     res.json(allCompanies);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -44,28 +42,27 @@ const getCompaniesById = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token,'Junior')
-    
+    const result = await decoder(token, "Junior");
+
     const { id } = req.params;
     const { firebase } = req.query;
 
     if (result.auth === false && !firebase) {
-
       return res.status(401).json(result);
     }
 
-    if(firebase === 'true'){
+    if (firebase === "true") {
+      const getCompanyr = await Company.findOne({ idFireBase: id }).populate([
+        { path: "technologies" },
+        { path: "publications" },
+        { path: "jobs" },
+      ]);
 
-      const getCompanyr = await Company.findOne({idFireBase: id})
-      .populate([{path: "technologies"}, {path: "publications"}, {path: "jobs"}])
-    
-      res.json(getCompanyr)
-      return
+      res.json(getCompanyr);
+      return;
     }
 
     const companiesGet = await Company.findById(id).populate("jobs");
@@ -82,15 +79,12 @@ const updateCompaniesProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
-
 
     const { id } = req.params;
 
-    const result = await decoder(token,'Company', id)
+    const result = await decoder(token, "Company", id);
 
     if (result.auth === false) {
       return res.status(401).json(result);
@@ -107,7 +101,7 @@ const updateCompaniesProfile = async (req, res) => {
       linkedin,
       latitude,
       longitude,
-      idFireBase
+      idFireBase,
     } = req.body;
 
     // const languagesGet = await Languages.find({ name: languages });
@@ -120,7 +114,8 @@ const updateCompaniesProfile = async (req, res) => {
         name: name,
         webpage: webpage,
         gmail: gmail,
-        photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
+        photograph:
+          photograph || "https://www.w3schools.com/howto/img_avatar.png",
         country: country,
         city: city,
         linkedin,
@@ -141,32 +136,42 @@ const deleteCompaniesProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
     const { id } = req.params;
 
-    const result = await decoder(token,'Company', id)
+    const result = await decoder(token, "Company", id);
 
     if (result.auth === false) {
       return res.status(401).json(result);
     }
 
-    const getCompany = await Company.findOne({idFireBase: result.idFireBase});
+    // const getCompany = await Company.findOne({idFireBase: result.idFireBase});
+    if (result.userType === "admin") {
+      const user = await Company.findOne({ idFireBase: id });
+      user.publications.forEach(async (e) => {
+        await Publication.findByIdAndDelete(e._id);
+      });
+      user.jobs.forEach(async (e) => {
+        await Jobs.findByIdAndDelete(e._id);
+        await Company.findOneAndDelete({ idFireBase: id });
+      });
+      await Company.findOneAndDelete({ idFireBase: id });
+      return res.json({ message: "Deleted", deleted: true });
+    }
 
-    getCompany.publications.forEach(async (e) => {
+    result.publications.forEach(async (e) => {
       await Publication.findByIdAndDelete(e._id);
     });
 
-    getCompany.jobs.forEach(async (e) => {
+    result.jobs.forEach(async (e) => {
       await Jobs.findByIdAndDelete(e._id);
     });
 
-    const companyDelete = await Company.findOneAndDelete(id)
+    await Company.findOneAndDelete({ idFireBase: id });
 
-    res.json(companyDelete);
+    res.json({ message: "Deleted", deleted: true });
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

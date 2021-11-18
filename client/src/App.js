@@ -14,11 +14,17 @@ import CreatePublications from "./components/CreatePublications/CreatePublicatio
 import ProfileCompany from "./components/ProfileCompany";
 import Socket from './components/socket.js';
 import Chat from './components/Chat/Chat2.jsx';
+import Admin from "./components/Admin/Admin";
+import AdminHome from "./components/Admin/AdminHome";
+import Notifications from "./components/Notifications/Notifications";
 import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
 
-  Socket.emit('conectado', "new new connection")
+  useEffect(()=>{
+
+    Socket.emit('conectado', "new new connection")
+  }, [])
 
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();
@@ -44,6 +50,10 @@ function App() {
         <Route exact path="/jobs/:id" component={JobsDetails} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/empleos/:id" component={JobsDetails} />
+
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/home" component={AdminHome} />
+        {/* <Route exact path="/admin/home/juniors" component={AdminHomeJuniors} /> */}
         <Route
           exact
           path="/createpublications"
@@ -52,6 +62,7 @@ function App() {
 
 				<Route path='/juniors/:id' component={JuniorsDetail} />
 				<Route path='/chat' component={Chat} />
+        <Route path='/notifications' component={Notifications} />
         <Route path='/mercadopago/:idJob' component={MercadoPago} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>

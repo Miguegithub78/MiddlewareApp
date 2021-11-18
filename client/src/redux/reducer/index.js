@@ -27,8 +27,11 @@ import {
 	GET_JOBS,
 	GET_UBICATION,
 	ADD_NEW_JOB,
+	DELETE_JOB,
 	MERCADO_PAGO,
 	SET_PLAN,
+	DELETE_JUNIOR,
+	DELETE_COMPANY,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -252,9 +255,9 @@ const rootReducer = (state = inicialState, action) => {
 		case GET_PUBLICATIONS:
 			return {
 				...state,
-				publications: [...state.publications].concat(
-					action.payload.publications
-				),
+				publications: action.payload.page
+					? [...state.publications].concat(action.payload.publications)
+					: action.payload.publications,
 				pages: action.payload.pages,
 				finishPage: action.payload.finishPage,
 			};
@@ -263,14 +266,6 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				publications: [action.payload].concat([...state.publications]),
-			};
-
-		case 'DELETE_PUBLICATION':
-			return {
-				...state,
-				publications: state.publications.filter(
-					(e) => e._id !== action.payload._id
-				),
 			};
 
 		case 'DELETE_PUBLICATION':
@@ -435,13 +430,61 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
-				idLastJob: action.payload._id,
 			};
-
-		case 'UPLOAD_PICTURE_PUBLICATION':
+		case DELETE_JOB:
 			return {
 				...state,
-				imgPublication: action.payload,
+				jobs: {
+					...state.jobs,
+					data: [
+						...state.jobs.data.filter((job) => job._id !== action.payload),
+					],
+				},
+			};
+		case DELETE_JUNIOR:
+			return {
+				...state,
+				juniors: [
+					...state.juniors.filter((j) => j.idFireBase !== action.payload),
+				],
+			};
+		case DELETE_COMPANY:
+			return {
+				...state,
+				companies: [
+					...state.companies.filter((j) => j.idFireBase !== action.payload),
+				],
+			};
+
+		case UPLOAD_PICTURE:
+			return {
+				...state,
+				publication: { ...state.publication, photograph: action.payload },
+			};
+		case GET_JOBS:
+			return {
+				...state,
+				jobs: {
+					...state.jobs,
+					data: action.payload,
+					filterData: action.payload,
+				},
+			};
+		case GET_JOB_DETAILS:
+			return {
+				...state,
+				jobsDetails: action.payload,
+			};
+		case GET_UBICATION:
+			return {
+				...state,
+				countryState: action.payload,
+			};
+		case ADD_NEW_JOB:
+			return {
+				...state,
+				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
 
 		case 'RESET_PICTURE_PUBLICATION':
@@ -451,6 +494,7 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case MERCADO_PAGO:
+			console.log(action.payload);
 			return {
 				...state,
 				mercadoPago: action.payload,

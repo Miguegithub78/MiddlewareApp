@@ -44,12 +44,12 @@ export default function Mapa() {
     googleMapsApiKey: "AIzaSyCCpn70ZJEIvFYTsUyxArbhmtFJXoNgtgo",
     libraries,
   });
-  
+
   const [selected, setSelected] = React.useState(null);
 
   const companies = useSelector(state => state.companies)
 
-  
+
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -59,7 +59,7 @@ export default function Mapa() {
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
-   
+
   }, []);
 
   if (loadError) return "Error";
@@ -68,10 +68,10 @@ export default function Mapa() {
   return (
     <div>
       <div>
-        <h5>Empresas{" "}
+        <h4 className="display-5 ">Empresas{" "}
           <i className="bi bi-people-fill"></i>
-        </h5>
-      
+        </h4>
+
         <Locate panTo={panTo} />
         <Search panTo={panTo} />
       </div>
@@ -81,29 +81,29 @@ export default function Mapa() {
         zoom={6}
         center={center}
         options={options}
-        
+
         onLoad={onMapLoad}
       >
         {companies?.map((marker) => (
           <Marker
             key={`${Number(marker.latitude)}-${Number(marker.longitude)}`}
             position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
-           
+
             onClick={() => {
               setSelected(marker);
             }}
-            
+
             icon={{
               url: `/company.svg`,
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
             }}
-            
+
           />
-          
+
         ))}
-       
+
         {selected ? (
           <InfoWindow
             position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }}
@@ -118,8 +118,8 @@ export default function Mapa() {
                 </span>{" "}
                 <Link to={`/companies/${selected._id}`} key={selected.name}>{selected.name}</Link>
               </h2>
-              
-             
+
+
             </div>
           </InfoWindow>
         ) : null}
@@ -139,7 +139,7 @@ function Locate({ panTo }) {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             });
-            
+
           },
           () => null
         );
@@ -197,9 +197,9 @@ function Search({ panTo }) {
             {status === "OK" &&
               data.map(({ id, description }) => (
                 <ComboboxOption key={id} value={description} />
-               
+
               ))}
-              
+
           </ComboboxList>
         </ComboboxPopover>
       </Combobox>

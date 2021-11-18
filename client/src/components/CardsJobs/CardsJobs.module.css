@@ -14,10 +14,10 @@
 	position: relative;
 	display: flex;
 	padding: 0 15px;
-	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.438);
+	box-shadow: 0px 0px 5px 1px rgba(71, 70, 70, 0.438);
 	height: 200px;
 	width: 600px;
-	border-radius: 10px;
+	border-radius: 5px;
 	align-items: center;
 	justify-content: start;
 	color: rgb(68, 64, 64);
@@ -71,6 +71,10 @@
 .card_container_info_extra_general {
 	display: flex;
 	align-items: center;
+}
+
+.card_container_info_extra_company {
+	margin-bottom: 10px;
 }
 
 .card_container_info_extra_city,
@@ -200,5 +204,8 @@
 		right: 0px;
 		border-radius: 5px;
 		background-color: rgb(224, 49, 131);
+	}
+	.card_container_info_extra_company {
+		margin-bottom: 5px;
 	}
 }

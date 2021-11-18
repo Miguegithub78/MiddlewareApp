@@ -263,6 +263,16 @@ const rootReducer = (state = inicialState, action) => {
         finishPage: action.payload.finishPage,
       };
 
+    case "GET_PUBLICATIONS_2":
+      return {
+        ...state,
+        publications: [...state.publications].concat(
+          action.payload.publications
+        ),
+        pages: action.payload.pages,
+        finishPage: action.payload.finishPage,
+      };
+
     case "POST_PUBLICATION":
       return {
         ...state,
@@ -454,6 +464,7 @@ const rootReducer = (state = inicialState, action) => {
           ...state.juniors.filter((j) => j.idFireBase !== action.payload),
         ],
       };
+
     case DELETE_COMPANY:
       return {
         ...state,
@@ -516,6 +527,29 @@ const rootReducer = (state = inicialState, action) => {
       return {
         ...state,
         imgPublication: action.payload,
+      };
+
+    case "setUser":
+      return {
+        ...state,
+        user: { ...state.user, notifications: action.payload },
+      };
+
+    case "DELETE_USER_NOTIFICATIONS":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          notifications:
+            state.user &&
+            state.user.notifications.filter((e) => e.typeNotification !== 3),
+        },
+      };
+
+    case "RESET_USER_NOTIFICATIONS":
+      return {
+        ...state,
+        user: { ...state.user, notifications: [] },
       };
 
     default:

@@ -92,14 +92,25 @@ const companySchema = new Schema({
     },
   ],
 
-  jobs: [
-    {
+  jobs: [{
       type: Schema.Types.ObjectId,
       ref: "jobs",
       autopopulate: true,
-    },
-  ],
-});
+    }],
+
+    notifications: [{
+        _id: Schema.Types.ObjectId,
+        userName: String,
+        typeNotification: Number,
+        date: {
+          type: Date,
+          default: Date.now
+        },
+        idPublication: Schema.Types.ObjectId,
+        userType: String,
+        userPublicationId: String
+    }]
+})
 
 // companySchema.plugin(require('mongoose-autopopulate'));
 

@@ -18,6 +18,7 @@ import Admin from "./components/Admin/Admin";
 import AdminHome from "./components/Admin/AdminHome";
 import Notifications from "./components/Notifications/Notifications";
 import MercadoPago from './components/Mercadopago/mercadopago';
+import DetailsPublication from './components/DetailsPublication/index.jsx';
 
 function App() {
 
@@ -64,6 +65,7 @@ function App() {
 				<Route path='/chat' component={Chat} />
         <Route path='/notifications' component={Notifications} />
         <Route path='/mercadopago/:idJob' component={MercadoPago} />
+        <Route path='/DetailsPublication/:id' component={DetailsPublication} />
 				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
 			</Switch>
 		</Router>

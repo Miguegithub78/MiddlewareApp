@@ -1,12 +1,14 @@
-const { Jobs } = require("../../models/index");
-
+const { Jobs, Company } = require("../../models/index");
+const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
+require('dotenv').config();
 const mercadopago = require("mercadopago");
 
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, MIDDLEWARE_EMAIL, EMAIL_PASSWORD } = process.env;
 
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
+
 
 const create_preference = async (req, res) => {
   // try{
@@ -111,6 +113,30 @@ const orderFeedback = async (req, res) => {
     // });
 
     // const companyPremium = Company.findOne({ _id : req.query.external_reference })
+    const jobData = await Jobs.findOne({ _id: idJob }).populate({
+			path: 'company',
+		});;
+    const gmailCompany = jobData.company.gmail;
+    
+     const transporter = nodemailer.createTransport({
+			//acá voy a crear los datos del correo del que envía
+			host: 'smtp.gmail.com',
+			port: 465,
+			secure: true, // true for 465, false for other ports
+			auth: {
+				user: MIDDLEWARE_EMAIL,
+				pass: EMAIL_PASSWORD,
+			},
+		});
+    await transporter.sendMail({
+			// acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
+			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
+			to: `${gmailCompany}`, // list of receivers
+			subject: `Pago en Middleware - ${payment_status}`, // Subject line
+			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
+      Muchas gracias!!!
+                      Saludos desde Middleware!!! </b>`,
+		});
 
     return res.redirect("https://middlewareapp-new.vercel.app/home/juniors");
 

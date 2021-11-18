@@ -149,6 +149,14 @@ const JobsPublications = ({ infoUser, job }) => {
               handleChange={handleChange}
             />
             <div className="row mb-3">
+              <div className="col-sm-4">
+                <h6 className="mb-0 text-secondary">Nivel de Premium</h6>
+              </div>
+              <div className="col-sm-8 ">
+                <span>{infoJobs.premium}</span>
+              </div>
+            </div>
+            <div className="row mb-3">
               <div className="col-sm-4"></div>
               <div className="col-sm-8 ">
                 <div className="row">
@@ -160,8 +168,12 @@ const JobsPublications = ({ infoUser, job }) => {
                       {editValue ? "Editar" : "Guardar"}
                     </button>
                   </div>
-                  <div className= "  col-md-6">
-                    <ModalDelete  handleDelete={handleDelete} profile={true} job={infoJobs} />
+                  <div className="  col-md-6">
+                    <ModalDelete
+                      handleDelete={handleDelete}
+                      profile={true}
+                      job={infoJobs}
+                    />
                   </div>
                 </div>
               </div>

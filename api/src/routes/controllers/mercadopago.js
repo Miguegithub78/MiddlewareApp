@@ -1,5 +1,6 @@
-const { Jobs } = require("../../models/index");
-
+const { Jobs, Company } = require("../../models/index");
+const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
+require('dotenv').config();
 const mercadopago = require("mercadopago");
 
 const { ACCESS_TOKEN, MIDDLEWARE_EMAIL, EMAIL_PASSWORD } = process.env;
@@ -7,7 +8,7 @@ const { ACCESS_TOKEN, MIDDLEWARE_EMAIL, EMAIL_PASSWORD } = process.env;
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
-require('dotenv').config();
+
 
 const create_preference = async (req, res) => {
   // try{

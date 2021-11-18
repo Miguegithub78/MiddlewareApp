@@ -46,7 +46,6 @@ function CardsJobs() {
 	}, []);
 
 	const jobs = useSelector((state) => state.jobs.filterData);
-	const filtros = useSelector((state) => state.jobs.activeFilters);
 
 	return (
 		<div className={s.cards}>

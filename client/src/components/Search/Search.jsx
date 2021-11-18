@@ -112,11 +112,11 @@ export const Search = () => {
 					<option disabled selected={salary}>
 						Rango Salarial:
 					</option>
-					<option value='0'>Menor a $50.000</option>
-					<option value='1'>Entre $50.000 y $100.000</option>
-					<option value='2'>Entre $101.000 y $150.000</option>
-					<option value='3'>Entre $151.000 y $200.000</option>
-					<option value='4'>Mayor de $200.000</option>
+					<option value='1'>Menor a $50.000</option>
+					<option value='2'>Entre $50.000 y $100.000</option>
+					<option value='3'>Entre $101.000 y $150.000</option>
+					<option value='4'>Entre $151.000 y $200.000</option>
+					<option value='5'>Mayor de $200.000</option>
 				</select>
 
 				<select className={button} name='Technologies' onChange={byTecnology}>

@@ -100,7 +100,7 @@ function filterJobs(state, filterKeyName, payload, reset) {
 			: false;
 
 		const filterBySalary = jobs.activeFilters.salary
-			? calculateSalary(payload, job)
+			? calculateSalary(jobs.activeFilters.salary, job)
 			: true;
 
 		const filterByFulltime = !jobs.activeFilters.fulltime
@@ -121,6 +121,16 @@ function filterJobs(state, filterKeyName, payload, reset) {
 			? true
 			: false;
 
+		console.log(job.title);
+		console.log('relocate: ' + filterByRelocate);
+		console.log('remote: ' + filterByRemote);
+		console.log('fulltime: ' + filterByFulltime);
+		console.log('salary: ' + filterBySalary);
+		console.log('country: ' + filterByCountry);
+		console.log('city: ' + filterByCity);
+		console.log('search: ' + filterBySearch);
+		console.log('techs: ' + tech);
+		console.log('------------------------------');
 		return (
 			filterByRelocate &&
 			filterByRemote &&
@@ -141,22 +151,22 @@ function calculateSalary(value, job) {
 	let max;
 	let money;
 	switch (value) {
-		case '0': {
+		case '1': {
 			min = 0;
 			max = 49999;
 			break;
 		}
-		case '1': {
+		case '2': {
 			min = 50000;
 			max = 99999;
 			break;
 		}
-		case '2': {
+		case '3': {
 			min = 100000;
 			max = 149999;
 			break;
 		}
-		case '3': {
+		case '4': {
 			min = 150000;
 			max = 199999;
 			break;

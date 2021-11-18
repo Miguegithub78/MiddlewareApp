@@ -54,9 +54,9 @@ const create_preference = async (req, res) => {
       default_installments: 1,
     },
     back_urls: {
-      success: "http://localhost:3001/feedback",
-      failure: "http://localhost:3001/feedback",
-      pending: "http://localhost:3001/feedback",
+      success: "https://middlewareapp-new.herokuapp.com/feedback",
+      failure: "https://middlewareapp-new.herokuapp.com/feedback",
+      pending: "https://middlewareapp-new.herokuapp.com/feedback",
     },
     auto_return: "approved",
   };

@@ -164,19 +164,19 @@ export default function CompanyDetail() {
       <div className=''>
 
         <NavBar />
+        <div className='row m-3'>
+          <div className='col-lg-6 col-md-12 col-sm-12 col-xs-12 text-center bg-white border'>
 
-        <div className='row align-items-center justify-content-center'>
-          <div className='col-lg-6 col-md-12 col-sm-12 col-xs-12 text-center p-3  bg-white text-dark'>
-            <div className="row">
-              <div className="col">
 
-                <div className="card-body">
-                  <div className="card-tittle">
-                    <h4 className="display-4 ">{company.name}</h4>
-                    <img src={company.photograph} style={{ width: " 150px ", height: " 180px " }} alt='Imagen no encontrada'></img>
-                  </div>
-                </div>
-              </div>
+
+
+            <div className="card-tittle">
+              <h4 className="display-5">{company.name}</h4>
+              <img src={company.photograph} style={{ width: " 120px ", height: " auto " }} alt='Imagen no encontrada'></img>
+            </div>
+
+
+            <div className="card-text">
               <h6 className="mb-0 me-auto p-3 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ export default function CompanyDetail() {
                   <line x1="2" y1="12" x2="22" y2="12"></line>
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                Website: {company.webpage}
+                {company.webpage}
               </h6>
               <h6 className="mb-0 p-3">
                 <svg
@@ -211,7 +211,7 @@ export default function CompanyDetail() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                Email: {company.gmail}
+                {company.gmail}
               </h6>
               <h6 className="mb-0 p-3">País: {company.country}</h6>
               <h6 className="mb-0 p-3">Provincia: {company.state}</h6>
@@ -226,14 +226,17 @@ export default function CompanyDetail() {
                 : <div></div>
               }
             </div>
+
           </div>
 
-          <div className='col-lg-6 col-md-12 col-sm-12 col-xs-12 text-center p-3 bg-white text-dark '>
+          <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 bg-white border">
             <Mapa />
           </div>
         </div>
       </div>
     </div>
+
+
 
 
 

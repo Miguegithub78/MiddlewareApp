@@ -66,65 +66,72 @@ export default function Mapa() {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
-      <div>
-        <h4 className="display-5 ">Empresas{" "}
-          <i className="bi bi-people-fill"></i>
-        </h4>
+    <div className="container">
+
+      <div className="row">
+        <div className="col">
+          <h1>Empresas{" "}
+            <i className="bi bi-people-fill"></i>
+          </h1>
+        </div>
+
 
         <Locate panTo={panTo} />
         <Search panTo={panTo} />
-      </div>
-      <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={6}
-        center={center}
-        options={options}
+        <div className="col">
+          <GoogleMap
+            id="map"
+            mapContainerStyle={mapContainerStyle}
+            zoom={6}
+            center={center}
+            options={options}
 
-        onLoad={onMapLoad}
-      >
-        {companies?.map((marker) => (
-          <Marker
-            key={`${Number(marker.latitude)}-${Number(marker.longitude)}`}
-            position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
-
-            onClick={() => {
-              setSelected(marker);
-            }}
-
-            icon={{
-              url: `/company.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-
-          />
-
-        ))}
-
-        {selected ? (
-          <InfoWindow
-            position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
+            onLoad={onMapLoad}
           >
-            <div>
-              <h2>
-                <span role="img" aria-label="companies">
-                  💻
-                </span>{" "}
-                <Link to={`/companies/${selected._id}`} key={selected.name}>{selected.name}</Link>
-              </h2>
+            {companies?.map((marker) => (
+              <Marker
+                key={`${Number(marker.latitude)}-${Number(marker.longitude)}`}
+                position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
+
+                onClick={() => {
+                  setSelected(marker);
+                }}
+
+                icon={{
+                  url: `/company.svg`,
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+
+              />
+
+            ))}
+
+            {selected ? (
+              <InfoWindow
+                position={{ lat: Number(selected.latitude), lng: Number(selected.longitude) }}
+                onCloseClick={() => {
+                  setSelected(null);
+                }}
+              >
+                <div>
+                  <h2>
+                    <span role="img" aria-label="companies">
+                      💻
+                    </span>{" "}
+                    <Link to={`/companies/${selected._id}`} key={selected.name}>{selected.name}</Link>
+                  </h2>
 
 
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
-    </div>
+                </div>
+              </InfoWindow>
+            ) : null}
+          </GoogleMap>
+        </div>
+      </div>
+    </div >
+
   );
 }
 

@@ -8,7 +8,9 @@ const ModalDelete = ({ handleDelete, job, profile }) => {
         }`}
         data-bs-toggle="modal"
         data-bs-target="#deleteModal"
-      >{profile&&'Eliminar trabajo'}</button>
+      >
+        {profile && "Eliminar trabajo"}
+      </button>
       <div
         className="modal fade"
         id="deleteModal"

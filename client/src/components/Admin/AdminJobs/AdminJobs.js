@@ -35,6 +35,9 @@ const AdminJobs = () => {
               <span className="ml-2">Estado</span>
             </th>
             <th>
+              <span className="ml-2">Nivel de premium</span>
+            </th>
+            <th>
               <span className="ml-4">Action</span>
             </th>
           </tr>

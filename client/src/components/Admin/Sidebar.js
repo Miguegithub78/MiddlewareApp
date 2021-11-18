@@ -95,13 +95,8 @@ const Sidebar = ({ setShow, show, logout }) => {
           aria-labelledby="dropdownUser1"
         >
           <li>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/createpublications">
               Nueva Publicacion
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Settings
             </a>
           </li>
           <li>

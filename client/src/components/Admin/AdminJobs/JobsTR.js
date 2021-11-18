@@ -3,7 +3,7 @@ import ModalDelete from "./ModalDelete";
 
 const JobsTR = ({ job, i, handleDelete }) => {
   // console.log(job, "jobsssss");
-  const { date, company, juniors, status } = job;
+  const { date, company, juniors, status, premium } = job;
   return (
     <tr className="border-bottom">
       <td>
@@ -33,6 +33,12 @@ const JobsTR = ({ job, i, handleDelete }) => {
       <td>
         <div className="p-2  text-center ">
           <span>{status}</span>
+          {/* <img src={job.photograph&&job.photograph} width="130" className="" /> */}
+        </div>
+      </td>
+      <td>
+        <div className="p-2  text-center ">
+          <span>{premium}</span>
           {/* <img src={job.photograph&&job.photograph} width="130" className="" /> */}
         </div>
       </td>

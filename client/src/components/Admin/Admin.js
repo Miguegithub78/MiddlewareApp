@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { singinAdminAction } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -22,6 +22,7 @@ const Admin = () => {
       history.push('/admin/home')
     } 
   });
+
 
 
 

@@ -93,7 +93,8 @@ const getPublications = async (req, res) => {
       { path: "admin" },
     ]);
 
-    if (numberPage === "false") return res.json({
+    if (numberPage === "false")
+      return res.json({
         publications,
         pages: false,
         finishPage: 0,
@@ -136,22 +137,17 @@ const getPublicationsById = async (req, res) => {
       { path: "company" },
       { path: "junior" },
       { path: "admin" },
+      { path: "likes" },
     ]);
 
     if (!getPublication)
       return res.status(404).json({ message: "La publicación no existe" });
 
-        const getPublication = await Publication.findById(id)
-            .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}, {path: 'likes'}])
-
-        if(!getPublication) return res.status(404).json({message: "La publicación no existe"})
-    
-        res.json(getPublication)
-    }
-    catch(err){
-        res.status(404).json({message: err.message})
-    }
-}
+    res.json(getPublication);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
 
 const putPublication = async (req, res) => {
   const token = req.headers["x-auth-token"];

@@ -52,6 +52,7 @@ La idea general es crear una aplicación en la cual se pueda ver información de
 - [ ] Mongoose v6
 - [ ] Firebase
 - [ ] MongoDb
+- [ ] Socket.io
 
 
 #### Frontend

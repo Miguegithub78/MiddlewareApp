@@ -28,7 +28,11 @@ const decoder = async (token, userType, id) => {
     if (userType === 'Company'){
       const user =  await Company.findOne({idFireBase : decoded.id});
       if (!user) {
-        return {auth: false, message: "User not found"};
+        const admin = await Admins.findOne({idFireBase : decoded.id});
+        if (!admin) {
+          return {auth: false, message: "User not found"};
+        }
+        return {auth: true, userType:'admin', user: admin};
       }else{
         if (id){
           if (id !== decoded.id){
@@ -41,7 +45,11 @@ const decoder = async (token, userType, id) => {
     if (userType === 'Junior'){
       const user =  await Juniors.findOne({ idFireBase: decoded.id});
       if (!user) {
-        return {auth: false, message: "User not found"};
+        const admin = await Admins.findOne({idFireBase : decoded.id});
+        if (!admin) {
+          return {auth: false, message: "User not found"};
+        }
+        return {auth: true,userType:'admin', user: admin};
       }else{
         if (id){
           if (id !== decoded.id){
@@ -61,4 +69,3 @@ module.exports = {
   jwtgenerater,
   decoder,
 };
-

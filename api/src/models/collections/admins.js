@@ -2,20 +2,19 @@ const { Schema, model } = require('mongoose');
 
 const adminSchema = new Schema({
 
-    name: {
+    fullName: {
         type: String,
         required: true
+    },
+    idFireBase: {
+        type: String,
+        required: true 
     },
 
     userType: {
         type: String,
         required: true,
-        enum: ['Admin']
-    },
-
-    lastname: {
-        type: String,
-        required: true
+        enum: ['admin']
     },
 
     gmail: {
@@ -25,7 +24,7 @@ const adminSchema = new Schema({
 
     github: {
         type: String,
-        required: true
+        required: false
     },
     photograph: {
         type: String,

@@ -9,7 +9,7 @@ const {
   Jobs,
 } = require("../../models/index");
 
-const { decoder } = require("../../helpers/index")
+const { decoder } = require("../../helpers/index");
 
 require("dotenv").config();
 
@@ -22,25 +22,23 @@ const getAllJuniors = async (req, res) => {
     const token = req.headers["x-auth-token"];
 
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token,'Company')
+    const result = await decoder(token, "Company");
 
     if (result.auth === false) {
       return res.status(401).json(result);
     }
 
-  const allJuniors = await Juniors.find().populate([
-    { path: "languages" },
-    { path: "technologies" },
-    { path: "softskills" },
-    { path: "publications" },
-    { path: "postulationsJobs" },
-  ]);
-  res.json(allJuniors);
+    const allJuniors = await Juniors.find().populate([
+      { path: "languages" },
+      { path: "technologies" },
+      { path: "softskills" },
+      { path: "publications" },
+      { path: "postulationsJobs" },
+    ]);
+    res.json(allJuniors);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -50,18 +48,15 @@ const getJuniorById = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token,'Company')
-    
+    const result = await decoder(token, "Company");
+
     const { id } = req.params;
     const { firebase } = req.query;
 
     if (result.auth === false && !firebase) {
-
       return res.status(401).json(result);
     }
 
@@ -87,7 +82,8 @@ const getJuniorById = async (req, res) => {
         if (err) {
           res.status(404).json({ message: err.message });
         } else {
-          if(!junior) return res.status(404).json({message: "junior not found"})
+          if (!junior)
+            return res.status(404).json({ message: "junior not found" });
           res.status(200).send(junior);
         }
       });
@@ -99,25 +95,21 @@ const getJuniorById = async (req, res) => {
 const updateJuniorsProfile = async (req, res) => {
   try {
     const token = req.headers["x-auth-token"];
-    console.log(token)
+    console.log(token);
     if (!token) {
-      return res
-        .status(403)
-        .json({ auth: false, message: "token is require" });
+      return res.status(403).json({ auth: false, message: "token is require" });
     }
 
     const decoded = await jwt.verify(token, SECRET);
 
     const user = await Juniors.findOne({ idFireBase: decoded.id });
     if (!user) {
-      return res
-        .status(404)
-        .json({ auth: false, message: "junior not found" });
+      return res.status(404).json({ auth: false, message: "junior not found" });
     }
 
     const { id } = req.params;
 
-    const result = await decoder(token,'Junior', id)
+    const result = await decoder(token, "Junior", id);
 
     if (result.auth === false) {
       return res.status(401).json(result);
@@ -151,7 +143,6 @@ const updateJuniorsProfile = async (req, res) => {
       openToFullTime,
     } = req.body;
 
-    
     const juniorsChange = await Juniors.findOneAndUpdate(
       {
         idFireBase: id,
@@ -160,7 +151,8 @@ const updateJuniorsProfile = async (req, res) => {
         name,
         gmail,
         github,
-        photograph: photograph || "https://www.w3schools.com/howto/img_avatar.png",
+        photograph:
+          photograph || "https://www.w3schools.com/howto/img_avatar.png",
         website,
         title,
         phone,
@@ -255,49 +247,40 @@ const deleteNotifications = async (req, res) => {
 
 
 const deleteJuniorsProfile = async (req, res) => {
-  try {
+  // try {
   const token = req.headers["x-auth-token"];
   if (!token) {
     return res.status(403).json({ auth: false, message: "token is require" });
   }
 
-  const decoded = await jwt.verify(token, SECRET);
-
-  const user = await Juniors.findOne({ idFireBase: decoded.id });
-  if (!user) {
-    return res
-      .status(404)
-
-      .json({ auth: false, message: "authorization required" });
-  }
-
-
   const { id } = req.params;
 
-  const result = await decoder(token,'Junior', id)
+  const result = await decoder(token, "Junior", id);
 
   if (result.auth === false) {
     return res.status(401).json(result);
   }
+  if (result.userType === "admin") {
+    const user = await Juniors.findOne({ idFireBase: id });
+    user.publications.forEach(async (e) => {
+      await Publication.findByIdAndDelete(e._id);
+    });
+    await Juniors.findOneAndDelete({ idFireBase: id });
 
-  const getJunior = result;
-  
-  getJunior.publications.forEach(async (e) => {
+    return res.json({ message: "Deleted", deleted: true })
+  }
+
+  result.publications.forEach(async (e) => {
     await Publication.findByIdAndDelete(e._id);
   });
 
-  // Jobs.deleteOne({juniors: { getJunior._id }}, (err) => {
-  //   if (err) {
-  //     res.status(404).json({ message: err.message });
-  //   }
-  // }})
-
+  // const usr = Juniors.findOne({ idFireBase: id })
   await Juniors.findOneAndDelete({ idFireBase: id });
 
   res.json({ message: "Deleted", deleted: true });
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+  // } catch (err) {
+  //   res.status(404).json({ message: err.message });
+  // }
 };
 
 module.exports = {

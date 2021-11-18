@@ -13,6 +13,9 @@ import {
 	FILTER_JOBS_BY_CITIES,
 	FILTER_JOBS_BY_SALARIES,
 	FILTER_JOBS_BY_TECHS,
+	FILTER_JOBS_BY_RELOCATE,
+	FILTER_JOBS_BY_FULLTIME,
+	FILTER_JOBS_BY_REMOTE,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
@@ -24,8 +27,11 @@ import {
 	GET_JOBS,
 	GET_UBICATION,
 	ADD_NEW_JOB,
+	DELETE_JOB,
 	MERCADO_PAGO,
 	SET_PLAN,
+	DELETE_JUNIOR,
+	DELETE_COMPANY,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -43,46 +49,118 @@ const inicialState = {
 	publications: [],
 	publication: [],
 	emailVerification: true,
-	countryState:null,
+	countryState: null,
 	jobs: {
 		data: [],
 		filterData: [],
 		activeFilters: {
-			countries: [],
-			cities: [],
-			salaries: [],
-			techs: [],
+			country: '',
+			city: '',
+			salary: '',
+			tech: '',
+			search: '',
+			relocate: false,
+			fulltime: false,
+			remote: false,
 		},
 	},
 	jobDetails: {},
 	imgPublication: null,
 	pages: 0,
 	finishPage: false,
-	mercadoPago: "",
-	idLastJob:"",
-	plan: "",
+	mercadoPago: '',
+	idLastJob: '',
+	plan: '',
+	imgPublication: '',
 };
 
-function calculateSalary(value, state) {
+function filterJobs(state, filterKeyName, payload, reset) {
+	let jobs = state;
+	jobs.activeFilters[filterKeyName] = payload;
+
+	const filterJobs = state.data.filter((job) => {
+		const filterByCountry = jobs.activeFilters.country
+			? job.country.toLowerCase() === jobs.activeFilters.country.toLowerCase()
+			: true;
+
+		const filterByCity = jobs.activeFilters.city
+			? job.city.toLowerCase() === jobs.activeFilters.city.toLowerCase()
+			: true;
+
+		const filterByTech = jobs.activeFilters.tech
+			? job.technologies.filter(
+					(t) => jobs.activeFilters.tech.toLowerCase() === t.name.toLowerCase()
+			  )
+			: true;
+
+		const filterBySearch = jobs.activeFilters.search
+			? job.title.toLowerCase().includes(jobs.activeFilters.search)
+			: true;
+
+		let tech = !jobs.activeFilters.tech
+			? true
+			: filterByTech.length > 0
+			? true
+			: false;
+
+		const filterBySalary = jobs.activeFilters.salary
+			? calculateSalary(jobs.activeFilters.salary, job)
+			: true;
+
+		const filterByFulltime = !jobs.activeFilters.fulltime
+			? true
+			: job.openToFullTime === jobs.activeFilters.fulltime
+			? true
+			: false;
+
+		const filterByRemote = !jobs.activeFilters.remote
+			? true
+			: job.openToRemote === jobs.activeFilters.remote
+			? true
+			: false;
+
+		const filterByRelocate = !jobs.activeFilters.relocate
+			? true
+			: job.openToRelocate === jobs.activeFilters.relocate
+			? true
+			: false;
+
+		return (
+			filterByRelocate &&
+			filterByRemote &&
+			filterByFulltime &&
+			filterBySalary &&
+			filterByCountry &&
+			filterByCity &&
+			filterBySearch &&
+			tech
+		);
+	});
+
+	return filterJobs;
+}
+
+function calculateSalary(value, job) {
 	let min;
 	let max;
+	let money;
 	switch (value) {
-		case '0': {
+		case '1': {
 			min = 0;
 			max = 49999;
 			break;
 		}
-		case '1': {
+		case '2': {
 			min = 50000;
 			max = 99999;
 			break;
 		}
-		case '2': {
+		case '3': {
 			min = 100000;
 			max = 149999;
 			break;
 		}
-		case '3': {
+		case '4': {
 			min = 150000;
 			max = 199999;
 			break;
@@ -92,18 +170,24 @@ function calculateSalary(value, state) {
 			max = 999999999999;
 		}
 	}
-
-	return state.jobs.data.filter((j) => {
-		if (j.dollar) {
-			if (j.salary * 200 >= min && j.salary * 200 < max) {
-				return j;
-			}
+	switch (job.currency) {
+		case 'dollar': {
+			money = job.salary * 100;
+			break;
 		}
-
-		if (j.salary > min && j.salary < max && j.dollar === false) {
-			return j;
+		case 'euro': {
+			money = job.salary * 113;
+			break;
 		}
-	});
+		default: {
+			money = job.salary;
+		}
+	}
+
+	if (money >= min && money <= max) {
+		return true;
+	}
+	return false;
 }
 
 function sortJobs(string, state) {
@@ -132,8 +216,6 @@ function sortJobs(string, state) {
 	}
 	return arr;
 }
-
-function filterJobs(state, filterKeyName, payload) {}
 
 const rootReducer = (state = inicialState, action) => {
 	switch (action.type) {
@@ -174,32 +256,46 @@ const rootReducer = (state = inicialState, action) => {
 		case GET_PUBLICATIONS:
 			return {
 				...state,
-				publications: [...state.publications].concat(action.payload.publications),
+				publications: action.payload.page
+					? [...state.publications].concat(action.payload.publications)
+					: action.payload.publications,
 				pages: action.payload.pages,
-				finishPage: action.payload.finishPage
+				finishPage: action.payload.finishPage,
 			};
 
-		case "POST_PUBLICATION": return {
+		case "GET_PUBLICATIONS_2":
+		return {
 			...state,
-			publications: [action.payload].concat([...state.publications]),
+			publications: [...state.publications].concat(action.payload.publications),
+			pages: action.payload.pages,
+			finishPage: action.payload.finishPage
 		};
 
-		case "DELETE_PUBLICATION": return {
-			...state,
-			publications: state.publications.filter(e => e._id !== action.payload._id)
-		};
+		case 'POST_PUBLICATION':
+			return {
+				...state,
+				publications: [action.payload].concat([...state.publications]),
+			};
 
-		case "PUT_PUBLICATION": return {
-			...state,
-			publications: state.publications.filter(e => {
-				if(e._id == action.payload._id){
-					e.description = action.payload.description
-					e.photograph = action.payload.photograph
-					return e
+		case 'DELETE_PUBLICATION':
+			return {
+				...state,
+				publications: state.publications.filter(
+					(e) => e._id !== action.payload._id
+				),
+			};
 
-				} else return e
-			})
-		};
+		case 'PUT_PUBLICATION':
+			return {
+				...state,
+				publications: state.publications.filter((e) => {
+					if (e._id == action.payload._id) {
+						e.description = action.payload.description;
+						e.photograph = action.payload.photograph;
+						return e;
+					} else return e;
+				}),
+			};
 
 		case GET_PUBLICATIONS_BY_ID:
 			return {
@@ -212,51 +308,91 @@ const rootReducer = (state = inicialState, action) => {
 			return { ...state, jobs: { ...state.jobs, filterData: arr } };
 		}
 		case FILTER_JOBS_BY_COUNTRIES: {
-			let arr = state.jobs.data.filter((j) => j.country === action.payload);
+			const arr = filterJobs(state.jobs, 'country', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
+
+		case FILTER_JOBS_BY_RELOCATE: {
+			const arr = filterJobs(state.jobs, 'relocate', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_FULLTIME: {
+			const arr = filterJobs(state.jobs, 'fulltime', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_REMOTE: {
+			const arr = filterJobs(state.jobs, 'remote', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
+		case FILTER_JOBS_BY_COUNTRIES: {
+			const arr = filterJobs(state.jobs, 'country', action.payload);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr },
+			};
+		}
+
 		case FILTER_JOBS_BY_CITIES: {
-			let arr = state.jobs.data.filter((j) => j.city === action.payload);
+			const arr = filterJobs(state.jobs, 'city', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case FILTER_JOBS_BY_SALARIES: {
-			let arr = calculateSalary(action.payload, state);
+			const arr = filterJobs(state.jobs, 'salary', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case FILTER_JOBS_BY_TECHS: {
-			console.log(action.payload);
-			let arr = state.jobs.data.filter((j) => j.tech.includes(action.payload));
-			console.log(arr);
+			const arr = filterJobs(state.jobs, 'tech', action.payload);
 			return {
 				...state,
 				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
-		case SEARCH_JOBS_BY_TITLE: {
-			let arr1 = state.jobs.data.filter((j) =>
-				j.title.toLowerCase().includes(action.payload)
-			);
 
+		case SEARCH_JOBS_BY_TITLE: {
+			const arr = filterJobs(state.jobs, 'search', action.payload);
 			return {
 				...state,
-				jobs: { ...state.jobs, filterData: arr1 },
+				jobs: { ...state.jobs, filterData: arr },
 			};
 		}
 		case RESET_JOBS_FILTER: {
-			let arr = state.jobs.data.filter((j) => j.salary > 0);
-			console.log(arr);
 			return {
 				...state,
-				jobs: { ...state.jobs, filterData: arr },
+				jobs: {
+					...state.jobs,
+					filterData: state.jobs.data,
+					activeFilters: {
+						country: '',
+						city: '',
+						salary: '',
+						tech: '',
+						search: '',
+						relocate: false,
+						fulltime: false,
+						remote: false,
+					},
+				},
 			};
 		}
 		case CHANGE_PROFILE_PICTURE:
@@ -299,34 +435,91 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				countryState: action.payload,
 			};
+			case ADD_NEW_JOB:
+			return {
+				...state,
+				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
+			};
+		case DELETE_JOB:
+			return {
+				...state,
+				jobs: {
+					...state.jobs,
+					data: [
+						...state.jobs.data.filter((job) => job._id !== action.payload),
+					],
+				},
+			};
+		case DELETE_JUNIOR:
+			return {
+				...state,
+				juniors: [
+					...state.juniors.filter((j) => j.idFireBase !== action.payload),
+				],
+			};
+		case DELETE_COMPANY:
+			return {
+				...state,
+				companies: [
+					...state.companies.filter((j) => j.idFireBase !== action.payload),
+				],
+			};
+
+		case UPLOAD_PICTURE:
+			return {
+				...state,
+				publication: { ...state.publication, photograph: action.payload },
+			};
+		case GET_JOBS:
+			return {
+				...state,
+				jobs: {
+					...state.jobs,
+					data: action.payload,
+					filterData: action.payload,
+				},
+			};
+		case GET_JOB_DETAILS:
+			return {
+				...state,
+				jobsDetails: action.payload,
+			};
+		case GET_UBICATION:
+			return {
+				...state,
+				countryState: action.payload,
+			};
 		case ADD_NEW_JOB:
 			return {
 				...state,
-				user: {...state.user, jobs:[...state.user.jobs, action.payload]},
-				idLastJob: action.payload._id
+				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
 
-		case "UPLOAD_PICTURE_PUBLICATION": return{
-			...state,
-			imgPublication: action.payload
-		};
-
-		case "RESET_PICTURE_PUBLICATION": return{
-			...state,
-			imgPublication: action.payload
-		};
+		case 'RESET_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
+			};
 
 		case MERCADO_PAGO:
-		console.log(action.payload);	
-		return {
+			console.log(action.payload);
+			return {
 				...state,
 				mercadoPago: action.payload,
 			};
 
-			case SET_PLAN:
+		case SET_PLAN:
 			return {
 				...state,
 				plan: action.payload,
+			};
+			
+					case 'UPLOAD_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
 			};
 
 		case "setUser": return {

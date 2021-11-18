@@ -2,14 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-// import {} from 'firebase/storage'
-// import { getAnalytics } from "firebase/analytics";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyA5wAhueY9lkWtkhtF9DZ6O9Exis6X9rB0",
   authDomain: "middleware-abd0a.firebaseapp.com",
@@ -19,14 +13,10 @@ const firebaseConfig = {
   appId: "1:253903258363:web:005517be5c43da0200265e",
   measurementId: "G-ZSYZTH0V60"
 };
-const userType = localStorage.getItem('userType')
+// const userType = localStorage.getItem('userType')
 const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: process.env.MAIL_REDIRECT,
-  // This must be true.
+  url:process.env.MAIL_REDIRECT ,
   handleCodeInApp: true,
-  // dynamicLinkDomain: 'example.page.link'
 };
 
 

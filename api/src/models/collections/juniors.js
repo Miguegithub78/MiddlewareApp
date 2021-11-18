@@ -15,6 +15,11 @@ const juniorSchema = new Schema({
     type: String,
     required: true,
   },
+  
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 
   gmail: {
     type: String,

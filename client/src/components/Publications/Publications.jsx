@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  getPublications,
+  getPublications2,
   putLike,
   postPublications,
   getUserAction,
   putPublications,
   changePicturePublications,
   deletePublications,
-  resetPicturePublications,
-  putNotification
+  resetPicturePublications
 } from "../../redux/actions/index";
 
 import s from "./Publications.module.css";
@@ -52,7 +51,7 @@ export const Publications = () => {
 
       if(loadingPubli && !finishPage){
 
-        await dispatch(getPublications(currentPublications));
+        await dispatch(getPublications2(currentPublications));
         setCurrentPublications(currentPublications + 1);
 
         await setTimeout(()=>{

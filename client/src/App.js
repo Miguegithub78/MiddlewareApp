@@ -14,6 +14,8 @@ import CreatePublications from "./components/CreatePublications/CreatePublicatio
 import ProfileCompany from "./components/ProfileCompany";
 import Socket from './components/socket.js';
 import Chat from './components/Chat/Chat2.jsx';
+import Admin from "./components/Admin/Admin";
+import AdminHome from "./components/Admin/AdminHome";
 import Notifications from "./components/Notifications/Notifications";
 import MercadoPago from './components/Mercadopago/mercadopago';
 import DetailsPublication from './components/DetailsPublication/index.jsx';
@@ -49,6 +51,10 @@ function App() {
         <Route exact path="/jobs/:id" component={JobsDetails} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/empleos/:id" component={JobsDetails} />
+
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/home" component={AdminHome} />
+        {/* <Route exact path="/admin/home/juniors" component={AdminHomeJuniors} /> */}
         <Route
           exact
           path="/createpublications"

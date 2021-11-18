@@ -1,4 +1,5 @@
 const { Jobs, Company } = require("../../models/index");
+const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
 require('dotenv').config();
 const mercadopago = require("mercadopago");
 

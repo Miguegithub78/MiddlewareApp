@@ -49,9 +49,9 @@ const create_preference = async (req, res) => {
           id: "atm",
         },
       ],
-      installments: 12, //cant de cuotas
+      installments: 1, //cant de cuotas
       default_payment_method_id: "visa",
-      default_installments: 12,
+      default_installments: 1,
     },
     back_urls: {
       success: "http://localhost:3001/feedback",

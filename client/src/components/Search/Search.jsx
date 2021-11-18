@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	searchJobsByTitle,
+	filterJobsByCountries,
 	filterJobsByCities,
 	filterJobsBySalaries,
 	filterJobsByTechs,
 	resetFilterJobs,
+	filterJobsRemote,
+	filterJobsFullTime,
+	filterJobsRelocate,
 	sortJobsBy,
 } from '../../redux/actions';
 import './Search.css';
+import CountryState from './CountryState';
+import State from './State';
 
 export const Search = () => {
 	const button = 'button';
@@ -16,29 +22,78 @@ export const Search = () => {
 	const options = useSelector((store) => store.technologies);
 
 	const handleInputChange = (e) => {
+		setSearch(e.target.value.toLowerCase().trim());
 		dispatch(searchJobsByTitle(e.target.value.toLowerCase().trim()));
 	};
 
 	const byTypeSalary = (e) => {
 		dispatch(filterJobsBySalaries(e.target.value));
+		setSalary(false);
 	};
 
 	const byTecnology = (e) => {
-		let tech = e.target.value.toLowerCase();
-		dispatch(filterJobsByTechs(tech));
+		dispatch(filterJobsByTechs(e.target.value.toLowerCase()));
+		setTech(false);
 	};
-	const byUbication = (e) => {
+	const byCity = (e) => {
 		dispatch(filterJobsByCities(e.target.value));
+		setCity(false);
+	};
+	const byCountry = (e) => {
+		dispatch(filterJobsByCountries(e.target.value));
 	};
 
 	const handleReset = (e) => {
 		dispatch(resetFilterJobs());
+		setFullTime(false);
+		setRemote(false);
+		setRelocate(false);
+		setSearch('');
+		setSalary(true);
+		setTech(true);
+		setCountry(true);
+		setCity(true);
+		setState(null);
+		setSort(true);
+		dispatch(sortJobsBy('premium'));
 	};
 
 	const sortBy = (e) => {
 		dispatch(sortJobsBy(e.target.value));
+		setSort(false);
 	};
 
+	const [relocate, setRelocate] = useState(false);
+	const [remote, setRemote] = useState(false);
+	const [fullTime, setFullTime] = useState(false);
+
+	const handleRelocate = () => {
+		setRelocate((relocate) => {
+			dispatch(filterJobsRelocate(!relocate));
+			return !relocate;
+		});
+	};
+
+	const handleFullTime = () => {
+		setFullTime((fullTime) => {
+			dispatch(filterJobsFullTime(!fullTime));
+			return !fullTime;
+		});
+	};
+
+	const handleRemote = () => {
+		setRemote((remote) => {
+			dispatch(filterJobsRemote(!remote));
+			return !remote;
+		});
+	};
+	const [state, setState] = useState(null);
+	const [search, setSearch] = useState('');
+	const [country, setCountry] = useState(true);
+	const [salary, setSalary] = useState(true);
+	const [city, setCity] = useState(true);
+	const [sort, setSort] = useState(true);
+	const [tech, setTech] = useState(true);
 	return (
 		<div className='cont'>
 			<form>
@@ -48,48 +103,91 @@ export const Search = () => {
 						id='searchterm'
 						onChange={handleInputChange}
 						placeholder='Realiza tu busqueda...'
+						value={search}
 					/>
 				</div>
 			</form>
 			<div className='field2'>
 				<select className={button} name='typePublic' onChange={byTypeSalary}>
-					<option disabled selected>
+					<option disabled selected={salary}>
 						Rango Salarial:
 					</option>
-					<option value='0'>Menor a $50.000</option>
-					<option value='1'>Entre $50.000 y $100.000</option>
-					<option value='2'>Entre $101.000 y $150.000</option>
-					<option value='3'>Entre $151.000 y $200.000</option>
-					<option value='4'>Mayor de $200.000</option>
+					<option value='1'>Menor a $50.000</option>
+					<option value='2'>Entre $50.000 y $100.000</option>
+					<option value='3'>Entre $101.000 y $150.000</option>
+					<option value='4'>Entre $151.000 y $200.000</option>
+					<option value='5'>Mayor de $200.000</option>
 				</select>
 
 				<select className={button} name='Technologies' onChange={byTecnology}>
-					<option value='' disabled selected>
+					<option disabled selected={tech}>
 						Tipo de Tecnología:
 					</option>
 					{options?.map((p) => (
-						<option value={p.name} key={p.id}>
+						<option value={p.name} key={p._id}>
 							{p.name}
 						</option>
 					))}
 				</select>
-				<select name='ubicacion' className={button} onChange={byUbication}>
-					<option disabled selected>
-						Ubicación:
-					</option>
-					<option value=''>Remoto</option>
-					<option value='cordoba'>Cordoba</option>
-					<option value='buenos aires'>Buenos Aires</option>
-					<option value='mendoza'>Mendoza</option>
-					<option value='junin'>Junin</option>
-				</select>
+				<CountryState
+					setState={setState}
+					handleChange={byCountry}
+					country={country}
+					setCountry={setCountry}
+				/>
+				<State
+					state={state}
+					handleChange={byCity}
+					city={city}
+					setCity={setCity}
+				/>
 				<select className={button} name='sort' onChange={sortBy}>
-					<option disabled selected>
-						Ordenar por:
+					<option value='premium' selected={sort}>
+						Más Relevantes
 					</option>
-					<option value='premium'>Premium</option>
-					<option value='date'>Fecha</option>
+					<option value='date'>Más Reciente</option>
 				</select>
+			</div>
+			<div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='Relocate'
+						value={relocate}
+						onChange={handleRelocate}
+						checked={relocate ? true : false}
+					/>
+					<label className='form-check-label' htmlFor='Relocate'>
+						Relocación
+					</label>
+				</div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='Remote'
+						value={remote}
+						onChange={handleRemote}
+						checked={remote ? true : false}
+					/>
+					<label className='form-check-label' htmlFor='Remote'>
+						Remoto
+					</label>
+				</div>
+				<div>
+					<input
+						className='form-check-input'
+						type='checkbox'
+						id='FullTime'
+						value={fullTime}
+						onChange={handleFullTime}
+						checked={fullTime ? true : false}
+					/>
+					<label className='form-check-label' htmlFor='FullTime'>
+						Tiempo Completo
+					</label>
+				</div>
 			</div>
 			<p className='clear' onClick={handleReset}>
 				Limpiar Filtros

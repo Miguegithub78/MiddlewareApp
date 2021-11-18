@@ -4,8 +4,8 @@
 	background-color: rgba(255, 255, 255, 0.938);
 	display: flex;
 	justify-content: space-around;
-	border-radius: 10px;
-	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.438);
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px 2px rgba(214, 211, 211, 0.438);
 	margin: 10px auto 0;
 	align-items: center;
 }

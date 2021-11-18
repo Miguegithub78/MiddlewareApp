@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { useHistory, useParams, useQuery } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginUserAction,
   loginUserEmailPassAction,
   emailVerificationAction,
   errorLoginAction,
-  getUserAction,
 } from "../../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -29,11 +28,11 @@ const Login = () => {
   if (type) {
     localStorage.setItem("userType", type);
   }
-  const { emailVerification, errorLogin, user } = useSelector((state) => state);
+  const { emailVerification, errorLogin } = useSelector((state) => state);
   const [singOrCreate, setSingOrCreate] = useState(true);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("guilletempo1@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (!userFirebase) return;

@@ -1,5 +1,4 @@
 import {
-<<<<<<< HEAD
 	LOGIN_OKEY,
 	LOGOUT_OKEY,
 	GET_JUNIORS,
@@ -25,44 +24,16 @@ import {
 	POSTULATION,
 	ADD_NEW_JOB,
 	GET_UBICATION,
+	DELETE_JOB,
+	DELETE_JUNIOR,
+	DELETE_COMPANY,
+	MERCADO_PAGO,
+	SET_PLAN,
 } from '../types';
 import clienteAxios from '../../components/config/clienteAxios';
 import { auth, firebase, actionCodeSettings } from '../../firebaseConfig';
-=======
-  LOGIN_OKEY,
-  LOGOUT_OKEY,
-  GET_JUNIORS,
-  GET_JUNIORS_DETAILS,
-  GET_COMPANIES,
-  GET_LANGUAGES,
-  GET_TECHNOLOGIES,
-  GET_COMPANY_DETAILS,
-  GET_PUBLICATIONS,
-  GET_PUBLICATIONS_BY_ID,
-  SORT_JOBS_BY,
-  FILTER_JOBS_BY_COUNTRIES,
-  FILTER_JOBS_BY_CITIES,
-  FILTER_JOBS_BY_SALARIES,
-  FILTER_JOBS_BY_TECHS,
-  SEARCH_JOBS_BY_TITLE,
-  RESET_JOBS_FILTER,
-  CHANGE_PROFILE_PICTURE,
-  EMAIL_VERIFICATION,
-  ERROR_LOGIN,
-  GET_JOB_DETAILS,
-  GET_JOBS,
-  POSTULATION,
-  ADD_NEW_JOB,
-  GET_UBICATION,
-  MERCADO_PAGO,
-  SET_PLAN,
-} from "../types";
-import clienteAxios from "../../components/config/clienteAxios";
-import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
->>>>>>> cb227d52378eb14042a5fbe7daa73a023f3cd902
 import {
 	signInWithPopup,
-	linkWithPopup,
 	GoogleAuthProvider,
 	GithubAuthProvider,
 	signInWithEmailAndPassword,
@@ -132,7 +103,6 @@ export const loginUserEmailPassAction = (email, pass, name) => {
 
 		if (name) {
 			try {
-				//   console.log("entro aca!");
 				const userFirebase = await createUserWithEmailAndPassword(
 					auth,
 					gmail,
@@ -149,12 +119,9 @@ export const loginUserEmailPassAction = (email, pass, name) => {
 					emailAndPass: false,
 				};
 				//creo al usuario en la db
-				console.log(user, 'esto mando al post');
 				const rta = await clienteAxios.post('/login', user);
-				console.log(rta.data);
 				dispatch(emailVerificationAction(false));
 				await signOut(auth);
-				console.log('deslogueado');
 			} catch (error) {
 				console.log(error, 'create error');
 			}
@@ -290,12 +257,29 @@ export function putJuniors(data, id) {
 	};
 }
 
-export function deleteJuniors(id) {
+export function deleteJuniors(id, userType) {
+	console.log(userType, '/////');
 	return async function (dispatch) {
 		const auth = getAuth();
 		const user = auth.currentUser;
 		const response = await clienteAxios.delete(`/juniors/${id}`);
-		if (response.data.deleted) {
+		if (userType === 'admin' && response.data.deleted) {
+			console.log('entra acaaaaaa');
+			return dispatch({ type: DELETE_JUNIOR, payload: id });
+		} else if (response.data.deleted) {
+			dispatch(logOutUserAction());
+			await deleteUser(user);
+		}
+	};
+}
+export function deleteCompany(id, userType) {
+	return async function (dispatch) {
+		const auth = getAuth();
+		const user = auth.currentUser;
+		const response = await clienteAxios.delete(`/companies/${id}`);
+		if (userType === 'admin' && response.data.deleted) {
+			return dispatch({ type: DELETE_COMPANY, payload: id });
+		} else if (response.data.deleted) {
 			dispatch(logOutUserAction());
 			await deleteUser(user);
 		}
@@ -391,10 +375,12 @@ export function deletePublications(idPublication, idUser, userType) {
 export function postJobs(payload) {
 	return async function (dispatch) {
 		const response = await clienteAxios.post('/jobs', payload);
-		return dispatch({
+
+		dispatch({
 			type: ADD_NEW_JOB,
 			payload: response.data,
 		});
+		return response.data;
 	};
 }
 
@@ -535,20 +521,28 @@ export function getJobs() {
 		try {
 			const allJobs = await clienteAxios.get(`/jobs`);
 			return dispatch({ type: GET_JOBS, payload: allJobs.data });
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+export function deleteJobsAction(idJob) {
+	return async function (dispatch) {
+		try {
+			await clienteAxios.delete(`/jobs/${idJob}`);
+			return dispatch({ type: DELETE_JOB, payload: idJob });
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
-export function postulation(idJob, idUser, coverLetter) {
+export function postulation(idJob, idUser) {
 	return async function (dispatch) {
 		try {
-			const allJobs = await clienteAxios.put(
-				`/jobs/postulation/${(juniorId, coverLetter)}`,
-				{
-					juniorId,
-					coverLetter,
-				}
-			);
+			const allJobs = await clienteAxios.put(`/jobs/postulation/${idJob}`, {
+				juniorId: idUser,
+			});
 			/* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
 		} catch (error) {}
 	};
@@ -574,7 +568,7 @@ export function editJobPostulationsAction(idJob, job) {
 		}
 	};
 }
-<<<<<<< HEAD
+
 export const editCompanyDataAction = (infoUser) => {
 	return async function (dispatch) {
 		try {
@@ -589,34 +583,60 @@ export const editCompanyDataAction = (infoUser) => {
 		}
 	};
 };
-=======
 
-export const mercadoPagoAction = ( idJob, plan ) => { 
-  
-  return async function (dispatch) {
-    try {
-      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}?plan=${plan}`)
-      .then((data) => {
-        dispatch({ 
-          type: MERCADO_PAGO, 
-          payload: data.data });
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+export const singinAdminAction = (gmail, pass) => {
+	return async function (dispatch) {
+		try {
+			const gemail = gmail;
+			const userFirebase = await signInWithEmailAndPassword(auth, gemail, pass);
+			const { uid, email, displayName, photoURL } = userFirebase.user;
+			const user = {
+				fullName: displayName || 'Admin',
+				idFireBase: uid,
+				gmail: email,
+				photograph: photoURL || false,
+				userType: 'admin',
+			};
+			const rta = await clienteAxios.post('/admin', user);
+			console.log(rta);
+			localStorage.setItem('token', rta.data.token);
+			// localStorage.setItem("userType", userType);
+			tokenAuth(rta.data.token);
+		} catch (error) {
+			console.log(error);
+			await signOut(auth);
+			localStorage.removeItem('token');
+			// localStorage.removeItem("userType");
+		}
+	};
+};
+
+export const mercadoPagoAction = (idJob, plan) => {
+	return async function (dispatch) {
+		try {
+			const mercadoPago = await clienteAxios
+				.get(`/create_preference/${idJob}?plan=${plan}`)
+				.then((data) => {
+					dispatch({
+						type: MERCADO_PAGO,
+						payload: data.data,
+					});
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
 
 export const setPlanMercado = (plan) => {
-  return async function (dispatch) {
-    try {
-      dispatch({ 
-        type: SET_PLAN, 
-        payload: plan });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
->>>>>>> cb227d52378eb14042a5fbe7daa73a023f3cd902
+	return async function (dispatch) {
+		try {
+			dispatch({
+				type: SET_PLAN,
+				payload: plan,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};

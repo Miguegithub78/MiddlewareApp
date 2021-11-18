@@ -190,14 +190,13 @@ const deleteJob = async (req, res) => {
         
     if (!token) {
       return res
-        .status(403)
+        .status(403) 
         .json({ auth: false, message: "token is require" });
     }
     
     const result = await decoder(token,'Company', idFireBase);
 
     if (result.auth === false) {
-
       return res.status(401).json(result);
     }
 

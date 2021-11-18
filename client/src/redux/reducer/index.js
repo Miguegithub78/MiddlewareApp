@@ -426,10 +426,11 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				countryState: action.payload,
 			};
-		case ADD_NEW_JOB:
+			case ADD_NEW_JOB:
 			return {
 				...state,
 				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
 		case DELETE_JOB:
 			return {

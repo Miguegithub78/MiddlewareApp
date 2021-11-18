@@ -60,9 +60,11 @@ const ProfileUser = () => {
     openToRemote: false,
     openToFullTime: false,
     academicHistory: [],
+    postulationsJobs: [],
   });
   useEffect(() => {
     if (user) {
+      console.log("eeeeee");
       setInfoUser({
         idUser: user.idFireBase,
         name: user.name,
@@ -98,6 +100,10 @@ const ProfileUser = () => {
       console.log("hubo cambio");
     }
   }, [infoUser]);
+  
+  useEffect(() => {
+    dispatch(getUserAction(user));
+  }, []);
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
@@ -115,7 +121,7 @@ const ProfileUser = () => {
     }));
   };
 
-  return user ? (
+  return  (
     <div>
       <NavBar />
 
@@ -159,9 +165,7 @@ const ProfileUser = () => {
       </div>
       <br />
     </div>
-  ) : (
-    "cargando...."
-  );
+  ) 
 };
 
 export default ProfileUser;

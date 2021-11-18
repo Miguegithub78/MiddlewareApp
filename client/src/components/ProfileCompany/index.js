@@ -19,6 +19,7 @@ import SuccessModal from "./SuccessModal";
 const ProfileCompany = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
@@ -86,16 +87,19 @@ const ProfileCompany = () => {
     dispatch(getLanguages());
     dispatch(getTechnologies());
   }, [user]);
+  useEffect(() => {
+    dispatch(getUserAction(user));
+  }, []);
   //en cada edicion de datos tiene que viajar a la db
   const handleClick = () => {
     dispatch(editCompanyDataAction(infoUser));
-    setInfoUser(info=>({
+    setInfoUser((info) => ({
       ...info,
-      infoUserChanged:false
-    }))
+      infoUserChanged: false,
+    }));
   };
 
-  return user ? (
+  return  (
     <>
       <NavBar />
       <div className="container mt-3">
@@ -120,7 +124,11 @@ const ProfileCompany = () => {
               <h5 className="text-center">Selecciona tu ubicación </h5>
               <div className="card-body">
                 <div className="accordion">
-                  <Mapa setInfoUser={setInfoUser} markers={markers} setMarkers={setMarkers} />
+                  <Mapa
+                    setInfoUser={setInfoUser}
+                    markers={markers}
+                    setMarkers={setMarkers}
+                  />
                 </div>
               </div>
             </div>
@@ -145,9 +153,7 @@ const ProfileCompany = () => {
         </div>
       </div>
     </>
-  ) : (
-    "cargando..."
-  );
+  ) 
 };
 
 export default ProfileCompany;

@@ -1,10 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { deleteJuniors } from "../../redux/actions";
 
-const ModalDeletAccount = ({ infoUser }) => {
-  const dispatch = useDispatch();
-
+const ModalDeletAccount = ({ infoUser, handleDelete }) => {
   return (
     <div>
       <button
@@ -51,10 +47,7 @@ const ModalDeletAccount = ({ infoUser }) => {
                 No Eliminar
               </button>
               <button
-                onClick={()=>{
-                   console.log(infoUser);
-                   dispatch(deleteJuniors(infoUser.idUser))
-                  }}
+                onClick={() => handleDelete(infoUser)}
                 type="button"
                 className="btn btn-block btn-outline-danger"
                 data-bs-dismiss="modal"

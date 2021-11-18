@@ -7,24 +7,24 @@ const ModalDeletAccount = ({ infoUser, handleDelete }) => {
         type="button"
         className="btn btn-outline-danger"
         data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
+        data-bs-target="#deleteaccount"
       >
         Borra Tu Cuenta
       </button>
 
       <div
         className="modal fade"
-        id="staticBackdrop"
+        id="deleteaccount"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
-        aria-labelledby="staticBackdropLabel"
+        aria-labelledby="deleteaccountLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="staticBackdropLabel">
+              <h5 className="modal-title" id="deleteaccountLabel">
                 Eliminar Cuenta
               </h5>
               <button

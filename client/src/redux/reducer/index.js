@@ -314,6 +314,10 @@ const rootReducer = (state = inicialState, action) => {
     case DELETE_JOB:
       return {
         ...state,
+        user:{
+          ...state.user,
+          jobs:[...state.user.jobs.filter(j=>j._id!==action.payload)]
+        },
         jobs: {
           ...state.jobs,
           data: [

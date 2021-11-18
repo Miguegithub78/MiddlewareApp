@@ -8,11 +8,15 @@ import Salary from "./Salary";
 import Postulates from "./Postulates";
 import Technologies from "./Technologies";
 import Status from "./Status";
-import { editJobPostulationsAction } from "../../../redux/actions";
+import {
+  editJobPostulationsAction,
+  deleteJobsAction,
+} from "../../../redux/actions";
+import ModalDelete from "../../Admin/AdminJobs/ModalDelete";
 
-const JobsPublications = ({ infoUser, setInfoUser, job }) => {
+const JobsPublications = ({ infoUser, job }) => {
   const [editValue, setEditValue] = useState(true);
-  const { juniors, technologies } = useSelector((state) => state);
+  const { technologies } = useSelector((state) => state);
   const [postulatiosTechnoliges, setPostulatiosTechnoliges] = useState([]);
   const [juniorsAplied, setJuniorsAplied] = useState([]);
   const [state, setState] = useState(null);
@@ -32,7 +36,7 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
     status: "",
     _id: "",
     idCompany: "",
-    idFireBase:''
+    idFireBase: "",
   });
   const handleChange = (e) => {
     // console.log("entrando", e.target.name, e.target.value);
@@ -45,6 +49,10 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
     setEditValue((d) => !d);
     if (!editValue) dispatch(editJobPostulationsAction(idJob, infoJobs));
     //hacer el dipatch y que todo funcione
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteJobsAction(infoJobs._id));
   };
 
   useEffect(() => {
@@ -143,12 +151,19 @@ const JobsPublications = ({ infoUser, setInfoUser, job }) => {
             <div className="row mb-3">
               <div className="col-sm-4"></div>
               <div className="col-sm-8 ">
-                <button
-                  className="btn btn-outline-dark px-4"
-                  onClick={() => handleClick(infoJobs._id)}
-                >
-                  {editValue ? "Editar" : "Guardar"}
-                </button>
+                <div className="row">
+                  <div className="col-md-3">
+                    <button
+                      className="btn btn-outline-dark  px-4"
+                      onClick={() => handleClick(infoJobs._id)}
+                    >
+                      {editValue ? "Editar" : "Guardar"}
+                    </button>
+                  </div>
+                  <div className= "  col-md-6">
+                    <ModalDelete  handleDelete={handleDelete} profile={true} job={infoJobs} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -15,7 +15,7 @@ const firebaseConfig = {
 };
 // const userType = localStorage.getItem('userType')
 const actionCodeSettings = {
-  url:`http://localhost:3000/` ,
+  url:process.env.MAIL_REDIRECT ,
   handleCodeInApp: true,
 };
 

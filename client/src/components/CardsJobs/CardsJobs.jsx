@@ -28,33 +28,37 @@ function CardsJobs() {
 			return 'Publicado hace más de un mes';
 		}
 	}
-	function money(dollar, salary) {
+	function money(currency, salary) {
 		if (!salary) {
 			return 'Sin especificar';
-		} else if (dollar) {
+		} else if (currency === 'dollar') {
 			return `U$s${salary}`;
+		} else if (currency === 'euro') {
+			return `€${salary}`;
 		} else {
 			return `$${salary}`;
 		}
 	}
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getJobs());
 	}, []);
 
 	const jobs = useSelector((state) => state.jobs.filterData);
+	const filtros = useSelector((state) => state.jobs.activeFilters);
 
 	return (
 		<div className={s.cards}>
-			{jobs
+			{jobs.length > 0
 				? jobs.map((j) =>
-						j.company ? (
+						j.company && j.status === 'active' ? (
 							<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
 								<div className={s.card}>
-									{j.country.toLowerCase() !== 'remote' ? (
+									{!j.openToRemote ? (
 										<p className={s.country}>{j.country}</p>
 									) : (
-										<p className={s.country2}>{j.country}</p>
+										<p className={s.country2}>{'Remoto'}</p>
 									)}
 									<p className={s.date}>{calculateDate(j.date)}</p>
 									<div className={s.card_container_logo}>
@@ -65,7 +69,9 @@ function CardsJobs() {
 										/>
 									</div>
 									<div className={s.card_container_info}>
-										<h3>{j.title}</h3>
+										<div className={s.containerTitle}>
+											<h3>{j.title}</h3>
+										</div>
 										<p className={s.card_container_info_extra_company}>
 											{j.company.name}
 										</p>
@@ -84,12 +90,16 @@ function CardsJobs() {
 															clip-rule='evenodd'
 														/>
 													</svg>
-													<p>{j.city !== '' ? j.city : 'all world'}</p>
+													{!j.openToRemote ? (
+														<p>{j.city}</p>
+													) : (
+														<p>{'All World'}</p>
+													)}
 												</div>
 												<div className={s.card_container_info_extra_salary}>
 													<p className={s.salary}>salario:</p>
 													<p className={s.textNone}>
-														{money(j.dollar, j.salary)}
+														{money(j.currency, j.salary)}
 													</p>
 												</div>
 											</div>

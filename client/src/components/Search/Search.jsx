@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	searchJobsByTitle,
@@ -54,10 +54,13 @@ export const Search = () => {
 		setCountry(true);
 		setCity(true);
 		setState(null);
+		setSort(true);
+		dispatch(sortJobsBy('premium'));
 	};
 
 	const sortBy = (e) => {
 		dispatch(sortJobsBy(e.target.value));
+		setSort(false);
 	};
 
 	const [relocate, setRelocate] = useState(false);
@@ -139,7 +142,7 @@ export const Search = () => {
 					setCity={setCity}
 				/>
 				<select className={button} name='sort' onChange={sortBy}>
-					<option value='premium' selected>
+					<option value='premium' selected={sort}>
 						Más Relevantes
 					</option>
 					<option value='date'>Más Reciente</option>

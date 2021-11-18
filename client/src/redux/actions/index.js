@@ -337,6 +337,7 @@ export function getPublicationsById(id) {
 }
 
 export function postPublications(payload, nameUser, idUser) {
+	console.log(payload);
 	return async function (dispatch) {
 		const response = await clienteAxios.post(
 			`/publications?nameUser=${nameUser}&idUser=${idUser}`,
@@ -347,6 +348,7 @@ export function postPublications(payload, nameUser, idUser) {
 }
 
 export function putPublications(idPublication, idUser, data) {
+	console.log(data);
 	return async function (dispatch) {
 		const response = await clienteAxios.put(
 			`/publications?idPublication=${idPublication}&idUser=${idUser}`,

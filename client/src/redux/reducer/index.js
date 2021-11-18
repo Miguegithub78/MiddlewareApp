@@ -71,6 +71,7 @@ const inicialState = {
 	mercadoPago: '',
 	idLastJob: '',
 	plan: '',
+	imgPublication: '',
 };
 
 function filterJobs(state, filterKeyName, payload, reset) {
@@ -295,7 +296,7 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case SORT_JOBS_BY: {
-			let arr = sortJobs(action.payload, state);
+			let arr = sortJobs;
 			return { ...state, jobs: { ...state.jobs, filterData: arr } };
 		}
 		case FILTER_JOBS_BY_COUNTRIES: {
@@ -402,35 +403,13 @@ const rootReducer = (state = inicialState, action) => {
 				errorLogin: action.payload,
 			};
 
-		case UPLOAD_PICTURE:
-			return {
-				...state,
-				publication: { ...state.publication, photograph: action.payload },
-			};
-		case GET_JOBS:
-			return {
-				...state,
-				jobs: {
-					...state.jobs,
-					data: action.payload,
-					filterData: action.payload,
-				},
-			};
-		case GET_JOB_DETAILS:
-			return {
-				...state,
-				jobsDetails: action.payload,
-			};
-		case GET_UBICATION:
-			return {
-				...state,
-				countryState: action.payload,
-			};
 		case ADD_NEW_JOB:
 			return {
 				...state,
 				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
+
 		case DELETE_JOB:
 			return {
 				...state,
@@ -462,12 +441,13 @@ const rootReducer = (state = inicialState, action) => {
 				publication: { ...state.publication, photograph: action.payload },
 			};
 		case GET_JOBS:
+			let arr = [...sortJobs('premium', action.payload)];
 			return {
 				...state,
 				jobs: {
 					...state.jobs,
-					data: action.payload,
-					filterData: action.payload,
+					data: arr,
+					filterData: arr,
 				},
 			};
 		case GET_JOB_DETAILS:
@@ -479,12 +459,6 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				countryState: action.payload,
-			};
-		case ADD_NEW_JOB:
-			return {
-				...state,
-				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
-				idLastJob: action.payload._id,
 			};
 
 		case 'RESET_PICTURE_PUBLICATION':
@@ -504,6 +478,12 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				plan: action.payload,
+			};
+
+		case 'UPLOAD_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
 			};
 
 		default:

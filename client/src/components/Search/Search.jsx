@@ -22,7 +22,7 @@ export const Search = () => {
 	const options = useSelector((store) => store.technologies);
 
 	const handleInputChange = (e) => {
-		setSearch(e.target.value.toLowerCase().trim());
+		setSearch(e.target.value.toLowerCase());
 		dispatch(searchJobsByTitle(e.target.value.toLowerCase().trim()));
 	};
 

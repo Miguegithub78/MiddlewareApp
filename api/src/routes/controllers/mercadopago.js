@@ -54,9 +54,9 @@ const create_preference = async (req, res) => {
       default_installments: 1,
     },
     back_urls: {
-      success: "http://localhost:3001/feedback",
-      failure: "http://localhost:3001/feedback",
-      pending: "http://localhost:3001/feedback",
+      success: "https://middlewareapp-new.vercel.app/home/juniors",
+      failure: "https://middlewareapp-new.vercel.app/home/juniors",
+      pending: "https://middlewareapp-new.vercel.app/home/juniors",
     },
     auto_return: "approved",
   };

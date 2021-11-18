@@ -22,19 +22,22 @@ export const Search = () => {
 	const options = useSelector((store) => store.technologies);
 
 	const handleInputChange = (e) => {
+		setSearch(e.target.value.toLowerCase().trim());
 		dispatch(searchJobsByTitle(e.target.value.toLowerCase().trim()));
 	};
 
 	const byTypeSalary = (e) => {
 		dispatch(filterJobsBySalaries(e.target.value));
+		setSalary(false);
 	};
 
 	const byTecnology = (e) => {
-		let tech = e.target.value.toLowerCase();
-		dispatch(filterJobsByTechs(tech));
+		dispatch(filterJobsByTechs(e.target.value.toLowerCase()));
+		setTech(false);
 	};
 	const byCity = (e) => {
 		dispatch(filterJobsByCities(e.target.value));
+		setCity(false);
 	};
 	const byCountry = (e) => {
 		dispatch(filterJobsByCountries(e.target.value));
@@ -42,6 +45,15 @@ export const Search = () => {
 
 	const handleReset = (e) => {
 		dispatch(resetFilterJobs());
+		setFullTime(false);
+		setRemote(false);
+		setRelocate(false);
+		setSearch('');
+		setSalary(true);
+		setTech(true);
+		setCountry(true);
+		setCity(true);
+		setState(null);
 	};
 
 	const sortBy = (e) => {
@@ -72,9 +84,13 @@ export const Search = () => {
 			return !remote;
 		});
 	};
-
 	const [state, setState] = useState(null);
-
+	const [search, setSearch] = useState('');
+	const [country, setCountry] = useState(true);
+	const [salary, setSalary] = useState(true);
+	const [city, setCity] = useState(true);
+	const [sort, setSort] = useState(true);
+	const [tech, setTech] = useState(true);
 	return (
 		<div className='cont'>
 			<form>
@@ -84,12 +100,13 @@ export const Search = () => {
 						id='searchterm'
 						onChange={handleInputChange}
 						placeholder='Realiza tu busqueda...'
+						value={search}
 					/>
 				</div>
 			</form>
 			<div className='field2'>
 				<select className={button} name='typePublic' onChange={byTypeSalary}>
-					<option disabled selected>
+					<option disabled selected={salary}>
 						Rango Salarial:
 					</option>
 					<option value='0'>Menor a $50.000</option>
@@ -100,7 +117,7 @@ export const Search = () => {
 				</select>
 
 				<select className={button} name='Technologies' onChange={byTecnology}>
-					<option value='' disabled selected>
+					<option disabled selected={tech}>
 						Tipo de Tecnología:
 					</option>
 					{options?.map((p) => (
@@ -109,8 +126,18 @@ export const Search = () => {
 						</option>
 					))}
 				</select>
-				<CountryState setState={setState} handleChange={byCountry} />
-				<State state={state} handleChange={byCity} />
+				<CountryState
+					setState={setState}
+					handleChange={byCountry}
+					country={country}
+					setCountry={setCountry}
+				/>
+				<State
+					state={state}
+					handleChange={byCity}
+					city={city}
+					setCity={setCity}
+				/>
 				<select className={button} name='sort' onChange={sortBy}>
 					<option value='premium' selected>
 						Más Relevantes
@@ -126,6 +153,7 @@ export const Search = () => {
 						id='Relocate'
 						value={relocate}
 						onChange={handleRelocate}
+						checked={relocate ? true : false}
 					/>
 					<label className='form-check-label' htmlFor='Relocate'>
 						Relocación
@@ -138,6 +166,7 @@ export const Search = () => {
 						id='Remote'
 						value={remote}
 						onChange={handleRemote}
+						checked={remote ? true : false}
 					/>
 					<label className='form-check-label' htmlFor='Remote'>
 						Remoto
@@ -150,6 +179,7 @@ export const Search = () => {
 						id='FullTime'
 						value={fullTime}
 						onChange={handleFullTime}
+						checked={fullTime ? true : false}
 					/>
 					<label className='form-check-label' htmlFor='FullTime'>
 						Tiempo Completo

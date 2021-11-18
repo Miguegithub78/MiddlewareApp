@@ -384,9 +384,9 @@ const rootReducer = (state = inicialState, action) => {
 						salary: '',
 						tech: '',
 						search: '',
-						relocate: '',
-						fulltime: '',
-						remote: '',
+						relocate: false,
+						fulltime: false,
+						remote: false,
 					},
 				},
 			};

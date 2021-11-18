@@ -5,6 +5,7 @@ import { getJobDetails, getUserAction } from '../../redux/actions';
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import s from './JobsDetails.module.css';
+import Socket from '../socket.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import { postulation } from '../../redux/actions';
@@ -17,6 +18,18 @@ export default function JobsDetails() {
 	const dispatch = useDispatch();
 	const [post, setPost] = useState(false);
 
+	function handlePostulation() {
+		dispatch(postulation(id, user._id));
+		// dispatch(putNotification(jobsDetails.company._id, user._id, 1, user.name, user.userType))
+		Socket.emit('notification', {
+			typeNotification: 1,
+			userName: user.name,
+			_id: user._id,
+			userPublicationId: jobsDetails.company._id,
+			userType: user.userType,
+		});
+		setPost(true);
+	}
 	useEffect(() => {
 		dispatch(getJobDetails(id));
 	}, [post]);
@@ -145,17 +158,17 @@ export default function JobsDetails() {
 					</div>
 					<div className={s.info}>
 						<div className={s.info_box}>
-							<p className={s.info_title}>Remoto:</p>
-							<p>{jobsDetails.openToRemote ? 'Si' : 'No'}</p>
+							<p className={s.info_title}>Pais:</p>
+							<p>{jobsDetails.country}</p>
 						</div>
 						<div className={s.info_box}>
-							<p className={s.info_title}>Relocación:</p>
-							<p>{jobsDetails.openToRelocate ? 'Si' : 'No'}</p>
+							<p className={s.info_title}>Ciudad:</p>
+							<p>{jobsDetails.city !== '' ? jobsDetails.city : 'all world'}</p>
 						</div>
 						<div className={s.info_box}>
-							<p className={s.info_title}>FullTime:</p>
+							<p className={s.info_title}>salario:</p>
 							<p className={s.textNone}>
-								<p>{jobsDetails.openToFullTime ? 'Si' : 'No'}</p>
+								{money(jobsDetails.currency, jobsDetails.salary)}
 							</p>
 						</div>
 					</div>

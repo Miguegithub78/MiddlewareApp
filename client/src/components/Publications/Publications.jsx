@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	getPublications,
+	getPublications2,
 	putLike,
 	postPublications,
 	getUserAction,
@@ -9,7 +9,6 @@ import {
 	changePicturePublications,
 	deletePublications,
 	resetPicturePublications,
-	/* putNotification, */
 } from '../../redux/actions/index';
 
 import s from './Publications.module.css';
@@ -49,7 +48,7 @@ export const Publications = () => {
 
 	useEffect(async () => {
 		if (loadingPubli && !finishPage) {
-			await dispatch(getPublications(currentPublications));
+			await dispatch(getPublications2(currentPublications));
 			setCurrentPublications(currentPublications + 1);
 
 			await setTimeout(() => {
@@ -112,17 +111,16 @@ export const Publications = () => {
 
 	function addLikes(idPublications, userPublicationId) {
 		setIdPost(idPublications);
-		dispatch(putLike(idPublications, user._id));
-		/* 	dispatch(
-			putNotification(userPublicationId, user._id, 2, user.name, idPublications)
-		); */
 		Socket.emit('notification', {
 			typeNotification: 2,
 			userName: user.name,
 			_id: user._id,
 			userPublicationId: userPublicationId,
 			idPublication: idPublications,
+			userType: user.userType,
 		});
+		dispatch(putLike(idPublications, user._id));
+		// dispatch(putNotification(userPublicationId, user._id, 2, user.name, user.userType, idPublications))
 	}
 
 	function handleChange() {
@@ -144,7 +142,7 @@ export const Publications = () => {
 		setLoadingImg(true);
 
 		const picture = e.target.files[0];
-		console.log(picture);
+
 		await dispatch(changePicturePublications(picture));
 
 		setImgPubli(publiImg);

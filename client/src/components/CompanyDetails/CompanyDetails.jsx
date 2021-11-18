@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyDetails } from '../../redux/actions';
+import { getCompanyDetails, putNotification } from '../../redux/actions';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Mapa from '../MapDetails/Mapa';
@@ -15,13 +15,14 @@ import {
 	setDoc,
 } from 'firebase/firestore';
 import NavBar from '../NavBar/NavBar';
+import Socket from '../socket';
 
 export default function CompanyDetail() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getCompanyDetails(id));
-	}, []);
+	}, [dispatch]);
 
 	const company = useSelector((state) => state.details);
 
@@ -102,6 +103,17 @@ export default function CompanyDetail() {
 
 				setIdChat(currentIdChat);
 			}
+
+			dispatch(
+				putNotification(oneCompany._id, user._id, 3, user.name, user.userType)
+			);
+			Socket.emit('notification', {
+				typeNotification: 3,
+				userName: user.name,
+				_id: user._id,
+				userPublicationId: oneCompany._id,
+				userType: user.userType,
+			});
 
 			//Mando los datos a la base de datos
 			await setDoc(doc(db, 'messages', currentIdChat), {

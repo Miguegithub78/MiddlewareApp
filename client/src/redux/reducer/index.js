@@ -263,6 +263,16 @@ const rootReducer = (state = inicialState, action) => {
 				finishPage: action.payload.finishPage,
 			};
 
+		case 'GET_PUBLICATIONS_2':
+			return {
+				...state,
+				publications: [...state.publications].concat(
+					action.payload.publications
+				),
+				pages: action.payload.pages,
+				finishPage: action.payload.finishPage,
+			};
+
 		case 'POST_PUBLICATION':
 			return {
 				...state,
@@ -296,7 +306,7 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case SORT_JOBS_BY: {
-			let arr = sortJobs;
+			let arr = sortJobs(action.payload, state);
 			return { ...state, jobs: { ...state.jobs, filterData: arr } };
 		}
 		case FILTER_JOBS_BY_COUNTRIES: {
@@ -403,13 +413,36 @@ const rootReducer = (state = inicialState, action) => {
 				errorLogin: action.payload,
 			};
 
+		case UPLOAD_PICTURE:
+			return {
+				...state,
+				publication: { ...state.publication, photograph: action.payload },
+			};
+		case GET_JOBS:
+			return {
+				...state,
+				jobs: {
+					...state.jobs,
+					data: action.payload,
+					filterData: action.payload,
+				},
+			};
+		case GET_JOB_DETAILS:
+			return {
+				...state,
+				jobsDetails: action.payload,
+			};
+		case GET_UBICATION:
+			return {
+				...state,
+				countryState: action.payload,
+			};
 		case ADD_NEW_JOB:
 			return {
 				...state,
 				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
 				idLastJob: action.payload._id,
 			};
-
 		case DELETE_JOB:
 			return {
 				...state,
@@ -441,13 +474,12 @@ const rootReducer = (state = inicialState, action) => {
 				publication: { ...state.publication, photograph: action.payload },
 			};
 		case GET_JOBS:
-			let arr = [...sortJobs('premium', action.payload)];
 			return {
 				...state,
 				jobs: {
 					...state.jobs,
-					data: arr,
-					filterData: arr,
+					data: action.payload,
+					filterData: action.payload,
 				},
 			};
 		case GET_JOB_DETAILS:
@@ -459,6 +491,12 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				countryState: action.payload,
+			};
+		case ADD_NEW_JOB:
+			return {
+				...state,
+				user: { ...state.user, jobs: [...state.user.jobs, action.payload] },
+				idLastJob: action.payload._id,
 			};
 
 		case 'RESET_PICTURE_PUBLICATION':
@@ -484,6 +522,29 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				imgPublication: action.payload,
+			};
+
+		case 'setUser':
+			return {
+				...state,
+				user: { ...state.user, notifications: action.payload },
+			};
+
+		case 'DELETE_USER_NOTIFICATIONS':
+			return {
+				...state,
+				user: {
+					...state.user,
+					notifications:
+						state.user &&
+						state.user.notifications.filter((e) => e.typeNotification !== 3),
+				},
+			};
+
+		case 'RESET_USER_NOTIFICATIONS':
+			return {
+				...state,
+				user: { ...state.user, notifications: [] },
 			};
 
 		default:

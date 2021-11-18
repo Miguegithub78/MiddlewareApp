@@ -133,21 +133,17 @@ const getPublicationsById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const getPublication = await Publication.findById(id).populate([
-      { path: "company" },
-      { path: "junior" },
-      { path: "admin" },
-      { path: "likes" },
-    ]);
+    const getPublication = await Publication.findById(id)
+        .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}, {path: 'likes'}])
 
-    if (!getPublication)
-      return res.status(404).json({ message: "La publicación no existe" });
+    if(!getPublication) return res.status(404).json({message: "La publicación no existe"})
 
-    res.json(getPublication);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.json([getPublication])
   }
-};
+  catch(err){
+      res.status(404).json({message: err.message})
+  }
+}
 
 const putPublication = async (req, res) => {
   const token = req.headers["x-auth-token"];
@@ -265,9 +261,9 @@ const deletePublication = async (req, res) => {
 };
 
 module.exports = {
-  postPublications,
-  getPublications,
-  getPublicationsById,
-  putPublication,
-  deletePublication,
-};
+    postPublications,
+    getPublications,
+    getPublicationsById,
+    putPublication,
+    deletePublication
+}

@@ -77,7 +77,7 @@ const Chat2 = () => {
       dispatch(resetPicturePublications())
 
       // dispatch(putNotification(idUser2, user._id, 3, user.name, user.userType))
-      
+
       Socket.emit('notification', {
         typeNotification: 3,
         userName: user.name,
@@ -106,7 +106,6 @@ const Chat2 = () => {
   if (idChat && cambio) {
 
     const unsub = onSnapshot(doc(db, "messages", idChat), (doc) => {
-      console.log("Current data: ", doc.data());
       setState({
         messages: (!doc.data() ? [] : doc.data().chat),
         owners: (!doc.data() ? null : doc.data().owners),

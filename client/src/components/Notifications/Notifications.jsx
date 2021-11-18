@@ -27,10 +27,6 @@ const Notifications = () => {
     const [loadingSocket, setLoadingSocket] = useState(true);
 
     useEffect(()=>{
-      console.log("Id de la publicación", idPublication);
-  }, [idPublication])
-
-    useEffect(()=>{
 
         setTimeout(()=>{
 
@@ -46,7 +42,6 @@ const Notifications = () => {
         console.log("viene del socket",data.notifications)
         setLoadingSocket(false)
         dispatch(setUserNotifications(data.notifications))
-        // setNotifications([...data.notifications])
     })
   }, [Socket, idUser])
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  getPublications,
+  getPublications2,
   putLike,
   postPublications,
   getUserAction,
@@ -28,7 +28,7 @@ export const Publications = () => {
   const publiImg = useSelector((state) => state.imgPublication);
   const pages = useSelector((state) => state.pages);
   const finishPage = useSelector((state) => state.finishPage);
-  var [idUser, setIdUser] = useState(null);
+  // var [idUser, setIdUser] = useState(null);
 
   var [idPost, setIdPost] = useState(null);
   var [loadingImg, setLoadingImg] = useState(false);
@@ -51,7 +51,7 @@ export const Publications = () => {
 
       if(loadingPubli && !finishPage){
 
-        await dispatch(getPublications(currentPublications));
+        await dispatch(getPublications2(currentPublications));
         setCurrentPublications(currentPublications + 1);
 
         await setTimeout(()=>{
@@ -63,15 +63,6 @@ export const Publications = () => {
       }
 
   }, [loadingPubli]);
-
-  useEffect(()=>{
-
-    setTimeout(()=>{
-
-      setIdUser(user?._id)
-    }, 500)
-    
-  }, [user])
   
   window.addEventListener('scroll', ()=>{
 
@@ -94,13 +85,10 @@ export const Publications = () => {
     if (scrollHeight - scrollTop === clientHeight) {
       setCurrentPublications(currentPublications + 1);
     }
-      console.log("Hola")
   };
 
   function postDescription() {
     if (postPublication.description !== "" && !editarPost) {
-
-      console.log("post", publiImg)
 
       dispatch(postPublications({ description: postPublication.description, photograph: publiImg !== null ? publiImg : undefined }, user.userType, user._id));
       postPublication.description = '';
@@ -116,21 +104,22 @@ export const Publications = () => {
 
   function addLikes(idPublications, userPublicationId) {
     setIdPost(idPublications);
-    dispatch(putLike(idPublications, user._id));
-    Socket.emit('like', {
-      type: 2,
-      user: user.name,
-      userID: user._id,
-      publication: idPublications,
-      userPublicationId: userPublicationId
+    Socket.emit('notification', {
+      typeNotification: 2,
+      userName: user.name,
+      _id: user._id,
+      userPublicationId: userPublicationId,
+      idPublication: idPublications,
+      userType: user.userType
     })
+    dispatch(putLike(idPublications, user._id));
+    // dispatch(putNotification(userPublicationId, user._id, 2, user.name, user.userType, idPublications))
   }
 
   function handleChange() {
     setPostPublication({
       description: deccriptionWindow.current.value,
     });
-    console.log("getImg2", publiImg)
   }
 
   onAuthStateChanged(auth, (userFirebase) => {
@@ -160,16 +149,16 @@ export const Publications = () => {
     dispatch(deletePublications(idPost, user._id, user.userType))
   }
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    Socket.on('liked',(data)=>{
-      if(data.userPublicationId === idUser){
+  //   Socket.on('liked',(data)=>{
+  //     if(data.userPublicationId === idUser){
 
-        console.log(data)
-      }
-    })
+  //       console.log(data)
+  //     }
+  //   })
 
-  }, [Socket, idUser])
+  // }, [Socket, idUser])
 
   return publications ? (
     <div className="container" onScroll={handleScroll}>
@@ -339,26 +328,33 @@ export const Publications = () => {
 
                       <div className={s.divButton}>
                         <span className="me-3">{e.likesNumber}</span>
-                        <button
-                          className={
 
-                            e.likes.length === e.likesNumber && !e.likes.includes(user ? user._id : '12345')
-                              ? s.btnBlue
-                              : s.btnBlueLike
-                          }
 
-                          onClick={() => {
-                            addLikes(e._id, (e.junior ? e.junior._id : e.company._id));
-                            if (
-                              e.likes.length === e.likesNumber &&
-                              !e.likes.includes(user._id)
-                            ) {
-                              e.likesNumber += 1;
-                            }
-                          }}
-                        >
-                          <i className="bi bi-hand-thumbs-up" style={{ fontSize: 16 }}></i>
-                        </button>
+                        { 
+                          e.likes.length === e.likesNumber && !e.likes.includes(user?._id)
+
+                          ? <button
+                            className={s.btnBlue}
+  
+                            onClick={() => {
+                              addLikes(e._id, (e.junior ? e.junior._id : e.company._id));
+                              if (
+                                e.likes.length === e.likesNumber &&
+                                !e.likes.includes(user._id)
+                              ) {
+                                e.likesNumber += 1;
+                              }
+                            }}
+                          >
+                            <i className="bi bi-hand-thumbs-up" style={{ fontSize: 16 }}></i>
+                          </button>
+
+                          : <button className={s.btnBlueLike}disabled>
+
+                              <i className="bi bi-hand-thumbs-up" style={{ fontSize: 16 }}></i>
+                            
+                            </button>
+                        }
 
                         {
                           (e.junior ? e.junior._id : e.company._id) === (user ? user._id : '12345') ?

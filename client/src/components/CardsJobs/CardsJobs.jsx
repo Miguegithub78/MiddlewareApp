@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import s from './CardsJobs.module.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getJobs } from '../../redux/actions';
+import { getJobs, resetFilterJobs } from '../../redux/actions';
+
 function CardsJobs() {
 	function calculateDate(date) {
 		const date1 = new Date().getTime();
@@ -27,73 +28,88 @@ function CardsJobs() {
 			return 'Publicado hace más de un mes';
 		}
 	}
-	function money(dollar, salary) {
+	function money(currency, salary) {
 		if (!salary) {
 			return 'Sin especificar';
-		} else if (dollar) {
+		} else if (currency === 'dollar') {
 			return `U$s${salary}`;
+		} else if (currency === 'euro') {
+			return `€${salary}`;
 		} else {
 			return `$${salary}`;
 		}
 	}
+
 	const dispatch = useDispatch();
 	useEffect(() => {
+		dispatch(resetFilterJobs());
 		dispatch(getJobs());
-	}, [dispatch]);
+	}, []);
+
 	const jobs = useSelector((state) => state.jobs.filterData);
 
 	return (
 		<div className={s.cards}>
-			{jobs.map((j) =>
-				j.company ? (
-					<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
-						<div className={s.card}>
-							{j.country.toLowerCase() !== 'remote' ? (
-								<p className={s.country}>{j.country}</p>
-							) : (
-								<p className={s.country2}>{j.country}</p>
-							)}
-							<p className={s.date}>{calculateDate(j.date)}</p>
-							<div className={s.card_container_logo}>
-								<img
-									className={s.card_logo}
-									src={j.company.photograph}
-									alt=''
-								/>
-							</div>
-							<div className={s.card_container_info}>
-								<h3>{j.title}</h3>
-								<p className={s.card_container_info_extra_company}>
-									{j.company.name}
-								</p>
-								<div className={s.card_container_info_extra}>
-									<div className={s.card_container_info_extra_general}>
-										<div className={s.card_container_info_extra_city}>
-											<svg
-												xmlns='http://www.w3.org/2000/svg'
-												class='h-5 w-5'
-												viewBox='0 0 20 20'
-												fill='currentColor'
-											>
-												<path
-													fill-rule='evenodd'
-													d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
-													clip-rule='evenodd'
-												/>
-											</svg>
-											<p>{j.city !== '' ? j.city : 'all world'}</p>
+			{jobs.length > 0
+				? jobs.map((j) =>
+						j.company && j.status === 'active' ? (
+							<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
+								<div className={s.card}>
+									{!j.openToRemote ? (
+										<p className={s.country}>{j.country}</p>
+									) : (
+										<p className={s.country2}>{'Remoto'}</p>
+									)}
+									<p className={s.date}>{calculateDate(j.date)}</p>
+									<div className={s.card_container_logo}>
+										<img
+											className={s.card_logo}
+											src={j.company.photograph}
+											alt=''
+										/>
+									</div>
+									<div className={s.card_container_info}>
+										<div className={s.containerTitle}>
+											<h3>{j.title}</h3>
 										</div>
-										<div className={s.card_container_info_extra_salary}>
-											<p className={s.salary}>salario:</p>
-											<p className={s.textNone}>{money(j.dollar, j.salary)}</p>
+										<p className={s.card_container_info_extra_company}>
+											{j.company.name}
+										</p>
+										<div className={s.card_container_info_extra}>
+											<div className={s.card_container_info_extra_general}>
+												<div className={s.card_container_info_extra_city}>
+													<svg
+														xmlns='http://www.w3.org/2000/svg'
+														class='h-5 w-5'
+														viewBox='0 0 20 20'
+														fill='currentColor'
+													>
+														<path
+															fill-rule='evenodd'
+															d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+															clip-rule='evenodd'
+														/>
+													</svg>
+													{!j.openToRemote ? (
+														<p>{j.city}</p>
+													) : (
+														<p>{'All World'}</p>
+													)}
+												</div>
+												<div className={s.card_container_info_extra_salary}>
+													<p className={s.salary}>salario:</p>
+													<p className={s.textNone}>
+														{money(j.currency, j.salary)}
+													</p>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</NavLink>
-				) : null
-			)}
+							</NavLink>
+						) : null
+				  )
+				: 'No hay empleos disponibles...'}
 		</div>
 	);
 }

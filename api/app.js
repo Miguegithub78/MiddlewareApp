@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const http = require('http');
 const routers = require("./src/routes/index");
+const {Juniors, Company} = require('./src/models/index')
 
 const app = express();
 
@@ -37,16 +38,25 @@ io.on('connection',(socket) =>{
         console.log(data)
     });
 
-    socket.on('like',(data)=>{
-        console.log(data)
-        io.emit('liked', {
-            
-            type: 2,
-            user: data.user,
-            userID: data.userID,
-            publication: data.publication,
+    socket.on('notification',async(data)=>{
+        console.log("se recivio el emit")
+        var user = await Juniors.findById(data.userPublicationId);
+        if(!user) user = await Company.findById(data.userPublicationId);
+
+          user.notifications = user.notifications.concat([{
+            _id: data._id,
+            userName: data.userName,
+            typeNotification: Number(data.typeNotification),
+            idPublication: data.idPublication,
+            userType: data.userType,
             userPublicationId: data.userPublicationId
-            
+          }])
+
+          const newUser = await user.save()
+
+
+        io.emit(`${data.userPublicationId}`, {
+            notifications: newUser.notifications
         })
     });
 

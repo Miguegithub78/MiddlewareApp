@@ -14,6 +14,9 @@ import {
 	FILTER_JOBS_BY_CITIES,
 	FILTER_JOBS_BY_SALARIES,
 	FILTER_JOBS_BY_TECHS,
+	FILTER_JOBS_BY_RELOCATE,
+	FILTER_JOBS_BY_FULLTIME,
+	FILTER_JOBS_BY_REMOTE,
 	SEARCH_JOBS_BY_TITLE,
 	RESET_JOBS_FILTER,
 	CHANGE_PROFILE_PICTURE,
@@ -324,6 +327,19 @@ export function getPublications(numberPage) {
 	};
 }
 
+export function getPublications2(numberPage) {
+	return async function (dispatch) {
+		try {
+			const json = await clienteAxios.get(
+				`/publications?numberPage=${numberPage}`
+			);
+			return dispatch({ type: 'GET_PUBLICATIONS_2', payload: json.data });
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
+}
+
 export function getPublicationsById(id) {
 	return async function (dispatch) {
 		try {
@@ -438,6 +454,33 @@ export function searchJobsByTitle(payload) {
 	};
 }
 
+export function filterJobsRemote(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_REMOTE,
+			payload,
+		});
+	};
+}
+
+export function filterJobsFullTime(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_FULLTIME,
+			payload,
+		});
+	};
+}
+
+export function filterJobsRelocate(payload) {
+	return async function (dispatch) {
+		dispatch({
+			type: FILTER_JOBS_BY_RELOCATE,
+			payload,
+		});
+	};
+}
+
 export function resetFilterJobs(payload) {
 	return async function (dispatch) {
 		dispatch({
@@ -537,11 +580,13 @@ export function deleteJobsAction(idJob) {
 	};
 }
 
-export function postulation(idJob, idUser) {
+export function postulation(jobsID, juniorId, coverLetter, idFireBase) {
 	return async function (dispatch) {
 		try {
-			const allJobs = await clienteAxios.put(`/jobs/postulation/${idJob}`, {
-				juniorId: idUser,
+			const allJobs = await clienteAxios.put(`/jobs/postulation/${jobsID}`, {
+				juniorId,
+				coverLetter,
+				idFireBase,
 			});
 			/* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
 		} catch (error) {}
@@ -628,6 +673,58 @@ export const mercadoPagoAction = (idJob, plan) => {
 	};
 };
 
+export const putNotification = (
+	idUserPublication,
+	idUserLike,
+	type,
+	userName,
+	userType,
+	idPublications
+) => {
+	return function (dispatch) {
+		return clienteAxios.put('/notifications', {
+			idUserPublication,
+			idUserLike,
+			type,
+			userName,
+			userType,
+			idPublications,
+		});
+	};
+};
+
+export const deleteNotifications = (idUser, typeNotification) => {
+	return function (dispatch) {
+		return clienteAxios.delete(
+			`/notifications?idUser=${idUser}&typeNotification=${typeNotification}`
+		);
+	};
+};
+
+export const setUserNotifications = (payload) => {
+	return function (dispatch) {
+		return dispatch({
+			type: 'setUser',
+			payload: payload,
+		});
+	};
+};
+
+export const deleteUserNotifications = () => {
+	return function (dispatch) {
+		return dispatch({
+			type: 'DELETE_USER_NOTIFICATIONS',
+		});
+	};
+};
+
+export const resetUserNotifications = () => {
+	return function (dispatch) {
+		return dispatch({
+			type: 'RESET_USER_NOTIFICATIONS',
+		});
+	};
+};
 export const setPlanMercado = (plan) => {
 	return async function (dispatch) {
 		try {

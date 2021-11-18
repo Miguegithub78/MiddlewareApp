@@ -1,12 +1,14 @@
-const { Jobs } = require("../../models/index");
-
+const { Jobs, Company } = require("../../models/index");
+const nodemailer = require('nodemailer'); // previamente hay que instalar nodemailer
+require('dotenv').config();
 const mercadopago = require("mercadopago");
 
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, MIDDLEWARE_EMAIL, EMAIL_PASSWORD } = process.env;
 
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
+
 
 const create_preference = async (req, res) => {
   // try{
@@ -49,14 +51,14 @@ const create_preference = async (req, res) => {
           id: "atm",
         },
       ],
-      installments: 12, //cant de cuotas
+      installments: 1, //cant de cuotas
       default_payment_method_id: "visa",
-      default_installments: 12,
+      default_installments: 1,
     },
     back_urls: {
-      success: "http://localhost:3001/feedback",
-      failure: "http://localhost:3001/feedback",
-      pending: "http://localhost:3001/feedback",
+      success: "https://middlewareapp-new.herokuapp.com/feedback",
+      failure: "https://middlewareapp-new.herokuapp.com/feedback",
+      pending: "https://middlewareapp-new.herokuapp.com/feedback",
     },
     auto_return: "approved",
   };
@@ -87,6 +89,7 @@ const orderFeedback = async (req, res) => {
       external_reference,
       status,
     } = req.query;
+
     console.log(req.query, "feedback");
     const reference = external_reference.split("/");
     const idJob = reference[0];
@@ -101,22 +104,44 @@ const orderFeedback = async (req, res) => {
       { new: true }
     );
 
-    res.json({
-      payment_id: req.query.payment_id,
-      payment_status: req.query.payment_status,
-      status: req.query.status,
-      merchant_order_id: req.query.merchant_order_id,
-      date_created: req.query.date_created,
-    });
+    // res.json({
+    //   payment_id: req.query.payment_id,
+    //   payment_status: req.query.payment_status,
+    //   status: req.query.status,
+    //   merchant_order_id: req.query.merchant_order_id,
+    //   date_created: req.query.date_created,
+    // });
 
     // const companyPremium = Company.findOne({ _id : req.query.external_reference })
+    const jobData = await Jobs.findOne({ _id: idJob }).populate({
+			path: 'company',
+		});;
+    const gmailCompany = jobData.company.gmail;
+    
+     const transporter = nodemailer.createTransport({
+			//acá voy a crear los datos del correo del que envía
+			host: 'smtp.gmail.com',
+			port: 465,
+			secure: true, // true for 465, false for other ports
+			auth: {
+				user: MIDDLEWARE_EMAIL,
+				pass: EMAIL_PASSWORD,
+			},
+		});
+    await transporter.sendMail({
+			// acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
+			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
+			to: `${gmailCompany}`, // list of receivers
+			subject: `Pago en Middleware - ${payment_status}`, // Subject line
+			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
+      Muchas gracias!!!
+                      Saludos desde Middleware!!! </b>`,
+		});
 
-    // .catch(function (error) {
-    //   console.log(error);
-    //   //return res.redirect(`http://localhost:3001/feedback/?error=${error}`); //se puede modificar para el front con la ruta del error que quiera
-    // })
+    return res.redirect("https://middlewareapp-new.vercel.app/home/juniors");
+
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    return res.redirect("https://middlewareapp-new.vercel.app/home/juniors");
   }
 };
 

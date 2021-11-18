@@ -59,7 +59,7 @@ const CreatePublications = () => {
 		return errors;
 	}
 
-	const [plan, setPlan] = useState('free');
+	const [plan, setPlan] = useState('free1');
 	const [picture, setPicture] = useState(null);
 	const [errors, setErrors] = useState({});
 	const [state, setState] = useState(null);
@@ -76,6 +76,7 @@ const CreatePublications = () => {
 		companyId: user && user._id,
 		premium: user && user.premium,
 		status: 'active',
+		idFireBase: user.idFireBase,
 		openToRelocate: false,
 		openToRemote: false,
 		openToFullTime: false,
@@ -186,12 +187,6 @@ const CreatePublications = () => {
 								El empleo, fue creado. Elige tu plan para mejorar el
 								posicionamiento:
 							</h5>
-							<button
-								type='button'
-								className='btn-close'
-								data-bs-dismiss='modal'
-								aria-label='Close'
-							></button>
 						</div>
 						<div className='modal-body'>
 							<div class='form-check'>
@@ -200,7 +195,6 @@ const CreatePublications = () => {
 									type='radio'
 									name='flexRadioDefault'
 									id='flexRadioDefault1'
-									checked
 									value='free'
 									onClick={handlePlan}
 								/>
@@ -236,14 +230,26 @@ const CreatePublications = () => {
 							</div>
 						</div>
 						<div className='modal-footer'>
-							<button
-								type='button'
-								className='btn btn-primary'
-								data-bs-dismiss='modal'
-								onClick={handlePayment}
-							>
-								quiero pagar
-							</button>
+							{plan === 'free1' ? (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={handlePayment}
+									disabled
+								>
+									Continuar
+								</button>
+							) : (
+								<button
+									type='button'
+									className='btn btn-primary'
+									data-bs-dismiss='modal'
+									onClick={handlePayment}
+								>
+									Continuar
+								</button>
+							)}
 						</div>
 					</div>
 				</div>
@@ -439,7 +445,7 @@ const CreatePublications = () => {
 										accept='.png, .jpg, .jpeg'
 										type='file'
 										id='loadfile'
-										onChange={handleChangePicture}
+										/* onChange={handleChangePicture} */
 									></input>
 									{errors.photograph && (
 										<p className='gerror'>{errors.photograph}</p>

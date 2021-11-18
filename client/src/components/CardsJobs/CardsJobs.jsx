@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import s from './CardsJobs.module.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getJobs } from '../../redux/actions';
+import { getJobs, resetFilterJobs } from '../../redux/actions';
 
 function CardsJobs() {
 	function calculateDate(date) {
@@ -42,6 +42,7 @@ function CardsJobs() {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
+		dispatch(resetFilterJobs());
 		dispatch(getJobs());
 	}, []);
 

@@ -31,6 +31,18 @@ export default function JobsDetails() {
 		}
 	});
 
+	function money(currency, salary) {
+		if (!salary) {
+			return 'Sin especificar';
+		} else if (currency === 'dollar') {
+			return `U$s${salary}`;
+		} else if (currency === 'euro') {
+			return `€${salary}`;
+		} else {
+			return `$${salary}`;
+		}
+	}
+
 	const [coverLetter, setCoverLetter] = useState('');
 
 	function handlePostulation() {
@@ -98,10 +110,23 @@ export default function JobsDetails() {
 					) : (
 						''
 					)}
-					<h1>{jobsDetails.title}</h1>
+					<div className={s.imgContainer}>
+						<img src={jobsDetails.photograph} alt='' />
+					</div>
+					<div className={s.cardHeader_info}>
+						<div className={s.cardHeader_info_title}>
+							<h1>{jobsDetails.title}</h1>
+						</div>
+						<Link target='blanck' to={`/companies/${jobsDetails.company._id}`}>
+							{jobsDetails.company.name}
+						</Link>
+					</div>
 				</div>
 				<div className={s.containerInfo}>
-					<p className={s.description}>{jobsDetails.description}</p>
+					<p className={s.description}>
+						<span>Descripcion del empleo: </span>
+						{jobsDetails.description}
+					</p>
 					<div className={s.info}>
 						<div className={s.info_box}>
 							<p className={s.info_title}>Pais:</p>
@@ -110,6 +135,28 @@ export default function JobsDetails() {
 						<div className={s.info_box}>
 							<p className={s.info_title}>Ciudad:</p>
 							<p>{jobsDetails.city !== '' ? jobsDetails.city : 'all world'}</p>
+						</div>
+						<div className={s.info_box}>
+							<p className={s.info_title}>salario:</p>
+							<p className={s.textNone}>
+								{money(jobsDetails.currency, jobsDetails.salary)}
+							</p>
+						</div>
+					</div>
+					<div className={s.info}>
+						<div className={s.info_box}>
+							<p className={s.info_title}>Pais:</p>
+							<p>{jobsDetails.country}</p>
+						</div>
+						<div className={s.info_box}>
+							<p className={s.info_title}>Ciudad:</p>
+							<p>{jobsDetails.city !== '' ? jobsDetails.city : 'all world'}</p>
+						</div>
+						<div className={s.info_box}>
+							<p className={s.info_title}>salario:</p>
+							<p className={s.textNone}>
+								{money(jobsDetails.currency, jobsDetails.salary)}
+							</p>
 						</div>
 					</div>
 					<div className={s.containerTechs}>
@@ -123,10 +170,12 @@ export default function JobsDetails() {
 						</div>
 					</div>
 				</div>
-				{user.postulationsJobs.includes(id) || post ? (
+				{user.postulationsJobs.includes(id) ||
+				post ||
+				jobsDetails.status === 'paused' ? (
 					<button
 						type='button'
-						className={'btn btn-block btn-dark btn-outline-light'}
+						className={s.btnDisabled}
 						data-bs-toggle='modal'
 						data-bs-target='#exampleModalCenter'
 						disabled
@@ -136,7 +185,7 @@ export default function JobsDetails() {
 				) : (
 					<button
 						type='button'
-						className={'btn btn-block btn-dark btn-outline-light'}
+						className={s.btnPostularse}
 						data-bs-toggle='modal'
 						data-bs-target='#exampleModalCenter'
 					>

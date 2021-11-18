@@ -121,16 +121,6 @@ function filterJobs(state, filterKeyName, payload, reset) {
 			? true
 			: false;
 
-		console.log(job.title);
-		console.log('relocate: ' + filterByRelocate);
-		console.log('remote: ' + filterByRemote);
-		console.log('fulltime: ' + filterByFulltime);
-		console.log('salary: ' + filterBySalary);
-		console.log('country: ' + filterByCountry);
-		console.log('city: ' + filterByCity);
-		console.log('search: ' + filterBySearch);
-		console.log('techs: ' + tech);
-		console.log('------------------------------');
 		return (
 			filterByRelocate &&
 			filterByRemote &&

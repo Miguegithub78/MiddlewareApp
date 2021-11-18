@@ -573,14 +573,39 @@ export const setPlanMercado = (plan) => {
   };
 }
 
-export const putNotification = (idUserPublication, idUserLike, type, userName) => {
+export const putNotification = (idUserPublication, idUserLike, type, userName, userType, idPublications) => {
   return function (dispatch){
-    return clienteAxios.put('/notifications', {idUserPublication, idUserLike, type, userName})
+    return clienteAxios.put('/notifications', {idUserPublication, idUserLike, type, userName, userType, idPublications})
   }
 }
 
-export const deleteNotifications = (idUser) => {
+export const deleteNotifications = (idUser, typeNotification) => {
   return function (dispatch){
-    return clienteAxios.delete(`/notifications?idUser=${idUser}`)
+    return clienteAxios.delete(`/notifications?idUser=${idUser}&typeNotification=${typeNotification}`)
+  }
+}
+
+export const setUserNotifications = (payload) => {
+  return function (dispatch){
+    return dispatch({
+      type: "setUser",
+      payload: payload
+    })
+  }
+}
+
+export const deleteUserNotifications = () => {
+  return function (dispatch){
+    return dispatch({
+      type: "DELETE_USER_NOTIFICATIONS"
+    })
+  }
+}
+
+export const resetUserNotifications = () => {
+  return function (dispatch){
+    return dispatch({
+      type: "RESET_USER_NOTIFICATIONS"
+    })
   }
 }

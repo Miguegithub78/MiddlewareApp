@@ -329,6 +329,21 @@ const rootReducer = (state = inicialState, action) => {
 				plan: action.payload,
 			};
 
+		case "setUser": return {
+			...state,
+			user: {...state.user, notifications: action.payload}
+		}
+
+		case "DELETE_USER_NOTIFICATIONS": return {
+			...state,
+			user: {...state.user, notifications: state.user && state.user.notifications.filter(e => e.typeNotification !== 3)}
+		}
+
+		case "RESET_USER_NOTIFICATIONS": return {
+			...state,
+			user: {...state.user, notifications: []}
+		}
+
 		default:
 			return state;
 	}

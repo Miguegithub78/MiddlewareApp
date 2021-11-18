@@ -64,15 +64,6 @@ export const Publications = () => {
       }
 
   }, [loadingPubli]);
-
-  // useEffect(()=>{
-
-  //   setTimeout(()=>{
-
-  //     setIdUser(user?._id)
-  //   }, 500)
-    
-  // }, [user])
   
   window.addEventListener('scroll', ()=>{
 
@@ -95,13 +86,10 @@ export const Publications = () => {
     if (scrollHeight - scrollTop === clientHeight) {
       setCurrentPublications(currentPublications + 1);
     }
-      console.log("Hola")
   };
 
   function postDescription() {
     if (postPublication.description !== "" && !editarPost) {
-
-      console.log("post", publiImg)
 
       dispatch(postPublications({ description: postPublication.description, photograph: publiImg !== null ? publiImg : undefined }, user.userType, user._id));
       postPublication.description = '';
@@ -117,21 +105,22 @@ export const Publications = () => {
 
   function addLikes(idPublications, userPublicationId) {
     setIdPost(idPublications);
-    dispatch(putLike(idPublications, user._id));
-    dispatch(putNotification(userPublicationId, user._id, 2, user.name))
     Socket.emit('notification', {
       typeNotification: 2,
       userName: user.name,
       _id: user._id,
-      userPublicationId: userPublicationId
+      userPublicationId: userPublicationId,
+      idPublication: idPublications,
+      userType: user.userType
     })
+    dispatch(putLike(idPublications, user._id));
+    // dispatch(putNotification(userPublicationId, user._id, 2, user.name, user.userType, idPublications))
   }
 
   function handleChange() {
     setPostPublication({
       description: deccriptionWindow.current.value,
     });
-    console.log("getImg2", publiImg)
   }
 
   onAuthStateChanged(auth, (userFirebase) => {

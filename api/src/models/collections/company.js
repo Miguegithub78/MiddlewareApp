@@ -100,6 +100,9 @@ const companySchema = new Schema({
           type: Date,
           default: Date.now
         },
+        idPublication: Schema.Types.ObjectId,
+        userType: String,
+        userPublicationId: String
     }]
 })
 

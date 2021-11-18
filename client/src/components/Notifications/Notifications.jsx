@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import {useHistory} from 'react-router-dom'
 import { auth } from "../../firebaseConfig";
-import { getUserAction, deleteNotifications } from '../../redux/actions';
+import { getUserAction, deleteNotifications, setUserNotifications, resetUserNotifications } from '../../redux/actions';
 import Socket from "../socket.js";
 import './Notifications.css'
+import { NavLink } from 'react-router-dom'
 
 
 
@@ -17,23 +18,36 @@ const Notifications = () => {
 
     const [notifications, setNotifications] = useState([]);
     const [open, setOpen] = useState(false);
+    const [nameUser2, setNameUser2] = useState(null);
+    const [idUser2, setIdUser2] = useState(null);
+    const [idPublication, setIdPublication] = useState(null);
+    const [userType, setUserType] = useState(null);
+    const [typeNotificatoin, setTypeNotificatoin] = useState(false);
+    const [loadingUser, setLoadingUser] = useState(true);
+    const [loadingSocket, setLoadingSocket] = useState(true);
+
+    useEffect(()=>{
+      console.log("Id de la publicación", idPublication);
+  }, [idPublication])
 
     useEffect(()=>{
 
-      setTimeout(()=>{
-  
-      setIdUser(user?._id)
-    }, 500)
+        setTimeout(()=>{
+
+          setIdUser(user?._id)
+        }, 500)
       
   }, [user])
 
     useEffect(()=>{
 
-    Socket.on('sendNotification',(data)=>{
-        if(data.userPublicationId === idUser){
-        setNotifications((prev) => [...prev, data])
-      }
-     })
+    Socket.on(`${idUser}`,async(data) => {
+
+        console.log("viene del socket",data.notifications)
+        setLoadingSocket(false)
+        dispatch(setUserNotifications(data.notifications))
+        // setNotifications([...data.notifications])
+    })
   }, [Socket, idUser])
 
   useEffect(()=>{
@@ -43,6 +57,7 @@ const Notifications = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
+      
       dispatch(getUserAction(userFirebase));
     } else {
       history.push("/");
@@ -50,40 +65,74 @@ const Notifications = () => {
   });
 
   const handleRead = () => {
-    setNotifications([]);
-    dispatch(deleteNotifications(user._id))
+    dispatch(deleteNotifications(user._id, "false"))
+    dispatch(resetUserNotifications())
     setOpen(false);
   };
 
-  console.log(notifications)
+    return notifications? (<>
 
-    return notifications? (
-        <div className='icons'>
-          <div className='icon' onClick={() => setOpen(!open)}>
-            <i className="bi bi-bell-fill"></i>
-            { notifications.length > 0 &&
-              <div className='counter'>{notifications.length}</div>
-            }
+      <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal">
+              </button>
+            </div>
+            <div className="modal-body d-flex flex-column">
+              {
+                typeNotificatoin
+                ? <div></div>
+                : <NavLink to={`/DetailsPublication/${idPublication}`}><button type="button" className="btn btn-secondary mb-1" data-bs-dismiss="modal">Ir a la publicación</button></NavLink>
+              }
+              
+              {
+              userType === 'juniors'
+              ? <NavLink to={`/juniors/${idUser2}`}><button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{`Ir al perfil de ${nameUser2}`}</button></NavLink>
+              : <NavLink to={`/companies/${idUser2}`}><button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{`Ir al perfil de ${nameUser2}`}</button></NavLink>
+              }
+            
+            </div>
           </div>
+        </div>
+      </div>
 
-          { open && (
+      <div className='icons'>
+        <div className='icon' onClick={() => setOpen(!open)}>
+          <i className="bi bi-bell-fill"></i>
+          { notifications.length > 0 &&
+            <div className='counter'>{notifications.length}</div>
+          }
+        </div>
 
-          <div className='notifications'>
+        { open && (
 
-           {notifications?.map(el => 
-              (
-                el.typeNotification === 2
-                ? <li>{ `${el.userName} Le dió me gusta a tu publicacion` }</li>
-                : <li>{ `${el.userName} Se postulo a tu empleo` }</li>
+        <div className='notifications'>
+
+          {
+            notifications && notifications.map((el, i) => 
+            (
+              <div className="ulNotification" key={i}>
+
+                {
+                  el.typeNotification === 2 || el.typeNotification === 1
+                  ? (el.typeNotification === 2
+                  ? <div className="notification" key={i} onClick={()=>{setNameUser2(el.userName); setIdUser2(el._id); setIdPublication(el.idPublication); setUserType(el.userType); setTypeNotificatoin(false)}} data-bs-toggle="modal" data-bs-target="#exampleModal">{ `A ${el.userName} Le gusta tu publicación` }</div>
+                  : <div className="notification" key={i} onClick={()=>{setNameUser2(el.userName); setIdUser2(el._id); setUserType(el.userType); setTypeNotificatoin(true)}} data-bs-toggle="modal" data-bs-target="#exampleModal">{ `${el.userName} Se postulo a tu empleo` }</div>)
+                  : <NavLink to="/chat" key={i}><div className="notification">{ `${el.userName} Te ha enviado un mensaje` }</div></NavLink>
+                }
+              
+              </div>
               )
 
-             )}
-
-             <button className='nButton' onClick={handleRead}>Marcar como leído</button>
-           </div>
           )}
-        </div>
-    ) : ('...No hay notificaciones que mostrar')
+
+            <button className='nButton btn btn-outline-dark' onClick={handleRead}>Borrar notificaciones</button>
+          </div>
+        )}
+      </div>
+      </>) : ('...No hay notificaciones que mostrar')
 }
 
 export default Notifications;

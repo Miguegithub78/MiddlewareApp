@@ -6,17 +6,17 @@ import "./chat.css"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import {
-  loginOkey,
-  logOutUserAction,
   getUserAction,
-  sortJobsBy,
   changePicturePublications,
-  resetPicturePublications
+  resetPicturePublications,
+  putNotification,
+  deleteNotifications,
+  deleteUserNotifications
 } from "../../redux/actions";
 import tokenAuth from "../config/token";
 import { useHistory } from "react-router-dom";
-
 import NavBar from "../NavBar/NavBar";
+import Socket from '../socket.js'
 
 
 const Chat2 = () => {
@@ -76,11 +76,32 @@ const Chat2 = () => {
 
       dispatch(resetPicturePublications())
 
+      // dispatch(putNotification(idUser2, user._id, 3, user.name, user.userType))
+      
+      Socket.emit('notification', {
+        typeNotification: 3,
+        userName: user.name,
+        _id: user._id,
+        userPublicationId: idUser2,
+        userType: user.userType
+      })
+
     }
     catch (err) {
       console.log(err.message)
     }
   }
+
+  useEffect(()=>{
+    dispatch(deleteUserNotifications())
+  }, [])
+
+  useEffect(()=>{
+
+    if(user){
+      dispatch(deleteNotifications(user?._id, "true"));
+    }
+  }, [user])
 
   if (idChat && cambio) {
 

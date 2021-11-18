@@ -120,7 +120,7 @@ const getPublicationsById = async (req, res) => {
 
         if(!getPublication) return res.status(404).json({message: "La publicación no existe"})
     
-        res.json(getPublication)
+        res.json([getPublication])
     }
     catch(err){
         res.status(404).json({message: err.message})

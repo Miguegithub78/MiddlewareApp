@@ -21,12 +21,13 @@ export default function JuniorsDetail() {
 
   function handlePostulation() {
     dispatch(postulation(id, user._id));
-    dispatch(putNotification(jobsDetails.company._id, user._id, 1, user.name))
+    // dispatch(putNotification(jobsDetails.company._id, user._id, 1, user.name, user.userType))
     Socket.emit('notification', {
       typeNotification: 1,
       userName: user.name,
       _id: user._id,
       userPublicationId: jobsDetails.company._id,
+      userType: user.userType
     })
     setPost(true);
   }

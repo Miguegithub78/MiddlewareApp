@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { getJuniorsDetails } from "../../redux/actions";
+import { getJuniorsDetails, putNotification } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import Socket from '../socket.js'
 
 
 export default function JuniorsDetail() {
@@ -96,6 +97,16 @@ export default function JuniorsDetail() {
         ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames,
         img: state.img == null ? { user1: juniors.photograph, user2: user.photograph } : state.img
       });
+
+      dispatch(putNotification(juniors._id, user._id, 3, user.name, juniors.userType))
+
+      Socket.emit('notification', {
+        typeNotification: 3,
+        userName: user.name,
+        _id: user._id,
+        userPublicationId: juniors._id,
+        userType: juniors.userType
+      })
     }
     catch (err) {
       console.log(err.message)

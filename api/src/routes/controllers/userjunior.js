@@ -194,9 +194,9 @@ const updateUserNotifications = async ( req, res) => {
     return res.status(403).json({ auth: false, message: "token is require" });
   }
 
-  const {idUserPublication, idUserLike, type, userName} = req.body;
+  const {idUserPublication, idUserLike, type, userName, userType, idPublications} = req.body;
 
-  console.log("Entro en el back", idUserPublication, idUserLike, type, userName)
+  console.log("Entro en el back", idUserPublication, idUserLike, type, userName, userType, idPublications)
 
   var user = await Juniors.findById(idUserPublication)
   if(!user){
@@ -207,7 +207,9 @@ const updateUserNotifications = async ( req, res) => {
   user.notifications = user.notifications.concat([{
     _id: idUserLike,
     userName: userName,
-    typeNotification: type
+    typeNotification: type,
+    idPublication: idPublications,
+    userType: userType
   }])
 
 
@@ -219,18 +221,36 @@ const updateUserNotifications = async ( req, res) => {
 
 const deleteNotifications = async (req, res) => {
 
-  const {idUser} = req.query;
+  const token = req.headers["x-auth-token"];
+  if (!token) {
+    return res.status(403).json({ auth: false, message: "token is require" });
+  }
+
+  const {idUser, typeNotification} = req.query;
 
   var user = await Juniors.findById(idUser)
   if(!user){
     user = await Company.findById(idUser)
   }
 
-  user.notifications = []
+  if(typeNotification === "true"){
+    console.log("ENTRO EN EL FILTRO DEL BACK")
+    console.log("ANTES", user.notifications)
+    user.notifications = user.notifications.filter(e => e && e.typeNotification !== 3)
+    console.log("DESPUES", user.notifications)
+    var resetNotifications = await user.save()
 
-  var resetNotifications = await user.save()
+    res.json(resetNotifications)
+  }else {
 
-  res.json(resetNotifications)
+    user.notifications = []
+
+    var resetNotifications = await user.save()
+
+    res.json(resetNotifications)
+  }
+
+
 }
 
 

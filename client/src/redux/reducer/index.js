@@ -71,6 +71,7 @@ const inicialState = {
 	mercadoPago: '',
 	idLastJob: '',
 	plan: '',
+	imgPublication: '',
 };
 
 function filterJobs(state, filterKeyName, payload, reset) {
@@ -505,6 +506,12 @@ const rootReducer = (state = inicialState, action) => {
 			return {
 				...state,
 				plan: action.payload,
+			};
+			
+					case 'UPLOAD_PICTURE_PUBLICATION':
+			return {
+				...state,
+				imgPublication: action.payload,
 			};
 
 		default:

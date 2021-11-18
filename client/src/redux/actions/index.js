@@ -24,12 +24,16 @@ import {
   POSTULATION,
   ADD_NEW_JOB,
   GET_UBICATION,
+  DELETE_JOB,
+  DELETE_JUNIOR,
+  DELETE_COMPANY,
+  MERCADO_PAGO,
+  SET_PLAN,
 } from "../types";
 import clienteAxios from "../../components/config/clienteAxios";
 import { auth, firebase, actionCodeSettings } from "../../firebaseConfig";
 import {
   signInWithPopup,
-  linkWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithEmailAndPassword,
@@ -99,7 +103,6 @@ export const loginUserEmailPassAction = (email, pass, name) => {
 
     if (name) {
       try {
-        //   console.log("entro aca!");
         const userFirebase = await createUserWithEmailAndPassword(
           auth,
           gmail,
@@ -116,12 +119,9 @@ export const loginUserEmailPassAction = (email, pass, name) => {
           emailAndPass: false,
         };
         //creo al usuario en la db
-        console.log(user, "esto mando al post");
         const rta = await clienteAxios.post("/login", user);
-        console.log(rta.data);
         dispatch(emailVerificationAction(false));
         await signOut(auth);
-        console.log("deslogueado");
       } catch (error) {
         console.log(error, "create error");
       }
@@ -247,7 +247,7 @@ export const getJuniorsDetails = (id) => {
 export function putJuniors(data, id) {
   return async function () {
     try {
-      console.log(data, id, 'action');
+      console.log(data, id, "action");
       const response = await clienteAxios.put(`/juniors/${id}`, data);
       // llamar al dispatch
       console.log(response.data, "editar usuario ok");
@@ -257,12 +257,29 @@ export function putJuniors(data, id) {
   };
 }
 
-export function deleteJuniors(id) {
+export function deleteJuniors(id, userType) {
+  console.log(userType, "/////");
   return async function (dispatch) {
     const auth = getAuth();
     const user = auth.currentUser;
     const response = await clienteAxios.delete(`/juniors/${id}`);
-    if (response.data.deleted) {
+    if (userType === "admin"&&response.data.deleted) {
+      console.log("entra acaaaaaa");
+      return dispatch({ type: DELETE_JUNIOR, payload: id });
+    } else if (response.data.deleted) {
+      dispatch(logOutUserAction());
+      await deleteUser(user);
+    }
+  };
+}
+export function deleteCompany(id, userType) {
+  return async function (dispatch) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const response = await clienteAxios.delete(`/companies/${id}`);
+    if (userType === "admin"&&response.data.deleted) {
+      return dispatch({ type: DELETE_COMPANY, payload: id });
+    } else if (response.data.deleted) {
       dispatch(logOutUserAction());
       await deleteUser(user);
     }
@@ -297,10 +314,12 @@ export const getCompanyDetails = (id) => {
 export function getPublications(numberPage) {
   return async function (dispatch) {
     try {
-      const json = await clienteAxios.get(`/publications?numberPage=${numberPage}`);
+      const json = await clienteAxios.get(
+        `/publications?numberPage=${numberPage}`
+      );
       return dispatch({ type: GET_PUBLICATIONS, payload: json.data });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   };
 }
@@ -325,10 +344,13 @@ export function postPublications(payload, nameUser, idUser) {
 }
 
 export function putPublications(idPublication, idUser, data) {
-	return async function (dispatch) {
-		const response = await clienteAxios.put(`/publications?idPublication=${idPublication}&idUser=${idUser}`, data);
-		return dispatch({ type: "PUT_PUBLICATION", payload: response.data });
-	};
+  return async function (dispatch) {
+    const response = await clienteAxios.put(
+      `/publications?idPublication=${idPublication}&idUser=${idUser}`,
+      data
+    );
+    return dispatch({ type: "PUT_PUBLICATION", payload: response.data });
+  };
 }
 
 export function putLike(idPublication, idUser) {
@@ -342,7 +364,9 @@ export function putLike(idPublication, idUser) {
 
 export function deletePublications(idPublication, idUser, userType) {
   return async function (dispatch) {
-    const response = await clienteAxios.delete(`/publications?idPublication=${idPublication}&idUser=${idUser}&userType=${userType}`);
+    const response = await clienteAxios.delete(
+      `/publications?idPublication=${idPublication}&idUser=${idUser}&userType=${userType}`
+    );
     return dispatch({ type: "DELETE_PUBLICATION", payload: response.data });
   };
 }
@@ -351,10 +375,12 @@ export function deletePublications(idPublication, idUser, userType) {
 export function postJobs(payload) {
   return async function (dispatch) {
     const response = await clienteAxios.post("/jobs", payload);
-    return dispatch({
+
+    dispatch({
       type: ADD_NEW_JOB,
-      payload:response.data
+      payload: response.data,
     });
+    return response.data;
   };
 }
 
@@ -474,10 +500,10 @@ const urlUploadPicPublication = (urlPicturePublication) => ({
 
 export const resetPicturePublications = () => {
   return async function (dispatch) {
-      return dispatch({
-        type: "RESET_PICTURE_PUBLICATION",
-        payload: null,
-      })
+    return dispatch({
+      type: "RESET_PICTURE_PUBLICATION",
+      payload: null,
+    });
   };
 };
 
@@ -495,7 +521,19 @@ export function getJobs() {
     try {
       const allJobs = await clienteAxios.get(`/jobs`);
       return dispatch({ type: GET_JOBS, payload: allJobs.data });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function deleteJobsAction(idJob) {
+  return async function (dispatch) {
+    try {
+      await clienteAxios.delete(`/jobs/${idJob}`);
+      return dispatch({ type: DELETE_JOB, payload: idJob });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -510,7 +548,6 @@ export function postulation(idJob, idUser) {
   };
 }
 
-
 export const getCountryStateAction = () => {
   return async function (dispatch) {
     try {
@@ -524,19 +561,77 @@ export const getCountryStateAction = () => {
 export function editJobPostulationsAction(idJob, job) {
   return async function (dispatch) {
     try {
-       await clienteAxios.put(`/jobs/${idJob}`, job);
-       console.log('se mando el job editado');
+      await clienteAxios.put(`/jobs/${idJob}`, job);
+      console.log("se mando el job editado");
     } catch (error) {
       console.log(error);
     }
   };
 }
-export const editCompanyDataAction =(infoUser) => {
+export const editCompanyDataAction = (infoUser) => {
   return async function (dispatch) {
     try {
-      const editCompany = await clienteAxios.put(`/companies/${infoUser.idFireBase}`, infoUser);
+      const editCompany = await clienteAxios.put(
+        `/companies/${infoUser.idFireBase}`,
+        infoUser
+      );
       // return dispatch({ type: GET_JOBS, payload: editCompany.data });
       console.log(editCompany.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const singinAdminAction = (gmail, pass) => {
+  return async function (dispatch) {
+    try {
+      const gemail = gmail;
+      const userFirebase = await signInWithEmailAndPassword(auth, gemail, pass);
+      const { uid, email, displayName, photoURL } = userFirebase.user;
+      const user = {
+        fullName: displayName || "Admin",
+        idFireBase: uid,
+        gmail: email,
+        photograph: photoURL || false,
+        userType: "admin",
+      };
+      const rta = await clienteAxios.post("/admin", user);
+      console.log(rta);
+      localStorage.setItem("token", rta.data.token);
+      // localStorage.setItem("userType", userType);
+      tokenAuth(rta.data.token);
+    } catch (error) {
+      console.log(error);
+      await signOut(auth);
+      localStorage.removeItem("token");
+      // localStorage.removeItem("userType");
+    }
+  };
+};
+
+
+export const mercadoPagoAction = ( idJob, plan ) => { 
+  
+  return async function (dispatch) {
+    try {
+      const mercadoPago = await clienteAxios.get(`/create_preference/${idJob}?plan=${plan}`)
+      .then((data) => {
+        dispatch({ 
+          type: MERCADO_PAGO, 
+          payload: data.data });
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const setPlanMercado = (plan) => {
+  return async function (dispatch) {
+    try {
+      dispatch({ 
+        type: SET_PLAN, 
+        payload: plan });
     } catch (error) {
       console.log(error);
     }

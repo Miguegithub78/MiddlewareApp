@@ -16,6 +16,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { useHistory } from "react-router-dom";
 import styles from "./Publications.module.css";
+import Socket from "../socket.js"
+
 export const Publications = () => {
 
   const history = useHistory();
@@ -26,6 +28,7 @@ export const Publications = () => {
   const publiImg = useSelector((state) => state.imgPublication);
   const pages = useSelector((state) => state.pages);
   const finishPage = useSelector((state) => state.finishPage);
+  var [idUser, setIdUser] = useState(null);
 
   var [idPost, setIdPost] = useState(null);
   var [loadingImg, setLoadingImg] = useState(false);
@@ -61,6 +64,14 @@ export const Publications = () => {
 
   }, [loadingPubli]);
 
+  useEffect(()=>{
+
+    setTimeout(()=>{
+
+      setIdUser(user?._id)
+    }, 500)
+    
+  }, [user])
   
   window.addEventListener('scroll', ()=>{
 
@@ -103,9 +114,16 @@ export const Publications = () => {
     }
   }
 
-  function addLikes(idPublications) {
+  function addLikes(idPublications, userPublicationId) {
     setIdPost(idPublications);
     dispatch(putLike(idPublications, user._id));
+    Socket.emit('like', {
+      type: 2,
+      user: user.name,
+      userID: user._id,
+      publication: idPublications,
+      userPublicationId: userPublicationId
+    })
   }
 
   function handleChange() {
@@ -141,6 +159,17 @@ export const Publications = () => {
 
     dispatch(deletePublications(idPost, user._id, user.userType))
   }
+
+  useEffect(()=>{
+
+    Socket.on('liked',(data)=>{
+      if(data.userPublicationId === idUser){
+
+        console.log(data)
+      }
+    })
+
+  }, [Socket, idUser])
 
   return publications ? (
     <div className="container" onScroll={handleScroll}>
@@ -319,7 +348,7 @@ export const Publications = () => {
                           }
 
                           onClick={() => {
-                            addLikes(e._id);
+                            addLikes(e._id, (e.junior ? e.junior._id : e.company._id));
                             if (
                               e.likes.length === e.likesNumber &&
                               !e.likes.includes(user._id)

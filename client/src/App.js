@@ -12,9 +12,20 @@ import { useEffect } from "react";
 import JuniorsDetail from "./components/JuniorsDetails/JuniorsDetails";
 import CreatePublications from "./components/CreatePublications/CreatePublications";
 import ProfileCompany from "./components/ProfileCompany";
-import Chat from './components/Chat';
+import Socket from './components/socket.js';
+import Chat from './components/Chat/Chat2.jsx';
+import Admin from "./components/Admin/Admin";
+import AdminHome from "./components/Admin/AdminHome";
+import Notifications from "./components/Notifications/Notifications";
+import MercadoPago from './components/Mercadopago/mercadopago';
 
 function App() {
+
+  useEffect(()=>{
+
+    Socket.emit('conectado', "new new connection")
+  }, [])
+
   //   const { user } = useSelector((state) => state);
   //   const history = useHistory();
   const token = localStorage.getItem("token");
@@ -39,18 +50,24 @@ function App() {
         <Route exact path="/jobs/:id" component={JobsDetails} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/empleos/:id" component={JobsDetails} />
+
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/home" component={AdminHome} />
+        {/* <Route exact path="/admin/home/juniors" component={AdminHomeJuniors} /> */}
         <Route
           exact
           path="/createpublications"
           component={CreatePublications}
         />
 
-        <Route path='/juniors/:id' component={JuniorsDetail} />
-        <Route path='/chat' component={Chat} />
-        {/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
-      </Switch>
-    </Router>
-  );
+				<Route path='/juniors/:id' component={JuniorsDetail} />
+				<Route path='/chat' component={Chat} />
+        <Route path='/notifications' component={Notifications} />
+        <Route path='/mercadopago/:idJob' component={MercadoPago} />
+				{/* <RutaPrivada exact path="/proyectos" component={Proyectos} /> */}
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

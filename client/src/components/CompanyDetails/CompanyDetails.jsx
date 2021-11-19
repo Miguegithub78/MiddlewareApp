@@ -54,7 +54,6 @@ export default function CompanyDetail() {
 	var [currentIdChat, setCurrentIdChat] = useState('');
 	var [oneCompany, setOneCompany] = useState('');
 
-	const user = useSelector((state) => state.user);
 	const companies = useSelector((state) => state.companies);
 
 	async function searchCompanyDetails(id) {

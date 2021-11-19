@@ -35,6 +35,7 @@ const create_preference = async (req, res) => {
 		];
 	}
 
+
 	let preference = {
 		items: product,
 		external_reference: `${idJob}/${product[0].title}`,
@@ -61,6 +62,7 @@ const create_preference = async (req, res) => {
 		},
 		auto_return: 'approved',
 	};
+
 
 	mercadopago.preferences
 		.create(preference)

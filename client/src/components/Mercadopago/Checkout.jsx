@@ -14,7 +14,7 @@ export default function Checkout({ product, dates }) {
 
     document.getElementById('form1').appendChild(script)
     return () => {
-      document.getElementById('form1').removeChild(script)
+      // document.getElementById('form1').removeChild(script)
     }
 
   }, [dates]);

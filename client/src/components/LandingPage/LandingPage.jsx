@@ -23,11 +23,11 @@ export default function LandingPage() {
   return (
     <div className="langing mt-5">
       <div className="container">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark p-md-1">
-          <div class="container">
-            <a class="navbar-brand" href="#">Middleware</a>
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark p-md-1">
+          <div className="container">
+            <a className="navbar-brand" href="#">Middleware</a>
             <button
-              class="navbar-toggler"
+              className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNav"
@@ -35,22 +35,22 @@ export default function LandingPage() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <div class="mx-auto"></div>
-              <ul class="navbar-nav">
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <div className="mx-auto"></div>
+              <ul className="navbar-nav">
 
-                <li class="nav-item">
-                  <a class="nav-link text-white" href="#row-servicios">Servicios</a>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="#row-servicios">Servicios</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link text-white" href="#row-nosotros">Sobre nosotros</a>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="#row-nosotros">Sobre nosotros</a>
                 </li>
 
-                <li class="nav-item">
-                  <a class="nav-link text-white" href="#row-contacto">Contacto</a>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="#row-contacto">Contacto</a>
                 </li>
               </ul>
             </div>

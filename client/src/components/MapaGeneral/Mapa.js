@@ -87,9 +87,9 @@ export default function Mapa() {
 
         onLoad={onMapLoad}
       >
-        {companies?.map((marker) => (
+        {companies?.map((marker,i) => (
           <Marker
-            key={`${Number(marker.latitude)}-${Number(marker.longitude)}`}
+            key={`${Number(marker.latitude)}-${Number(marker.longitude)}-${i}`}
             position={{ lat: Number(marker.latitude), lng: Number(marker.longitude) }}
 
             onClick={() => {

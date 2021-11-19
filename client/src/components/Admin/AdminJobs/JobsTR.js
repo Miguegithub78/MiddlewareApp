@@ -4,7 +4,7 @@ import ModalDelete from "./ModalDelete";
 const JobsTR = ({ job, i, handleDelete }) => {
   // console.log(job, "jobsssss");
   const { date, company, juniors, status, premium } = job;
-  return (
+  return job? (
     <tr className="border-bottom">
       <td>
         <div className="p-2">
@@ -18,10 +18,10 @@ const JobsTR = ({ job, i, handleDelete }) => {
       </td>
       <td>
         <div className="p-2 d-flex flex-row align-items-center mb-2">
-          <img src={company.photograph} width="40" className="rounded-circle" />
+          <img src={company&&company.photograph} width="40" className="rounded-circle" />
           <div className="d-flex flex-column ">
-            <span className="d-block  font-weight-bold">{company.name}</span>
-            <small className="text-muted">{company.gmail}</small>
+            <span className="d-block  font-weight-bold">{company&&company.name}</span>
+            <small className="text-muted">{company&&company.gmail}</small>
           </div>
         </div>
       </td>
@@ -49,7 +49,7 @@ const JobsTR = ({ job, i, handleDelete }) => {
         </div>
       </td>
     </tr>
-  );
+  ):'cargando';
 };
 
 export default JobsTR;

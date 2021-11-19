@@ -8,15 +8,13 @@ import {
   getJuniors,
   getCompanies,
   getTechnologies,
-  emailVerificationAction,
+
 } from "../../redux/actions";
 import tokenAuth from "../config/token";
 
 import {
-  loginOkey,
-  logOutUserAction,
   getUserAction,
-  sortJobsBy,
+
 } from "../../redux/actions";
 
 import { Search } from "../Search/Search";
@@ -37,7 +35,6 @@ const Home = () => {
   const userType = localStorage.getItem("userType");
   useEffect(() => {
     if (token && user) {
-      console.log("dispatch el tokeeenn", token);
       tokenAuth(token);
       dispatch(getTechnologies());
       if (user.userType === "juniors") dispatch(getCompanies());
@@ -67,9 +64,9 @@ const Home = () => {
   let [page, setPage] = useState(0);
   
    const pagination = () => {
-    if (juniors.length) return juniors.slice(page, page + 8);
+    if (juniors.length) return juniors.slice(page, page + 9);
     if (juniors.info) return juniors;
-    if (companies.length) return companies.slice(page, page + 8);
+    if (companies.length) return companies.slice(page, page + 9);
     if (companies.info) return companies;
     return [];
     
@@ -77,16 +74,16 @@ const Home = () => {
    };
    const array = pagination();
    const nextPage = () => {
-     if (companies.length > page + 8) {
-       setPage(page + 8);
+     if (companies.length > page + 9) {
+       setPage(page + 9);
      }
-     if (juniors.length > page + 8) {
-      setPage(page + 8);
+     if (juniors.length > page + 9) {
+      setPage(page + 9);
     }
    };
    const previusPage = () => {
      if (page > 0) {
-       setPage(page - 8);
+       setPage(page - 9);
      }
    };
 

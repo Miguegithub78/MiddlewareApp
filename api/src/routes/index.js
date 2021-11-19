@@ -3,7 +3,7 @@ const { Router } = require('express');
 const router = Router()
 
 const { signIn } = require('./controllers/userType')
-const { getAllJuniors, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile } = require('./controllers/userjunior')
+const { getAllJuniors, getJuniorById, updateJuniorsProfile, deleteJuniorsProfile, updateUserNotifications, deleteNotifications } = require('./controllers/userjunior')
 const {getAllCompanies, getCompaniesById, updateCompaniesProfile, deleteCompaniesProfile} = require('./controllers/usercompanies')
 const { getAllLaguages, getAllTechnologies, getUbication } = require('./controllers/abilities')
 const { adminRegister, getAdmins } = require('./controllers/useradmin')
@@ -19,10 +19,12 @@ router.post('/login', signIn);
 
 router.get('/juniors', getAllJuniors);
 router.get('/juniors/:id', getJuniorById);
-
-
 router.put('/juniors/:id', updateJuniorsProfile);
 router.delete('/juniors/:id', deleteJuniorsProfile);
+
+//Notifications
+
+router.delete('/notifications', deleteNotifications)
 
 router.get('/companies', getAllCompanies);
 router.get('/companies/:id', getCompaniesById); 

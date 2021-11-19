@@ -7,7 +7,7 @@ const SuccessModal = ({handleClick}) => {
         type="button"
         className="btn btn-block btn-dark btn-outline-light"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#Succ"
         onClick={handleClick}
       >
         Guardar Cambios
@@ -15,15 +15,15 @@ const SuccessModal = ({handleClick}) => {
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="Succ"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="SuccLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="SuccLabel">
                 
               </h5>
               <button

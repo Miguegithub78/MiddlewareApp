@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { getJuniorsDetails } from "../../redux/actions";
+import { getJuniorsDetails, putNotification } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+<<<<<<< HEAD
 import NavBar from '../NavBar/NavBar';
+=======
+import Socket from '../socket.js'
+
+>>>>>>> main
 
 export default function JuniorsDetail() {
   const { id } = useParams();
@@ -14,7 +19,7 @@ export default function JuniorsDetail() {
   useEffect(() => {
     dispatch(getJuniorsDetails(id))
     console.log(juniors)
-  }, [dispatch]);
+  }, [id]);
 
   const juniors = useSelector(state => state.juniorsdetails)
 
@@ -24,7 +29,7 @@ export default function JuniorsDetail() {
   var [state, setState] = useState({ messages: [], owners: null, ownersNames: null, img: null })
   var [idChat, setIdChat] = useState('')
   var [currentIdChat, setCurrentIdChat] = useState('')
-  var [onejunior, setOnejunior] = useState('')
+  // var [onejunior, setOnejunior] = useState('')
 
   const user = useSelector((state) => state.user);
 
@@ -96,6 +101,16 @@ export default function JuniorsDetail() {
         ownersNames: state.ownersNames == null ? { user1: juniors.name, user2: user.name } : state.ownersNames,
         img: state.img == null ? { user1: juniors.photograph, user2: user.photograph } : state.img
       });
+
+      dispatch(putNotification(juniors._id, user._id, 3, user.name, juniors.userType))
+
+      Socket.emit('notification', {
+        typeNotification: 3,
+        userName: user.name,
+        _id: user._id,
+        userPublicationId: juniors._id,
+        userType: juniors.userType
+      })
     }
     catch (err) {
       console.log(err.message)
@@ -158,12 +173,12 @@ export default function JuniorsDetail() {
 
 
     <NavBar />
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="row card ">
-            <div class="col-12 bg-white p-0 px-3 py-3 mb-3">
-              <div class="d-flex flex-column align-items-center">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6">
+          <div className="row card ">
+            <div className="col-12 bg-white p-0 px-3 py-3 mb-3">
+              <div className="d-flex flex-column align-items-center">
                 <img src={juniors.photograph} alt='Imagen no encontrada' className="img-rounded" width="150px" height="150px" ></img>
                 <h3 className="mt-2">{juniors.name}</h3>
                 <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
@@ -173,10 +188,10 @@ export default function JuniorsDetail() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-user">
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-user">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
@@ -209,10 +224,10 @@ export default function JuniorsDetail() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-mail">
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-mail">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                   </svg>
@@ -243,15 +258,15 @@ export default function JuniorsDetail() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-phone">
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-phone">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                   </svg>
                   Teléfono: {juniors.phone}
                 </h6>
-                <div class="text-center">
+                <div className="text-center">
                   {user && user.userType == 'companies' ?
                     <button type="button" onClick={() => generateChat()}
                       type="button"

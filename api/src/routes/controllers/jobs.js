@@ -126,7 +126,7 @@ const getJobsById = async (req, res) => {
 const putJobs = async (req, res) => {
     
     const { id } = req.params; //id de job
-   
+   console.log(id, '/////');
       const { title, description, photograph, country, city, salary, currency, date, technologies, idCompany, idFireBase, premium, status, openToFullTime, openToRelocate, openToRemote } = req.body;
   
       const token = req.headers["x-auth-token"];
@@ -141,9 +141,9 @@ const putJobs = async (req, res) => {
       
         const company = await Company.findOne({ idCompany } );
 
-        if (!company || company.idFireBase !== decoded.id) {
-          return res.status(403).json({ error: 'access denied' });
-        }
+      //   if (!company || company.idFireBase !== decoded.id) {
+      //     return res.status(403).json({ error: 'access denied' });
+      //   }
 
           if(!title){
             

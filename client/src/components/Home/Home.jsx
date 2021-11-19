@@ -67,9 +67,9 @@ const Home = () => {
   let [page, setPage] = useState(0);
   
    const pagination = () => {
-    if (juniors.length) return juniors.slice(page, page + 8);
+    if (juniors.length) return juniors.slice(page, page + 9);
     if (juniors.info) return juniors;
-    if (companies.length) return companies.slice(page, page + 8);
+    if (companies.length) return companies.slice(page, page + 9);
     if (companies.info) return companies;
     return [];
     
@@ -77,16 +77,16 @@ const Home = () => {
    };
    const array = pagination();
    const nextPage = () => {
-     if (companies.length > page + 8) {
-       setPage(page + 8);
+     if (companies.length > page + 9) {
+       setPage(page + 9);
      }
-     if (juniors.length > page + 8) {
-      setPage(page + 8);
+     if (juniors.length > page + 9) {
+      setPage(page + 9);
     }
    };
    const previusPage = () => {
      if (page > 0) {
-       setPage(page - 8);
+       setPage(page - 9);
      }
    };
 

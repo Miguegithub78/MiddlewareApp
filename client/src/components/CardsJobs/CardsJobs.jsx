@@ -54,7 +54,24 @@ function CardsJobs() {
 				? jobs.map((j) =>
 						j.company && j.status === 'active' ? (
 							<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
-								<div className={s.card}>
+								<div
+									className={
+										j.premium === 2
+											? `${s.card} ${s.cardPremium}`
+											: j.premium === 1
+											? `${s.card} ${s.cardDefault}`
+											: `${s.card}`
+									}
+								>
+									{j.premium === 2 ? (
+										<p className={s.premium}>
+											<i class='bi bi-star-fill'></i>
+										</p>
+									) : j.premium === 1 ? (
+										<p className={s.standard}>
+											<i class='bi bi-star-fill'></i>
+										</p>
+									) : null}
 									{!j.openToRemote ? (
 										<p className={s.country}>{j.country}</p>
 									) : (

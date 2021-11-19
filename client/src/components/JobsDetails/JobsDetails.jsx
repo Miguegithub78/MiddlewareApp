@@ -158,17 +158,17 @@ export default function JobsDetails() {
 					</div>
 					<div className={s.info}>
 						<div className={s.info_box}>
-							<p className={s.info_title}>Pais:</p>
-							<p>{jobsDetails.country}</p>
+							<p className={s.info_title}>Relocación:</p>
+							<p>{jobsDetails.openToRelocate ? 'Si' : 'No'}</p>
 						</div>
 						<div className={s.info_box}>
-							<p className={s.info_title}>Ciudad:</p>
-							<p>{jobsDetails.city !== '' ? jobsDetails.city : 'all world'}</p>
+							<p className={s.info_title}>Remoto:</p>
+							<p>{jobsDetails.openToRemote ? 'Si' : 'No'}</p>
 						</div>
 						<div className={s.info_box}>
-							<p className={s.info_title}>salario:</p>
+							<p className={s.info_title}>FullTime:</p>
 							<p className={s.textNone}>
-								{money(jobsDetails.currency, jobsDetails.salary)}
+								{jobsDetails.openToFullTime ? 'Si' : 'No'}
 							</p>
 						</div>
 					</div>

@@ -17,7 +17,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
 
                 <div className="text-center"> <img src={e.photograph} width="100" className="rounded-circle"/>
                     
-                    <h3 className="mt-2" style={{color: "black"}}>{e.name}</h3>
+                    <h3 className={`mt-2 ${s.p}`} style={{color: "black"}}>{e.name}</h3>
                     
                     <div className="d-flex flex-column justify-content-center">
 
@@ -28,7 +28,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
                           {
                           e.technologies.length
                           ? e.technologies.map((el, i) => i < 5 && <span className={`m-2 ${s.neo}`} key={i+1000}>{el.name}</span>)
-                          :<span style={{color: "black"}}>No tiene tecnotogías asigndas</span>
+                          :<span style={{color: "black"}}>No tiene tecnologías asignadas</span>
                           }
                         </span>
                       </div>

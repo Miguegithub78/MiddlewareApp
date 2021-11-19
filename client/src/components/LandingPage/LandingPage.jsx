@@ -132,7 +132,7 @@ export default function LandingPage() {
                   </div>
 
                   <div className="card-text">
-                    <span>Tendrás acceso a un chat en linea, aumentando la satisfacción de lograr conectar Progrador Jr/Empresa en tiempos más breves, agilizando el proceso de selección, y teniendo información adicional al instante.</span>
+                    <span>Tendrás acceso a un chat en linea, aumentando la satisfacción de lograr conectar Programador Jr/Empresa en tiempos más breves, agilizando el proceso de selección, y teniendo información adicional al instante.</span>
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ export default function LandingPage() {
                   </div>
 
                   <div className="card-text">
-                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                    <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret.</span>
                   </div>
                 </div>
 

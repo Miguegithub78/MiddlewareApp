@@ -7,7 +7,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
   //const companies = useSelector((state) => state.companies);
 
   return (
-
+    <div className="container-fluid">
     <div className={s.card1}>
       {
         arrayJuniors && arrayJuniors.map((e, i) => <>
@@ -39,6 +39,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
           </div>
         </>)
       }
+    </div>
     </div>
 
   );

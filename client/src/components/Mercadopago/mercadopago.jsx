@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mercadoPagoAction, getUserAction } from '../../redux/actions';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
-import LoginImage from "../LandingPage/image.png"
-import styles from "../LandingPage/LandingPage.module.css"
+import NavBar from '../NavBar/NavBar';
 
 export default function MercadoPago() {
 
@@ -35,18 +34,20 @@ export default function MercadoPago() {
 
   return (
 
-    <div className="container">
-      <div className="card">
+    <div className="">
+      <NavBar />
+      <div className="container">
+        <div className="card">
 
-        <div className="card-text text-center">
-
-
-
-
-          {!id ? <p>Cargando...</p> : <Checkout product={product} dates={id} />}
+          <div className="card-text text-center">
 
 
 
+
+            {!id ? <p>Cargando...</p> : <Checkout product={product} dates={id} />}
+
+
+          </div>
         </div>
 
 

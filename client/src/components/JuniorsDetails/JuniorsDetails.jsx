@@ -6,12 +6,9 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from '../../firebaseConfig'
 import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
-<<<<<<< HEAD
 import NavBar from '../NavBar/NavBar';
-=======
 import Socket from '../socket.js'
 
->>>>>>> main
 
 export default function JuniorsDetail() {
   const { id } = useParams();

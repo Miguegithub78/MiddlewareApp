@@ -6,37 +6,53 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mercadoPagoAction, getUserAction } from '../../redux/actions';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import LoginImage from "../LandingPage/image.png"
+import styles from "../LandingPage/LandingPage.module.css"
 
-
-export default function MercadoPago(){
+export default function MercadoPago() {
 
   // const [dates, setDates] = useState("");
-	const dispatch = useDispatch();
-	const plan = useSelector((state) => state.plan);
-	const { id, product } = useSelector((state) => state.mercadoPago);
-	const user = useSelector((state) => state.user);
-	const history = useHistory();
-	const { idJob } = useParams();
-	useEffect(() => {
-		dispatch(mercadoPagoAction(idJob, plan));
-		// setDates(idMercadoPago);
+  const dispatch = useDispatch();
+  const plan = useSelector((state) => state.plan);
+  const { id, product } = useSelector((state) => state.mercadoPago);
+  const user = useSelector((state) => state.user);
+  const history = useHistory();
+  const { idJob } = useParams();
+  useEffect(() => {
+    dispatch(mercadoPagoAction(idJob, plan));
+    // setDates(idMercadoPago);
 
-	}, []);	
+  }, []);
 
-	onAuthStateChanged(auth, (userFirebase) => {
-		if (userFirebase) {
-			if (user) return;
-			dispatch(getUserAction(userFirebase));
-		} else {
-			history.push('/');
-		}
-	});
+  onAuthStateChanged(auth, (userFirebase) => {
+    if (userFirebase) {
+      if (user) return;
+      dispatch(getUserAction(userFirebase));
+    } else {
+      history.push('/');
+    }
+  });
 
   return (
-    <div className="MercadoPago">
-      { !id ? <p>Cargando...</p> : <Checkout product={product} dates={id} /> }
-    </div>
-      
+
+    <div className="container">
+      <div className="card">
+
+        <div className="card-text text-center">
+
+
+
+
+          {!id ? <p>Cargando...</p> : <Checkout product={product} dates={id} />}
+
+
+
+        </div>
+
+
+      </div >
+    </div >
+
   )
 }
 

@@ -84,7 +84,7 @@ const orderFeedback = async (req, res) => {
   try {
     const {
       payment_id,
-      payment_status,
+      collection_status,
       merchant_order_id,
       external_reference,
       status,
@@ -133,7 +133,7 @@ const orderFeedback = async (req, res) => {
 			// acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
 			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
 			to: `${gmailCompany}`, // list of receivers
-			subject: 'Pago en Middleware', // Subject line
+			subject: `Tu Pago en Middleware fue ${ collection_status }`, // Subject line
 			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
       Muchas gracias!!!
                       Saludos desde Middleware!!! </b>`,

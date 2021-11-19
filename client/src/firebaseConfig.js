@@ -15,7 +15,7 @@ const firebaseConfig = {
 };
 // const userType = localStorage.getItem('userType')
 const actionCodeSettings = {
-  url:process.env.MAIL_REDIRECT ,
+  url:'https://middlewareapp-new.vercel.app' ,
   handleCodeInApp: true,
 };
 

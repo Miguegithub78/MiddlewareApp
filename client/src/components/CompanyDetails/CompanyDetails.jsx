@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyDetails, putNotification } from '../../redux/actions';
+import {
+	getCompanyDetails,
+	putNotification,
+	getUserAction,
+} from '../../redux/actions';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
+import tokenAuth from '../config/token';
 import Mapa from '../MapDetails/Mapa';
 import { db } from '../../firebaseConfig';
 import {
@@ -18,11 +25,26 @@ import NavBar from '../NavBar/NavBar';
 import Socket from '../socket';
 
 export default function CompanyDetail() {
+	const user = useSelector((state) => state.user);
 	const { id } = useParams();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	useEffect(() => {
-		dispatch(getCompanyDetails(id));
-	}, [dispatch]);
+		const token = localStorage.getItem('token');
+		if (token && user) {
+			tokenAuth(token);
+			dispatch(getCompanyDetails(id));
+		}
+	}, [user]);
+
+	onAuthStateChanged(auth, (userFirebase) => {
+		if (userFirebase) {
+			if (user) return;
+			dispatch(getUserAction(userFirebase));
+		} else {
+			history.push('/');
+		}
+	});
 
 	const company = useSelector((state) => state.details);
 
@@ -38,7 +60,6 @@ export default function CompanyDetail() {
 	var [currentIdChat, setCurrentIdChat] = useState('');
 	var [oneCompany, setOneCompany] = useState('');
 
-	const user = useSelector((state) => state.user);
 	const companies = useSelector((state) => state.companies);
 
 	async function searchCompanyDetails(id) {

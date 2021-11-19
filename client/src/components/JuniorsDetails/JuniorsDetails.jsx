@@ -309,7 +309,7 @@ export default function JuniorsDetail() {
                     </label>
                   ))}
                 </div>
-                <div className="fw-bold h4 mt-3">
+                {/* <div className="fw-bold h4 mt-3">
                   <h3 className="fw-bold h4 mt-3">Habilidades</h3>
                   {juniors.softskills?.map((soft) => (
                     <label
@@ -318,7 +318,7 @@ export default function JuniorsDetail() {
                       {soft.name}
                     </label>
                   ))}
-                </div>
+                </div> */}
 
 
               </div>

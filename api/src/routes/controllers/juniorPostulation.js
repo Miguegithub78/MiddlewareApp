@@ -66,7 +66,7 @@ const juniorsPostulations = async (req, res) => {
 										: 'No hay una carta de presentación disponible aun.'
 								}
                 Te comentamos sus capacidades y experiencia en nuestra app. Ingresa para verlo.         
-                <a href= "http://localhost:3000/juniors/${
+                <a href= "https://middlewareapp-new.vercel.app/juniors/${
 									junior.idFireBase
 								}">El Talento postulado</a> 
                       Saludos desde Middleware!!! </b>`,

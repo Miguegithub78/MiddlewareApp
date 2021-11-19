@@ -23,7 +23,7 @@ router.put('/juniors/:id', updateJuniorsProfile);
 router.delete('/juniors/:id', deleteJuniorsProfile);
 
 //Notifications
-// router.put('/notifications', updateUserNotifications)
+
 router.delete('/notifications', deleteNotifications)
 
 router.get('/companies', getAllCompanies);

@@ -1,36 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 //import { useSelector } from 'react-redux';
-import styles from "./card.css";
+import s from "./card.module.css";
 
 export const CardsJuniors = ({ arrayJuniors }) => {
   //const companies = useSelector((state) => state.companies);
 
   return (
+    <div className="container-fluid">
+    <div className={s.card1}>
+      {
+        arrayJuniors && arrayJuniors.map((e, i) => <>
 
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12 text-center">
-          <h2>Nuestros Programadores</h2>
-          <div className="row">
-            {arrayJuniors?.map((p) => (
-              <div className="col-lg-3 col-md 12 mb-4">
-                <div className="card-section">
-                  <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
-                    <Link to={`/juniors/${p._id}`} key={p.name}>
-                      <img src={p.photograph} className="card-img-top mt-3" style={{ width: " 150px ", height: " 180px " }} alt="Card cap" />
-                      <div className="card-body  text-dark">
-                        <h6 className="card-title">{p.name}{p.lastname}</h6>
+          <div className={`d-flex justify-content-center ${s.divCard2}`} key={i}>
+          <NavLink style={{paddingLeft: 13, textDecoration: 'none'}} to={`/juniors/${e._id}`}><div className={`${s.card2} p-3 py-4`}>
+
+                <div className="text-center"> <img src={e.photograph} width="100" className="rounded-circle"/>
+                    
+                    <h3 className="mt-2" style={{color: "black"}}>{e.name}</h3>
+                    
+                    <div className="d-flex flex-column justify-content-center">
+
+                      <div><span className={s.span}>{e.title}</span></div>
+
+                      <div>
+                        <span className={`mt-3 ${s.spanTecnologies}`}>
+                          {
+                          e.technologies.length
+                          ? e.technologies.map((el, i) => i < 5 && <span className={`m-2 ${s.neo}`} key={i+1000}>{el.name}</span>)
+                          :<span style={{color: "black"}}>No tiene tecnotogías asigndas</span>
+                          }
+                        </span>
                       </div>
-                    </Link>
-                  </div >
+                    
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div >
-        </div>
-
-      </div>
+            </div></NavLink>
+          </div>
+        </>)
+      }
+    </div>
     </div>
 
   );

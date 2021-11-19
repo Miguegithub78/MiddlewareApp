@@ -1,12 +1,10 @@
 import { useState } from "react";
-// import CareerData from "./CareerData";
+import ModalDeletAccount from "../ProfileUser/ModalDeletAccount";
+import { useDispatch } from "react-redux";
+import { deleteCompany } from "../../redux/actions";
 import ChangePicture from "./../ProfileUser/ChangePicture";
-// import SocialMedia from "./SocialMedia";
 
-// import ModalDeletAccount from "./ModalDeletAccount";
-
-const Prueba2left = ({ user, setInfoUser, infoUser, editValue }) => {
-
+const Prueba2left = ({ setInfoUser, infoUser, editValue }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,
@@ -14,7 +12,11 @@ const Prueba2left = ({ user, setInfoUser, infoUser, editValue }) => {
       description: e.target.value,
     }));
   };
-  return user ? (
+  const dispatch = useDispatch();
+  const handleDelete = (infoUser) => {
+    dispatch(deleteCompany(infoUser.idFireBase));
+  };
+  return (
     <>
       <div className="d-flex flex-column align-items-center text-center">
         <img
@@ -41,17 +43,17 @@ const Prueba2left = ({ user, setInfoUser, infoUser, editValue }) => {
             className={`form-control ${!editValue && "green-shadow"}`}
             type="text"
             value={infoUser.description}
-            placeholder="Quien eres? . . ."
+            placeholder="Cuentanos de tu empresa . . ."
             onChange={handleChange}
             name="description"
             disabled={editValue}
           />
         </div>
+        <div className='mt-4'>
+          <ModalDeletAccount handleDelete={handleDelete} infoUser={infoUser} />
+        </div>
       </div>
-
     </>
-  ) : (
-    "Cargando...."
   );
 };
 

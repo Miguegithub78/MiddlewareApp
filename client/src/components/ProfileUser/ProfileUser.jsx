@@ -60,6 +60,7 @@ const ProfileUser = () => {
     openToRemote: false,
     openToFullTime: false,
     academicHistory: [],
+    postulationsJobs: [],
   });
   useEffect(() => {
     if (user) {
@@ -80,11 +81,11 @@ const ProfileUser = () => {
         jobsExperience: user.jobsExperience,
         academicHistory: user.academicHistory,
         phone: user.phone,
-        github: user.github,
-        website: user.website,
+        github: user.github||'',
+        website: user.website||'',
         city: user.city,
         title: user.title || "",
-        linkedin: user.linkedin,
+        linkedin: user.linkedin||'',
       });
     }
 
@@ -93,11 +94,15 @@ const ProfileUser = () => {
     dispatch(getTechnologies());
   }, [user]);
 
+  // useEffect(() => {
+  //   if (infoUser.infoUserChanged) {
+  //     console.log("hubo cambio");
+  //   }
+  // }, [infoUser]);
+  
   useEffect(() => {
-    if (infoUser.infoUserChanged) {
-      console.log("hubo cambio");
-    }
-  }, [infoUser]);
+    dispatch(getUserAction(user));
+  }, []);
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
@@ -115,7 +120,7 @@ const ProfileUser = () => {
     }));
   };
 
-  return user ? (
+  return  (
     <div>
       <NavBar />
 
@@ -159,9 +164,7 @@ const ProfileUser = () => {
       </div>
       <br />
     </div>
-  ) : (
-    "cargando...."
-  );
+  ) 
 };
 
 export default ProfileUser;

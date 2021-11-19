@@ -302,7 +302,7 @@ const Chat2 = () => {
                     <label className="custom-file-upload">
 
                       <input type="file" className="inputt" onChange={publicationImg} />
-                      <i class="fa fa-cloud-upload"></i>
+                      <i className="fa fa-cloud-upload"></i>
                     </label>
 
                     {

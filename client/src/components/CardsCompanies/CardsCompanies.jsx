@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./card.css";
-import { useSelector } from 'react-redux';
-import { getCompanyDetails } from '../../redux/actions'
-import { useDispatch } from 'react-redux'
+
 
 
 export const CardsCompanies = ({ arrayCompanies }) => {
@@ -17,7 +15,7 @@ export const CardsCompanies = ({ arrayCompanies }) => {
         <h2>Nuestras Empresas</h2>  
           <div className="row">
             {arrayCompanies.map((p) => (
-              <div className="col-lg-3 col-md 12 mb-4">
+              <div key={p._id} className="col-lg-3 col-md 12 mb-4">
                 <div className="card-section">
                   <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}>
                     <Link to={`/companies/${p._id}`} key={p.name}>

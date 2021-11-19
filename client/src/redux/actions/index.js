@@ -606,8 +606,8 @@ export const getCountryStateAction = () => {
 export function editJobPostulationsAction(idJob, job) {
 	return async function (dispatch) {
 		try {
+			console.log('se mando el job editado', idJob, job); 
 			await clienteAxios.put(`/jobs/${idJob}`, job);
-			console.log('se mando el job editado');
 		} catch (error) {
 			console.log(error);
 		}

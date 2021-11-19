@@ -174,8 +174,8 @@ export default function JobsDetails() {
 					<div className={s.containerTechs}>
 						<h4>Tecnologias Requeridas:</h4>
 						<div className={s.techs}>
-							{jobsDetails.technologies?.map((t) => (
-								<p key={t.id} className={s.tech}>
+							{jobsDetails.technologies?.map((t, i) => (
+								<p key={i} className={s.tech}>
 									{t.name}
 								</p>
 							))}

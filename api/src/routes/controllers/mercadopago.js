@@ -81,15 +81,8 @@ const create_preference = async (req, res) => {
 
 const orderFeedback = async (req, res) => {
 	try {
-		const {
-			payment_id,
-			payment_status,
-			merchant_order_id,
-			external_reference,
-			status,
-		} = req.query;
+		const { collection_status, external_reference } = req.query;
 
-		console.log(req.query, 'feedback');
 		const reference = external_reference.split('/');
 		const idJob = reference[0];
 		const plan = reference[1];
@@ -106,7 +99,7 @@ const orderFeedback = async (req, res) => {
 		// res.json({
 		//   payment_id: req.query.payment_id,
 		//   payment_status: req.query.payment_status,
-		//   status: req.query.status,
+		//const statusPayment = payment_status,
 		//   merchant_order_id: req.query.merchant_order_id,
 		//   date_created: req.query.date_created,
 		// });
@@ -131,7 +124,7 @@ const orderFeedback = async (req, res) => {
 			// acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
 			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
 			to: `${gmailCompany}`, // list of receivers
-			subject: `Pago en Middleware - ${payment_status}`, // Subject line
+			subject: `Tu Pago en Middleware fue ${collection_status}`, // Subject line
 			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
       Muchas gracias!!!
                       Saludos desde Middleware!!! </b>`,

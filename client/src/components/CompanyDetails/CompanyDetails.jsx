@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getCompanyDetails,
@@ -13,22 +13,16 @@ import { auth } from '../../firebaseConfig';
 import tokenAuth from '../config/token';
 import Mapa from '../MapDetails/Mapa';
 import { db } from '../../firebaseConfig';
-import {
-	collection,
-	getDocs,
-	getDoc,
-	doc,
-	onSnapshot,
-	setDoc,
-} from 'firebase/firestore';
+import { getDoc, doc, setDoc } from 'firebase/firestore';
 import NavBar from '../NavBar/NavBar';
 import Socket from '../socket';
 
 export default function CompanyDetail() {
-	const user = useSelector((state) => state.user);
 	const { id } = useParams();
 	const dispatch = useDispatch();
+
 	const history = useHistory();
+	const user = useSelector((state) => state.user);
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token && user) {
@@ -60,6 +54,7 @@ export default function CompanyDetail() {
 	var [currentIdChat, setCurrentIdChat] = useState('');
 	var [oneCompany, setOneCompany] = useState('');
 
+	const user = useSelector((state) => state.user);
 	const companies = useSelector((state) => state.companies);
 
 	async function searchCompanyDetails(id) {
@@ -205,76 +200,83 @@ export default function CompanyDetail() {
 				</div>
 			</div>
 
-			<div className='container-fluid '>
+			<div className=''>
 				<NavBar />
+				<div className=''>
+					<div className='row m-3 text-center'>
+						<div className='col-lg-6 col-md-6 col-sm-12 col-xs-12 bg-white '>
+							<div className='card'>
+								<div className='card-tittle '>
+									<h4 className='display-5 '>{company.name}</h4>
+									<img
+										src={company.photograph}
+										style={{ width: ' 120px ', height: ' auto ' }}
+										alt='Imagen no encontrada'
+									></img>
+								</div>
 
-				<div className='row align-items-center justify-content-center '>
-					<div className='col-5 text-center p-3  bg-white text-dark border border-3'>
-						<h4 className='display-4 '>{company.name}</h4>
-						<img
-							src={company.photograph}
-							style={{ width: ' 150px ', height: ' 180px ' }}
-							alt='Imagen no encontrada'
-						></img>
-						<h6 className='mb-0 me-auto p-3 '>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								width='24'
-								height='24'
-								viewBox='0 0 24 24'
-								fill='none'
-								stroke='currentColor'
-								strokeWidth='2'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								className='feather feather-globe me-2 icon-inline'
-							>
-								<circle cx='12' cy='12' r='10'></circle>
-								<line x1='2' y1='12' x2='22' y2='12'></line>
-								<path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'></path>
-							</svg>
-							Website: {company.webpage}
-						</h6>
-						<h6 className='mb-0 p-3'>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								width='24'
-								height='24'
-								viewBox='0 0 24 24'
-								fill='none'
-								stroke='currentColor'
-								stroke-width='2'
-								stroke-linecap='round'
-								stroke-linejoin='round'
-								class='feather feather-mail'
-							>
-								<path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path>
-								<polyline points='22,6 12,13 2,6'></polyline>
-							</svg>
-							Email: {company.gmail}
-						</h6>
-						<h6 className='mb-0 p-3'>País: {company.country}</h6>
-						<h6 className='mb-0 p-3'>Provincia: {company.state}</h6>
-						<h6 className='mb-0 p-3'>Ciudad: {company.city}</h6>
-						<h6 className='mb-0 p-3'>Acerca de: {company.description}</h6>
-						{user && user.userType == 'juniors' ? (
-							<button
-								type='button'
-								onClick={() => searchCompanyDetails(company._id)}
-								type='button'
-								className='btn btn-block btn-dark btn-outline-light'
-								data-bs-toggle='modal'
-								data-bs-target='#exampleModalCenter'
-							>
-								Enviar mensaje
-							</button>
-						) : (
-							<div></div>
-						)}
-					</div>
-
-					<div className='col-6 text-center p-3 mb-2 bg-white text-dark border border-3'>
-						<Mapa />
+								<div className='card-text'>
+									<h6 className='mb-0 me-auto p-3 '>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											width='24'
+											height='24'
+											viewBox='0 0 24 24'
+											fill='none'
+											stroke='currentColor'
+											strokeWidth='2'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											className='feather feather-globe me-2 icon-inline'
+										>
+											<circle cx='12' cy='12' r='10'></circle>
+											<line x1='2' y1='12' x2='22' y2='12'></line>
+											<path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'></path>
+										</svg>
+										{company.webpage}
+									</h6>
+									<h6 className='mb-0 p-3'>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											width='24'
+											height='24'
+											viewBox='0 0 24 24'
+											fill='none'
+											stroke='currentColor'
+											strokeWidth='2'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											className='feather feather-mail'
+										>
+											<path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path>
+											<polyline points='22,6 12,13 2,6'></polyline>
+										</svg>
+										{company.gmail}
+									</h6>
+									<h6 className='mb-0 p-3'>País: {company.country}</h6>
+									<h6 className='mb-0 p-3'>Provincia: {company.state}</h6>
+									<h6 className='mb-0 p-3'>Ciudad: {company.city}</h6>
+									<h6 className='mb-0 p-3'>Acerca de: {company.description}</h6>
+									{user && user.userType == 'juniors' ? (
+										<button
+											type='button'
+											onClick={() => searchCompanyDetails(company._id)}
+											type='button'
+											className='btn btn-block btn-dark btn-outline-light'
+											data-bs-toggle='modal'
+											data-bs-target='#exampleModalCenter'
+										>
+											Enviar mensaje
+										</button>
+									) : (
+										<div></div>
+									)}
+								</div>
+							</div>
+						</div>
+						<div className='col-lg-6 col-md-6 col-sm-12 col-xs-12 bg-white '>
+							<Mapa />
+						</div>
 					</div>
 				</div>
 			</div>

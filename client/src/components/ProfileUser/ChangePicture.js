@@ -28,22 +28,22 @@ const ChangePicture = ({ setInfoUser }) => {
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#picture"
         >
           Upload
         </button>
       </div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="picture"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="pictureLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="pictureLabel">
                 Subiendo Foto
               </h5>
               <button

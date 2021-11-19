@@ -556,16 +556,16 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				user: { ...state.user, notifications: [] },
 			};
-		/* 
+
 		case POSTULATION:
 			return {
 				...state,
 				jobs: {
 					...state.jobs,
-					data: arr2,
-					filterData: arr2,
+					data: action.payload,
+					filterData: action.payload,
 				},
-			}; */
+			};
 
 		default:
 			return state;

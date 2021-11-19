@@ -88,59 +88,62 @@ export default function Mapa({ setMarkers, markers, setInfoUser }) {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
+    <div className="row">
+      <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 bg-white ">
 
-      <Locate panTo={panTo} />
-      <Search panTo={panTo} />
+        <Locate panTo={panTo} />
+        <Search panTo={panTo} />
 
-      <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={8}
-        center={center}
-        options={options}
-        onClick={onMapClick}
-        onLoad={onMapLoad}
-      >
+        <GoogleMap
+          id="map"
+          mapContainerStyle={mapContainerStyle}
+          zoom={8}
+          center={center}
+          options={options}
+          onClick={onMapClick}
+          onLoad={onMapLoad}
+        >
 
-        {markers.length > 0 &&
-          markers.map((marker) => (
-            <Marker
-              key={`${marker.lat}-${marker.lng}`}
-              position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
-              onClick={() => {
-                cont = 0;
+          {markers.length > 0 &&
+            markers.map((marker) => (
+              <Marker
+                key={`${marker.lat}-${marker.lng}`}
+                position={{ lat: Number(marker.lat), lng: Number(marker.lng) }}
+                onClick={() => {
+                  cont = 0;
+                  setMarkers([]);
+                }}
+                icon={{
+                  url: `/company.svg`,
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+              />
+            ))}
+
+          {selected ? (
+            <InfoWindow
+              position={{ lat: selected.lat, lng: selected.lng }}
+              onCloseClick={() => {
                 setMarkers([]);
               }}
-              icon={{
-                url: `/company.svg`,
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
-                scaledSize: new window.google.maps.Size(30, 30),
-              }}
-            />
-          ))}
+            >
+              <div>
+                <h2>
+                  <i className="bi bi-laptop"></i>{" "}
+                  Company
 
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setMarkers([]);
-            }}
-          >
-            <div>
-              <h2>
-                <i className="bi bi-laptop"></i>{" "}
-                Company
-
-              </h2>
+                </h2>
 
 
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
+              </div>
+            </InfoWindow>
+          ) : null}
+        </GoogleMap>
+      </div>
     </div>
+
   );
 }
 

@@ -1,11 +1,14 @@
 import { useState } from "react";
-import CareerData from "./CareerData";
+// import CareerData from "./CareerData";
 import ChangePicture from "./ChangePicture";
 import SocialMedia from "./SocialMedia";
 
 import ModalDeletAccount from "./ModalDeletAccount";
 import CardShowExperience from "./ShowWorkExperience/CardShowExperience";
 import CardShowAcademicExperience from "./ShowAcademicExperience/CardShowAcademicExperience";
+import { useDispatch } from "react-redux";
+import { deleteJuniors } from "../../redux/actions";
+import ShowWorkPostulated from "./ShowWorkPostulated/ShowWorkPostulated";
 
 const Prueba2left = ({
   user,
@@ -14,6 +17,8 @@ const Prueba2left = ({
   setWorkExperience,
   setAcademicHistory,
 }) => {
+  const dispatch = useDispatch();
+
   const [editValue, setEditValue] = useState(true);
   const handleChange = (e) => {
     setInfoUser((info) => ({
@@ -22,17 +27,24 @@ const Prueba2left = ({
       description: e.target.value,
     }));
   };
-  return user ? (
+  const handleDelete = (infoUser) => {
+    dispatch(deleteJuniors(infoUser.idUser));
+  };
+  return (
     <div className="col-lg-4">
       <div className="card">
         <div className="card-body">
           <div className="d-flex flex-column align-items-center text-center">
-            <img
-              src={infoUser.photograph}
-              alt="Admin"
-              className="rounded-circle p-1 bg-primary"
-              width="140"
-            />
+            {infoUser.photograph ? (
+              <img
+                src={infoUser.photograph}
+                alt="Admin"
+                className="rounded-circle p-1 bg-primary"
+                width="140"
+              />
+            ) : (
+              "loading.."
+            )}
             <ChangePicture setInfoUser={setInfoUser} />
             <div className="mt-3">
               <h4>{infoUser.name}</h4>
@@ -65,9 +77,11 @@ const Prueba2left = ({
             {editValue ? "editar" : "aceptar"}
           </button>
         </div>
-        <ModalDeletAccount infoUser={infoUser} />
+        <ModalDeletAccount handleDelete={handleDelete} infoUser={infoUser} />
       </div>
       <SocialMedia setInfoUser={setInfoUser} infoUser={infoUser} />
+      <ShowWorkPostulated infoUser={infoUser} />
+
       <CardShowExperience
         setInfoUser={setInfoUser}
         setWorkExperience={setWorkExperience}
@@ -79,8 +93,6 @@ const Prueba2left = ({
         infoUser={infoUser}
       />
     </div>
-  ) : (
-    "Cargando...."
   );
 };
 

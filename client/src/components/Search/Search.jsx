@@ -108,7 +108,11 @@ export const Search = () => {
 				</div>
 			</form>
 			<div className='field2'>
-				<select className={button} name='typePublic' onChange={byTypeSalary}>
+				<select
+					className='form-control'
+					name='typePublic'
+					onChange={byTypeSalary}
+				>
 					<option disabled selected={salary}>
 						Rango Salarial:
 					</option>
@@ -119,7 +123,7 @@ export const Search = () => {
 					<option value='5'>Mayor de $200.000</option>
 				</select>
 
-				<select className={button} name='Technologies' onChange={byTecnology}>
+				<select name='typePublic' name='Technologies' onChange={byTecnology}>
 					<option disabled selected={tech}>
 						Tipo de Tecnología:
 					</option>
@@ -141,11 +145,11 @@ export const Search = () => {
 					city={city}
 					setCity={setCity}
 				/>
-				<select className={button} name='sort' onChange={sortBy}>
+				<select name='typePublic' name='sort' onChange={sortBy}>
 					<option value='premium' selected={sort}>
 						Más Relevantes
 					</option>
-					<option value='date'>Más Reciente</option>
+					<option value='date'>Más Recientes</option>
 				</select>
 			</div>
 			<div>

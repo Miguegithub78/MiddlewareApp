@@ -32,21 +32,21 @@ function CardsJobs() {
 		if (!salary) {
 			return 'Sin especificar';
 		} else if (currency === 'dollar') {
-			return `U$s${salary}`;
+			return `U$s ${salary}`;
 		} else if (currency === 'euro') {
-			return `€${salary}`;
+			return `€ ${salary}`;
 		} else {
-			return `$${salary}`;
+			return `$ ${salary}`;
 		}
 	}
+	const jobs = useSelector((state) => state.jobs.filterData);
+	const user = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(resetFilterJobs());
 		dispatch(getJobs());
-	}, []);
-
-	const jobs = useSelector((state) => state.jobs.filterData);
+	}, [user]);
 
 	return (
 		<div className={s.cards}>
@@ -54,7 +54,26 @@ function CardsJobs() {
 				? jobs.map((j) =>
 						j.company && j.status === 'active' ? (
 							<NavLink key={j._id} className={s.link} to={`/empleos/${j._id}`}>
-								<div className={s.card}>
+								<div
+									className={
+										j.premium === 2
+											? `${s.card} ${s.cardPremium}`
+											: j.premium === 1
+											? `${s.card} ${s.cardDefault}`
+											: `${s.card}`
+									}
+								>
+									{j.premium === 2 ? (
+										<p className={s.premium}>
+											<i class='bi bi-star-fill'></i>
+											Premium
+										</p>
+									) : j.premium === 1 ? (
+										<p className={s.standard}>
+											<i class='bi bi-star-fill'></i>
+											Standard
+										</p>
+									) : null}
 									{!j.openToRemote ? (
 										<p className={s.country}>{j.country}</p>
 									) : (

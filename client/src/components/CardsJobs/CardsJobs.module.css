@@ -28,7 +28,6 @@
 .card:hover {
 	transform: translateY(-5px);
 	transition: 0.4s;
-	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.623);
 }
 
 .card_container_logo {
@@ -98,6 +97,45 @@
 	font-weight: 700;
 }
 
+/* .cardPremium {
+	border: 4px solid rgba(216, 184, 2, 0.767);
+}
+
+.cardDefault {
+  border: 4px solid rgb(161, 160, 160);
+} */
+
+.premium {
+	text-transform: capitalize;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgb(240, 185, 6);
+	color: white;
+	font-weight: 500;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin: 0;
+	font-size: 18px;
+}
+.standard {
+	text-transform: capitalize;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgb(161, 160, 160);
+	color: white;
+	font-weight: 500;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin: 0;
+	font-size: 18px;
+}
+
+i {
+	margin-right: 4px;
+}
+
 .country {
 	text-transform: capitalize;
 	position: absolute;
@@ -156,7 +194,7 @@
 	}
 
 	.card {
-		height: 400px;
+		height: 450px;
 		width: 90vw;
 		padding: 10px;
 		justify-content: start;

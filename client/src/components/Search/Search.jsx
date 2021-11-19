@@ -145,7 +145,7 @@ export const Search = () => {
 					<option value='premium' selected={sort}>
 						Más Relevantes
 					</option>
-					<option value='date'>Más Reciente</option>
+					<option value='date'>Más Recientes</option>
 				</select>
 			</div>
 			<div>

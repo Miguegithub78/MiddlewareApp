@@ -63,6 +63,7 @@ const inicialState = {
 			fulltime: false,
 			remote: false,
 		},
+		activeSort: 'premium',
 	},
 	jobDetails: {},
 	imgPublication: null,
@@ -78,7 +79,7 @@ function filterJobs(state, filterKeyName, payload, reset) {
 	let jobs = state;
 	jobs.activeFilters[filterKeyName] = payload;
 
-	const filterJobs = state.data.filter((job) => {
+	let filterJobs = state.data.filter((job) => {
 		const filterByCountry = jobs.activeFilters.country
 			? job.country.toLowerCase() === jobs.activeFilters.country.toLowerCase()
 			: true;
@@ -136,7 +137,11 @@ function filterJobs(state, filterKeyName, payload, reset) {
 			tech
 		);
 	});
-
+	if (jobs.activeSort === 'premium') {
+		filterJobs = sortJobs('premium', filterJobs);
+	} else {
+		filterJobs = sortJobs('date', filterJobs);
+	}
 	return filterJobs;
 }
 
@@ -190,10 +195,10 @@ function calculateSalary(value, job) {
 	return false;
 }
 
-function sortJobs(string, state) {
+function sortJobs(string, array) {
 	let arr;
 	if (string === 'date') {
-		arr = state.jobs.filterData.sort(function (a, b) {
+		arr = array.sort(function (a, b) {
 			if (calculateDate(a.date) < calculateDate(b.date)) {
 				return -1;
 			}
@@ -204,7 +209,7 @@ function sortJobs(string, state) {
 		});
 	}
 	if (string === 'premium') {
-		arr = state.jobs.filterData.sort(function (a, b) {
+		arr = array.sort(function (a, b) {
 			if (a.premium > b.premium) {
 				return -1;
 			}
@@ -214,6 +219,7 @@ function sortJobs(string, state) {
 			return 0;
 		});
 	}
+	console.log(array);
 	return arr;
 }
 
@@ -306,8 +312,11 @@ const rootReducer = (state = inicialState, action) => {
 			};
 
 		case SORT_JOBS_BY: {
-			let arr = sortJobs(action.payload, state);
-			return { ...state, jobs: { ...state.jobs, filterData: arr } };
+			let arr = sortJobs(action.payload, state.jobs.filterData);
+			return {
+				...state,
+				jobs: { ...state.jobs, filterData: arr, activeSort: action.payload },
+			};
 		}
 		case FILTER_JOBS_BY_COUNTRIES: {
 			const arr = filterJobs(state.jobs, 'country', action.payload);
@@ -394,6 +403,7 @@ const rootReducer = (state = inicialState, action) => {
 						fulltime: false,
 						remote: false,
 					},
+					activeSort: 'premium',
 				},
 			};
 		}
@@ -419,12 +429,13 @@ const rootReducer = (state = inicialState, action) => {
 				publication: { ...state.publication, photograph: action.payload },
 			};
 		case GET_JOBS:
+			let arr = sortJobs('premium', action.payload);
 			return {
 				...state,
 				jobs: {
 					...state.jobs,
-					data: action.payload,
-					filterData: action.payload,
+					data: arr,
+					filterData: arr,
 				},
 			};
 		case GET_JOB_DETAILS:
@@ -467,7 +478,6 @@ const rootReducer = (state = inicialState, action) => {
 					...state.companies.filter((j) => j.idFireBase !== action.payload),
 				],
 			};
-
 		case UPLOAD_PICTURE:
 			return {
 				...state,

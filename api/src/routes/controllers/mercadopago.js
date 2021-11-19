@@ -84,7 +84,7 @@ const orderFeedback = async (req, res) => {
   try {
     const {
       payment_id,
-      payment_status,
+      collection_status,
       merchant_order_id,
       external_reference,
       status,
@@ -107,7 +107,7 @@ const orderFeedback = async (req, res) => {
     // res.json({
     //   payment_id: req.query.payment_id,
     //   payment_status: req.query.payment_status,
-    //   status: req.query.status,
+   //const statusPayment = payment_status,
     //   merchant_order_id: req.query.merchant_order_id,
     //   date_created: req.query.date_created,
     // });
@@ -117,7 +117,8 @@ const orderFeedback = async (req, res) => {
 			path: 'company',
 		});;
     const gmailCompany = jobData.company.gmail;
-    
+   
+	  
      const transporter = nodemailer.createTransport({
 			//acá voy a crear los datos del correo del que envía
 			host: 'smtp.gmail.com',
@@ -132,7 +133,7 @@ const orderFeedback = async (req, res) => {
 			// acá los datos de a quien se le envía y qué se le envía, se puede mandar template html también incluso atachment o imágenes y documentos
 			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
 			to: `${gmailCompany}`, // list of receivers
-			subject: `Pago en Middleware - ${payment_status}`, // Subject line
+			subject: `Tu Pago en Middleware fue ${ collection_status }`, // Subject line
 			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
       Muchas gracias!!!
                       Saludos desde Middleware!!! </b>`,

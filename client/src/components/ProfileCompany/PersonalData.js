@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+
 import LeftData from "./LeftData";
 import SensitiveData from "./SensitiveData";
 // import Languages from "./Languages";

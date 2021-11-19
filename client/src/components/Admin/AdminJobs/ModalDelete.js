@@ -1,25 +1,27 @@
-
-
-const ModalDelete = ({ handleDelete, job }) => {
+const ModalDelete = ({ handleDelete, job, profile }) => {
   return (
     <div>
       <button
         type="button"
-        className="btn bi bi-trash-fill text-danger "
+        className={`btn  ${
+          profile ? "btn-outline-danger " : "bi bi-trash-fill  text-danger "
+        }`}
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      ></button>
+        data-bs-target="#deleteModal"
+      >
+        {profile && "Eliminar trabajo"}
+      </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="deleteModal"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="deleteModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="deleteModalLabel">
                 Eliminar Trabajo {job.name}
               </h5>
               <button
@@ -42,7 +44,7 @@ const ModalDelete = ({ handleDelete, job }) => {
                 No
               </button>
               <button
-                onClick={()=>handleDelete(job._id)}
+                onClick={() => handleDelete(job._id)}
                 type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import tokenAuth from '../config/token';
@@ -189,42 +189,42 @@ const CreatePublications = () => {
 							</h5>
 						</div>
 						<div className='modal-body'>
-							<div class='form-check'>
+							<div className='form-check'>
 								<input
-									class='form-check-input'
+									className='form-check-input'
 									type='radio'
 									name='flexRadioDefault'
 									id='flexRadioDefault1'
 									value='free'
 									onClick={handlePlan}
 								/>
-								<label class='form-check-label' for='flexRadioDefault1'>
+								<label className='form-check-label' htmlFor='flexRadioDefault1'>
 									FREE $0
 								</label>
 							</div>
-							<div class='form-check'>
+							<div className='form-check'>
 								<input
-									class='form-check-input'
+									className='form-check-input'
 									type='radio'
 									name='flexRadioDefault'
 									id='flexRadioDefault2'
 									value='standard'
 									onClick={handlePlan}
 								/>
-								<label class='form-check-label' for='flexRadioDefault2'>
+								<label className='form-check-label' htmlFor='flexRadioDefault2'>
 									STANDARD $600
 								</label>
 							</div>
-							<div class='form-check'>
+							<div className='form-check'>
 								<input
-									class='form-check-input'
+									className='form-check-input'
 									type='radio'
 									name='flexRadioDefault'
 									id='flexRadioDefault3'
 									value='premium'
 									onClick={handlePlan}
 								/>
-								<label class='form-check-label' for='flexRadioDefault3'>
+								<label className='form-check-label' htmlFor='flexRadioDefault3'>
 									PREMIUM $900
 								</label>
 							</div>

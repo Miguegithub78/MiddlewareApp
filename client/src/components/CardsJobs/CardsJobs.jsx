@@ -66,10 +66,12 @@ function CardsJobs() {
 									{j.premium === 2 ? (
 										<p className={s.premium}>
 											<i class='bi bi-star-fill'></i>
+											Premium
 										</p>
 									) : j.premium === 1 ? (
 										<p className={s.standard}>
 											<i class='bi bi-star-fill'></i>
+											Standard
 										</p>
 									) : null}
 									{!j.openToRemote ? (

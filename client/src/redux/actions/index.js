@@ -591,7 +591,7 @@ export function postulation(jobsID, juniorId, coverLetter, idFireBase) {
 				idFireBase,
 			});
 
-			console.log(allJobs.data);
+			return dispatch({ type: POSTULATION, payload: allJobs.data });
 			/* 			return dispatch({ type: GET_JOBS, payload: allJobs.data }); */
 		} catch (error) {}
 	};

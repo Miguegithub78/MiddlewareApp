@@ -97,40 +97,43 @@
 	font-weight: 700;
 }
 
-.cardPremium {
+/* .cardPremium {
 	border: 4px solid rgba(216, 184, 2, 0.767);
 }
+
+.cardDefault {
+  border: 4px solid rgb(161, 160, 160);
+} */
 
 .premium {
 	text-transform: capitalize;
 	position: absolute;
-	top: -15px;
-	left: -15px;
-	background-color: rgb(240, 197, 6);
+	top: 0px;
+	left: 0px;
+	background-color: rgb(240, 185, 6);
 	color: white;
 	font-weight: 500;
 	padding: 5px 10px;
-	border-radius: 50%;
+	border-radius: 5px;
 	margin: 0;
 	font-size: 18px;
-	box-shadow: 0px 0px 5px 1px rgba(71, 70, 70, 0.438);
 }
 .standard {
 	text-transform: capitalize;
 	position: absolute;
-	top: -15px;
-	left: -15px;
+	top: 0px;
+	left: 0px;
 	background-color: rgb(161, 160, 160);
 	color: white;
 	font-weight: 500;
 	padding: 5px 10px;
-	border-radius: 50%;
+	border-radius: 5px;
 	margin: 0;
 	font-size: 18px;
-	box-shadow: 0px 0px 5px 1px rgba(71, 70, 70, 0.438);
 }
-.cardDefault {
-	border: 4px solid rgb(161, 160, 160);
+
+i {
+	margin-right: 4px;
 }
 
 .country {

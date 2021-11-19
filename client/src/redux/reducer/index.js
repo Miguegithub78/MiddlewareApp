@@ -32,6 +32,7 @@ import {
 	SET_PLAN,
 	DELETE_JUNIOR,
 	DELETE_COMPANY,
+	POSTULATION,
 } from '../types';
 
 import { calculateDate } from '../helpers';
@@ -555,6 +556,16 @@ const rootReducer = (state = inicialState, action) => {
 				...state,
 				user: { ...state.user, notifications: [] },
 			};
+		/* 
+		case POSTULATION:
+			return {
+				...state,
+				jobs: {
+					...state.jobs,
+					data: arr2,
+					filterData: arr2,
+				},
+			}; */
 
 		default:
 			return state;

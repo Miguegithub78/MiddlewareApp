@@ -8,15 +8,13 @@ import {
   getJuniors,
   getCompanies,
   getTechnologies,
-  emailVerificationAction,
+
 } from "../../redux/actions";
 import tokenAuth from "../config/token";
 
 import {
-  loginOkey,
-  logOutUserAction,
   getUserAction,
-  sortJobsBy,
+
 } from "../../redux/actions";
 
 import { Search } from "../Search/Search";
@@ -37,7 +35,6 @@ const Home = () => {
   const userType = localStorage.getItem("userType");
   useEffect(() => {
     if (token && user) {
-      console.log("dispatch el tokeeenn", token);
       tokenAuth(token);
       dispatch(getTechnologies());
       if (user.userType === "juniors") dispatch(getCompanies());

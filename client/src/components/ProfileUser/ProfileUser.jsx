@@ -64,7 +64,6 @@ const ProfileUser = () => {
   });
   useEffect(() => {
     if (user) {
-      console.log("eeeeee");
       setInfoUser({
         idUser: user.idFireBase,
         name: user.name,
@@ -82,11 +81,11 @@ const ProfileUser = () => {
         jobsExperience: user.jobsExperience,
         academicHistory: user.academicHistory,
         phone: user.phone,
-        github: user.github,
-        website: user.website,
+        github: user.github||'',
+        website: user.website||'',
         city: user.city,
         title: user.title || "",
-        linkedin: user.linkedin,
+        linkedin: user.linkedin||'',
       });
     }
 
@@ -95,11 +94,11 @@ const ProfileUser = () => {
     dispatch(getTechnologies());
   }, [user]);
 
-  useEffect(() => {
-    if (infoUser.infoUserChanged) {
-      console.log("hubo cambio");
-    }
-  }, [infoUser]);
+  // useEffect(() => {
+  //   if (infoUser.infoUserChanged) {
+  //     console.log("hubo cambio");
+  //   }
+  // }, [infoUser]);
   
   useEffect(() => {
     dispatch(getUserAction(user));

@@ -178,38 +178,42 @@ const updateJuniorsProfile = async (req, res) => {
   }
 };
 
-const updateUserNotifications = async ( req, res) => {
+// const updateUserNotifications = async ( req, res) => {
+// try {
+  
+//   const token = req.headers["x-auth-token"];
 
-  const token = req.headers["x-auth-token"];
+//   if (!token) {
+//     return res.status(403).json({ auth: false, message: "token is require" });
+//   }
 
-  if (!token) {
-    return res.status(403).json({ auth: false, message: "token is require" });
-  }
+//   const {idUserPublication, idUserLike, type, userName, userType, idPublications} = req.body;
 
-  const {idUserPublication, idUserLike, type, userName, userType, idPublications} = req.body;
+//   console.log("Entro en el back", idUserPublication, idUserLike, type, userName, userType, idPublications)
 
-  console.log("Entro en el back", idUserPublication, idUserLike, type, userName, userType, idPublications)
-
-  var user = await Juniors.findById(idUserPublication)
-  if(!user){
-    user = await Company.findById(idUserPublication)
-  }
-
-
-  user.notifications = user.notifications.concat([{
-    _id: idUserLike,
-    userName: userName,
-    typeNotification: type,
-    idPublication: idPublications,
-    userType: userType
-  }])
+//   var user = await Juniors.findById(idUserPublication)
+//   if(!user){
+//     user = await Company.findById(idUserPublication)
+//   }
 
 
-  var newUserNotifications = await user.save()
+//   user.notifications = user.notifications.concat([{
+//     _id: idUserLike,
+//     userName: userName,
+//     typeNotification: type,
+//     idPublication: idPublications,
+//     userType: userType
+//   }])
 
 
-  res.json(newUserNotifications)
-}
+//   var newUserNotifications = await user.save()
+
+
+//   res.json(newUserNotifications)
+// } catch (error) {
+//   console.log(error);
+// }
+// }
 
 const deleteNotifications = async (req, res) => {
 
@@ -226,13 +230,17 @@ const deleteNotifications = async (req, res) => {
   }
 
   if(typeNotification === "true"){
-    console.log("ENTRO EN EL FILTRO DEL BACK")
-    console.log("ANTES", user.notifications)
+
+
     user.notifications = user.notifications.filter(e => e && e.typeNotification !== 3)
-    console.log("DESPUES", user.notifications)
-    var resetNotifications = await user.save()
+
+    try {
+      var resetNotifications = await user.save()
 
     res.json(resetNotifications)
+    } catch (error) {
+      console.log(error);
+    }
   }else {
 
     user.notifications = []
@@ -288,6 +296,6 @@ module.exports = {
   getJuniorById,
   updateJuniorsProfile,
   deleteJuniorsProfile,
-  updateUserNotifications,
+
   deleteNotifications
 };

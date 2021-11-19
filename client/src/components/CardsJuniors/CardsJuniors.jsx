@@ -14,7 +14,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
           <h2>Nuestros Programadores</h2>
           <div className="row">
             {arrayJuniors?.map((p) => (
-              <div className="col-lg-3 col-md 12 mb-4">
+              <div key={p._id} className="col-lg-3 col-md 12 mb-4">
                 <div className="card-section">
                   <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}  >
                     <Link to={`/juniors/${p._id}`} key={p.name}>

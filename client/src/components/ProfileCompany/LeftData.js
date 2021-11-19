@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteCompany } from "../../redux/actions";
 import ChangePicture from "./../ProfileUser/ChangePicture";
 
-const Prueba2left = ({ user, setInfoUser, infoUser, editValue }) => {
+const Prueba2left = ({ setInfoUser, infoUser, editValue }) => {
   const handleChange = (e) => {
     setInfoUser((info) => ({
       ...info,

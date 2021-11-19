@@ -15,7 +15,7 @@ export default function JuniorsDetail() {
   useEffect(() => {
     dispatch(getJuniorsDetails(id))
     console.log(juniors)
-  }, [dispatch]);
+  }, [id]);
 
   const juniors = useSelector(state => state.juniorsdetails)
 

@@ -60,6 +60,7 @@ const ModalLogin = ({ email, setEmail }) => {
                //  onClick={resetEmail}
                 type="button"
                 className="btn btn-block btn-outline-dark"
+                data-bs-dismiss="modal"
               >
                 Enviar Email
               </button>

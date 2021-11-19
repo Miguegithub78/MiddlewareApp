@@ -37,30 +37,30 @@ const create_preference = async (req, res) => {
   }
 
   let preference = {
-    items: product,
-    external_reference: `${idJob}/${product[0].title}`,
-    notification_url: "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
-    payment_methods: {
-      excluded_payment_types: [
+    "items": "product",
+    "external_reference": `${idJob}/${product[0].title}`,
+    "notification_url": "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
+    "payment_methods": {
+      "excluded_payment_types": [
         {
-          id: "ticket",
+          "id": "ticket",
         },
       ],
-      excluded_payment_methods: [
+      "excluded_payment_methods": [
         {
-          id: "atm",
+          "id": "atm",
         },
       ],
-      installments: 1, //cant de cuotas
-      default_payment_method_id: "visa",
-      default_installments: 1,
+      "installments": 1, //cant de cuotas
+      "default_payment_method_id": "visa",
+      "default_installments": 1,
     },
-    back_urls: {
-      success: "https://middlewareapp-new.herokuapp.com/feedback",
-      failure: "https://middlewareapp-new.herokuapp.com/feedback",
-      pending: "https://middlewareapp-new.herokuapp.com/feedback",
+    "back_urls": {
+      "success": "https://middlewareapp-new.herokuapp.com/feedback",
+      "failure": "https://middlewareapp-new.herokuapp.com/feedback",
+      "pending": "https://middlewareapp-new.herokuapp.com/feedback",
     },
-    auto_return: "approved",
+    "auto_return": "approved",
   };
 
   mercadopago.preferences
@@ -90,7 +90,6 @@ const orderFeedback = async (req, res) => {
       status,
     } = req.query;
 
-    console.log(req.query, "feedback");
     const reference = external_reference.split("/");
     const idJob = reference[0];
     const plan = reference[1];
@@ -104,15 +103,6 @@ const orderFeedback = async (req, res) => {
       { new: true }
     );
 
-    // res.json({
-    //   payment_id: req.query.payment_id,
-    //   payment_status: req.query.payment_status,
-   //const statusPayment = payment_status,
-    //   merchant_order_id: req.query.merchant_order_id,
-    //   date_created: req.query.date_created,
-    // });
-
-    // const companyPremium = Company.findOne({ _id : req.query.external_reference })
     const jobData = await Jobs.findOne({ _id: idJob }).populate({
 			path: 'company',
 		});;
@@ -134,9 +124,9 @@ const orderFeedback = async (req, res) => {
 			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
 			to: `${gmailCompany}`, // list of receivers
 			subject: `Tu Pago en Middleware fue ${ collection_status }`, // Subject line
-			html: `<b> Te comentamos que ya estas mejor posicionado en nuestra app!!
+			html: ` ${collection_status === "approved" ? <b> Te comentamos que ya estas mejor posicionado en nuestra app!!
       Muchas gracias!!!
-                      Saludos desde Middleware!!! </b>`,
+                      Saludos desde Middleware!!! </b> : "Lamentamos informarte que tu pago no haya sido procesado"}`,
 		});
 
     return res.redirect("https://middlewareapp-new.vercel.app/home/juniors");

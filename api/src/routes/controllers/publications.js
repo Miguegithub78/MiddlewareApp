@@ -11,6 +11,12 @@ const postPublications = async (req, res) => {
   const { description, photograph } = req.body;
 
   try {
+
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(403).json({ auth: false, message: "token is require" });
+    }
+
     if (!description)
       return res.status(404).json({ message: "Falta la descripción" });
     if (!nameUser)
@@ -87,6 +93,12 @@ const getPublications = async (req, res) => {
   const { numberPage } = req.query;
 
   try {
+
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(403).json({ auth: false, message: "token is require" });
+    }
+
     const publications = await Publication.find().populate([
       { path: "company" },
       { path: "junior" },
@@ -133,6 +145,12 @@ const getPublicationsById = async (req, res) => {
   const { id } = req.params;
 
   try {
+
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(403).json({ auth: false, message: "token is require" });
+    }
+
     const getPublication = await Publication.findById(id)
         .populate([{ path: 'company'},{ path: 'junior'},{ path: 'admin'}, {path: 'likes'}])
 
@@ -220,6 +238,12 @@ const deletePublication = async (req, res) => {
   const { idPublication, idUser, userType } = req.query;
 
   try {
+
+    const token = req.headers["x-auth-token"];
+    if (!token) {
+      return res.status(403).json({ auth: false, message: "token is require" });
+    }
+
     if (userType == "juniors") {
       let junior = Juniors.findById(idUser);
       const publication = Publication.findById(idPublication);

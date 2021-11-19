@@ -32,21 +32,21 @@ function CardsJobs() {
 		if (!salary) {
 			return 'Sin especificar';
 		} else if (currency === 'dollar') {
-			return `U$s${salary}`;
+			return `U$s ${salary}`;
 		} else if (currency === 'euro') {
-			return `€${salary}`;
+			return `€ ${salary}`;
 		} else {
-			return `$${salary}`;
+			return `$ ${salary}`;
 		}
 	}
+	const jobs = useSelector((state) => state.jobs.filterData);
+	const user = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(resetFilterJobs());
 		dispatch(getJobs());
-	}, []);
-
-	const jobs = useSelector((state) => state.jobs.filterData);
+	}, [user]);
 
 	return (
 		<div className={s.cards}>

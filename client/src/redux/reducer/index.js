@@ -219,7 +219,6 @@ function sortJobs(string, array) {
 			return 0;
 		});
 	}
-	console.log(array);
 	return arr;
 }
 

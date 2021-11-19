@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./card.css";
+import { NavLink } from "react-router-dom";
+import s from "../CardsJuniors/card.module.css";
 
 
 
@@ -9,32 +9,35 @@ export const CardsCompanies = ({ arrayCompanies }) => {
 
   return (
 
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12 text-center">
-        <h2>Nuestras Empresas</h2>  
-          <div className="row">
-            {arrayCompanies.map((p) => (
-              <div key={p._id} className="col-lg-3 col-md 12 mb-4">
-                <div className="card-section">
-                  <div className={`card text-center  bg-ligth bg-opacity-100${styles.card}`} style={{ width: " 80% " }}>
-                    <Link to={`/companies/${p._id}`} key={p.name}>
+    <div className="container-fluid">
+    <div className={s.card1}>
+      {
+        arrayCompanies && arrayCompanies.map((e, i) => <>
 
-                      <img src={p.photograph} className="card-img-top mt-3 m" style={{ width: " 80% " }} alt="Card cap" />
+          <div className={`d-flex justify-content-center ${s.divCard2}`} key={i}>
+          <NavLink style={{paddingLeft: 13, textDecoration: 'none'}} to={`/companies/${e._id}`}><div className={`${s.card2} p-3 py-4`}>
 
-                      <div className="card-body  text-dark">
-                        <h6 className="card-title">{p.name}</h6>
+                <div className="text-center"> <img src={e.photograph} width="100" className="rounded-circle"/>
+                    
+                    <h3 className={`mt-2 ${s.p}`} style={{color: "black"}}>{e.name}</h3>
+                    
+                    <div className="d-flex flex-column justify-content-center">
+
+                      <div><span className={s.span}>{e.title}</span></div>
+
+                      <div>
+                        <span className={`mt-3 ${s.spanTecnologies}`}>
+                          {e.jobs.length ? `Esta empresa ha realizado ${e.jobs.length} publicaciones de empleo` : "Ésta empresa no ha realizado publicaciones de empleo"}
+                        </span>
                       </div>
-                      
-                    </Link>
-                  </div >
+                    
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div >
-        </div>
-
-      </div>
+            </div></NavLink>
+          </div>
+        </>)
+      }
+    </div>
     </div>
 
 

@@ -72,40 +72,45 @@ export default function Mapa() {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
-      <h4 className="display-6">
-        Empresas{" "}
-        <i className="bi bi-people-fill"></i>
-      </h4>
+    <div className="">
+      <div className="card">
+        <div className="card-title">
+          <h4 className="display-6">
+            Empresas{" "}
+            <i className="bi bi-people-fill"></i>
+          </h4>
+        </div>
+        <div className="card-body">
+          <GoogleMap
+            id="map"
+            mapContainerStyle={mapContainerStyle}
+            zoom={6}
+            center={center}
+            options={options}
 
-      <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={6}
-        center={center}
-        options={options}
+            onLoad={onMapLoad}
+          >
 
-        onLoad={onMapLoad}
-      >
+            {id && id === companies._id ? (
+              <Marker
+                key={`${companies.latitude}-${companies.longitude}`}
+                position={{ lat: Number(companies.latitude), lng: Number(companies.longitude) }}
 
-        {id && id === companies._id ? (
-          <Marker
-            key={`${companies.latitude}-${companies.longitude}`}
-            position={{ lat: Number(companies.latitude), lng: Number(companies.longitude) }}
-
-            icon={{
-              url: `/company.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ) : null
+                icon={{
+                  url: `/company.svg`,
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+              />
+            ) : null
 
 
-        }
+            }
 
-      </GoogleMap>
+          </GoogleMap>
+        </div>
+      </div>
     </div>
   );
 }

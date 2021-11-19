@@ -66,10 +66,10 @@ export default function Mapa() {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div className="contenedorMapa">
+    <div className="">
 
 
-      <h5 className="display-6">Empresas{" "}
+      <h5 className="display-6 text-center">Empresas{" "}
         <i className="bi bi-people-fill"></i>
       </h5>
 

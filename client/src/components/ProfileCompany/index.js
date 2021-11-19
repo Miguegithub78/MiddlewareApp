@@ -23,6 +23,7 @@ const ProfileCompany = () => {
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
       if (user) return;
+      console.log('onauthstate');
       dispatch(getUserAction(userFirebase));
     } else {
       history.push("/");
@@ -55,6 +56,7 @@ const ProfileCompany = () => {
     publications: [],
     jobs: [],
     technologies: [],
+    infoUserChanged:false,
     _id: "",
   });
   useEffect(() => {
@@ -87,9 +89,13 @@ const ProfileCompany = () => {
     dispatch(getLanguages());
     dispatch(getTechnologies());
   }, [user]);
+
   useEffect(() => {
+    if(!user)return
+    console.log('userefft');
     dispatch(getUserAction(user));
   }, []);
+  
   //en cada edicion de datos tiene que viajar a la db
   const handleClick = () => {
     dispatch(editCompanyDataAction(infoUser));

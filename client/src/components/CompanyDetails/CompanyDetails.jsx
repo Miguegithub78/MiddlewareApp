@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyDetails, putNotification } from "../../redux/actions";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Mapa from "../MapDetails/Mapa";
 import { db } from '../../firebaseConfig'
-import { collection, getDocs, getDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 import NavBar from '../NavBar/NavBar';
 import Socket from '../socket'
 
@@ -206,10 +206,10 @@ export default function CompanyDetail() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-mail">
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-mail">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>

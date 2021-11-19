@@ -8,6 +8,7 @@ import Salary from "./Salary";
 import Postulates from "./Postulates";
 import Technologies from "./Technologies";
 import Status from "./Status";
+import Premium from "./Premium";
 import {
   editJobPostulationsAction,
   deleteJobsAction,
@@ -153,9 +154,14 @@ const JobsPublications = ({ infoUser, job }) => {
                 <h6 className="mb-0 text-secondary">Nivel de Premium</h6>
               </div>
               <div className="col-sm-8 ">
-                <span>{infoJobs.premium}</span>
+                {editValue ? (
+                  <span>{infoJobs.premium}</span>
+                ) : (
+                  <Premium infoJobs={infoJobs} />
+                )}
               </div>
             </div>
+
             <div className="row mb-3">
               <div className="col-sm-4"></div>
               <div className="col-sm-8 ">

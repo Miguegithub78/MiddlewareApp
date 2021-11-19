@@ -9,7 +9,7 @@ export const CardsJuniors = ({ arrayJuniors }) => {
 	return (
 		<div className='container-fluid'>
 			<div className='text-center'>
-				<h2>Nuestras Programadores</h2>
+				<h2>Nuestros Programadores</h2>
 			</div>
 			<div className={s.card1}>
 				{arrayJuniors &&

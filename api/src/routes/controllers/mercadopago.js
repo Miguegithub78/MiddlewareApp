@@ -124,9 +124,9 @@ const orderFeedback = async (req, res) => {
 			from: '"Middleware App " <info.MiddlewareApp@gmail.com>', // sender address
 			to: `${gmailCompany}`, // list of receivers
 			subject: `Tu Pago en Middleware fue ${ collection_status }`, // Subject line
-			html: ` ${collection_status === "approved" ? <b> Te comentamos que ya estas mejor posicionado en nuestra app!!
+			html: ` ${collection_status === "approved" ? "Te comentamos que ya estas mejor posicionado en nuestra app!!
       Muchas gracias!!!
-                      Saludos desde Middleware!!! </b> : "Lamentamos informarte que tu pago no haya sido procesado"}`,
+                      Saludos desde Middleware!!!" : "Lamentamos informarte que tu pago no haya sido procesado"}`,
 		});
 
     return res.redirect("https://middlewareapp-new.vercel.app/home/juniors");

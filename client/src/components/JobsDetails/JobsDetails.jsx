@@ -32,7 +32,7 @@ export default function JobsDetails() {
 	}
 	useEffect(() => {
 		dispatch(getJobDetails(id));
-	}, [post]);
+	}, [user]);
 	const history = useHistory();
 
 	onAuthStateChanged(auth, (userFirebase) => {
@@ -66,7 +66,6 @@ export default function JobsDetails() {
 	var modalWin = useRef(null);
 
 	function handleArea() {
-		console.log(modalWin.current.value);
 		setCoverLetter(modalWin.current.value);
 	}
 

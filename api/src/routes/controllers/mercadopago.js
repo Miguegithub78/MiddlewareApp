@@ -37,30 +37,30 @@ const create_preference = async (req, res) => {
   }
 
   let preference = {
-    "items": "product",
-    "external_reference": `${idJob}/${product[0].title}`,
-    "notification_url": "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
-    "payment_methods": {
-      "excluded_payment_types": [
+    items: "product",
+    external_reference: `${idJob}/${product[0].title}`,
+    notification_url: "https://hookb.in/VGLVqnXx0qHDrgoorlzJ",
+    payment_methods: {
+      excluded_payment_types: [
         {
-          "id": "ticket",
+          id: "ticket",
         },
       ],
-      "excluded_payment_methods": [
+      excluded_payment_methods: [
         {
-          "id": "atm",
+          id: "atm",
         },
       ],
-      "installments": 1, //cant de cuotas
-      "default_payment_method_id": "visa",
-      "default_installments": 1,
+      installments: 1, //cant de cuotas
+      default_payment_method_id: "visa",
+      default_installments: 1,
     },
-    "back_urls": {
-      "success": "https://middlewareapp-new.herokuapp.com/feedback",
-      "failure": "https://middlewareapp-new.herokuapp.com/feedback",
-      "pending": "https://middlewareapp-new.herokuapp.com/feedback",
+    back_urls: {
+      success: "https://middlewareapp-new.herokuapp.com/feedback",
+      failure: "https://middlewareapp-new.herokuapp.com/feedback",
+      pending: "https://middlewareapp-new.herokuapp.com/feedback",
     },
-    "auto_return": "approved",
+    auto_return: "approved",
   };
 
   mercadopago.preferences

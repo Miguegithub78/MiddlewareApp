@@ -23,11 +23,11 @@ const getAllCompanies = async (req, res) => {
       return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token, "Junior");
+    // const result = await decoder(token, "Junior");
 
-    if (result.auth === false) {
-      return res.status(401).json(result);
-    }
+    // if (result.auth === false) {
+    //   return res.status(401).json(result);
+    // }
 
     const allCompanies = await Company.find()
       .populate("jobs")
@@ -45,14 +45,14 @@ const getCompaniesById = async (req, res) => {
       return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token, "Junior");
+    // const result = await decoder(token, "Junior");
 
     const { id } = req.params;
     const { firebase } = req.query;
 
-    if (result.auth === false && !firebase) {
-      return res.status(401).json(result);
-    }
+    // if (result.auth === false && !firebase) {
+    //   return res.status(401).json(result);
+    // }
 
     if (firebase === "true") {
       const getCompanyr = await Company.findOne({ idFireBase: id }).populate([

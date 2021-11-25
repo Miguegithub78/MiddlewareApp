@@ -25,11 +25,11 @@ const getAllJuniors = async (req, res) => {
       return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token, "Company");
+    // const result = await decoder(token, "Company");
 
-    if (result.auth === false) {
-      return res.status(401).json(result);
-    }
+    // if (result.auth === false) {
+    //   return res.status(401).json(result);
+    // }
 
     const allJuniors = await Juniors.find().populate([
       { path: "languages" },
@@ -51,14 +51,14 @@ const getJuniorById = async (req, res) => {
       return res.status(403).json({ auth: false, message: "token is require" });
     }
 
-    const result = await decoder(token, "Company");
+    // const result = await decoder(token, "Company");
 
     const { id } = req.params;
     const { firebase } = req.query;
 
-    if (result.auth === false && !firebase) {
-      return res.status(401).json(result);
-    }
+    // if (result.auth === false && !firebase) {
+    //   return res.status(401).json(result);
+    // }
 
     if (firebase === "true") {
       const getJunior = await Juniors.findOne({ idFireBase: id }).populate([
